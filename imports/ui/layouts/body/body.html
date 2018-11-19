@@ -1,0 +1,7 @@
+<template name="App_body">
+  {{#if currentUser}}
+    {{> App_home_page}}
+  {{else }}
+    {{> App_auth_page}}
+  {{/if}}
+</template>
