@@ -36,6 +36,6 @@ import '../../api/roles/server/publications.js';
 import '../../api/testers/methods.js';
 import '../../api/testers/server/publications.js';
 
-// User Details
+// Users and User Details
 import '../../api/users/methods.js';
 import '../../api/users/server/publications.js';

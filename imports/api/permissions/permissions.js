@@ -8,8 +8,10 @@ export const Permissions = new Mongo.Collection('permissions');
 Permissions.schema = new SimpleSchema({
   roleId: {
     type: String,
+    optional: false,
   },
   permission: {
     type: String,
+    optional: false,
   },
 });

@@ -10,8 +10,9 @@ Testers.schema = new SimpleSchema({
     type: String,
     optional: true,
   },
-  parameterId: {
+  paramId: {
     type: String,
+    optional: false,
   },
   createdAt: {
     type: Date,

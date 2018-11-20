@@ -8,15 +8,19 @@ export const Products = new Mongo.Collection('products');
 Products.schema = new SimpleSchema({
   name: {
       type: String,
+      optional: false,
   },
   quantity: {
       type: Number,
+      optional: false,
   },
   testerRoute: {
     type: Array,
+    optional: false,
   },
   'testerRoute.$': {
     type: String,
+    optional: false,
   },
   createdAt: {
     type: Date,

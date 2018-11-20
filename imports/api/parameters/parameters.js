@@ -8,7 +8,7 @@ export const Parameters = new Mongo.Collection('parameters');
 Parameters.schema = new SimpleSchema({
   name: {
     type: String,
-    optional: true
+    optional: false,
   },
   sampleSize: {
     type: Number,
@@ -16,15 +16,19 @@ Parameters.schema = new SimpleSchema({
   },
   xBarCtrlLimit: {
     type: Object,
+    optional: false,
   },
   xBarSpecLimit: {
     type: Object,
+    optional: false,
   },
   rChartCtrlLimit: {
     type: Object,
+    optional: false,
   },
   rChartSpecLimit: {
     type: Object,
+    optional: false,
   },
   createdAt: {
     type: Date,
@@ -40,5 +44,8 @@ Parameters.schema = new SimpleSchema({
   },
   deletedAt: {
     type: Date,
+    autoValue: function() {
+      return null
+    }
   },
 });

@@ -8,52 +8,55 @@ export const PerSampleTestResults = new Mongo.Collection('perSampleTestResults')
 PerSampleTestResults.schema = new SimpleSchema({
   sampleItems: {
     type: Array,
+    optional: false,
   },
   'sampleItems.$': {
     type: Object,
+    optional: false,
   },
-  parameterId: {
+  paramId: {
     type: String,
+    optional: false,
   },
-  parameterConfigXBar: {
+  paramConfigXBar: {
     type: Number,
-    optional: true
+    optional: false,
   },
-  parameterConfigRChart: {
+  paramConfigRChart: {
     type: Number,
-    optional: true
+    optional: false
   },
-  parameterConfig: {
+  paramConfig: {
     type: Number,
-    optional: true
+    optional: false
   },
   xBarResult: {
     type: Number,
-    optional: true,
+    optional: false,
   },
   rChartResult: {
     type: Number,
-    optional: true
+    optional: false
   },
-  minimum: {
+  min: {
     type: Number,
-    optional: true
+    optional: false
   },
   firstQuartile: {
     type: Number,
-    optional: true
+    optional: false
   },
   median: {
     type: Number,
-    optional: true
+    optional: false
   },
   thirdQuartile: {
     type: Number,
-    optional: true
+    optional: false
   },
-  maximum: {
+  max: {
     type: Number,
-    optional: true
+    optional: false
   },
   histogramPerSample: {
     type: Number,

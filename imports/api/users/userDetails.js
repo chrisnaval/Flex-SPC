@@ -2,23 +2,30 @@
 
 import { Mongo } from 'meteor/mongo';
 
-export const userDetails = new Mongo.Collection('userDetails');
+export const UserDetails = new Mongo.Collection('userDetails');
 
 // Schema
-userDetails.schema = new SimpleSchema({
+UserDetails.schema = new SimpleSchema({
   userId: {
     type: String,
+    optional: false,
   },
   firstName: {
-      type: String,
-      optional: true
+    type: String,
+    optional: false,
   },
   lastName: {
-      type: String,
+    type: String,
+    optional: false,
   },
   gender: {
     type: String,
-    allowedValues: ['admin', 'user'],
+    allowedValues: ['male', 'female'],
+    optional: false,
+  },
+  address: {
+    type: String,
+    optional: false,
   },
   createdAt: {
     type: Date,
