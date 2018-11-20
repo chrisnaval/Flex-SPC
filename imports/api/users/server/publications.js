@@ -4,8 +4,8 @@
 import { Meteor } from 'meteor/meteor';
 
 // Import(s)
-import { userDetails } from '../userDetails.js';
+import { UserDetails } from '../userDetails.js';
 
 Meteor.publish('users.all', function() {
-  return userDetails.find({});
+  // return UserDetails.find({});
 });

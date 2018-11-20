@@ -8,7 +8,7 @@ export const Items = new Mongo.Collection('items');
 Items.schema = new SimpleSchema({
   name: {
     type: String,
-    optional: true
+    optional: false,
   },
   category: {
     type: String,
@@ -16,9 +16,11 @@ Items.schema = new SimpleSchema({
   },
   productId: {
     type: String,
+    optional: false,
   },
   productName: {
     type: String,
+    optional: false,
   },
   createdAt: {
     type: Date,
@@ -34,5 +36,8 @@ Items.schema = new SimpleSchema({
   },
   deletedAt: {
     type: Date,
+    autoValue: function() {
+      return null
+    }
   },
 });

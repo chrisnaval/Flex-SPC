@@ -8,15 +8,19 @@ export const HistogramData = new Mongo.Collection('histogramData');
 HistogramData.schema = new SimpleSchema({
   bin: {
     type: Number,
+    optional: false,
   },
   binRange: {
     type: Number,
+    optional: false,
   },
   binCount: {
     type: Number,
+    optional: false,
   },
   sampleId: {
     type: String,
+    optional: false,
   },
   createdAt: {
     type: Date,
@@ -32,5 +36,8 @@ HistogramData.schema = new SimpleSchema({
   },
   deletedAt: {
     type: Date,
+    autoValue: function() {
+      return null
+    }
   },
 });
