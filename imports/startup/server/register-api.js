@@ -37,5 +37,5 @@ import '../../api/testers/methods.js';
 import '../../api/testers/server/publications.js';
 
 // User Details
-import '../../api/userDetails/methods.js';
-import '../../api/userDetails/server/publications.js';
+import '../../api/users/methods.js';
+import '../../api/users/server/publications.js';
