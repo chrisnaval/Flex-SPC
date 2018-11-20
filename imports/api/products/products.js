@@ -15,6 +15,9 @@ Products.schema = new SimpleSchema({
   testerRoute: {
     type: Array,
   },
+  'testerRoute.$': {
+    type: String,
+  },
   createdAt: {
     type: Date,
     autoValue: function() {
