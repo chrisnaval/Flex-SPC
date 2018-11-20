@@ -8,9 +8,6 @@ export const userDetails = new Mongo.Collection('userDetails');
 userDetails.schema = new SimpleSchema({
   userId: {
     type: String,
-    autoValue: function() {
-      return this.userId
-    }
   },
   firstName: {
       type: String,

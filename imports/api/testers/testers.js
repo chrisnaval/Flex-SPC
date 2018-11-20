@@ -10,11 +10,8 @@ Testers.schema = new SimpleSchema({
     type: String,
     optional: true,
   },
-  parametersId: {
+  parameterId: {
     type: String,
-    autoValue: function() {
-      return this.parametersId
-    }
   },
   createdAt: {
     type: Date,
@@ -31,7 +28,7 @@ Testers.schema = new SimpleSchema({
   deletedAt: {
     type: Date,
     autoValue: function() {
-      return new Date()
+      return null
     }
   },
 });

@@ -9,6 +9,9 @@ PerSampleTestResults.schema = new SimpleSchema({
   sampleItems: {
     type: Array,
   },
+  'sampleItems.$': {
+    type: Object,
+  },
   parameterId: {
     type: String,
   },
