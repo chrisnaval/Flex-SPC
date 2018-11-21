@@ -2,10 +2,10 @@
 
 import { Mongo } from 'meteor/mongo';
 
-export const userDetails = new Mongo.Collection('userDetails');
+export const UserDetails = new Mongo.Collection('userDetails');
 
 // Schema
-userDetails.schema = new SimpleSchema({
+UserDetails.schema = new SimpleSchema({
   userId: {
     type: String,
     autoValue: function() {
