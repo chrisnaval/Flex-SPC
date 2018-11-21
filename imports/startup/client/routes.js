@@ -4,7 +4,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 
 // Import(s)
 import '../../ui/layouts/body/body.js';
-import '../../ui/layouts/headers/user/home-header.js';
+import '../../ui/layouts/headers/home/home-header.js';
 import '../../ui/pages/auth/auth.html';
 import '../../ui/pages/auth/login/login.js';
 import '../../ui/pages/auth/register/register.js';
@@ -12,6 +12,21 @@ import '../../ui/pages/home/home.js';
 import '../../ui/pages/not-found/not-found.js';
 
 // Set up all routes in the app
+FlowRouter.route("/", {
+  name: "home-page",
+  action() {
+    if(!Meteor.userId()) {
+      BlazeLayout.render("App_home_page", { 
+        header: "Home_header",
+        main: "",
+        footer: ""
+      });
+    } else {
+      FlowRouter.go("/login");
+    }
+  },
+});
+
 FlowRouter.route("/login", {
   name: "login-page",
   action() {
