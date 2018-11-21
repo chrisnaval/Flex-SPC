@@ -1,0 +1,18 @@
+<template name="App_item_page">
+    <main class="main">
+        <div class="page-container">
+            {{> Template.dynamic template=header}}
+            {{> Template.dynamic template=sidebar}}
+            <div class="page-content">
+            <div class="wrap">
+                {{> Banner}}
+                <div class="content-wrap">
+                <div class="content">
+                    {{> Item}}
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </main>
+</template>

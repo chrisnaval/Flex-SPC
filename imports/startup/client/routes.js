@@ -10,10 +10,10 @@ import '../../ui/pages/auth/auth.html';
 import '../../ui/pages/auth/login/login.js';
 import '../../ui/pages/auth/register/register.js';
 import '../../ui/pages/home/home.js';
+import '../../ui/pages/items/item.js';
 import '../../ui/pages/not-found/not-found.js';
 
 // Set up all routes in the app
-
 FlowRouter.route("/", {
   name: "home-page",
   action() {
@@ -53,6 +53,19 @@ FlowRouter.route("/register", {
       });
     } else {
       FlowRouter.go("/");
+    }
+  },
+});
+FlowRouter.route("/item", {
+  name: "item-page",
+  action() {
+    if(Meteor.userId()) {
+      BlazeLayout.render("App_item_page", { 
+        header: "Home_header",
+        sidebar: "App_sidebar",
+      });
+    } else {
+      FlowRouter.go("/login");
     }
   },
 });
