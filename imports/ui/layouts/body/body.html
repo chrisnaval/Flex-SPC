@@ -1,7 +1,8 @@
 <template name="App_body">
-  {{#if currentUser}}
+  <!-- {{#if currentUser}}
     {{> App_home_page}}
   {{else }}
     {{> App_auth_page}}
-  {{/if}}
+  {{/if}} -->
+  {{> Template.dynamic template=main}}
 </template>
