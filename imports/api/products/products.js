@@ -4,7 +4,6 @@ import { Mongo } from 'meteor/mongo';
 
 export const Products = new Mongo.Collection('products');
 
-// Schema
 Products.schema = new SimpleSchema({
   name: {
       type: String,
@@ -15,12 +14,11 @@ Products.schema = new SimpleSchema({
       optional: false,
   },
   testerRoute: {
-    type: Array,
-    optional: false,
+    type: [Array],
   },
-  'testerRoute.$': {
-    type: String,
-    optional: false,
+  'testerRoute': {
+    type: Object,
+    optional: true,
   },
   createdAt: {
     type: Date,

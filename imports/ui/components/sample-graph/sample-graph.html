@@ -1,0 +1,67 @@
+<template name="Sample_graph">
+  <form class="insert-data">
+    name:<input type="text" name="name"><br>
+    sampleSize:<input type="number" name="sampleSize"><br>
+    xBarUpperCtrlLimit:<input type="number" name="xBarUpperCtrlLimit"><br>
+    xBarLowerCtrlLimit:<input type="number" name="xBarLowerCtrlLimit"><br>
+    xBarUpperSpecLimit:<input type="number" name="xBarUpperSpecLimit"><br>
+    xBarLowerSpecLimit:<input type="number" name="xBarLowerSpecLimit"><br>
+    rUpperCtrlLimit:<input type="number" name="rUpperCtrlLimit"><br>
+    rLowerCtrlLimit:<input type="number" name="rLowerCtrlLimit"><br>
+    rUpperSpecLimit:<input type="number" name="rUpperSpecLimit"><br>
+    rLowerSpecLimit:<input type="number" name="rLowerSpecLimit"><br>
+    <input type="submit" name="submit" value="submit">
+    <p id="error-msg" style="color: #F16362;"></p>
+  </form>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>sampleItems</th>
+        <th>paramId</th>
+        <th>paramConfigXBar</th>
+        <th>paramConfigRChart</th>
+        <th>paramConfig</th>
+        <th>xBarResult</th>
+        <th>rChartResult</th>
+        <th>min</th>
+        <th>firstQuartile</th>
+        <th>median</th>
+        <th>thirdQuartile</th>
+        <th>max</th>
+        <th>histogramPerSample</th>
+        <th>action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each perSampleTestResults}}
+      <tr>
+        <td>{{sampleItems}}</td>
+        <td>{{paramId}}</td>
+        <td>{{paramConfigXBar}}</td>
+        <td>{{paramConfigRChart}}</td>
+        <td>{{paramConfig}}</td>
+        <td>{{xBarResult}}</td>
+        <td>{{rChartResult}}</td>
+        <td>{{min}}</td>
+        <td>{{firstQuartile}}</td>
+        <td>{{median}}</td>
+        <td>{{thirdQuartile}}</td>
+        <td>{{max}}</td>
+        <td>{{histogramPerSample}}</td>
+        <!-- {{#if testerRoute}}
+          {{#each testerRoute}}
+            <td>{{testerName}}</td>
+          {{/each}}
+        {{else}}
+          <td>{{testerRoute}}</td>
+        {{/if}} -->
+        <td>
+            <a href="/edit-sample-graph/{{_id}}" class="btn-success btn btn-xs">Abubut</a>
+            <button id="delete" class="btn-danger">Delete</button>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</template>

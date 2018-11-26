@@ -26,3 +26,4 @@ johanbrook:publication-collector  # Test a Meteor publication by collecting its 
 accounts-password
 reactive-dict
 aldeed:simple-schema
+session
