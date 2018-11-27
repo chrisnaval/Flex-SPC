@@ -1,11 +1,35 @@
 <template name="App_home_page">
   <!-- main -->
   <main class="main">
-    <div class="container">
+      <div class="page-container">
+        {{> Home_header}}
+        {{> App_sidebar}}
+        <div class="page-content">
+          <div class="wrap">
+            {{> Banner}}
+            <div class="content-wrap">
+              <div class="content">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  <!-- <main class="main">
+    <div class="page-container">
       {{> Template.dynamic template=header}}
-      {{> Template.dynamic template=main}}
-      {{> Template.dynamic template=footer}}
+      {{> Template.dynamic template=sidebar}}
+      <div class="page-content">
+        <div class="wrap">
+          {{> Banner}}
+          <div class="content-wrap">
+            <div class="content">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </main>
+  </main> -->
   <!-- main -->
 </template>
