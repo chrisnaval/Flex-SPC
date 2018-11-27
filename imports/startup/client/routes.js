@@ -20,6 +20,7 @@ import '../../ui/pages/users/profile/profile.js';
 import '../../ui/pages/users/update/update.js';
 import '../../ui/pages/users/role/role-list.js';
 import '../../ui/pages/not-found/not-found.js';
+import '../../ui/components/sample-graph/sample-graph.js';
 
 // Set up all routes in the app
 FlowRouter.route("/", {
@@ -124,6 +125,35 @@ FlowRouter.route("/login", {
     if(!Meteor.userId()) {
       BlazeLayout.render("App_body", { 
         main: "Auth_login_page",
+      });
+    } else {
+      FlowRouter.go("/");
+    }
+  },
+});
+FlowRouter.route("/sample-graph", {
+  name: "graph-page",
+  action() {
+    if(!Meteor.userId()) {
+      BlazeLayout.render("App_home_page", { 
+        headerAuth: "",
+        main: "Sample_graph",
+        footerAuth: ""
+      });
+    } else {
+      FlowRouter.go("/");
+    }
+  },
+});
+
+FlowRouter.route("/edit-sample-graph/:_id", {
+  name: "edit-graph-page",
+  action() {
+    if(!Meteor.userId()) {
+      BlazeLayout.render("App_home_page", { 
+        headerAuth: "",
+        main: "Edit_Sample_Graph",
+        footerAuth: ""
       });
     } else {
       FlowRouter.go("/");

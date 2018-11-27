@@ -1,0 +1,20 @@
+<template name="Edit_Sample_Graph">
+    <form class="update-data">
+    sampleItems:<input type="text" name="sampleItems" value="{{perSampleTestResults.sampleItems}}"><br>
+    paramId:<input type="text" name="paramId" value="{{paramId}}"><br>
+    paramConfigXBar:<input type="number" name="paramConfigXBar" value="{{perSampleTestResults.paramConfigXBar}}"><br>
+    paramConfigRChart:<input type="number" name="paramConfigRChart" value="{{perSampleTestResults.paramConfigRChart}}"><br>
+    paramConfig:<input type="number" name="paramConfig" value="{{perSampleTestResults.paramConfig}}"><br>
+    xBarResult:<input type="number" name="xBarResult" value="{{perSampleTestResults.xBarResult}}"><br>
+    rChartResult:<input type="number" name="rChartResult" value="{{perSampleTestResults.rChartResult}}"><br>
+    min:<input type="number" name="min" value="{{perSampleTestResults.min}}"><br>
+    firstQuartile:<input type="number" name="firstQuartile" value="{{perSampleTestResults.firstQuartile}}"><br>
+    median:<input type="number" name="median" value="{{perSampleTestResults.median}}"><br>
+    thirdQuartile:<input type="number" name="thirdQuartile" value="{{perSampleTestResults.thirdQuartile}}"><br>
+    max:<input type="number" name="max" value="{{perSampleTestResults.max}}"><br>
+    histogramPerSample:<input type="number" name="histogramPerSample" value="{{perSampleTestResults.histogramPerSample}}"><br>
+      <input type="submit" class="btn btn-primary" value="Save">
+      <p id="error-msg" style="color: #F16362;"></p>
+    </form>
+    <a href="/sample-graph">back</a>
+  </template>
