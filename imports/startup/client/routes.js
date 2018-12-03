@@ -9,6 +9,7 @@ import '../../ui/pages/auth/register/register.js';
 import '../../ui/pages/dataentry/item/item.js';
 import '../../ui/pages/home/home.js';
 import '../../ui/pages/items/item.js';
+import '../../ui/pages/reports/pareto/pareto.js';
 import '../../ui/pages/users/list/list.js';
 import '../../ui/pages/users/permission/permission.js';
 import '../../ui/pages/users/profile/profile.js';
