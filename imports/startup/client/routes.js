@@ -6,13 +6,8 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import '../../ui/layouts/body/body.js';
 import '../../ui/pages/auth/login/login.js';
 import '../../ui/pages/auth/register/register.js';
+import '../../ui/pages/dataentry/item/item.js';
 import '../../ui/pages/home/home.js';
-import '../../ui/pages/reports/candlestick/candlestick.js';
-import '../../ui/pages/reports/histograph/histograph.js';
-import '../../ui/pages/reports/range/range.js';
-import '../../ui/pages/reports/tester/tester.js';
-import '../../ui/pages/reports/xbar/xbar.js';
-import '../../ui/pages/reports/yield/yield.js';
 import '../../ui/pages/items/item.js';
 import '../../ui/pages/users/list/list.js';
 import '../../ui/pages/users/permission/permission.js';
@@ -35,84 +30,12 @@ FlowRouter.route("/", {
     }
   },
 });
-FlowRouter.route("/reports/candlestick", {
-  name: "candle-page",
+FlowRouter.route("/dataentry", {
+  name: "dataentry-page",
   action() {
     if(Meteor.userId()) {
       BlazeLayout.render("App_body", { 
-        main: "App_candlestick_page"
-      });
-    } else {
-      FlowRouter.go("/login");
-    }
-  },
-});
-FlowRouter.route("/reports/histograph", {
-  name: "histograph-page",
-  action() {
-    if(Meteor.userId()) {
-      BlazeLayout.render("App_body", { 
-        main: "App_histograph_page"
-      });
-    } else {
-      FlowRouter.go("/login");
-    }
-  },
-});
-FlowRouter.route("/reports/tester", {
-  name: "tester-page",
-  action() {
-    if(Meteor.userId()) {
-      BlazeLayout.render("App_body", { 
-        main: "App_tester_page"
-      });
-    } else {
-      FlowRouter.go("/login");
-    }
-  },
-});
-FlowRouter.route("/reports/range", {
-  name: "range-page",
-  action() {
-    if(Meteor.userId()) {
-      BlazeLayout.render("App_body", { 
-        main: "App_range_page"
-      });
-    } else {
-      FlowRouter.go("/login");
-    }
-  },
-});
-FlowRouter.route("/reports/xbar", {
-  name: "xbar-page",
-  action() {
-    if(Meteor.userId()) {
-      BlazeLayout.render("App_body", { 
-        main: "App_xbar_page"
-      });
-    } else {
-      FlowRouter.go("/login");
-    }
-  },
-});
-FlowRouter.route("/reports/yield", {
-  name: "yield-page",
-  action() {
-    if(Meteor.userId()) {
-      BlazeLayout.render("App_body", { 
-        main: "App_yield_page"
-      });
-    } else {
-      FlowRouter.go("/login");
-    }
-  },
-});
-FlowRouter.route("/item", {
-  name: "item-page",
-  action() {
-    if(Meteor.userId()) {
-      BlazeLayout.render("App_body", { 
-        main: "App_item_page"
+        main: "App_dataentry_item_page"
       });
     } else {
       FlowRouter.go("/login");
