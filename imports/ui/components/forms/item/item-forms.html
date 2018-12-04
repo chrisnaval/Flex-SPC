@@ -1,0 +1,245 @@
+<template name="Item_forms">
+    <div class="card item-custom">
+        <div class="item_forms_section">
+            <div class="item_forms_content">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="label-side">
+                            <div class="item-inputs">
+                                <div class="form-group">
+                                    <label>Item name</label>
+                                    <input type="text" class="form-control" name="item_name" id="item_name">
+                                    <a href="#" class="choose"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                            <!-- <div class="label-button">
+                                <a href="#" type="button" class="button item">Item</a>
+                            </div>
+                            <div class="label-button">
+                                <a href="#" type="button" class="button product">Product</a>
+                            </div>
+                            <div class="label-button">
+                                <a href="#" type="button" class="button parameter">Parameter</a>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="input-side">
+                            <form class="insert-item">
+                                {{#if showItemFields}}
+                                    <div class="item-inputs">
+                                        <div class="form-group">
+                                            <label>Item name</label>
+                                            <input type="text" class="form-control" name="item_name">
+                                        </div>
+                                    </div>
+                                {{/if}}
+                                {{#if showProductFields}}
+                                    <div class="product-inputs">
+                                        <div class="form-group">
+                                            <label>Product name</label>
+                                            <input type="text" class="form-control" name="product_name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Quantity</label>
+                                            <input type="number" class="form-control" name="quantity">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Tester Route</label>
+                                        </div>
+                                    </div>
+                                {{/if}}
+                                {{#if showParameterFields}}
+                                    <div class="parameter-inputs">
+                                        <div class="form-group">
+                                            <label>Parameter name</label>
+                                            <input type="text" class="form-control" name="param_name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Sample Size</label>
+                                            <input type="number" class="form-control" name="Sample_Size">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>X Bar Upper Control Limit</label>
+                                            <input type="number" class="form-control" name="xbarUCL">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>X Bar Lower Control Limit</label>
+                                            <input type="number" class="form-control" name="xbarLCL">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>X Bar Upper Specification Limit</label>
+                                            <input type="number" class="form-control" name="xbarUSL">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>X Bar Lower Specification Limit</label>
+                                            <input type="number" class="form-control" name="xbarLSL">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Range Upper Control Limit</label>
+                                            <input type="number" class="form-control" name="rangeUCL">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Range Lower Control Limit</label>
+                                            <input type="number" class="form-control" name="rangeLCL">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Range Upper Specification Limit</label>
+                                            <input type="number" class="form-control" name="rangeUSL">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Range Lower Specification Limit</label>
+                                            <input type="number" class="form-control" name="rangeLSL">
+                                        </div>
+                                    </div>
+                                {{/if}}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="submit-button">
+                    <button class="button align-right submit" type="submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="formModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Item</h5>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td class="lastname">Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td>Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td>Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td>Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td>Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td>Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td>Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td>Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td>Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td>Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td>Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td>Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td>Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td>Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td>Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Ian John</td>
+                            <td>Lauron</td>
+                            <td>Sangi Tabunoc Talisay City</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Jhosua</td>
+                            <td>Arda</td>
+                            <td>Ucma</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Jhosua</td>
+                            <td>Arda</td>
+                            <td>Ucma</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Jhosua</td>
+                            <td>Arda</td>
+                            <td>Ucma</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Jhosua</td>
+                            <td>Arda</td>
+                            <td>Ucma</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Jhosua</td>
+                            <td>Arda</td>
+                            <td>Ucma</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Jhosua</td>
+                            <td>Arda</td>
+                            <td>Ucma</td>
+                        </tr>
+                        <tr>
+                            <td class="firstname">Jhosua</td>
+                            <td>Arda</td>
+                            <td>Ucma</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal modal-default cancel">Cancel</button>
+                <button type="button" class="btn-modal modal-info select-data">Select</button>
+            </div>
+        </div>
+    </div>
+</template>

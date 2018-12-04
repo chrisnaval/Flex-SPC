@@ -2,10 +2,13 @@
 h4 {
     font-weight: normal;
     font-size: 26px;
+    display: inline-block;
 }
 h5 {
     font-weight: normal;
     font-size: 22px;
+    display: inline-block;
+    margin: 10px 0;
 }
 @keyframes fade {
     0% {
@@ -139,15 +142,16 @@ ol, ul {
     margin-top: 0;
     margin-bottom: 10px;
 }
-input[type="text"] {
+input {
     width: 100%;
+    border-radius: 0 !important;
 }
 label {
     width: 100%;
     display: block;
 }
 td, th {
-    padding: 8px;
+    padding: 10px;
     line-height: 1.4;
     vertical-align: middle;
 }
@@ -173,31 +177,37 @@ tbody>tr:hover {
     background-color: #92c755;
     border-color: #8bc34a;
     color: #fff;
+    text-decoration: none;
 }
 .button-danger {
     background-color:#f22314;
     border-color: #f22314;
-    color: #fff
+    color: #fff;
+    text-decoration: none;
 }
 .warning {
     background-color: #ffb300;
     border-color: #ffb300;
     color: #fff;
+    text-decoration: none;
 }
 .info {
     background-color: #03a9f4;
     border-color: #03a9f4;
     color: #fff;
+    text-decoration: none;
 }
 .mint {
     background-color: #26a69a;
     border-color: #26a69a;
     color: #fff;
+    text-decoration: none;
 }
 .danger {
     background-color: #f44336;
     border-color: #f44336;
     color: #fff;
+    text-decoration: none;
 }
 .icon {
     padding: 6px 2px;
@@ -274,7 +284,9 @@ tbody>tr:hover {
                 -ms-box-shadow: 0 1px 3px rgba(33,33,33,.2);
                 border-radius: 6px;
                 min-height: 400px;
-                #histograph, #candlestick {
+                margin-bottom: 40px;
+                #histograph, #candlestick,
+                #pareto {
                     height: 400px;
                 }
             }
@@ -296,7 +308,6 @@ tbody>tr:hover {
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
     animation-duration: 0.4s;
-    border-radius: 20px;
 }
 .modal {
     display: none; /* Hidden by default */
@@ -338,7 +349,7 @@ tbody>tr:hover {
     cursor: pointer;
 }
 .modal-header {
-    padding: 1px 30px;
+    padding: 10px 30px;
     border-bottom: 1px solid #e5e5e5;
     i.fa.fa-times {
         font-size: 20px;
@@ -364,6 +375,13 @@ tbody>tr:hover {
     background-color: transparent;
     color: #FF4A55;
     border: solid 2px #FF4A55;
+    padding: 12px;
+    cursor: pointer;
+}
+.modal-info {
+    background-color: transparent;
+    color: #03a9f4;
+    border: solid 2px #03a9f4;
     padding: 12px;
     cursor: pointer;
 }
