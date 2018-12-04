@@ -37,5 +37,8 @@ import '../../api/testers/methods.js';
 import '../../api/testers/server/publications.js';
 
 // User and User Details
-import '../../api/users/methods.js';
-import '../../api/users/server/publications.js';
+import '../../api/admin/auth/methods.js';
+import '../../api/admin/auth/server/publications.js';
+
+// Users Data Entry
+import '../../api/usersDataEntry/methods.js';
