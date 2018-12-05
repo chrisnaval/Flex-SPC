@@ -14,45 +14,6 @@ Meteor.methods({
       name: {
         type: String
       },
-      sampleSize: {
-        type: Number
-      },
-      xBarCtrlLimit: {
-        type: Object
-      },
-      'xBarCtrlLimit.xBarUpperCtrlLimit': {
-        type: Number,
-      },
-      'xBarCtrlLimit.xBarLowerCtrlLimit': {
-        type: Number,
-      },
-      xBarSpecLimit: {
-        type: Object
-      },
-      'xBarSpecLimit.xBarUpperSpecLimit': {
-        type: Number,
-      },
-      'xBarSpecLimit.xBarLowerSpecLimit': {
-        type: Number,
-      },
-      rChartCtrlLimit: {
-        type: Object
-      },
-      'rChartCtrlLimit.rUpperCtrlLimit': {
-        type: Number,
-      },
-      'rChartCtrlLimit.rLowerCtrlLimit': {
-        type: Number,
-      },
-      rChartSpecLimit: {
-        type: Object
-      },
-      'rChartSpecLimit.rUpperSpecLimit': {
-        type: Number,
-      },
-      'rChartSpecLimit.rLowerSpecLimit': {
-        type: Number,
-      },
     }).validate( parameterData );
 
     if (!this.userId) {
@@ -62,22 +23,6 @@ Meteor.methods({
     try {
       Parameters.insert({
         name: parameterData.name,
-        sampleSize: parameterData.sampleSize,
-        xBarCtrlLimit: parameterData.xBarCtrlLimit,
-        xBarUpperCtrlLimit: parameterData.xBarCtrlLimit, 
-        xBarLowerCtrlLimit: parameterData.xBarSpecLimit, 
-
-        xBarSpecLimit: parameterData.xBarSpecLimit,
-        xBarUpperSpecLimit: parameterData.rChartCtrlLimit, 
-        xBarLowerSpecLimit: parameterData.rChartSpecLimit, 
-
-        rChartCtrlLimit: parameterData.rChartCtrlLimit,
-        rUpperCtrlLimit: parameterData.rChartSpecLimit,
-        rLowerCtrlLimit: parameterData.rChartSpecLimit,
-
-        rChartSpecLimit: parameterData.rChartSpecLimit,
-        rUpperSpecLimit: parameterData.rChartSpecLimit,
-        rLowerSpecLimit: parameterData.rChartSpecLimit,
         createdAt: new Date(),
         deletedAt: null,
       });

@@ -9,7 +9,6 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Items } from './items.js';
 
 Meteor.methods({
-  
   'items.insert': function(itemData) {
     new SimpleSchema({
       name: {type: String},

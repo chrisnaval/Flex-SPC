@@ -6,9 +6,9 @@ export const UserDetails = new Mongo.Collection('userDetails');
 
 // Schema
 UserDetails.schema = new SimpleSchema({
-  userId: {
+  userName: {
     type: String,
-    optional: false,
+    optional: false
   },
   firstName: {
     type: String,
@@ -23,10 +23,6 @@ UserDetails.schema = new SimpleSchema({
     allowedValues: ['male', 'female'],
     optional: false,
   },
-  address: {
-    type: String,
-    optional: false,
-  },
   createdAt: {
     type: Date,
     autoValue: function() {
@@ -37,12 +33,6 @@ UserDetails.schema = new SimpleSchema({
     type: Date,
     autoValue: function() {
       return new Date()
-    }
-  },
-  deletedAt: {
-    type: Date,
-    autoValue: function() {
-      return null
     }
   },
 });
