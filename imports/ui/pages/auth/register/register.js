@@ -8,10 +8,13 @@ Template.Auth_register_page.events({
 
     const target = event.target;
 
-    // var fullName = target.fullName.value;
     var emailAddress = target.email.value;
     var password = target.password.value;
     var confirmPassword = target.confirmPassword.value;
+    var firstName = target.firstName.value;
+    var lastName = target.lastName.value;
+    var gender = target.gender.value;
+    var userName = target.userName.value;
 
     var emailAddressFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     
@@ -23,36 +26,39 @@ Template.Auth_register_page.events({
     } else if(password !== confirmPassword) {
       document.getElementById("error-msg").innerHTML = "Passwords don't match.";
     } else {
-      var username = emailAddress.split("@");
-      username = username[0];
 
-      // Creates a new record of user
+      var userData = {
+        email: emailAddress,
+        password: password,
+        profile: {
+          firstName: firstName,
+          lastName: lastName,
+          gender: gender,
+          userName: userName
+        }
+      }
+
+      var profile = {
+        firstName: firstName,
+        lastName: lastName,
+        gender: gender,
+        userName: userName
+      }
+
       Accounts.createUser({
         email: emailAddress,
-        username: username,
-        password: password
-      }, (error) => {
+        password: password,
+        profile: profile,
+      });
+      console.log(userData, profile)
+      Meteor.call('users.insert', userData, profile, function(error) {
         if(error) {
-          document.getElementById("error-msg").innerHTML = error.reason;
+          document.getElementById('error-msg').innerHTML = error.reason;
         } else {
-          // var userData = {
-          //   userId: Meteor.userId(),
-          //   fullName: fullName,
-          //   address: ""
-          // };
-
-          // // Insert user details
-          // Meteor.call('userDetails.insert', userData, (error) => {
-          //   if(error) {
-          //     alert(error.error);
-          //   } else {
-          //     FlowRouter.go("/");
-          //   }
-          // });
+          //
         }
       });
-
-      FlowRouter.go("/");
+      FlowRouter.go('/');
     }
   },
 });

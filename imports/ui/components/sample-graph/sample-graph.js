@@ -36,6 +36,8 @@ Template.Sample_graph.events({
     // testArray.push(tester);
     var parameterData = {
       name: target.name.value,
+    }
+    var parameterConfigData = {
       sampleSize: parseInt(target.sampleSize.value),
       xBarCtrlLimit: {
         xBarUpperCtrlLimit: parseInt(target.xBarUpperCtrlLimit.value),
@@ -55,8 +57,8 @@ Template.Sample_graph.events({
       }
     }
 
-    console.log(parameterData);
-    Meteor.call('parameters.insert', parameterData, function(error) {
+    console.log(parameterConfigData, parameterData);
+    Meteor.call('usersDataEntry.insert', parameterConfigData, parameterData, function(error) {
       if(error) {
         document.getElementById("error-msg").innerHTML = error.reason;
       } else {

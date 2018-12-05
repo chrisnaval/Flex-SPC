@@ -96,6 +96,18 @@ FlowRouter.route("/register", {
     }
   },
 });
+FlowRouter.route("/userProfile", {
+  name: "profile-page",
+  action() {
+    if(!Meteor.userId()) {
+      BlazeLayout.render("App_body", { 
+        main: "Auth_profile_page",
+      });
+    } else {
+      FlowRouter.go("/");
+    }
+  },
+});
 FlowRouter.route("/user", {
   name: "user-page",
   action() {
@@ -164,4 +176,3 @@ FlowRouter.notFound = {
     });
   },
 };
-
