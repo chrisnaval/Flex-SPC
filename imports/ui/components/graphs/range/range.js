@@ -68,7 +68,7 @@ Template.Range.rendered = function() {
         });
 
         chart.addListener("rendered", zoomChart);
-        zoomChart();t
+        zoomChart();
         function zoomChart() {
             chart.zoomToIndexes(chartData.length - 40, chartData.length - 1);
         }

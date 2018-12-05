@@ -74,9 +74,4 @@ Template.Item_forms.events({
         var modal = document.getElementById('formModal');
         modal.style.display = "none";
     },
-    'click window': function(event, temp){
-        var modal = document.getElementById('formModal');
-        modal.style.display = "none";
-    },
-
 });

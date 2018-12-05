@@ -19,6 +19,10 @@ h5 {
         opacity: 1;
     }
 }
+img {
+    width: 100%;
+    height: auto;
+}
 .gu-mirror {
     border: solid 3px #fff;
     padding: 5px;
@@ -274,20 +278,44 @@ tbody>tr:hover {
                 margin: 0 auto;
                 width: 92%;
                 transition: 2s;
-            }
-            .graphs {
-                overflow: hidden;
-                box-shadow: 0 1px 3px rgba(33,33,33,.2);
-                -webkit-box-shadow: 0 1px 3px rgba(33,33,33,.2);
-                -moz-box-shadow: 0 1px 3px rgba(33,33,33,.2);
-                -o-box-shadow: 0 1px 3px rgba(33,33,33,.2);
-                -ms-box-shadow: 0 1px 3px rgba(33,33,33,.2);
-                border-radius: 6px;
-                min-height: 400px;
-                margin-bottom: 40px;
-                #histograph, #candlestick,
-                #pareto {
-                    height: 400px;
+                a.choose {
+                    text-align: center;
+                    text-decoration: none;
+                    color: #6b737c;
+                }
+                a.choose:hover .choose-graphs-content {
+                    background-color: #21212133;
+                    transition:.3s;
+                }
+                a.choose:hover .choose-graphs-content .text-content {
+                    opacity: 1;
+                    transition:.3s;
+                }
+                .graphs {
+                    overflow: hidden;
+                    box-shadow: 0 1px 3px rgba(33,33,33,.2);
+                    -webkit-box-shadow: 0 1px 3px rgba(33,33,33,.2);
+                    -moz-box-shadow: 0 1px 3px rgba(33,33,33,.2);
+                    -o-box-shadow: 0 1px 3px rgba(33,33,33,.2);
+                    -ms-box-shadow: 0 1px 3px rgba(33,33,33,.2);
+                    border-radius: 6px;
+                    min-height: 400px;
+                    margin-bottom: 40px;
+                    #histograph, #candlestick,
+                    #pareto {
+                        height: 400px;
+                    }
+                }
+                .choose-graphs-content {
+                    background-color: #fff;
+                    i.fa.fa-plus-circle {
+                        color: #6b737c;
+                        font-size: 65px;
+                    }
+                    .text-content {
+                        padding-top: 140px;
+                        opacity:0;
+                    }
                 }
             }
         }
@@ -359,6 +387,38 @@ tbody>tr:hover {
 .modal-body {
     padding: 0px 30px;
     border-bottom: 1px solid #e5e5e5;
+    .image-content {
+        padding: 8px;
+        text-align: center;
+        cursor: pointer;
+        .sm-img {
+            max-height: 118px;
+            transition: .5s;
+        }
+        i.fa.fa-check {
+            position: absolute;
+            font-size: 45px;
+            left: 100px;
+            top: 44px;
+            color: #4CAF50;;
+            opacity:0;
+        }
+    }
+    .image-content:hover .sm-img {
+        opacity: 0.2;
+    }
+    .image-content:hover .fa.fa-check {
+        opacity: 1;
+    }
+    .selected {
+        .sm-img {
+            opacity: 0.2;
+        }
+        i.fa.fa-check {
+            opacity: 1;
+        }
+    }
+
 }
 .modal-footer {
     padding: 10px 16px;
