@@ -8,6 +8,6 @@ import { AppModule } from './appModule.js';
 
 Meteor.methods({
   'appModule.insert': function() {
-    
+
   },
 });
