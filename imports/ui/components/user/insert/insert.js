@@ -10,7 +10,6 @@ Template.role_insert.onCreated(function() {
   Tracker.autorun(function() {
     Meteor.subscribe('appModule.all');
   });
-  console.log('success');
 });
 
 Template.role_insert.helpers({
@@ -40,8 +39,6 @@ Template.role_insert.events({
       permissions: testArray
     };
 
-    console.log(roleData, testArray);
-
     Meteor.call('role.insert', roleData, function(error) {
       if(error) {
         document.getElementById('error-msg').innerHTML = error.reason;
@@ -54,7 +51,6 @@ Template.role_insert.events({
       roleId: roleData,
       permission: target.permission.value,
     };
-    console.log(typeof permissionData.permission);
 
     Meteor.call('permission.insert', permissionData, function(error) {
       if(error) {
@@ -63,6 +59,6 @@ Template.role_insert.events({
         //
       }
     });
-    // FlowRouter.go('/');
+     FlowRouter.go('/');
   },
 });
