@@ -26,9 +26,11 @@ johanbrook:publication-collector  # Test a Meteor publication by collecting its 
 accounts-password@1.5.1
 reactive-dict@1.2.1
 aldeed:simple-schema
+msavin:mongol
 
 
 fortawesome:fontawesome
 anychart:anychart
 em0ney:amcharts
 ahref:dragula
+session

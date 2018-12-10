@@ -10,22 +10,51 @@ import { PerSampleTestResults } from './perSampleTestResults.js';
 
 Meteor.methods({
   'perSampleTestResults.insert': function(perSampleTestResultData) {
+
+    // validation for perSampleTestResult collection
     new SimpleSchema({
-      sampleItems: {type: [String]},
-      paramId: {type: String},
-      paramConfigXBar: {type: Number},
-      paramConfigRChart: {type: Number},
-      paramConfig: {type: Number},
-      xBarResult: {type: Number},
-      rChartResult: {type: Number},
-      min: {type: Number},
-      firstQuartile: {type: Number},
-      median: {type: Number},
-      thirdQuartile: {type: Number},
-      max: {type: Number},
-      histogramPerSample: {type: Number}
+      sampleItems: {
+        type: [String]
+      },
+      paramId: {
+        type: String
+      },
+      paramConfigXBar: {
+        type: Number
+      },
+      paramConfigRChart: {
+        type: Number
+      },
+      paramConfig: {
+        type: Number
+      },
+      xBarResult: {
+        type: Number
+      },
+      rChartResult: {
+        type: Number
+      },
+      min: {
+        type: Number
+      },
+      firstQuartile: {
+        type: Number
+      },
+      median: {
+        type: Number
+      },
+      thirdQuartile: {
+        type: Number
+      },
+      max: {
+        type: Number
+      },
+      histogramPerSample: {
+        type: Number
+      }
     }).validate( perSampleTestResultData );
 
+    // make permission that only user can insert documents
     if (!this.userId) {
       throw new Meteor.Error(error.reason);
     }
@@ -53,22 +82,51 @@ Meteor.methods({
     }
   },
   'perSampleTestResults.update': function(perSampleTestResultsId, perSampleTestResultData) {
+
+    // validation for perSampleTestResult collection
     new SimpleSchema({
-      sampleItems: {type: [String]},
-      paramId: {type: String},
-      paramConfigXBar: {type: Number},
-      paramConfigRChart: {type: Number},
-      paramConfig: {type: Number},
-      xBarResult: {type: Number},
-      rChartResult: {type: Number},
-      min: {type: Number},
-      firstQuartile: {type: Number},
-      median: {type: Number},
-      thirdQuartile: {type: Number},
-      max: {type: Number},
-      histogramPerSample: {type: Number}
+      sampleItems: {
+        type: [String]
+      },
+      paramId: {
+        type: String
+      },
+      paramConfigXBar: {
+        type: Number
+      },
+      paramConfigRChart: {
+        type: Number
+      },
+      paramConfig: {
+        type: Number
+      },
+      xBarResult: {
+        type: Number
+      },
+      rChartResult: {
+        type: Number
+      },
+      min: {
+        type: Number
+      },
+      firstQuartile: {
+        type: Number
+      },
+      median: {
+        type: Number
+      },
+      thirdQuartile: {
+        type: Number
+      },
+      max: {
+        type: Number
+      },
+      histogramPerSample: {
+        type: Number
+      }
     }).validate( perSampleTestResultData );
 
+    // make permission that only specific user can modify their document
     const eidtPerSampleTestResults = PerSampleTestResults.findOne(perSampleTestResultsId);
 
     if (!eidtPerSampleTestResults.editableBy(this.userId)) {
@@ -102,12 +160,14 @@ Meteor.methods({
   },
   'perSampleTestResults.remove': function(perSampleTestResultsId) {
 
+    // make permission that only specific user can remove their document
     const deletePerSampleTestResults = PerSampleTestResults.findOne(perSampleTestResultsId);
 
     if (!deletePerSampleTestResults.editableBy(this.userId)) {
       throw new Meteor.Error(error.reason);
     }
 
+    // soft-delete
     PerSampleTestResults.update({ _id: perSampleTestResultsId }, {
         $set: {
           deletedAt: new Date(),

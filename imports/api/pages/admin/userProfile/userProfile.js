@@ -1,14 +1,14 @@
-// Definition of the User Details Collection
+// Definition of the User Profiles Collection
 
 import { Mongo } from 'meteor/mongo';
 
-export const UserDetails = new Mongo.Collection('userDetails');
+export const UserProfile = new Mongo.Collection('userProfile');
 
 // Schema
-UserDetails.schema = new SimpleSchema({
-  userName: {
+UserProfile.schema = new SimpleSchema({
+  userType: {
     type: String,
-    optional: false
+    optional: false,
   },
   firstName: {
     type: String,
@@ -18,9 +18,16 @@ UserDetails.schema = new SimpleSchema({
     type: String,
     optional: false,
   },
-  gender: {
+  address: {
     type: String,
-    allowedValues: ['male', 'female'],
+    optional: false,
+  },
+  userRole: {
+    type: Object,
+    optional: false,
+  },
+  isActive: {
+    type: Boolean,
     optional: false,
   },
   createdAt: {

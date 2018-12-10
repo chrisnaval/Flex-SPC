@@ -9,7 +9,6 @@ import '../../ui/pages/auth/register/register.js';
 import '../../ui/pages/dataentry/item/item.js';
 import '../../ui/pages/home/home.js';
 import '../../ui/pages/items/item.js';
-import '../../ui/pages/reports/pareto/pareto.js';
 import '../../ui/pages/users/list/list.js';
 import '../../ui/pages/users/permission/permission.js';
 import '../../ui/pages/users/profile/profile.js';
@@ -17,6 +16,9 @@ import '../../ui/pages/users/update/update.js';
 import '../../ui/pages/users/role/role-list.js';
 import '../../ui/pages/not-found/not-found.js';
 import '../../ui/components/sample-graph/sample-graph.js';
+
+//testing only
+import '../../ui/pages/users/insert/insert.js';
 
 // Set up all routes in the app
 FlowRouter.route("/", {
@@ -176,3 +178,16 @@ FlowRouter.notFound = {
     });
   },
 };
+
+FlowRouter.route("/user/insert", {
+  name: "user-insert-page",
+  action() {
+    if(Meteor.userId()) {
+      BlazeLayout.render("App_body", { 
+        main: "App_insert_page",
+      });
+    } else {
+      FlowRouter.go("/login");
+    }
+  },
+});

@@ -1,4 +1,4 @@
-// Definition of the Parameters Collection
+// Definition of the Parameter-Config Collection
 
 import { Mongo } from 'meteor/mongo';
 

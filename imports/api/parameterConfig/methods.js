@@ -1,4 +1,4 @@
-// Methods related to Parameter Config Collection
+// Methods related to Parameter-Config Collection
 
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
@@ -11,6 +11,8 @@ import { ParameterConfig } from './usersTransaction.js';
 
 Meteor.methods({
   'parameterConfig.insert': function(parameterConfigData) {
+
+    // validation for parameterConfig
     new SimpleSchema({
       sampleSize: {
         type: Number
@@ -55,6 +57,7 @@ Meteor.methods({
         type: Number,
       },
     }).validate( parameterConfigData );
+
     try {
       ParameterConfig.insert({
         sampleSize: parameterConfigData.sampleSize,
@@ -83,12 +86,14 @@ Meteor.methods({
   },
   'parametersConfig.remove': function(parameterConfigId) {
 
+    // make permission that only user can remove their documents
     const deleteParametersConfig = ParameterConfig.findOne(parameterConfigId);
 
     if (!deleteParametersConfig.editableBy(this.userId)) {
       throw new Meteor.Error(error.reason);
     }
 
+    // soft delete for parameterConfig collection
     ParameterConfig.update({ _id: parameterConfigId }, {
         $set: {
           deletedAt: new Date(),

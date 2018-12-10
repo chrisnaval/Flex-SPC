@@ -10,15 +10,30 @@ import { PerItemTestResults } from './perItemTestResults.js';
 
 Meteor.methods({
   'perItemTestResults.insert': function(perItemTestResultsData) {
+
+    // validation for perItemTestResult collection
     new SimpleSchema({
-      itemId: {type: String},
-      paramId: {type: String},
-      paramConfig: {type: Number},
-      paramConfigXBar: {type: Number},
-      paramConfigRChart: {type: Number},
-      xResult: {type: Number},
+      itemId: {
+        type: String
+      },
+      paramId: {
+        type: String
+      },
+      paramConfig: {
+        type: Number
+      },
+      paramConfigXBar: {
+        type: Number
+      },
+      paramConfigRChart: {
+        type: Number
+      },
+      xResult: {
+        type: Number
+      },
     }).validate( perItemTestResultsData );
 
+    // make permission that only user can insert documents
     if (!this.userId) {
       throw new Meteor.Error(error.reason);
     }
@@ -38,15 +53,30 @@ Meteor.methods({
     }
   },
   'perItemTestResults.update': function(perItemTestResultsId, perItemTestResultsData) {
+
+    // validation for perItemTestResult collection
     new SimpleSchema({
-      itemId: {type: String},
-      paramId: {type: String},
-      paramConfig: {type: Number},
-      paramConfigXBar: {type: Number},
-      paramConfigRChart: {type: Number},
-      xResult: {type: Number},
+      itemId: {
+        type: String
+      },
+      paramId: {
+        type: String
+      },
+      paramConfig: {
+        type: Number
+      },
+      paramConfigXBar: {
+        type: Number
+      },
+      paramConfigRChart: {
+        type: Number
+      },
+      xResult: {
+        type: Number
+      },
     }).validate( perItemTestResultsData );
 
+    // make permission that only specific user can modify their document
     const editPerItemTestResults = PerItemTestResults.findOne(perItemTestResultsId);
 
     if (!editPerItemTestResults.editableBy(this.userId)) {
@@ -73,12 +103,14 @@ Meteor.methods({
   },
   'perItemTestResults.remove': function(perItemTestResultsId) {
 
+    // make permission that only specific user can remove their document
     const deletePerItemTestResults = PerItemTestResults.findOne(perItemTestResultsId);
     
     if (!deletePerItemTestResults.editableBy(this.userId)) {
       throw new Meteor.Error(error.reason);
     }
 
+    // soft-delete
     PerItemTestResults.update({ _id: perItemTestResultsId }, {
         $set: {
           deletedAt: new Date(),

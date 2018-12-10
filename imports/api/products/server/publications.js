@@ -18,11 +18,14 @@ Meteor.publish('products.all', function() {
 });
 
 Meteor.publish('productsGetByName', function(name) {
+
+  // validation for product collection
   new SimpleSchema({
     name: {
       type: String 
     },
-  }).validate({ name });
+  }).validate( name );
+  
   if (!this.userId) {
     return this.ready();
   }
@@ -30,7 +33,13 @@ Meteor.publish('productsGetByName', function(name) {
   return Products.find({
     userId: this.userId
   }, {
-    fields: {name: 1}
+      _fields: { name: 1 },
+      get fields() {
+        return this._fields;
+      },
+      set fields(value) {
+        this._fields = value;
+      },
   });
 });
 

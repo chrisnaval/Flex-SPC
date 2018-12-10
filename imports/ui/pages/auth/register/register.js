@@ -14,6 +14,7 @@ Template.Auth_register_page.events({
     var firstName = target.firstName.value;
     var lastName = target.lastName.value;
     var gender = target.gender.value;
+    var role = target.role.value;
     var userName = target.userName.value;
 
     var emailAddressFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -30,11 +31,13 @@ Template.Auth_register_page.events({
       var userData = {
         email: emailAddress,
         password: password,
+        role: role,
         profile: {
           firstName: firstName,
           lastName: lastName,
           gender: gender,
-          userName: userName
+          userName: userName,
+          role:role
         }
       }
 
@@ -42,7 +45,8 @@ Template.Auth_register_page.events({
         firstName: firstName,
         lastName: lastName,
         gender: gender,
-        userName: userName
+        userName: userName,
+        role: role
       }
 
       Accounts.createUser({
