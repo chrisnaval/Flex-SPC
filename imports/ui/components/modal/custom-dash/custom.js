@@ -1,4 +1,5 @@
 import './custom.html';
+
 Template.Custom_dashboard_modal.events({
     'click .cancel': function(event, temp){
         var modal = document.getElementById('formModal');

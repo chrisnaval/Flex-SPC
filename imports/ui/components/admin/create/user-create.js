@@ -29,11 +29,13 @@ Template.User_create.events({
                     userName: target.username.value
                 }
             }
+
             Accounts.createUser({
                 email: target.email.value,
                 password: target.password.value,
                 profile: profile,
             });
+            
             Meteor.call('users.insert', userData, profile, function (error) {
                 if (error) {
                     document.getElementById('error-msg').innerHTML = error.reason;
