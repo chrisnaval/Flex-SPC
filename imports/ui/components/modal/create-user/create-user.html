@@ -1,0 +1,73 @@
+<template name="Create_user">
+    <div id="userModal" class="modal">
+        <form class="createuser-form" id="createuser-form">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close-usermodal align-right"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <h5>Add User</h5>
+                </div>
+                <div class="modal-body" style="height:280px;">
+                    <div class="modal-padding adduser">
+                        <p id="error-msg" style="color: #F16362;"></p>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Firstname</label>
+                                    <input type="text" class="form-control" name="firstname" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label>Lastname</label>
+                                <input type="text" class="form-control" name="lastname" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Gender</label>
+                                    <select name="gender" class="form-control" required>
+                                        <option value="male">Male</option>
+                                        <option value="male">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label>Email Address</label>
+                                <input type="text" class="form-control" name="email" required>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Role</label>
+                                    <select name="gender" class="form-control" required>
+                                        <option value="male">Admin</option>
+                                        <option value="male">User</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input type="text" class="form-control" name="username" required>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label>Password</label>
+                                <input type="password" class="form-control" name="password" required>
+                            </div>
+                            <div class="col-4">
+                                <label>Confirm Password</label>
+                                <input type="password" class="form-control" name="confirmPassword">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-modal modal-default cancel-usermodal">Cancel</button>
+                    <button type="submit" class="btn-modal modal-info">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</template>

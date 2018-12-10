@@ -17,6 +17,5 @@ Meteor.publish('usersById', function(userId, userName) {
 });
 
 Meteor.publish('users.all', function() {
-  return Meteor.users.find({_id: this.userId},
-    {fields: {'profile': 1}});
+  return Meteor.users.find({});
 });
