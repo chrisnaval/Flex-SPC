@@ -12,7 +12,7 @@ Meteor.publish('user.getById', function(userId) {
     userId: { 
       type: String 
     },
-  }).validate({ userId});
+  }).validate( userId );
 
   return UserProfile.find({}, {
     fields: { secretInfo: 0 }
@@ -20,6 +20,5 @@ Meteor.publish('user.getById', function(userId) {
 });
 
 Meteor.publish('users.all', function() {
-  return Meteor.users.find({_id: this.userId},
-    {fields: {'profile': 1}});
+  return Meteor.users.find({});
 });
