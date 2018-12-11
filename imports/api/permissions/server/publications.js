@@ -3,7 +3,6 @@
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-
 // Import(s)
 import { Permissions } from '../permissions.js';
 

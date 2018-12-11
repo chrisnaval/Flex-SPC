@@ -8,11 +8,21 @@ Meteor.startup(function () {
   //Seed Data for permission Collection
   if (Permissions.find().count() === 0) {
     [
-      {permission: "can update user"},
-      {permission: "can insert user"},
-      {permission: "can delete user"},
-      {permission: "can modify dashboard"},
-      {permission: "can hide the button in users"},
+      {
+        permission: "can update user"
+      },
+      {
+        permission: "can insert user"
+      },
+      {
+        permission: "can delete user"
+      },
+      {
+        permission: "can modify dashboard"
+      },
+      {
+        permission: "can hide the button in users"
+      },
     ].forEach(function(createPermissionData){
       Permissions.insert(createPermissionData);
     });  
@@ -27,11 +37,21 @@ Meteor.startup(function () {
   //Seed Data for appModule Collection
   if (AppModule.find().count() === 0) {
     [
-      {moduleName: "DashBoard"},
-      {moduleName: "User DashBoard"},
-      {moduleName: "Data Entry"},
-      {moduleName: "Issues"},
-      {moduleName: "Reports"},
+      {
+        moduleName: "DashBoard"
+      },
+      {
+        moduleName: "User DashBoard"
+      },
+      {
+        moduleName: "Data Entry"
+      },
+      {
+        moduleName: "Issues"
+      },
+      {
+        moduleName: "Reports"
+      },
     ].forEach(function(createModuleData){
       AppModule.insert(createModuleData);
     });

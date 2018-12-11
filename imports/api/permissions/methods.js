@@ -36,30 +36,4 @@ Meteor.methods({
       throw new Meteor.error('error', error.reason);
     }
   },
-  'permission.update': function(permissionId, permissionData) {
-    
-    // validation for permission collection
-    new SimpleSchema({
-      roleId: {
-        type: Object,
-      },
-      permission: {
-        type: String
-      },
-      functionName: {
-        type: String
-      },
-      moduleName: {
-        type: String
-      },
-    }).validate( permissionData );
-
-    try {
-      Permissions.update({
-
-      });
-    } catch(error) {
-
-    }
-  }
 });

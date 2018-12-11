@@ -74,47 +74,4 @@ Meteor.methods({
       }
     }
   },
-  'userProfile.update': function(userProfileId, profile) {
-
-   // validation for userProfile Collection
-   new SimpleSchema({
-    userType: {
-      type: String,
-    },
-    firstName: {
-      type: String,
-    },
-    lastName: {
-      type: String
-    },
-    address: {
-      type: String
-    },
-    userRole: {
-      type: String
-    },
-    isActive: {
-      type: Boolean
-    },
-  }).validate( profile );
-
-    //update the userProfile Colletion
-    const updateUserProfile = UserProfile.update({_id: userProfileId}, {
-      $set: {
-        userType: profile.userType,
-        firstName: profile.firstName,
-        lastName: profile.lastName,
-        address: profile.address,
-        gender: profile.gender,
-        userName: profile.userName,
-      }
-    });
-    
-    //update the user profile from user collection
-    Meteor.users.update(Meteor.userId(), {
-      $set: {
-        profile: updateUserProfile,
-      }
-    });
-  },
 });
