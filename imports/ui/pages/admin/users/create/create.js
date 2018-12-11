@@ -1,4 +1,4 @@
 import './create.html';
-import '../../../../layouts/headers/home/home-header.js';
-import '../../../../layouts/sidebar/sidebar.js';
+
+// Component(s)
 import '../../../../components/admin/create/user-create.js';

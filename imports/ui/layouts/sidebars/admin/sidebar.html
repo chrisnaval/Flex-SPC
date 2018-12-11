@@ -1,0 +1,43 @@
+<template name="Admin_sidebar">
+    <div class="page-sidebar">
+        <div class="navbar-logo">
+            <div class="logo">
+                <h1><a href="/admin">Flex</a></h1>
+            </div>
+        </div>
+        <div class="menus">
+            <div class="profile-wrap align-center">
+                <div class="profile-image">
+                    <img src="/img/1.png" class="img-md rounded" alt="profile">
+                </div>
+                <div class="profile-desc">
+                    <a href="/admin">
+                        <span class="align-right dropdown-toggle">
+                            <i class="dropdown-caret"></i>
+                        </span>
+                        <p class="mnp-name">Revelo Solutions, Inc.</p>
+                        <span class="small-desc">Administrator</span>
+                    </a>
+                </div>
+            </div>
+            <div class="menu-list">
+                <ul class="list-group" id="list-group">
+                    <li class="list-header">navigation</li>
+                    <li class="list">
+                        <a href="/admin" class="button side-toggle active"
+                            aria-expanded="false">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="/admin/user" class="side-toggle" aria-expanded="false">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span class="menu-title">Users</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</template>
