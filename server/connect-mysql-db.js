@@ -13,19 +13,8 @@ if(Meteor.isServer) {
             }
         });
 
-        // knex.from('test_results').select('*').orderBy('id')
-        //     .then((rows) => {
-        //         for(row of rows) {
-        //             console.log(row);
-        //         }
-        //     }).catch((error) => { 
-        //         console.log(error); throw err 
-        //     }).finally(() => {
-        //         knex.destroy();
-        // });
-
         async function getTestResults() {
-            return await knex.select('*')
+            return await knex.select('*').orderBy('id')
             .from('test_results')
             .limit(10);
         }
@@ -44,10 +33,5 @@ if(Meteor.isServer) {
                 });
             });
         }())
-        
-        // knex.select('*').from('test_results')
-        //     .then((rows) => {
-        //         console.log(rows);
-        //     });
     });
 }
