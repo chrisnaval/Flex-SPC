@@ -10,12 +10,15 @@ import { Parameters } from './parameters.js';
 
 Meteor.methods({
   'parameters.insert': function(parameterData) {
+
+    // validation for parameter collection
     new SimpleSchema({
       name: {
         type: String
       },
     }).validate( parameterData );
 
+    // make permission that only user can insert documents
     if (!this.userId) {
       throw new Meteor.Error(error.reason);
     }
@@ -32,6 +35,7 @@ Meteor.methods({
   },
   'Parameters.remove': function(parameterId) {
 
+    // make permission that only specific user can modify their doucments
     const deleteParameters = Parameters.findOne(parameterId);
 
     if (!deleteParameters.editableBy(this.userId)) {

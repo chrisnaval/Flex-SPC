@@ -12,9 +12,9 @@ Template.Auth_login_page.events({
 
     Meteor.loginWithPassword(emailAddress, password, (error) => {
       if(error) {
-        document.getElementById("error-msg").innerHTML = error.reason;
+        document.getElementById('error-msg').innerHTML = error.reason;
       } else {
-        FlowRouter.go("/");
+        FlowRouter.go('/');
       }
     });
   },

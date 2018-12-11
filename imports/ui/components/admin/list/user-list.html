@@ -1,0 +1,44 @@
+<template name="User_list">
+    <div class="user-list-section page">
+        <div class="content-wrap">
+            <div class="content">
+                <div class="card">
+                    <p id="error-msg" style="color: #F16362;"></p>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Firstname</th>
+                                <th>Lastname</th>
+                                <th>User Type</th>
+                                <th>Address</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{ #each users }}
+                            <tr>
+                                <td>{{ profile.firstName }}</td>
+                                <td>{{ profile.lastName }}</td>
+                                <td>{{ profile.userType }}</td>
+                                <td>{{ profile.address}}</td>
+                                <td>
+                                    <a href="/admin/user/update/{{_id}}" class="icon icon-info" title="Edit User">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="icon icon-danger remove-user" title="Remove User">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <a href="/admin/user/create" class="float-adduser">
+                    <i class="fa fa-plus my-float"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    {{> Delete_modal}}
+</template>

@@ -1,23 +1,59 @@
 // Fill the Db with sample data on startup
-// export const Parameters = new Mongo.Collection('parameters');
 
-import { Parameters } from '/imports/api/parameters/parameters.js';
+// import(s)
+import { Permissions } from '/imports/api/permissions/permissions.js';
+import { AppModule } from '/imports/api/appModule/appModule.js';
 
-Meteor.startup(() => {
-  if (Parameters.find().count() === 0) {
-    Parameters.insert({
-      _id: '23kl4j2k2j4lk2k',
-      name: 'electric',
-    });
+Meteor.startup(function () {
+  //Seed Data for permission Collection
+  if (Permissions.find().count() === 0) {
+    [
+      {
+        permission: "can update user"
+      },
+      {
+        permission: "can insert user"
+      },
+      {
+        permission: "can delete user"
+      },
+      {
+        permission: "can modify dashboard"
+      },
+      {
+        permission: "can hide the button in users"
+      },
+    ].forEach(function(createPermissionData){
+      Permissions.insert(createPermissionData);
+    });  
   }
-});
-
-Meteor.startup(function() {
+  //Seed Data for user Collection
   if (Meteor.users.find().count() === 0) {
     Accounts.createUser({
-      username: 'jhosua',
       email: 'admin@gmail.com',
-      password: 'secret'
+      password: 'secret',
+    });
+  }
+  //Seed Data for appModule Collection
+  if (AppModule.find().count() === 0) {
+    [
+      {
+        moduleName: "DashBoard"
+      },
+      {
+        moduleName: "User DashBoard"
+      },
+      {
+        moduleName: "Data Entry"
+      },
+      {
+        moduleName: "Issues"
+      },
+      {
+        moduleName: "Reports"
+      },
+    ].forEach(function(createModuleData){
+      AppModule.insert(createModuleData);
     });
   }
 });

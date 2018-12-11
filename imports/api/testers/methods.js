@@ -10,11 +10,18 @@ import { Testers } from './testers.js';
 
 Meteor.methods({
   'testers.insert': function(testerData) {
+
+    // validation for testers collection
     new SimpleSchema({
-      name: {type: String},
-      paramId: {type: String},
+      name: {
+        type: String
+      },
+      paramId: {
+        type: String
+      },
     }).validate( testerData );
 
+    // make permissio that only user can insert 
     if (!this.userId) {
       throw new Meteor.Error(error.reason);
     }
@@ -31,11 +38,18 @@ Meteor.methods({
     }
   },
   'testers.update': function(testersId, testerData) {
+
+    // validation for testers collection
     new SimpleSchema({
-      name: {type: String},
-      paramId: {type: String},
+      name: {
+        type: String
+      },
+      paramId: {
+        type: String
+      },
     }).validate( testerData );
 
+    // make permission that only specific user can modify their document
     const editTester = Testers.findOne(testersId);
 
     if (!editTester.editableBy(this.userId)) {
@@ -58,12 +72,14 @@ Meteor.methods({
   },
   'testers.remove': function(testersId) {
 
+    // make permission that only user can remove their collection
     const deleteTester = Items.findOne(testersId);
 
     if (!deleteTester.editableBy(this.userId)) {
       throw new Meteor.Error(error.reason);
     }
     
+    // soft-delete
     Testers.update({ _id: testersId }, {
         $set: {
           deletedAt: new Date(),

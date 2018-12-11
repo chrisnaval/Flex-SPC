@@ -2,7 +2,6 @@
 
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
-
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 // Collection
@@ -10,13 +9,24 @@ import { Items } from './items.js';
 
 Meteor.methods({
   'items.insert': function(itemData) {
+
+    // validation for item collection
     new SimpleSchema({
-      name: {type: String},
-      category: {type: String},
-      productId: {type: String},
-      productName: {type: String},
+      name: {
+        type: String
+      },
+      category: {
+        type: String
+      },
+      productId: {
+        type: String
+      },
+      productName: {
+        type: String
+      },
     }).validate( itemData );
 
+    // make permission that only user can insert documents
     if (!this.userId) {
       throw new Meteor.Error(error.reason);
     }
@@ -35,13 +45,24 @@ Meteor.methods({
     }
   },
   'items.update': function(itemId, itemData) {
+
+    // validation for item Collection
     new SimpleSchema({
-      name: {type: String},
-      category: {type: String},
-      productId: {type: String},
-      productName: {type: String},
+      name: {
+        type: String
+      },
+      category: {
+        type: String
+      },
+      productId: {
+        type: String
+      },
+      productName: {
+        type: String
+      },
     }).validate( itemData );
 
+    // make permission that only specific user can modify their document
     const editItem = Items.findOne(ItemId);
 
     if (!editItem.editableBy(this.userId)) {
@@ -66,12 +87,14 @@ Meteor.methods({
   },
   'items.remove': function(itemId) {
 
+    // make permission that only specific user can remove their document
     const deleteItem = Items.findOne(ItemId);
 
     if (!deleteItem.editableBy(this.userId)) {
       throw new Meteor.Error(error.reason);
     }
 
+    // soft-delete
     Items.update({ _id: itemId }, {
         $set: {
           deletedAt: new Date(),

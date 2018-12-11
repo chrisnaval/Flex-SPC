@@ -17,20 +17,3 @@ Meteor.publish('products.all', function() {
   });
 });
 
-Meteor.publish('productsGetByName', function(name) {
-  new SimpleSchema({
-    name: {
-      type: String 
-    },
-  }).validate({ name });
-  if (!this.userId) {
-    return this.ready();
-  }
-
-  return Products.find({
-    userId: this.userId
-  }, {
-    fields: {name: 1}
-  });
-});
-

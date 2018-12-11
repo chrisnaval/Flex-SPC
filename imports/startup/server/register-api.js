@@ -32,13 +32,21 @@ import '../../api/products/server/publications.js';
 import '../../api/roles/methods.js';
 import '../../api/roles/server/publications.js';
 
+// App Module
+import '../../api/appModule/methods.js';
+import '../../api/appModule/server/publications.js';
+
+// Role Permission
+import '../../api/rolePermissions/methods.js';
+import '../../api/rolePermissions/server/publications.js';
+
 // Testers
 import '../../api/testers/methods.js';
 import '../../api/testers/server/publications.js';
 
-// User and User Details
-import '../../api/admin/auth/methods.js';
-import '../../api/admin/auth/server/publications.js';
+// User and User Profile
+import '../../api/pages/admin/userProfile/methods.js';
+import '../../api/pages/admin/userProfile/server/publications.js';
 
 // Users Data Entry
-import '../../api/usersDataEntry/methods.js';
+import '../../api/pages/user/data-entry/methods.js';
