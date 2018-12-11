@@ -5,19 +5,19 @@ import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 // Collection(s)
-import { Parameters } from '/imports/api/parameters/parameters.js';
-import { ParameterConfig } from '/imports/api/parameterConfig/parameterConfig.js';
+import { Parameters } from '/imports/api/collections/parameters/parameters.js';
+import { ParameterConfig } from '/imports/api/collections/parameterConfig/parameterConfig.js';
 
 Meteor.methods({
-  'dataEntry.insert': function(parameterConfigData, parameterData) {
-    // Validation for Parameters Data from the client
+  'createConfiguration': function(parameterConfigData, parameterData) {
+    // Validation for Parameters Data from the Client
     new SimpleSchema({
       name: {
         type: String
       },
     }).validate( parameterData );
 
-    // Validation for ParameterConfig from the client
+    // Validation for ParameterConfig from the Client
     new SimpleSchema({
         sampleSize: {
             type: Number
@@ -91,7 +91,7 @@ Meteor.methods({
       throw new Meteor.Error('error', error.error);
     }
   },
-  'dataEntry.remove': function(parameterId, parameterConfigId) {
+  'removeConfiguration': function(parameterId, parameterConfigId) {
         try {
             // soft delete for parameter Collection
             Parameters.update({ _id: parameterId }, {

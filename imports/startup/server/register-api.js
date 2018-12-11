@@ -1,8 +1,8 @@
 // Register your API(s) here
 
 // AppModules
-import '../../api/collections/appModule/methods.js';
-import '../../api/collections/appModule/server/publications.js';
+import '../../api/collections/appModules/methods.js';
+import '../../api/collections/appModules/server/publications.js';
 
 // HistogramData
 import '../../api/collections/histogramData/methods.js';
@@ -49,4 +49,4 @@ import '../../api/collections/users/methods.js';
 import '../../api/collections/users/server/publications.js';
 
 // Configuration Setup
-import '../../api/pages/user/configuration/methods.js';
+import '../../api/pages/configuration/methods.js';
