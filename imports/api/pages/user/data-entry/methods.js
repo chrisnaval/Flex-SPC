@@ -2,20 +2,22 @@
 
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
-
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 // Collection
 import { Parameters } from '/imports/api/parameters/parameters.js';
-
 import { ParameterConfig } from '/imports/api/parameterConfig/parameterConfig.js';
 
 Meteor.methods({
-  'usersDataEntry.insert': function(parameterConfigData, parameterData) {
+  'dataEntry.insert': function(parameterConfigData, parameterData) {
+    // validation for parameters Collection
     new SimpleSchema({
-      name: {type: String},
+      name: {
+        type: String
+      },
     }).validate( parameterData );
 
+    // validation for parameterConfig Collection
     new SimpleSchema({
       sampleSize: {
         type: Number
@@ -59,14 +61,14 @@ Meteor.methods({
     }).validate( parameterConfigData );
 
     try {
-      //parameter insert method
+      // parameter insert method
       Parameters.insert({
         name: parameterData.name,
         createdAt: new Date(),
         deletedAt: null,
       });
 
-      //parameterconfig insert method
+      // parameterConfig insert method
       ParameterConfig.insert({
         sampleSize: parameterConfigData.sampleSize,
         xBarCtrlLimit: parameterConfigData.xBarCtrlLimit,
@@ -92,14 +94,16 @@ Meteor.methods({
       throw new Meteor.Error('error', error.error);
     }
   },
-  'usersDataEntry.remove': function(parameterId, parameterConfigId) {
+  'dataEntry.remove': function(parameterId, parameterConfigId) {
 
     try {
+      // soft delete for parameter Collection
       Parameters.update({ _id: parameterId }, {
         $set: {
           deletedAt: new Date(),
         }
       });
+      // soft delete for parameterConfig Collection
       ParameterConfig.update({ _id:parameterConfigId}, {
         $set: {
           deletedAt: new Date(),

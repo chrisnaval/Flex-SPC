@@ -11,11 +11,7 @@ Roles.schema = new SimpleSchema({
     optional: false,
   },
   permissions: {
-    type: Array,
-    optional: false,
-  },
-  'permissions.$': {
-    type: Object,
+    type: [Object],
     optional: false,
   },
 });

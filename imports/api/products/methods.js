@@ -10,10 +10,18 @@ import { Products } from './products.js';
 
 Meteor.methods({
   'products.insert': function(productData) {
+
+    // validation for product collection
     new SimpleSchema({
-      name: {type: String},
-      quantity: {type: Number},
-      testerRoute: {type: [Object]},
+      name: {
+        type: String
+      },
+      quantity: {
+        type: Number
+      },
+      testerRoute: {
+        type: [Object]
+      },
     }).validate( productData );
 
     try {
@@ -29,12 +37,21 @@ Meteor.methods({
     }
   },
   'products.update': function(productsId, productData) {
+
+    // validation for product collection
     new SimpleSchema({
-      name: {type: String},
-      quantity: {type: Number},
-      testerRoute: {type: [Object]},
+      name: {
+        type: String
+      },
+      quantity: {
+        type: Number
+      },
+      testerRoute: {
+        type: [Object]
+      },
     }).validate( productData );
 
+    // make permission that only user can modify their documents
     const editProduct = Products.findOne(productsId);
 
     if (!editProduct.editableBy(this.userId)) {
@@ -58,12 +75,14 @@ Meteor.methods({
   },
   'products.remove': function(productsId) {
 
+    // make permission that only user can remove their collection
     const deleteProduct = Products.findOne(productsId);
 
     if (!deleteProduct.editableBy(this.userId)) {
       throw new Meteor.Error(error.reason);
     }
 
+    // soft-delete
     Products.update({ _id: productsId }, {
         $set: {
           deletedAt: new Date(),

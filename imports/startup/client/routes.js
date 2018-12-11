@@ -98,3 +98,16 @@ FlowRouter.notFound = {
         });
     },
 };
+
+FlowRouter.route("/user/insert", {
+  name: "user-insert-page",
+  action() {
+    if(Meteor.userId()) {
+      BlazeLayout.render("App_body", { 
+        main: "App_insert_page",
+      });
+    } else {
+      FlowRouter.go("/login");
+    }
+  },
+});
