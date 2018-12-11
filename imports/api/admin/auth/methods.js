@@ -73,22 +73,25 @@ Meteor.methods({
       },
     }).validate( profile );
 
-    //update the user profile from User Details Colletion
-    const userProfile = UserDetails.update({_id: userDetailId}, {
-      $set: {
-        firstName: profile.firstName,
-        lastName: profile.lastName,
-        gender: profile.gender,
-        userName: profile.userName,
-      }
-    });
+    // //update the user profile from User Details Colletion
+    // const userProfile = UserDetails.update({_id: userDetailId}, {
+    //   $set: {
+    //     firstName: profile.firstName,
+    //     lastName: profile.lastName,
+    //     gender: profile.gender,
+    //     userName: profile.userName,
+    //   }
+    // });
     
-    //update the user profile from user collection
-    Meteor.users.update({_id: Meteor.userId()}, {
-      $set: {
-        profile: userProfile,
-      }
-    });
+    // //update the user profile from user collection
+    // Meteor.users.update({_id: Meteor.userId()}, {
+    //   $set: {
+    //     profile: userProfile,
+    //   }
+    // });
+
+    // }
+    
   },
   'userRemove': function (_id) {
     Meteor.users.update({_id: Meteor.userId()}, {
