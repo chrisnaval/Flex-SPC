@@ -26,12 +26,6 @@ Template.User_list.events({
 	'click .remove'(event, temp) {
 		event.preventDefault();
 		var _id = document.getElementById('delete_id').value;
-		Meteor.call('userRemove', _id, function (error) {
-			if (error) {
-				document.getElementById('error-msg').innerHTML = error.reason;
-			}
-		});
-
 		document.getElementById('delete_id').value = '';
 		var modal = document.getElementById('myModal');
 		modal.style.display = 'none';
