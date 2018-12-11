@@ -33,9 +33,6 @@ Meteor.methods({
       userRole: {
         type: String
       },
-      isActive: {
-        type: Boolean
-      },
     }).validate( profile );
 
     const userExists = Accounts.findUserByEmail(userData.email);
@@ -50,7 +47,6 @@ Meteor.methods({
         user.profile.lastName = options.lastName;
         user.profile.address = options.address;
         user.profile.userRole = options.userRole;
-        user.profile.isActive = options.isActive;
         return user;
       });
     }
@@ -62,7 +58,6 @@ Meteor.methods({
       lastName: profile.lastName,  
       address: profile.address,  
       userRole: profile.userRole,
-      isActive: profile.isActive,
       createdAt: new Date(),
       deletedAt: null,
     }

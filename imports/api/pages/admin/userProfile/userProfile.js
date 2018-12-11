@@ -26,10 +26,6 @@ UserProfile.schema = new SimpleSchema({
     type: Object,
     optional: false,
   },
-  isActive: {
-    type: Boolean,
-    optional: false,
-  },
   createdAt: {
     type: Date,
     autoValue: function() {
