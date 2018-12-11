@@ -6,33 +6,33 @@ Template.User_create.events({
         const target = event.target;
         var emailAddressFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-        if (!target.email.value.match(emailAddressFormat)) {
+        if (!target.Email.value.match(emailAddressFormat)) {
             document.getElementById('error-msg').innerHTML = 'Invalid email address format.';
-        } else if (target.password.value.trim().length < 8) {
+        } else if (target.Password.value.trim().length < 8) {
             document.getElementById('error-msg').innerHTML = 'Password must be at least 8 characters.';
-        } else if (target.password.value !== target.confirmPassword.value) {
+        } else if (target.Password.value !== target.confirmPassword.value) {
             document.getElementById('error-msg').innerHTML = 'Password dont match.';
         } else {
             var profile = {
-                firstName: target.firstname.value,
-                lastName: target.lastname.value,
-                gender: target.gender.value,
-                userName: target.username.value
+                firstName: target.FirsTname.value,
+                lastName: target.LastName.value,
+                userType: target.UserType.value,
+                address: target.Address.value
             }
             var userData = {
-                email: target.email.value,
-                password: target.password.value,
+                email: target.Email.value,
+                password: target.Password.value,
                 profile: {
-                    firstName: target.firstname.value,
-                    lastName: target.lastname.value,
-                    gender: target.gender.value,
-                    userName: target.username.value
+                    firstName: target.FirsTname.value,
+                    lastName: target.LastName.value,
+                    userType: target.UserType.value,
+                    address: target.Address.value
                 }
             }
 
             Accounts.createUser({
-                email: target.email.value,
-                password: target.password.value,
+                email: target.Email.value,
+                password: target.Password.value,
                 profile: profile,
             });
             

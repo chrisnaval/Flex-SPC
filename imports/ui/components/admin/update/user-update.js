@@ -15,22 +15,8 @@ Template.User_update.helpers({
 
 Template.User_update.events({
     'submit .user-update'(event) {
-        console.log('nice');
         event.preventDefault();
         const target = event.target;
-        // var profile = {
-        //     firstName = target.firstname.value;
-        //     lastName = target.lastname.value;
-        //     gender = target.gender.value;
-        //     userName = target.username.value;
-        // }
-        var _id = FlowRouter.getParam('_id');
-        console.log(_id, firstName, lastName, gender, userName);
-        Meteor.call('userProfile.update', _id, firstName, lastName, gender, userName, function (error) {
-            if(error) {
-                document.getElementById('error-msg').innerHTML = error.reason;
-            }
-        });
         FlowRouter.go('/admin/user');
     }
 });
