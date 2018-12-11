@@ -1,6 +1,7 @@
-import './user-create.html'
+import './forms.html';
 
-Template.User_create.events({
+//create user 
+Template.Users_create.events({
     'submit .createuser-form'(event) {
         event.preventDefault();
         const target = event.target;
@@ -44,4 +45,26 @@ Template.User_create.events({
         }
         FlowRouter.go('/admin/user');
     },
+});
+
+//user update
+Template.Users_update.onCreated(function () {
+    Meteor.subscribe('users.all');
+});
+
+Template.Users_update.helpers({
+    update_user() {
+        var user_id = FlowRouter.getParam('_id');
+        return Meteor.users.findOne({
+            _id: user_id,
+        });
+    },
+});
+
+Template.Users_update.events({
+    'submit .user-update'(event) {
+        event.preventDefault();
+        const target = event.target;
+        FlowRouter.go('/admin/user');
+    }
 });

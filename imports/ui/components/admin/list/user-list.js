@@ -1,11 +1,11 @@
 import './user-list.html';
 import '../../modal/delete/delete.js'
 
-Template.User_list.onCreated(function () {
+Template.Users_list.onCreated(function () {
 	Meteor.subscribe('users.all');
 });
 
-Template.User_list.helpers({
+Template.Users_list.helpers({
 	users() {
 		return Meteor.users.find({
 			deletedAt: null,
@@ -13,7 +13,7 @@ Template.User_list.helpers({
 	}
 });
 
-Template.User_list.events({
+Template.Users_list.events({
 	// modal toggle
 	'click .remove-user'(event, temp) {
 		event.preventDefault();
@@ -21,7 +21,6 @@ Template.User_list.events({
 		modal.style.display = 'block';
 		document.getElementById('delete_id').value = this._id;
 	},
-
 	//get ID and remove the user
 	'click .remove'(event, temp) {
 		event.preventDefault();
