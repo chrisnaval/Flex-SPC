@@ -22,10 +22,6 @@ UserProfile.schema = new SimpleSchema({
     type: String,
     optional: false,
   },
-  userRole: {
-    type: Object,
-    optional: false,
-  },
   createdAt: {
     type: Date,
     autoValue: function() {
