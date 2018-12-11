@@ -7,20 +7,20 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Username</th>
                                 <th>Firstname</th>
                                 <th>Lastname</th>
-                                <th>Gender</th>
+                                <th>User Type</th>
+                                <th>Address</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {{ #each users }}
                             <tr>
-                                <td>{{ profile.userName }}</td>
                                 <td>{{ profile.firstName }}</td>
                                 <td>{{ profile.lastName }}</td>
-                                <td>{{ profile.gender }}</td>
+                                <td>{{ profile.userType }}</td>
+                                <td>{{ profile.address}}</td>
                                 <td>
                                     <a href="/admin/user/update/{{_id}}" class="icon icon-info" title="Edit User">
                                         <i class="fa fa-edit"></i>
