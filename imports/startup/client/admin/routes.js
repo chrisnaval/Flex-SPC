@@ -3,7 +3,9 @@ import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
 // Component(s)
-import '../../../ui/components/dashboard/dashboard.js';
+import '../../../ui/components/admin/dashboard/dashboard.js';
+import '../../../ui/components/admin/forms/forms.js';
+import '../../../ui/components/admin/list/user-list.js';
 
 // Layout(s)
 import '../../../ui/layouts/body/body.js';
@@ -12,9 +14,6 @@ import '../../../ui/layouts/sidebars/admin/sidebar.js';
 
 // Page(s)
 import '../../../ui/pages/admin/home/home.js';
-import '../../../ui/pages/admin/users/list/list.js';
-import '../../../ui/pages/admin/users/update/update.js';
-import '../../../ui/pages/admin/users/create/create.js';
 
 // Set up all routes for the admin side
 FlowRouter.route('/admin', {
