@@ -1,8 +1,8 @@
-<template name="App_sidebar">
+<template name="Sidebar">
     <div class="page-sidebar">
         <div class="navbar-logo">
             <div class="logo">
-                <h1><a href="">Flex</a></h1>
+                <h1><a href="/">Flex</a></h1>
             </div>
         </div>
         <div class="menus">
@@ -11,12 +11,12 @@
                     <img src="/img/1.png" class="img-md rounded" alt="profile">
                 </div>
                 <div class="profile-desc">
-                    <a href="#profile-nav">
+                    <a href="/">
                         <span class="align-right dropdown-toggle">
                             <i class="dropdown-caret"></i>
                         </span>
                         <p class="mnp-name">Danilo Benolirao</p>
-                        <span class="small-desc">Admin</span>
+                        <span class="small-desc">User</span>
                     </a>
                 </div>
             </div>
@@ -31,20 +31,20 @@
                         </a>
                     </li>
                     <li class="list">
-                        <a href="/admin/user" class="side-toggle" aria-expanded="false">
+                        <a href="/reports" class="side-toggle" aria-expanded="false">
                             <i class="fa fa-user" aria-hidden="true"></i>
-                            <span class="menu-title">User</span>
+                            <span class="menu-title">Reports</span>
                         </a>
                     </li>
                     <li class="list">
-                        <a href="/dataentry" class="side-toggle" aria-expanded="false">
+                        <a href="/issue-tracker" class="side-toggle" aria-expanded="false">
                             <i class="fa fa-columns" aria-hidden="true"></i>
-                            <span class="menu-title">Testers</span>
+                            <span class="menu-title">Issue Tracker</span>
                             <i class="fa fa-arrow"></i>
                         </a>
                     </li>
                     <li class="list">
-                        <a href="/" class="side-toggle" aria-expanded="false">
+                        <a href="/configuration" class="side-toggle" aria-expanded="false">
                             <i class="fa fa-cog"></i>
                             <span class="menu-title">Configuration</span>
                             <span class="align-right dropdown-toggle">
@@ -52,9 +52,9 @@
                             </span>
                         </a>
                         <ul class="dropdown-wrap">
-                            <li><a href="#">Product</a></li>
-                            <li><a href="#">tester route</a></li>
-                            <li><a href="#">parameter</a></li>
+                            <li><a href="/">Product</a></li>
+                            <li><a href="/">Parameters</a></li>
+                            <li><a href="/">Testers</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -65,7 +65,7 @@
             <div class="dropdown-content">
                 <a href="/"><span>Dashboard</span></a>
                 <div class="divide"></div>
-                <a href="#"><span>Layouts</span></a>
+                <a href="/"><span>Layouts</span></a>
             </div>
         </div>
         <div class="thin-menu displaynone">
@@ -73,7 +73,7 @@
             <div class="dropdown-content">
                 <a href="/"><span>Dashboard</span></a>
                 <div class="divide"></div>
-                <a href="#"><span>Layouts</span></a>
+                <a href="/"><span>Layouts</span></a>
             </div>
         </div>
         <div class="thin-menu displaynone">
