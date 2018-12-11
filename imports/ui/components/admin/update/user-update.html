@@ -1,0 +1,48 @@
+<template name="User_update">
+    <div class="user_update_section page">
+        <div class="content-wrap">
+            <div class="content">
+                <div class="card">
+                    <form class="user-update">
+                        <div class="update_form">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Firstname</label>
+                                        <input type="text" class="form-control" name="firstname" value="{{update_user.profile.firstName}}">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Lastname</label>
+                                        <input type="text" class="form-control" name="lastname" value="{{update_user.profile.lastName}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Username</label>
+                                        <input type="text" class="form-control" name="username" value="{{update_user.profile.userName}}">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Gender</label>
+                                        <select class="form-control" name="gender">
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="submit-button align-right">
+                                <button class="button success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
