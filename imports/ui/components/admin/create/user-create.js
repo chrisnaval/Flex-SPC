@@ -10,11 +10,11 @@ Template.User_create.events({
             document.getElementById('error-msg').innerHTML = 'Invalid email address format.';
         } else if (target.Password.value.trim().length < 8) {
             document.getElementById('error-msg').innerHTML = 'Password must be at least 8 characters.';
-        } else if (target.Password.value !== target.confirmPassword.value) {
+        } else if (target.Password.value !== target.ConfirmPassword.value) {
             document.getElementById('error-msg').innerHTML = 'Password dont match.';
         } else {
             var profile = {
-                firstName: target.FirsTname.value,
+                firstName: target.FirstName.value,
                 lastName: target.LastName.value,
                 userType: target.UserType.value,
                 address: target.Address.value
@@ -23,7 +23,7 @@ Template.User_create.events({
                 email: target.Email.value,
                 password: target.Password.value,
                 profile: {
-                    firstName: target.FirsTname.value,
+                    firstName: target.FirstName.value,
                     lastName: target.LastName.value,
                     userType: target.UserType.value,
                     address: target.Address.value
