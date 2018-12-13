@@ -6,9 +6,39 @@ export const Configurations = new Mongo.Collection('configurations');
 
 // Schema
 Configurations.schema = new SimpleSchema({
+  product: {
+    type: Object,
+    optional: false
+  },
+  'product._id': {
+    type: String,
+  },
+  'product.name': {
+    type: String,
+  },
   sampleSize: {
     type: Number,
     optional: false,
+  },
+  tester: {
+    type: Object,
+    optional: false
+  },
+  'tester._id': {
+    type: String,
+  },
+  'tester.name': {
+    type: String,
+  },
+  parameter: {
+    type: Object,
+    optional: false
+  },
+  'parameter._id': {
+    type: String,
+  },
+  'parameter.name': {
+    type: String,
   },
   controlLimit: {
     type: Object,

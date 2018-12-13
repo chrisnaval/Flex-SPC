@@ -2,34 +2,45 @@
 
 // Collection(s)
 import { AppModules } from '/imports/api/collections/appModules/appModules.js';
+import { UserProfiles } from '/imports/api/collections/users/userProfiles.js';
 
 Meteor.startup(function () {
-  // Seed Data to Users Collection (Administrator)
+  // Create Administrator on Users Collection
   if(Meteor.users.find().count() === 0) {
+    var userProfileId = UserProfiles.insert({
+                        firstName: "Admin",
+                        lastName: "Administrator",
+                        address: "Cebu City",
+                        type: "admin",
+                        role: {}
+                      });
+    
+    var userProfile = UserProfiles.findOne(userProfileId);
+
     Accounts.createUser({
-      email: "admin@gmail.com",
-      password: "secret",
+      email: "admin@email.com",
+      password: "secret-passw0rt",
       username: "admin",
-      profile: {
-        userType: "admin",
-      }
+      profile: userProfile
     });
   }
   
-  // Seed Data for appModule Collection
+  // Seed Data to AppModules Collection
   if(AppModules.find().count() === 0) {
-    [
+    const modules = [
       {
-        moduleName: "Dashboard"
+        module: "Dashboard"
       },
       {
-        moduleName: "Reports"
+        module: "Reports"
       },
       {
-        moduleName: "Issue Tracker"
+        module: "Issue Tracker"
       },
-    ].forEach(function(createModuleData){
-      AppModules.insert(createModuleData);
+    ];
+
+    modules.forEach(element => {
+      AppModules.insert(element);
     });
   }
 });

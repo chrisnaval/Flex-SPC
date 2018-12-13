@@ -6,12 +6,12 @@ export const Roles = new Mongo.Collection('roles');
 
 // Schema
 Roles.schema = new SimpleSchema({
-  name: {
+  role: {
     type: String,
     optional: false,
   },
-  permissions: {
-    type: [Object],
+  description: {
+    type: String,
     optional: false,
   },
 });

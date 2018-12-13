@@ -6,20 +6,16 @@ export const Permissions = new Mongo.Collection('permissions');
 
 // Schema
 Permissions.schema = new SimpleSchema({
-  roleId: {
-    type: Object,
-    optional: false,
+  module: {
+    type: String,
+    optional: false
+  },
+  function: {
+    type: String,
+    optional: false
   },
   permission: {
     type: String,
-    optional: false,
-  },
-  functionName: {
-    type: String,
     optional: false
-  },
-  moduleName: {
-    type: String,
-    optional: false
-  },
+  }
 });

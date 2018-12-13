@@ -14,15 +14,15 @@ PerItemTestResults.schema = new SimpleSchema({
     type: Object,
     optional: false,
   },
-  'product.productId': {
+  'product._id': {
     type: String,
     optional: false,
   },
-  'product.productName': {
+  'product.name': {
     type: String,
     optional: false,
   },
-  'product.itemCode': {
+  itemCode: {
     type: String,
     optional: false,
   },
@@ -33,11 +33,15 @@ PerItemTestResults.schema = new SimpleSchema({
   'testResults.$': {
     type: Object,
   },
-  'testResults.$.testerId': {
+  'testResults.$.tester': {
+    type: Object,
+    optional: false,
+  },
+  'testResults.$.tester._id': {
     type: String,
     optional: false,
   },
-  'testResults.$.testerName': {
+  'testResults.$.tester.name': {
     type: String,
     optional: false,
   },
@@ -49,7 +53,7 @@ PerItemTestResults.schema = new SimpleSchema({
     type: Object,
     optional: false,
   },
-  'testResults.$.parameters.$.paramId': {
+  'testResults.$.parameters.$._id': {
     type: String,
     optional: false,
   },

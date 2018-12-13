@@ -10,10 +10,6 @@ Testers.schema = new SimpleSchema({
     type: String,
     optional: true,
   },
-  paramId: {
-    type: String,
-    optional: false,
-  },
   createdAt: {
     type: Date,
     autoValue: function() {
