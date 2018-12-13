@@ -10,26 +10,22 @@ Meteor.methods({
   'permission.insert': function(permissionData) {
     // Validation for Permissions Data from the Client
     new SimpleSchema({
-      roleId: {
-        type: Object,
+      module: {
+        type: String,
+      },
+      function: {
+        type: String,
       },
       permission: {
-        type: String
-      },
-      functionName: {
-        type: String
-      },
-      moduleName: {
-        type: String
-      },
+        type: String,
+      }
     }).validate( permissionData );
 
     try {
       Permissions.insert({
-        roleId: permissionData.roleId,
-        permission: permissionData.permission,
-        functionName: permissionData.functionName,
-        moduleName: permissionData.moduleName
+        module: permissionData.module,
+        function: permissionData.function,
+        permission: permissionData.permission
       });
     } catch(error) {
       throw new Meteor.error('error', error.reason);

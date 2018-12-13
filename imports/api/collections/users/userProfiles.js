@@ -18,18 +18,18 @@ UserProfiles.schema = new SimpleSchema({
     type: String,
     optional: false,
   },
-  userType: {
+  type: {
     type: String,
     optional: false,
   },
-  userRole: {
+  role: {
     type: Object,
     optional: false,
   },
-  'userRole.roleId': {
+  'role._id': {
     type: String,
   },
-  'userRole.role': {
+  'role.role': {
     type: String,
   },
   createdAt: {

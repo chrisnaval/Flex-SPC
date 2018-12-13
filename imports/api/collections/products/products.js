@@ -9,17 +9,6 @@ Products.schema = new SimpleSchema({
       type: String,
       optional: false,
   },
-  quantity: {
-      type: Number,
-      optional: false,
-  },
-  testerRoute: {
-    type: [Array],
-  },
-  'testerRoute': {
-    type: Object,
-    optional: true,
-  },
   createdAt: {
     type: Date,
     autoValue: function() {
