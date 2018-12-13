@@ -6,32 +6,55 @@ export const PerItemTestResults = new Mongo.Collection('perItemTestResults');
 
 // Schema
 PerItemTestResults.schema = new SimpleSchema({
-  itemId: {
+  assembly: {
     type: String,
     optional: false,
   },
-  paramId: {
+  product: {
+    type: Object,
+    optional: false,
+  },
+  'product.productId': {
     type: String,
     optional: false,
   },
-  paramConfig: {
-    type: Number,
-    decimal: true,
+  'product.productName': {
+    type: String,
     optional: false,
   },
-  paramConfigXBar: {
-    type: Number,
-    decimal: true,
+  'product.itemCode': {
+    type: String,
     optional: false,
   },
-  paramConfigRChart: {
-    type: Number,
-    decimal: true,
+  testResults: {
+    type: Array,
     optional: false,
   },
-  xResult: {
-    type: Number,
-    decimal: true,
+  'testResults.$': {
+    type: Object,
+  },
+  'testResults.$.testerId': {
+    type: String,
+    optional: false,
+  },
+  'testResults.$.testerName': {
+    type: String,
+    optional: false,
+  },
+  'testResults.$.parameters': {
+    type: Array,
+    optional: false,
+  },
+  'testResults.$.parameters.$': {
+    type: Object,
+    optional: false,
+  },
+  'testResults.$.parameters.$.paramId': {
+    type: String,
+    optional: false,
+  },
+  'testResults.$.parameters.$.paramName': {
+    type: String,
     optional: false,
   },
   createdAt: {
