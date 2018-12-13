@@ -6,10 +6,6 @@ export const UserProfiles = new Mongo.Collection('userProfiles');
 
 // Schema
 UserProfiles.schema = new SimpleSchema({
-  userType: {
-    type: String,
-    optional: false,
-  },
   firstName: {
     type: String,
     optional: false,
@@ -21,6 +17,20 @@ UserProfiles.schema = new SimpleSchema({
   address: {
     type: String,
     optional: false,
+  },
+  userType: {
+    type: String,
+    optional: false,
+  },
+  userRole: {
+    type: Object,
+    optional: false,
+  },
+  'userRole.roleId': {
+    type: String,
+  },
+  'userRole.role': {
+    type: String,
   },
   createdAt: {
     type: Date,
