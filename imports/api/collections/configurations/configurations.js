@@ -6,80 +6,64 @@ export const Configurations = new Mongo.Collection('configurations');
 
 // Schema
 Configurations.schema = new SimpleSchema({
-  product: {
-    type: Object,
-    optional: false
-  },
-  'product._id': {
-    type: String,
-  },
-  'product.name': {
-    type: String,
-  },
-  sampleSize: {
-    type: Number,
-    optional: false,
-  },
-  tester: {
-    type: Object,
-    optional: false
-  },
-  'tester._id': {
-    type: String,
-  },
-  'tester.name': {
-    type: String,
-  },
-  parameter: {
-    type: Object,
-    optional: false
-  },
-  'parameter._id': {
-    type: String,
-  },
-  'parameter.name': {
-    type: String,
-  },
-  controlLimit: {
-    type: Object,
-    optional: false,
-  },
-  'controlLimit.upper': {
-    type: Number,
-    optional: false,
-  },
-  'controlLimit.lower': {
-    type: Number,
-    optional: false,
-  },
-  specLimit: {
-    type: Object,
-    optional: false,
-  },
-  'specLimit.upper': {
-    type: Number,
-    optional: false,
-  },
-  'specLimit.lower': {
-    type: Number,
-    optional: false,
-  },
-  createdAt: {
-    type: Date,
-    autoValue: function() {
-      return new Date()
-    }
-  },
-  updatedAt: {
-    type: Date,
-    autoValue: function() {
-      return new Date()
-    }
-  },
-  deletedAt: {
-    type: Date,
-    autoValue: function() {
-      return null
-    }
-  },
+	product: {
+		type: Object,
+	},
+	'product._id': {
+		type: String,
+	},
+	'product.name': {
+		type: String,
+	},
+	sampleSize: {
+		type: Number,
+	},
+	tester: {
+		type: Object,
+	},
+	'tester._id': {
+		type: String,
+	},
+	'tester.name': {
+		type: String,
+	},
+	parameter: {
+		type: Object,
+	},
+	'parameter._id': {
+		type: String,
+	},
+	'parameter.name': {
+		type: String,
+	},
+	controlLimit: {
+		type: Object,
+	},
+	'controlLimit.upper': {
+		type: Number,
+	},
+	'controlLimit.lower': {
+		type: Number,
+	},
+	specLimit: {
+		type: Object,
+	},
+	'specLimit.upper': {
+		type: Number,
+	},
+	'specLimit.lower': {
+		type: Number,
+	},
+	createdAt: {
+		type: Date,
+		optional: true
+	},
+	updatedAt: {
+		type: Date,
+		optional: true
+	},
+	deletedAt: {
+		type: Date,
+		optional: true
+	},
 });

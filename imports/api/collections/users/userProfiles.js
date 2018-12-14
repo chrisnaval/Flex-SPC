@@ -8,23 +8,19 @@ export const UserProfiles = new Mongo.Collection('userProfiles');
 UserProfiles.schema = new SimpleSchema({
   firstName: {
     type: String,
-    optional: false,
   },
   lastName: {
     type: String,
-    optional: false,
   },
   address: {
     type: String,
-    optional: false,
   },
   type: {
     type: String,
-    optional: false,
+    optional: true,
   },
   role: {
     type: Object,
-    optional: false,
   },
   'role._id': {
     type: String,
@@ -34,14 +30,10 @@ UserProfiles.schema = new SimpleSchema({
   },
   createdAt: {
     type: Date,
-    autoValue: function() {
-      return new Date()
-    }
+    optional: true,
   },
   updatedAt: {
     type: Date,
-    autoValue: function() {
-      return new Date()
-    }
+    optional: true,
   },
 });

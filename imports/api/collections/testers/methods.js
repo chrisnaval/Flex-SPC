@@ -2,22 +2,15 @@
 
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 // Collection(s)
 import { Testers } from './testers.js';
 
 Meteor.methods({
   'testers.insert': function(testerData) {
-    // Validation for Testers Data from the Client
-    new SimpleSchema({
-      name: {
-        type: String
-      },
-      paramId: {
-        type: String
-      },
-    }).validate( testerData );
+	
+	// Validation of data from the client using schema
+	Testers.schema.validate(testerData);
 
     if(!this.userId) {
       throw new Meteor.Error(error.reason);
@@ -35,15 +28,9 @@ Meteor.methods({
     }
   },
   'testers.update': function(testersId, testerData) {
-    // Validation for Testers Data from the Client
-    new SimpleSchema({
-      name: {
-        type: String
-      },
-      paramId: {
-        type: String
-      },
-    }).validate( testerData );
+	
+	// Validation of data from the client using schema
+	Testers.schema.validate(testerData);
 
     const editTester = Testers.findOne(testersId);
 

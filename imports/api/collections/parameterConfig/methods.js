@@ -3,60 +3,13 @@
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-// meteor package for SimpleSchema
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-
 // Collection
 import { ParameterConfig } from './usersTransaction.js';
 
 Meteor.methods({
   'parameterConfig.insert': function(parameterConfigData) {
-
     // validation for parameterConfig
-    new SimpleSchema({
-      sampleSize: {
-        type: Number
-      },
-      parameters: {
-        type: Object
-      },
-      xBarCtrlLimit: {
-        type: Object
-      },
-      'xBarCtrlLimit.xBarUpperCtrlLimit': {
-        type: Number,
-      },
-      'xBarCtrlLimit.xBarLowerCtrlLimit': {
-        type: Number,
-      },
-      xBarSpecLimit: {
-        type: Object
-      },
-      'xBarSpecLimit.xBarUpperSpecLimit': {
-        type: Number,
-      },
-      'xBarSpecLimit.xBarLowerSpecLimit': {
-        type: Number,
-      },
-      rChartCtrlLimit: {
-        type: Object
-      },
-      'rChartCtrlLimit.rUpperCtrlLimit': {
-        type: Number,
-      },
-      'rChartCtrlLimit.rLowerCtrlLimit': {
-        type: Number,
-      },
-      rChartSpecLimit: {
-        type: Object
-      },
-      'rChartSpecLimit.rUpperSpecLimit': {
-        type: Number,
-      },
-      'rChartSpecLimit.rLowerSpecLimit': {
-        type: Number,
-      },
-    }).validate( parameterConfigData );
+    ParameterConfig.schema.validate(parameterConfigData);
 
     try {
       ParameterConfig.insert({
@@ -78,7 +31,7 @@ Meteor.methods({
         rUpperSpecLimit: parameterConfigData.rChartSpecLimit,
         rLowerSpecLimit: parameterConfigData.rChartSpecLimit,
         createdAt: new Date(),
-        deletedAt: null,
+        deletedAt: new Date(),
       });
     } catch(error) {
       throw new Meteor.Error('error', error.error);

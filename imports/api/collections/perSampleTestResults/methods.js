@@ -2,55 +2,15 @@
 
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 // Collection(s)
 import { PerSampleTestResults } from './perSampleTestResults.js';
 
 Meteor.methods({
     'perSampleTestResults.insert': function(perSampleTestResultData) {
-        // Validation for PerSampleTestResults Data from the Client
-        new SimpleSchema({
-            sampleItems: {
-                type: [String]
-            },
-            paramId: {
-                type: String
-            },
-            paramConfigXBar: {
-                type: Number
-            },
-            paramConfigRChart: {
-                type: Number
-            },
-            paramConfig: {
-                type: Number
-            },
-            xBarResult: {
-                type: Number
-            },
-            rChartResult: {
-                type: Number
-            },
-            min: {
-                type: Number
-            },
-            firstQuartile: {
-                type: Number
-            },
-            median: {
-                type: Number
-            },
-            thirdQuartile: {
-                type: Number
-            },
-            max: {
-                type: Number
-            },
-            histogramPerSample: {
-                type: Number
-            }
-        }).validate( perSampleTestResultData );
+
+        // Validation of data from the client using schema
+        PerSampleTestResults.schema.validate(perSampleTestResultData);
 
         if(!this.userId) {
             throw new Meteor.Error(error.reason);
@@ -79,48 +39,9 @@ Meteor.methods({
         }
     },
     'perSampleTestResults.update': function(perSampleTestResultsId, perSampleTestResultData) {
-        // Validation for PerSampleTestResults Data from the Client
-        new SimpleSchema({
-            sampleItems: {
-                type: [String]
-            },
-            paramId: {
-                type: String
-            },
-            paramConfigXBar: {
-                type: Number
-            },
-            paramConfigRChart: {
-                type: Number
-            },
-            paramConfig: {
-                type: Number
-            },
-            xBarResult: {
-                type: Number
-            },
-            rChartResult: {
-                type: Number
-            },
-            min: {
-                type: Number
-            },
-            firstQuartile: {
-                type: Number
-            },
-            median: {
-                type: Number
-            },
-            thirdQuartile: {
-                type: Number
-            },
-            max: {
-                type: Number
-            },
-            histogramPerSample: {
-                type: Number
-            }
-        }).validate( perSampleTestResultData );
+
+        // Validation of data from the client using schema
+        PerSampleTestResults.schema.validate(perSampleTestResultData);
 
         const eidtPerSampleTestResults = PerSampleTestResults.findOne(perSampleTestResultsId);
 

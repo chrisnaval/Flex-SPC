@@ -6,74 +6,57 @@ export const PerSampleTestResults = new Mongo.Collection('perSampleTestResults')
 
 // Schema
 PerSampleTestResults.schema = new SimpleSchema({
-  sampleItems: {
-    type: [String],
-    optional: false,
-  },
-  paramId: {
-    type: String,
-    optional: false,
-  },
-  paramConfigXBar: {
-    type: Number,
-    optional: false,
-  },
-  paramConfigRChart: {
-    type: Number,
-    optional: false
-  },
-  paramConfig: {
-    type: Number,
-    optional: false
-  },
-  xBarResult: {
-    type: Number,
-    optional: false,
-  },
-  rChartResult: {
-    type: Number,
-    optional: false
-  },
-  min: {
-    type: Number,
-    optional: false
-  },
-  firstQuartile: {
-    type: Number,
-    optional: false
-  },
-  median: {
-    type: Number,
-    optional: false
-  },
-  thirdQuartile: {
-    type: Number,
-    optional: false
-  },
-  max: {
-    type: Number,
-    optional: false
-  },
-  histogramPerSample: {
-    type: Number,
-    optional: true
-  },
-  createdAt: {
-    type: Date,
-    autoValue: function() {
-      return new Date()
-    }
-  },
-  updatedAt: {
-    type: Date,
-    autoValue: function() {
-      return new Date()
-    }
-  },
-  deletedAt: {
-    type: Date,
-    autoValue: function() {
-      return null;
-    }
-  },
+	sampleItems: {
+		type: [String],
+	},
+	paramId: {
+		type: String,
+	},
+	paramConfigXBar: {
+		type: Number,
+	},
+	paramConfigRChart: {
+		type: Number,
+	},
+	paramConfig: {
+		type: Number,
+	},
+	xBarResult: {
+		type: Number,
+
+	},
+	rChartResult: {
+		type: Number,
+	},
+	min: {
+		type: Number,
+	},
+	firstQuartile: {
+		type: Number,
+	},
+	median: {
+		type: Number,
+	},
+	thirdQuartile: {
+		type: Number,
+	},
+	max: {
+		type: Number,
+	},
+	histogramPerSample: {
+		type: Number,
+		optional: true
+	},
+	createdAt: {
+		type: Date,
+		optional: true
+	},
+	updatedAt: {
+		type: Date,
+		optional: true
+	},
+	deletedAt: {
+		type: Date,
+		optional: true
+	},
 });
