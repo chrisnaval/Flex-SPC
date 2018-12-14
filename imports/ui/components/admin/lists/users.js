@@ -1,5 +1,5 @@
-import './user-list.html';
-import '../../modal/delete/delete.js'
+import './users.html';
+import '../../modals/modals.js'
 
 Template.Users_list.onCreated(function () {
 	Meteor.subscribe('users.all');
@@ -14,15 +14,13 @@ Template.Users_list.helpers({
 });
 
 Template.Users_list.events({
-	// modal toggle
-	'click .remove-user'(event, temp) {
+	'click .remove-user'(event) {
 		event.preventDefault();
 		var modal = document.getElementById('myModal');
 		modal.style.display = 'block';
 		document.getElementById('delete_id').value = this._id;
 	},
-	//get ID and remove the user
-	'click .remove'(event, temp) {
+	'click .remove'(event) {
 		event.preventDefault();
 		var _id = document.getElementById('delete_id').value;
 		document.getElementById('delete_id').value = '';

@@ -4,8 +4,8 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 
 // Component(s)
 import '../../../ui/components/admin/dashboard/dashboard.js';
-import '../../../ui/components/admin/forms/forms.js';
-import '../../../ui/components/admin/list/user-list.js';
+import '../../../ui/components/admin/forms/users.js';
+import '../../../ui/components/admin/lists/users.js';
 
 // Layout(s)
 import '../../../ui/layouts/body/body.js';

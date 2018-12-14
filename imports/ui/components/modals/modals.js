@@ -1,7 +1,8 @@
-import './custom.html';
+import './modals.html';
 
-Template.Custom_dashboard_modal.events({
-    'click .cancel': function(event, temp){
+//custom dashboard
+Template.Custom_dashboard.events({
+    'click .cancel': function(){
         var modal = document.getElementById('formModal');
         var tar = document.getElementsByTagName('tr');
 
@@ -11,14 +12,26 @@ Template.Custom_dashboard_modal.events({
 
         modal.style.display = 'none';
     },
-    'click tr': function(event, temp){
+    'click tr': function(event){
         var tar = document.getElementsByTagName('tr');
 
         for (var i = 0; i < tar.length; i++) {
             tar[i].classList.remove('selected');
-         }
+        }
          
         const target = event.target.closest('tr');
         target.classList.add('selected');
     },
+});
+
+//delete modal
+Template.Delete_modal.events({
+    'click .close-toggle'(){
+        var modal = document.getElementById('myModal');
+        modal.style.display = 'none';
+    },
+    'click .cancel'(){
+        var modal = document.getElementById('myModal');
+        modal.style.display = 'none';
+    }
 });
