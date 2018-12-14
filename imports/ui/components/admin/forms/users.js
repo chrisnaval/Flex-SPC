@@ -1,6 +1,18 @@
 import './users.html';
 
-//create user 
+Template.Users_update.onCreated(function () {
+    Meteor.subscribe('users.all');
+});
+
+Template.Users_update.helpers({
+    getUserById() {
+        var userId = FlowRouter.getParam('_id');
+        return Meteor.users.findOne({
+            _id: userId,
+        });
+    },
+});
+
 Template.Users_create.events({
     'submit .createuser-form'(event) {
         event.preventDefault();
@@ -10,15 +22,16 @@ Template.Users_create.events({
         var lastName = target.lastName.value;
         var address = target.address.value;
         var emailAddress = target.emailAddress.value;
-        var password = target.emailAddress.value;
+        var password = target.password.value;
+        var confirmPassword = target.confirmPassword.value;
 
         var emailAddressFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-        if (!target.emailAddress.value.match(emailAddressFormat)) {
+        if(!emailAddress.match(emailAddressFormat)) {
             document.getElementById('error-msg').innerHTML = 'Invalid email address format.';
-        } else if (target.password.value.trim().length < 8) {
+        } else if(password.trim().length < 8) {
             document.getElementById('error-msg').innerHTML = 'Password must be at least 8 characters.';
-        } else if (target.password.value !== target.confirmPassword.value) {
+        } else if(password !== confirmPassword) {
             document.getElementById('error-msg').innerHTML = 'Password dont match.';
         } else {
             var username = emailAddress.split("@");
@@ -33,6 +46,7 @@ Template.Users_create.events({
                     role: "",
                 }
             };
+
             var userData = {
                 username: username,
                 emailAddress: emailAddress,
@@ -47,19 +61,5 @@ Template.Users_create.events({
             });
         }
         FlowRouter.go('/admin/user');
-    },
-});
-
-//user update
-Template.Users_update.onCreated(function () {
-    Meteor.subscribe('users.all');
-});
-
-Template.Users_update.helpers({
-    update_user() {
-        var user_id = FlowRouter.getParam('_id');
-        return Meteor.users.findOne({
-            _id: user_id,
-        });
     },
 });
