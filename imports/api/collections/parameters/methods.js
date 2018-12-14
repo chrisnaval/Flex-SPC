@@ -2,19 +2,15 @@
 
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 // Collection(s)
 import { Parameters } from './parameters.js';
 
 Meteor.methods({
     'parameters.insert': function(parameterData) {
-        // Validation for Parameter Collection
-        new SimpleSchema({
-            name: {
-                type: String
-            },
-        }).validate( parameterData );
+
+        // Validation of data from the client using schema
+        Parameters.schema.validate(parameterData);
 
         if(!this.userId) {
             throw new Meteor.Error(error.reason);
@@ -24,7 +20,7 @@ Meteor.methods({
             Parameters.insert({
                 name: parameterData.name,
                 createdAt: new Date(),
-                deletedAt: null,
+                deletedAt: new Date(),
             });
         } catch(error) {
             throw new Meteor.Error('error', error.error);

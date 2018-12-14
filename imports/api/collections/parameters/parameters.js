@@ -6,26 +6,19 @@ export const Parameters = new Mongo.Collection('parameters');
 
 // Schema
 Parameters.schema = new SimpleSchema({
-  name: {
-    type: String,
-    optional: false,
-  },
-  createdAt: {
-    type: Date,
-    autoValue: function() {
-      return new Date()
-    }
-  },
-  updatedAt: {
-    type: Date,
-    autoValue: function() {
-      return new Date()
-    }
-  },
-  deletedAt: {
-    type: Date,
-    autoValue: function() {
-      return null
-    }
-  },
+  	name: {
+    	type: String,
+  	},
+	createdAt: {
+		type: Date,
+		optional: true
+	},
+	updatedAt: {
+		type: Date,
+		optional: true
+	},
+	deletedAt: {
+		type: Date,
+		optional: true
+	},
 });

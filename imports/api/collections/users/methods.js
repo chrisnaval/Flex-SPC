@@ -8,62 +8,46 @@ import { check } from 'meteor/check';
 import { UserProfiles } from './userProfiles.js';
 
 Meteor.methods({
-  'users.insert': function(userData) {
-    // Validation for Users Data Entry
-    check(userData, {
-      email: String,
-      password: String,
-      profile: Object
-    });
+    'users.insert': function(userData) {
+        check(userData, {
+            username: String,
+            emailAddress: String,
+            password: String,
+            userProfile: Object
+        });
 
-    // Validation for User's Profile Data Entry
-    new SimpleSchema({
-      userType: {
-        type: String,
-      },
-      firstName: {
-        type: String,
-      },
-      lastName: {
-        type: String
-      },
-      address: {
-        type: String
-      },
-    }).validate( profile );
+        // Validation of data from the client using schema
+        UserProfiles.schema.validate(userData.userProfile);
 
-    const userExists = Accounts.findUserByEmail(userData.email);
+        try {
+            return UserProfiles.insert({
+                firstName: userData.userProfile.firstName,
+                lastName: userData.userProfile.lastName,
+                address: userData.userProfile.address,
+                type: "user",
+                role: {
+                    _id: userData.userProfile.role._id,
+                    role: userData.userProfile.role.role,
+                },
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            }, function(error, response) {
 
-    // Hook profile field passed from the client
-    if(!userExists) {
-      Accounts.onCreateUser(function(options, user) {
-        user.profile = options.profile || {};
-        
-        user.profile.userType = options.userType;
-        user.profile.firstName = options.firstName;
-        user.profile.lastName = options.lastName;
-        user.profile.address = options.address;
+                var userProfile = UserProfiles.findOne(response);
 
-        return user;
-      });
-    }
-
-    // User's Profile Data
-    var profile = {
-      userType: profile.userType,  
-      firstName: profile.firstName,  
-      lastName: profile.lastName,  
-      address: profile.address,  
-      createdAt: new Date(),
-      deletedAt: null,
-    }
-
-    if(Meteor.userId()) {
-      try {
-        UserProfiles.insert(profile);
-      } catch(error) {
-        throw new Meteor.Error('error', error.error);
-      }
-    }
-  },
+                if (error) {
+                    throw new Meteor.Error('error', error.error);
+                } else {
+                    Accounts.createUser({
+                        email: userData.emailAddress,
+                        password: userData.password,
+                        username: userData.username,
+                        profile: userProfile,
+                    });
+                }
+            });
+        } catch (error) {
+            throw new Meteor.Error('error', error.error);
+        }
+    },
 });

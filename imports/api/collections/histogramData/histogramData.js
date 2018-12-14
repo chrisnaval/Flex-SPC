@@ -6,38 +6,28 @@ export const HistogramData = new Mongo.Collection('histogramData');
 
 // Schema
 HistogramData.schema = new SimpleSchema({
-  bin: {
-    type: Number,
-    optional: false,
-  },
-  binRange: {
-    type: Number,
-    optional: false,
-  },
-  binCount: {
-    type: Number,
-    optional: false,
-  },
-  sampleId: {
-    type: String,
-    optional: false,
-  },
-  createdAt: {
-    type: Date,
-    autoValue: function() {
-      return new Date()
-    }
-  },
-  updatedAt: {
-    type: Date,
-    autoValue: function() {
-      return new Date()
-    }
-  },
-  deletedAt: {
-    type: Date,
-    autoValue: function() {
-      return null
-    }
-  },
+	bin: {
+		type: Number,
+	},
+	binRange: {
+		type: Number,
+	},
+	binCount: {
+		type: Number,
+	},
+	sampleId: {
+		type: String,
+	},
+	createdAt: {
+		type: Date,
+		optional: true,
+	},
+	updatedAt: {
+		type: Date,
+		optional: true,
+	},
+	deletedAt: {
+		type: Date,
+		optional: true,
+	},
 });

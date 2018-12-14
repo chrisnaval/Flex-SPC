@@ -6,77 +6,58 @@ export const PerItemTestResults = new Mongo.Collection('perItemTestResults');
 
 // Schema
 PerItemTestResults.schema = new SimpleSchema({
-  assembly: {
-    type: String,
-    optional: false,
-  },
-  product: {
-    type: Object,
-    optional: false,
-  },
-  'product._id': {
-    type: String,
-    optional: false,
-  },
-  'product.name': {
-    type: String,
-    optional: false,
-  },
-  itemCode: {
-    type: String,
-    optional: false,
-  },
-  testResults: {
-    type: Array,
-    optional: false,
-  },
-  'testResults.$': {
-    type: Object,
-  },
-  'testResults.$.tester': {
-    type: Object,
-    optional: false,
-  },
-  'testResults.$.tester._id': {
-    type: String,
-    optional: false,
-  },
-  'testResults.$.tester.name': {
-    type: String,
-    optional: false,
-  },
-  'testResults.$.parameters': {
-    type: Array,
-    optional: false,
-  },
-  'testResults.$.parameters.$': {
-    type: Object,
-    optional: false,
-  },
-  'testResults.$.parameters.$._id': {
-    type: String,
-    optional: false,
-  },
-  'testResults.$.parameters.$.paramName': {
-    type: String,
-    optional: false,
-  },
-  createdAt: {
-    type: Date,
-    autoValue: function() {
-      return new Date()
-    }
-  },
-  updatedAt: {
-    type: Date,
-    autoValue: function() {
-      return new Date()
-    }
-  },
-  deletedAt: {
-    type: Date,
-    autoValue: function() {
-      return null
-    }
-  },
+	assembly: {
+		type: String,
+	},
+	product: {
+		type: Object,
+	},
+	'product._id': {
+		type: String,
+	},
+	'product.name': {
+		type: String,
+	},
+	itemCode: {
+		type: String,
+	},
+	testResults: {
+		type: Array,
+	},
+	'testResults.$': {
+		type: Object,
+	},
+	'testResults.$.tester': {
+		type: Object,
+	},
+	'testResults.$.tester._id': {
+		type: String,
+	},
+	'testResults.$.tester.name': {
+		type: String,
+	},
+	'testResults.$.parameters': {
+		type: Array,
+	},
+	'testResults.$.parameters.$': {
+		type: Object,
+	},
+	'testResults.$.parameters.$._id': {
+		type: String,
+	},
+	'testResults.$.parameters.$.paramName': {
+		type: String,
+	},
+	createdAt: {
+		type: Date,
+		optional: true
+	},
+	updatedAt: {
+		type: Date,
+		optional: true
+	},
+	deletedAt: {
+		type: Date,
+		optional: true
+	},
 });

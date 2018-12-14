@@ -2,7 +2,6 @@
 
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 // Collection(s)
 import { Parameters } from '/imports/api/collections/parameters/parameters.js';
@@ -10,55 +9,10 @@ import { ParameterConfig } from '/imports/api/collections/parameterConfig/parame
 
 Meteor.methods({
   'createConfiguration': function(parameterConfigData, parameterData) {
-    // Validation for Parameters Data from the Client
-    new SimpleSchema({
-      name: {
-        type: String
-      },
-    }).validate( parameterData );
-
-    // Validation for ParameterConfig from the Client
-    new SimpleSchema({
-        sampleSize: {
-            type: Number
-        },
-        xBarCtrlLimit: {
-            type: Object
-        },
-        'xBarCtrlLimit.xBarUpperCtrlLimit': {
-            type: Number,
-        },
-        'xBarCtrlLimit.xBarLowerCtrlLimit': {
-            type: Number,
-        },
-        xBarSpecLimit: {
-            type: Object
-        },
-        'xBarSpecLimit.xBarUpperSpecLimit': {
-            type: Number,
-        },
-        'xBarSpecLimit.xBarLowerSpecLimit': {
-            type: Number,
-        },
-        rChartCtrlLimit: {
-            type: Object
-        },
-        'rChartCtrlLimit.rUpperCtrlLimit': {
-            type: Number,
-        },
-        'rChartCtrlLimit.rLowerCtrlLimit': {
-            type: Number,
-        },
-        rChartSpecLimit: {
-            type: Object
-        },
-        'rChartSpecLimit.rUpperSpecLimit': {
-            type: Number,
-        },
-        'rChartSpecLimit.rLowerSpecLimit': {
-            type: Number,
-        },
-    }).validate( parameterConfigData );
+    
+    // Validation of data from the client using schema
+    Parameters.schema.validate(parameterConfigData);
+    ParameterConfig.schema.validate(parameterData);
 
     try {
         Parameters.insert({
