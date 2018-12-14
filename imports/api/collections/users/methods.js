@@ -30,7 +30,6 @@ Meteor.methods({
                     role: userData.userProfile.role.role,
                 },
                 createdAt: new Date(),
-                updatedAt: new Date(),
             }, function(error, response) {
 
                 var userProfile = UserProfiles.findOne(response);
