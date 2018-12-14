@@ -1,4 +1,4 @@
-import './forms.html';
+import './users.html';
 
 //create user 
 Template.Users_create.events({

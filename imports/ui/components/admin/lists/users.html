@@ -1,3 +1,4 @@
+<!-- user list -->
 <template name="Users_list">
     <div class="user-list-section page">
         <div class="content-wrap">
@@ -16,20 +17,7 @@
                         </thead>
                         <tbody>
                             {{ #each users }}
-                            <tr>
-                                <td>{{ profile.firstName }}</td>
-                                <td>{{ profile.lastName }}</td>
-                                <td>{{ profile.userType }}</td>
-                                <td>{{ profile.address}}</td>
-                                <td>
-                                    <a href="/admin/user/update/{{_id}}" class="icon icon-info" title="Edit User">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a href="#" class="icon icon-danger remove-user" title="Remove User">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                                {{> User_data}}
                             {{/each}}
                         </tbody>
                     </table>
@@ -41,4 +29,22 @@
         </div>
     </div>
     {{> Delete_modal}}
+</template>
+
+<!-- list of user data-->
+<template name="User_data">
+    <tr>
+        <td>{{ profile.firstName }}</td>
+        <td>{{ profile.lastName }}</td>
+        <td>{{ profile.userType }}</td>
+        <td>{{ profile.address}}</td>
+        <td>
+            <a href="/admin/user/update/{{_id}}" class="icon icon-info" title="Edit User">
+                <i class="fa fa-edit"></i>
+            </a>
+            <a href="javascript:void(0)" class="icon icon-danger remove-user" title="Remove User">
+                <i class="fa fa-times"></i>
+            </a>
+        </td>
+    </tr>
 </template>

@@ -10,7 +10,15 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <a href="" class="choose">
+                        {{#if remove}}
+                            <a href="javascriot:void(0)" id="remove-graph">
+                                <div class="text-content">
+                                    <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                            {{> Template.dynamic template=chart }}
+                        {{/if}}
+                        <a href="" class="choose" id="choose">
                             <div class="graphs choose-graphs-content">
                                 <div class="text-content">
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -39,4 +47,5 @@
             </div>
         </div>
     </div>
+    {{> Custom_dashboard}}
 </template>
