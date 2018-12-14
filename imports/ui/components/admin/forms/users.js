@@ -5,40 +5,43 @@ Template.Users_create.events({
     'submit .createuser-form'(event) {
         event.preventDefault();
         const target = event.target;
+
+        var firstName = target.firstName.value;
+        var lastName = target.lastName.value;
+        var address = target.address.value;
+        var emailAddress = target.emailAddress.value;
+        var password = target.emailAddress.value;
+
         var emailAddressFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-        if (!target.Email.value.match(emailAddressFormat)) {
+        if (!target.emailAddress.value.match(emailAddressFormat)) {
             document.getElementById('error-msg').innerHTML = 'Invalid email address format.';
-        } else if (target.Password.value.trim().length < 8) {
+        } else if (target.password.value.trim().length < 8) {
             document.getElementById('error-msg').innerHTML = 'Password must be at least 8 characters.';
-        } else if (target.Password.value !== target.ConfirmPassword.value) {
+        } else if (target.password.value !== target.confirmPassword.value) {
             document.getElementById('error-msg').innerHTML = 'Password dont match.';
         } else {
-            var profile = {
-                firstName: target.FirstName.value,
-                lastName: target.LastName.value,
-                userType: target.UserType.value,
-                address: target.Address.value
-            }
-            var userData = {
-                email: target.Email.value,
-                password: target.Password.value,
-                profile: {
-                    firstName: target.FirstName.value,
-                    lastName: target.LastName.value,
-                    userType: target.UserType.value,
-                    address: target.Address.value
-                }
-            }
+            var username = emailAddress.split("@");
+            username = username[0];
 
-            Accounts.createUser({
-                email: target.Email.value,
-                password: target.Password.value,
-                profile: profile,
-            });
-            
-            Meteor.call('users.insert', userData, profile, function (error) {
-                if (error) {
+            var userProfile = {
+                firstName: firstName,
+                lastName: lastName,
+                address: address,
+                role: {
+                    _id: "",
+                    role: "",
+                }
+            };
+            var userData = {
+                username: username,
+                emailAddress: emailAddress,
+                password: password,
+                userProfile
+            };
+
+            Meteor.call('users.insert', userData, function(error) {
+                if(error) {
                     document.getElementById('error-msg').innerHTML = error.reason;
                 }
             });
@@ -59,12 +62,4 @@ Template.Users_update.helpers({
             _id: user_id,
         });
     },
-});
-
-Template.Users_update.events({
-    'submit .user-update'(event) {
-        event.preventDefault();
-        const target = event.target;
-        FlowRouter.go('/admin/user');
-    }
 });

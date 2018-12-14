@@ -1,59 +1,46 @@
 // Fill the Db with sample data on startup
 
-// import(s)
-import { Permissions } from '/imports/api/permissions/permissions.js';
-import { AppModule } from '/imports/api/appModule/appModule.js';
+// Collection(s)
+import { AppModules } from '/imports/api/collections/appModules/appModules.js';
+import { UserProfiles } from '/imports/api/collections/users/userProfiles.js';
 
 Meteor.startup(function () {
-  //Seed Data for permission Collection
-  if (Permissions.find().count() === 0) {
-    [
-      {
-        permission: "can update user"
-      },
-      {
-        permission: "can insert user"
-      },
-      {
-        permission: "can delete user"
-      },
-      {
-        permission: "can modify dashboard"
-      },
-      {
-        permission: "can hide the button in users"
-      },
-    ].forEach(function(createPermissionData){
-      Permissions.insert(createPermissionData);
-    });  
-  }
-  //Seed Data for user Collection
-  if (Meteor.users.find().count() === 0) {
+  // Create Administrator on Users Collection
+  if(Meteor.users.find().count() === 0) {
+    var userProfileId = UserProfiles.insert({
+                        firstName: "Admin",
+                        lastName: "Administrator",
+                        address: "Cebu City",
+                        type: "admin",
+                        role: {}
+                      });
+    
+    var userProfile = UserProfiles.findOne(userProfileId);
+
     Accounts.createUser({
-      email: 'admin@gmail.com',
-      password: 'secret',
+      email: "admin@email.com",
+      password: "secret-passw0rt",
+      username: "admin",
+      profile: userProfile
     });
   }
-  //Seed Data for appModule Collection
-  if (AppModule.find().count() === 0) {
-    [
+  
+  // Seed Data to AppModules Collection
+  if(AppModules.find().count() === 0) {
+    const modules = [
       {
-        moduleName: "DashBoard"
+        module: "Dashboard"
       },
       {
-        moduleName: "User DashBoard"
+        module: "Reports"
       },
       {
-        moduleName: "Data Entry"
+        module: "Issue Tracker"
       },
-      {
-        moduleName: "Issues"
-      },
-      {
-        moduleName: "Reports"
-      },
-    ].forEach(function(createModuleData){
-      AppModule.insert(createModuleData);
+    ];
+
+    modules.forEach(element => {
+      AppModules.insert(element);
     });
   }
 });
