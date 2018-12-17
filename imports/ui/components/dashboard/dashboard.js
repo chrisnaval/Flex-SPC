@@ -37,18 +37,17 @@ Template.Dashboard.events({
         const target = event.target.closest('.image-content');
         target.classList.add('selected');
     },
-    'click #remove-graph': function(event) {
+    'click #remove-graph': function() {
         Session.set('remove', false);
         var choose= document.getElementById('choose');
         choose.style.display = "block";
     },
-    'click .select-graph': function(event, template) {
+    'click .select-graph': function(event) {
         event.preventDefault();
         var data = document.getElementsByClassName("selected");
         var alt = data[0].getElementsByClassName("sm-img")[0].getAttribute("alt");
         var img = document.getElementsByClassName('image-content');
         var modal = document.getElementById('formModal');
-        var remove_graph = document.getElementById('remove-graph');
         modal.style.display = "none";
 
         for(var i = 0; i < img.length; i++) {
@@ -81,6 +80,7 @@ Template.Dashboard.events({
                 Session.set('remove', true);
                 break;
         }
+        
         var choose= document.getElementById('choose');
         choose.style.display = "none";
     },
