@@ -7,28 +7,18 @@ export const PerSampleTestResults = new Mongo.Collection('perSampleTestResults')
 // Schema
 PerSampleTestResults.schema = new SimpleSchema({
 	sampleItems: {
-		type: [String],
+		type: Array,
 	},
-	paramId: {
-		type: String,
-	},
-	paramConfigXBar: {
-		type: Number,
-	},
-	paramConfigRChart: {
-		type: Number,
-	},
-	paramConfig: {
-		type: Number,
+	'sampleItems.$': {
+		type: Object
 	},
 	xBarResult: {
 		type: Number,
-
 	},
 	rChartResult: {
 		type: Number,
 	},
-	min: {
+	minimum: {
 		type: Number,
 	},
 	firstQuartile: {
@@ -40,12 +30,8 @@ PerSampleTestResults.schema = new SimpleSchema({
 	thirdQuartile: {
 		type: Number,
 	},
-	max: {
+	maximum: {
 		type: Number,
-	},
-	histogramPerSample: {
-		type: Number,
-		optional: true
 	},
 	createdAt: {
 		type: Date,
