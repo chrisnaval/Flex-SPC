@@ -3,9 +3,9 @@
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-// Collection(s)
+// Mongo Collection(s)
 import { rolePermissions } from '../rolePermissions.js';
 
 Meteor.publish('rolePermissions.all', function() {
-  return rolePermissions.find({});
+    return rolePermissions.find({});
 });

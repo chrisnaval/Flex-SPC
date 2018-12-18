@@ -3,17 +3,16 @@
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-// Collection(s)
+// Mongo Collection(s)
 import { Configurations } from './configurations.js';
 
 Meteor.methods({
-    'configurations.create': function(configData) {
-
-        // Validation of data from the client using schema
+    'configurations.insert': function(configData) {
+        // Validation of Data from the Client using the Collection's Schema
         Configurations.schema.validate(configData);
 
         Configurations.insert({
-            //
+            // 
         });
     }
 });

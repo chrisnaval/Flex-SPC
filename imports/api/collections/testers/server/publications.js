@@ -3,9 +3,9 @@
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-// Collection(s)
+// Mongo Collection(s)
 import { Testers } from '../testers.js';
 
 Meteor.publish('testers.all', function() {
-  return Testers.find({});
+    return Testers.find({});
 });
