@@ -3,7 +3,7 @@
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-// Collection(s)
+// Mongo Collection(s)
 import { Configurations } from '../configurations.js';
 
 Meteor.publish('configurations.all', function() {

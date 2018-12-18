@@ -3,9 +3,9 @@
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-// Collection(s)
+// Mongo Collection(s)
 import { Roles } from '../roles.js';
 
 Meteor.publish('roles.all', function() {
-  return Roles.find({});
+    return Roles.find({});
 });

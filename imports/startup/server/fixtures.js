@@ -1,20 +1,21 @@
 // Fill the Db with sample data on startup
 
-// Collection(s)
+// Mongo Collection(s)
 import { AppModules } from '/imports/api/collections/appModules/appModules.js';
 import { UserProfiles } from '/imports/api/collections/users/userProfiles.js';
 
 Meteor.startup(function() {
-    // Create Administrator on Users Collection
+    // Create Super Admin
     if(Meteor.users.find().count() === 0) {
         var userProfileId = UserProfiles.insert({
             firstName: "Admin",
             lastName: "Administrator",
             address: "Cebu City",
+            contactNo: "",
             type: "admin",
             role: {
                 _id: "",
-                role: ""
+                role: "Administrator"
             }
         });
 
@@ -32,13 +33,19 @@ Meteor.startup(function() {
     if(AppModules.find().count() === 0) {
         const modules = [
             {
-                module: "Dashboard"
+                name: "Dashboard",
+                module: "dashboard",
+                type: "user"
             },
             {
-                module: "Reports"
+                name: "Reports",
+                module: "reports",
+                type: "user"
             },
             {
-                module: "Issue Tracker"
+                name: "Issue Tracker",
+                module: "issue-tracker",
+                type: "user"
             },
         ];
 
