@@ -14,6 +14,37 @@ Template.Users_create.helpers({
     }
 });
 
+//user update
+// Template.Users_update.onCreated(function () {
+//     Meteor.subscribe('users.all');
+// });
+
+// Template.Users_update.helpers({
+//     getUserById() {
+//         var userId = FlowRouter.getParam('_id');
+//         return Meteor.users.findOne({
+//             _id: userId,
+//         });
+//     },
+// });
+
+// Testing Only
+import { UserProfiles } from '/imports/api/collections/users/userProfiles.js';
+
+Template.Users_update.onCreated(function () {
+    Meteor.subscribe('usersProfile.all');
+});
+
+Template.Users_update.helpers({
+    'try': function() {
+        var userId = FlowRouter.getParam('_id');
+        return UserProfiles.findOne({ _id: userId });
+        // return Meteor.users.findOne({
+        //     _id: userId
+        // });
+    },
+});
+
 Template.Users_create.events({
     'click .choose'(event, template) {
         event.preventDefault();
@@ -84,16 +115,27 @@ Template.Users_create.events({
     },
 });
 
-//user update
-Template.Users_update.onCreated(function () {
-    Meteor.subscribe('users.all');
-});
-
-Template.Users_update.helpers({
-    getUserById() {
-        var userId = FlowRouter.getParam('_id');
-        return Meteor.users.findOne({
-            _id: userId,
+// Testing Only
+Template.Users_update.events({
+    'submit .user-update'(event) {
+        event.preventDefault();
+        const target = event.target;
+    
+        var firstName = target.firstName.value;
+        var lastName = target.lastName.value;
+        var address = target.address.value;
+    
+        var userData = {
+            firstName: firstName,
+            lastName: lastName,
+            address: address,
+        }
+        console.log(userData);
+        var userProfileId = FlowRouter.getParam("_id");
+        Meteor.call('users.update',userData, userProfileId, function(error) {
+            if(error) {
+                document.getElementById('error-msg').innerHTML = error.reason;
+            }
         });
-    },
+    }
 });
