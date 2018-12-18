@@ -34,7 +34,7 @@ Meteor.methods({
 
                 var userProfile = UserProfiles.findOne(response);
 
-                if (error) {
+                if(error) {
                     throw new Meteor.Error('error', error.error);
                 } else {
                     Accounts.createUser({
@@ -45,7 +45,7 @@ Meteor.methods({
                     });
                 }
             });
-        } catch (error) {
+        } catch(error) {
             throw new Meteor.Error('error', error.error);
         }
     },
