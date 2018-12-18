@@ -4,7 +4,7 @@ import { Template } from 'meteor/templating';
 import './header.html';
 
 Template.Header.events({
-  'click #logout': function(event) {
+  'click #logout'(event) {
     event.preventDefault();
     
 		Meteor.logout();

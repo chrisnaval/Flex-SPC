@@ -1,7 +1,7 @@
 import './header.html';
 
 Template.Admin_header.events({
-    'click #logout': function(event) {
+    'click #logout'(event) {
         event.preventDefault();
 
         Meteor.logout();
