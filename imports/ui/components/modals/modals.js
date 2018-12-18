@@ -2,7 +2,7 @@ import './modals.html';
 
 //custom dashboard
 Template.Custom_dashboard.events({
-    'click .cancel': function(){
+    'click .cancel'(){
         var modal = document.getElementById('formModal');
         var tar = document.getElementsByTagName('tr');
 
@@ -12,7 +12,7 @@ Template.Custom_dashboard.events({
 
         modal.style.display = 'none';
     },
-    'click tr': function(event){
+    'click tr'(event){
         var tar = document.getElementsByTagName('tr');
 
         for (var i = 0; i < tar.length; i++) {

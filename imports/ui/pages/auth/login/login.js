@@ -3,7 +3,7 @@ import './login.html';
 
 // Template Events
 Template.Auth_login_page.events({
-  'submit .login-form': function(event) {
+  'submit .login-form'(event) {
     event.preventDefault();
 
     const target = event.target;

@@ -23,11 +23,11 @@ Template.Dashboard.helpers({
 });
 
 Template.Dashboard.events({
-    'click .choose': function() {
+    'click .choose'() {
         var modal = document.getElementById('formModal');
         modal.style.display = 'block';
     },
-    'click .image-content': function(event) {
+    'click .image-content'(event) {
         var img = document.getElementsByClassName('image-content');
         
         for(var i = 0; i < img.length; i++) {
@@ -37,12 +37,12 @@ Template.Dashboard.events({
         const target = event.target.closest('.image-content');
         target.classList.add('selected');
     },
-    'click #remove-graph': function() {
+    'click #remove-graph'() {
         Session.set('remove', false);
         var choose= document.getElementById('choose');
         choose.style.display = "block";
     },
-    'click .select-graph': function(event) {
+    'click .select-graph'(event) {
         event.preventDefault();
         var data = document.getElementsByClassName("selected");
         var alt = data[0].getElementsByClassName("sm-img")[0].getAttribute("alt");
@@ -81,7 +81,7 @@ Template.Dashboard.events({
                 break;
         }
         
-        var choose= document.getElementById('choose');
+        var choose = document.getElementById('choose');
         choose.style.display = "none";
     },
 });

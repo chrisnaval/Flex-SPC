@@ -19,12 +19,12 @@ Template.Users_create.events({
         event.preventDefault();
         template.show.set('showtable', true);
     },
-    'click tr': function(event, template){
+    'click tr'(event, template){
         var tar = document.getElementsByTagName('tr');
 
-        for (var i = 0; i < tar.length; i++) {
+        for(var i = 0; i < tar.length; i++) {
             tar[i].classList.remove('selected');
-         }
+        }
 
         const target = event.target.closest('tr');
         target.classList.add('selected');
@@ -45,7 +45,6 @@ Template.Users_create.events({
         var emailAddress = target.emailAddress.value;
         var password = target.password.value;
         var confirmPassword = target.confirmPassword.value;
-
         var emailAddressFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
         if(!emailAddress.match(emailAddressFormat)) {
