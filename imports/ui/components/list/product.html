@@ -32,26 +32,16 @@
                             <th>Tester</th>
                             <th>Parameter</th>
                             <th>Upper Control Limit</th>
+                            <th>Lower Control Limit</th>
                             <th>Upper Spec Limit</th>
                             <th>Lower Spec Limit</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>iphone</td>
-                            <td>iphone</td>
-                            <td>iphone</td>
-                            <td>iphone</td>
-                            <td>iphone</td>
-                            <td>iphone</td>
-                            <td>iphone</td>
-                            <td>
-                                <a href="#" class="icon icon-danger remove-data" title="Remove data">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </td>
-                        </tr>
+                        {{#each config}}
+                            {{> Config_list}}
+                        {{/each}}
                     </tbody>
                 </table>
             </div>
@@ -61,4 +51,22 @@
         </div>
     </div>
     {{> Delete_modal}}
+</template>
+
+<template name="Config_list">
+    <tr>
+        <td>{{product.name}}</td>
+        <td>{{sampleSize}}</td>
+        <td>{{tester.name}}</td>
+        <td>{{parameter.name}}</td>
+        <td>{{controlLimit.upperControlLimit}}</td>
+        <td>{{controlLimit.lowerControlLimit}}</td>
+        <td>{{specLimit.upperSpecLimit}}</td>
+        <td>{{specLimit.lowerSpecLimit}}</td>
+        <td>
+            <a href="javascript:void(0)" class="icon icon-danger remove-data" title="Remove data">
+                <i class="fa fa-times"></i>
+            </a>
+        </td>
+    </tr>
 </template>

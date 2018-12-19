@@ -13,30 +13,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="parameter">Parameter 1</td>
-                        </tr>
-                        <tr>
-                            <td class="parameter">Parameter 2</td>
-                        </tr>
-                        <tr>
-                            <td class="parameter">Parameter 3</td>
-                        </tr>
-                        <tr>
-                            <td class="parameter">Parameter 4</td>
-                        </tr>
-                        <tr>
-                            <td class="parameter">Parameter 5</td>
-                        </tr>
-                        <tr>
-                            <td class="parameter">Parameter 6</td>
-                        </tr>
-                        <tr>
-                            <td class="parameter">Parameter 7</td>
-                        </tr>
-                        <tr>
-                            <td class="parameter">Parameter 98</td>
-                        </tr>
+                        {{#each parameters}}
+                            <tr>
+                                <td class="parameter" data-id="{{_id}}">{{name}}</td>
+                            </tr>
+                        {{/each}}
                     </tbody>
                 </table>
             </div>

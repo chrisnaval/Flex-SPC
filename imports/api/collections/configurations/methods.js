@@ -13,28 +13,13 @@ Meteor.methods({
         // Validation of Data from the Client using the Collection's Schema
         Configurations.schema.validate(configData);
 
-        return Configurations.insert({
+        Configurations.insert({
             product: configData.product,
-            _id: configData.productId,
-            name: configData.name,
             sampleSize: configData.sampleSize,
-
             tester: configData.tester,
-            _id: configData.parameterId,
-            name: configData.name,
-
             parameter: configData.parameter,
-            _id: configData.testersId,
-            name: configData.name,
-    
             controlLimit: configData.controlLimit,
-            upperControlLimit: configData.upperControlLimit,
-            lowerControlLimit: configData.lowerControlLimit,
-    
             specLimit: configData.specLimit,
-            upperSpecLimit: configData.upperSpecLimit,
-            lowerSpecLimit: configData.lowerSpecLimit,
-
             createdAt: new Date(),
         });
     },

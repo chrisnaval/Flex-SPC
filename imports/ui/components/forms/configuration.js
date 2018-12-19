@@ -1,8 +1,28 @@
 import './configuration.html'
 
-//component from modal
+//imports
 import '../../components/modals/modals.js'
 
+//api
+import { Products } from '/imports/api/collections/products/products.js';
+import { Testers } from '/imports/api/collections/testers/testers.js';
+
+Template.Configuration.onCreated(function() {
+    Meteor.subscribe('productsData');
+    Meteor.subscribe('testersData');
+});
+
+Template.Configuration.helpers({
+    parameters() {
+		return Parameters.find({});
+	},
+    products() {
+        return Products.find({});
+    },
+    testers() {
+		return Testers.find({});
+	},
+});
 //events
 Template.Configuration.events({
     'click .choose'(event) {
@@ -13,9 +33,11 @@ Template.Configuration.events({
     'click .select-data'(event) {
         event.preventDefault();
         var data = document.getElementsByClassName("selected");
-        var test = data[0].getElementsByClassName("parameter")[0].innerText;
+        var dataselected = data[0].getElementsByClassName("parameter")[0].innerText;
+        var dataid = data[0].getElementsByClassName("parameter")[0].getAttribute("data-id");
 
-        document.getElementById("parameter").value = test;
+        document.getElementById("parameter").value = dataselected;
+        document.getElementById("parameter_id").value = dataid;
 
         var modal = document.getElementById('parameterModal');
         modal.style.display = "none";
@@ -35,19 +57,51 @@ Template.Configuration.events({
         event.preventDefault();
         const target = event.target;
 
+        var selectProduct = document.getElementById('product');
+        var productId = selectProduct.selectedOptions[0].getAttribute("data-id");
+
+        var selectTester = document.getElementById('tester');
+        var testerId = selectTester.selectedOptions[0].getAttribute("data-id");
+
+        var parameter_id = target.parameter_id.value
         var product = target.product.value;
         var sampleSize = target.sampleSize.value;
         var tester = target.tester.value;
         var parameter = target.parameter.value;
         var upperControlLimit = target.upperControlLimit.value;
+        var lowerControlLimit = target.lowerControlLimit.value;
         var upperSpecLimit = target.upperSpecLimit.value;
         var lowerSpecLimit = target.lowerSpecLimit.value;
 
-        // Meteor.call('', userData, function(error) {
-        //     if(error) {
-        //         document.getElementById('error-msg').innerHTML = error.reason;
-        //     }
-        // });
+        var configData = {
+            product: {
+                _id: productId,
+        		name: product,
+            },
+            sampleSize: parseInt(sampleSize),
+            tester: {
+                _id: testerId,
+        		name: tester,
+            },
+            parameter: {
+                _id: parameter_id,
+        		name: parameter,
+            },
+            controlLimit: {
+                upperControlLimit: parseInt(upperControlLimit),
+                lowerControlLimit: parseInt(lowerControlLimit),
+            },
+            specLimit: {
+                upperSpecLimit: parseInt(upperSpecLimit),
+                lowerSpecLimit: parseInt(lowerSpecLimit),
+            },
+        }
+        
+        Meteor.call('configurations.insert', configData, function(error) {
+            if(error) {
+                document.getElementById('error-msg').innerHTML = error.reason;
+            }
+        });
         FlowRouter.go('/');
     }
 });
