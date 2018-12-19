@@ -39,19 +39,19 @@ Configurations.schema = new SimpleSchema({
 	controlLimit: {
 		type: Object,
 	},
-	'controlLimit.upper': {
+	'controlLimit.upperControlLimit': {
 		type: Number,
 	},
-	'controlLimit.lower': {
+	'controlLimit.lowerControlLimit': {
 		type: Number,
 	},
 	specLimit: {
 		type: Object,
 	},
-	'specLimit.upper': {
+	'specLimit.upperSpecLimit': {
 		type: Number,
 	},
-	'specLimit.lower': {
+	'specLimit.lowerSpecLimit': {
 		type: Number,
 	},
 	createdAt: {
