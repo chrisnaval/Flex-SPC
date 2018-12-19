@@ -2,20 +2,20 @@ import './modals.html';
 
 //custom dashboard
 Template.Custom_dashboard.events({
-    'click .cancel'(){
+    'click .cancel'() {
         var modal = document.getElementById('formModal');
-        var tar = document.getElementsByTagName('tr');
+        var tr = document.getElementsByTagName('tr');
 
-        for (var i = 0; i < tar.length; i++) {
-            tar[i].classList.remove('selected');
+        for(var i = 0; i < tr.length; i++) {
+            tr[i].classList.remove('selected');
          }
 
         modal.style.display = 'none';
     },
-    'click tr'(event){
+    'click tr'(event) {
         var tar = document.getElementsByTagName('tr');
 
-        for (var i = 0; i < tar.length; i++) {
+        for(var i = 0; i < tar.length; i++) {
             tar[i].classList.remove('selected');
         }
          
@@ -26,12 +26,26 @@ Template.Custom_dashboard.events({
 
 //delete modal
 Template.Delete_modal.events({
-    'click .close-toggle'(){
-        var modal = document.getElementById('myModal');
+    'click .close-toggle'() {
+        var modal = document.getElementById('deleteModal');
         modal.style.display = 'none';
     },
-    'click .cancel'(){
-        var modal = document.getElementById('myModal');
+    'click .cancel'() {
+        var modal = document.getElementById('deleteModal');
+        modal.style.display = 'none';
+    }
+});
+
+//Parameter
+Template.Parameter.events({
+    'click .cancel'() {
+        var modal = document.getElementById('parameterModal');
+        var tr = document.getElementsByTagName('tr');
+
+        for (var i = 0; i < tr.length; i++) {
+            tr[i].classList.remove('selected');
+         }
+
         modal.style.display = 'none';
     }
 });
