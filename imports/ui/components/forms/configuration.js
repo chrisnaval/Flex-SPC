@@ -1,17 +1,19 @@
-import './configuration.html'
+import './configuration.html';
 
-//imports
-import '../../components/modals/modals.js'
-
-//api
+// API(s)
 import { Products } from '/imports/api/collections/products/products.js';
 import { Testers } from '/imports/api/collections/testers/testers.js';
 
+// Components(s)
+import '../../components/modals/modals.js';
+
+// Created
 Template.Configuration.onCreated(function() {
     Meteor.subscribe('productsData');
     Meteor.subscribe('testersData');
 });
 
+// Helpers
 Template.Configuration.helpers({
     parameters() {
 		return Parameters.find({});
@@ -23,7 +25,8 @@ Template.Configuration.helpers({
 		return Testers.find({});
 	},
 });
-//events
+
+// Events
 Template.Configuration.events({
     'click .choose'(event) {
         event.preventDefault();
@@ -32,12 +35,12 @@ Template.Configuration.events({
     },
     'click .select-data'(event) {
         event.preventDefault();
-        var data = document.getElementsByClassName("selected");
-        var dataselected = data[0].getElementsByClassName("parameter")[0].innerText;
-        var dataid = data[0].getElementsByClassName("parameter")[0].getAttribute("data-id");
+        var data = document.getElementsByClassName('selected');
+        var dataselected = data[0].getElementsByClassName('parameter')[0].innerText;
+        var dataid = data[0].getElementsByClassName('parameter')[0].getAttribute('data-id');
 
-        document.getElementById("parameter").value = dataselected;
-        document.getElementById("parameter_id").value = dataid;
+        document.getElementById('parameter').value = dataselected;
+        document.getElementById('parameter_id').value = dataid;
 
         var modal = document.getElementById('parameterModal');
         modal.style.display = "none";
@@ -58,10 +61,10 @@ Template.Configuration.events({
         const target = event.target;
 
         var selectProduct = document.getElementById('product');
-        var productId = selectProduct.selectedOptions[0].getAttribute("data-id");
+        var productId = selectProduct.selectedOptions[0].getAttribute('data-id');
 
         var selectTester = document.getElementById('tester');
-        var testerId = selectTester.selectedOptions[0].getAttribute("data-id");
+        var testerId = selectTester.selectedOptions[0].getAttribute('data-id');
 
         var parameter_id = target.parameter_id.value
         var product = target.product.value;
