@@ -4,7 +4,8 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 
 // Component(s)
 import '../../../ui/components/admin/dashboard/dashboard.js';
-import '../../../ui/components/admin/forms/users.js';
+import '../../../ui/components/admin/forms/roles/roles.js';
+import '../../../ui/components/admin/forms/users/users.js';
 import '../../../ui/components/admin/lists/users.js';
 
 // Layout(s)
@@ -24,6 +25,21 @@ FlowRouter.route('/admin', {
                 header: 'Admin_header',
                 sidebar: 'Admin_sidebar',
                 main: 'Admin_dashboard'
+            });
+        } else {
+            FlowRouter.go('/login');
+        }
+    },
+});
+
+FlowRouter.route('/admin/role', {
+    name: 'admin-user-list-page',
+    action() {
+        if(Meteor.userId()) {
+            BlazeLayout.render('Admin_home', {
+                header: 'Admin_header',
+                sidebar: 'Admin_sidebar',
+                main: 'Roles_create'
             });
         } else {
             FlowRouter.go('/login');

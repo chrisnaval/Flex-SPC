@@ -4,6 +4,8 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 
 // Component(s)
 import '../../ui/components/dashboard/dashboard.js';
+import '../../ui/components/forms/configuration.js';
+import '../../ui/components/list/product.js';
 
 // Layout(s)
 import '../../ui/layouts/body/body.js';
@@ -24,6 +26,36 @@ FlowRouter.route('/', {
                 header: 'Header',
                 sidebar: 'Sidebar',
                 main: 'Dashboard'
+            });
+        } else {
+            FlowRouter.go('/login');
+        }
+    },
+});
+
+FlowRouter.route('/product', {
+    name: 'update-configuration-page',
+    action() {
+        if(Meteor.userId()) {
+            BlazeLayout.render('Home', {
+                header: 'Header',
+                sidebar: 'Sidebar',
+                main: 'Product_list'
+            });
+        } else {
+            FlowRouter.go('/login');
+        }
+    },
+});
+
+FlowRouter.route('/product/configuration', {
+    name: 'configuration-page',
+    action() {
+        if(Meteor.userId()) {
+            BlazeLayout.render('Home', {
+                header: 'Header',
+                sidebar: 'Sidebar',
+                main: 'Configuration'
             });
         } else {
             FlowRouter.go('/login');
