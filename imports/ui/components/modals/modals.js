@@ -1,5 +1,8 @@
 import './modals.html';
 
+//api imports
+import { Parameters } from '/imports/api/collections/parameters/parameters.js';
+
 //custom dashboard
 Template.Custom_dashboard.events({
     'click .cancel'() {
@@ -37,6 +40,16 @@ Template.Delete_modal.events({
 });
 
 //Parameter
+Template.Parameter.onCreated(function() {
+    Meteor.subscribe('parametersData');
+});
+
+Template.Parameter.helpers({
+    parameters() {
+        return Parameters.find({});
+    }
+})
+
 Template.Parameter.events({
     'click .cancel'() {
         var modal = document.getElementById('parameterModal');

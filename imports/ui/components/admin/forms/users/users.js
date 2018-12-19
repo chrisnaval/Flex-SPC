@@ -14,34 +14,16 @@ Template.Users_create.helpers({
     }
 });
 
-//user update
-// Template.Users_update.onCreated(function () {
-//     Meteor.subscribe('users.all');
-// });
-
-// Template.Users_update.helpers({
-//     getUserById() {
-//         var userId = FlowRouter.getParam('_id');
-//         return Meteor.users.findOne({
-//             _id: userId,
-//         });
-//     },
-// });
-
-// Testing Only
-import { UserProfiles } from '/imports/api/collections/users/userProfiles.js';
-
 Template.Users_update.onCreated(function () {
-    Meteor.subscribe('usersProfile.all');
+    Meteor.subscribe('users.all');
 });
 
 Template.Users_update.helpers({
-    'try': function() {
+    getUserById() {
         var userId = FlowRouter.getParam('_id');
-        return UserProfiles.findOne({ _id: userId });
-        // return Meteor.users.findOne({
-        //     _id: userId
-        // });
+        return Meteor.users.findOne({
+            _id: userId,
+        });
     },
 });
 
@@ -130,7 +112,6 @@ Template.Users_update.events({
             lastName: lastName,
             address: address,
         }
-        console.log(userData);
         var userProfileId = FlowRouter.getParam("_id");
         Meteor.call('users.update',userData, userProfileId, function(error) {
             if(error) {

@@ -6,17 +6,13 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import '../../ui/components/dashboard/dashboard.js';
 import '../../ui/components/forms/configuration.js';
 import '../../ui/components/list/product.js';
-
-// Testing Only
-import '../../ui/pages/configurationTesting/configurationTesting.js';
+import '../../ui/components/kanban/kanban.js';
 
 // Layout(s)
 import '../../ui/layouts/body/body.js';
 import '../../ui/layouts/headers/header.js';
 import '../../ui/layouts/sidebars/sidebar.js';
 
-// For testing Only
-import '../../ui/pages/auth/login/login.js';
 
 // Page(s)
 import '../../ui/pages/auth/login/login.js';
@@ -35,6 +31,19 @@ FlowRouter.route('/', {
             });
         } else {
             FlowRouter.go('/login');
+        }
+    },
+});
+
+FlowRouter.route('/login', {
+    name: 'login-page',
+    action() {
+        if(!Meteor.userId()) {
+            BlazeLayout.render('App_body', {
+                main: 'Auth_login_page',
+            });
+        } else {
+            FlowRouter.go('/');
         }
     },
 });
@@ -69,15 +78,17 @@ FlowRouter.route('/product/configuration', {
     },
 });
 
-FlowRouter.route('/login', {
-    name: 'login-page',
+FlowRouter.route('/kanban', {
+    name: 'kanban-page',
     action() {
-        if(!Meteor.userId()) {
-            BlazeLayout.render('App_body', {
-                main: 'Auth_login_page',
+        if(Meteor.userId()) {
+            BlazeLayout.render('Home', {
+                header: 'Header',
+                sidebar: 'Sidebar',
+                main: 'Kanban'
             });
         } else {
-            FlowRouter.go('/');
+            FlowRouter.go('/login');
         }
     },
 });
@@ -90,17 +101,3 @@ FlowRouter.notFound = {
         });
     },
 };
-
-// Testing Only
-FlowRouter.route('/configurationTesting', {
-    name: 'configuration-testing',
-    action() {
-        if(!Meteor.userId()) {
-            BlazeLayout.render('App_body', {
-                main: 'Configuration_Testing',
-            });
-        } else {
-            FlowRouter.go('/');
-        }
-    },
-});
