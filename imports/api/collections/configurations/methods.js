@@ -6,10 +6,8 @@ import { Meteor } from 'meteor/meteor';
 // Mongo Collection(s)
 import { Configurations } from './configurations.js';
 
-
 Meteor.methods({
     'configurations.insert': function(configData) {
-
         // Validation of Data from the Client using the Collection's Schema
         Configurations.schema.validate(configData);
 
@@ -25,7 +23,7 @@ Meteor.methods({
     },
     'configurations.remove': function(configDataId) {
         try {
-            // soft delete for configuration Collection
+            // Soft Delete for Configuration Collection
             Configurations.update({ _id: configDataId }, {
                 $set: {
                     deletedAt: new Date(),
