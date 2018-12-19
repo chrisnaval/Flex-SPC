@@ -2,10 +2,10 @@
 
 import { Mongo } from 'meteor/mongo';
 
-export const rolePermissions = new Mongo.Collection('rolePermissions');
+export const RolePermissions = new Mongo.Collection('rolePermissions');
 
 // Schema
-rolePermissions.schema = new SimpleSchema({
+RolePermissions.schema = new SimpleSchema({
 	role: {
 		type: Object,
 		optional: false

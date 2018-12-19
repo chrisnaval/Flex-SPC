@@ -24,16 +24,10 @@ Meteor.methods({
                 firstName: userData.userProfile.firstName,
                 lastName: userData.userProfile.lastName,
                 address: userData.userProfile.address,
-                type: "user",
-                role: {
-                    _id: userData.userProfile.role._id,
-                    role: userData.userProfile.role.role,
-                },
+                type: userData.type,
+                role: userData.userProfile.role,
                 createdAt: new Date(),
-            }, function(error, response) {
-
-                var userProfile = UserProfiles.findOne(response);
-
+            }, function(error, userProfileId) {
                 if(error) {
                     throw new Meteor.Error('error', error.error);
                 } else {
@@ -41,7 +35,7 @@ Meteor.methods({
                         email: userData.emailAddress,
                         password: userData.password,
                         username: userData.username,
-                        profile: userProfile,
+                        profile: UserProfiles.findOne(userProfileId),
                     });
                 }
             });
