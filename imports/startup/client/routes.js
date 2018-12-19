@@ -5,10 +5,16 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 // Component(s)
 import '../../ui/components/dashboard/dashboard.js';
 
+// Testing Only
+import '../../ui/pages/configurationTesting/configurationTesting.js';
+
 // Layout(s)
 import '../../ui/layouts/body/body.js';
 import '../../ui/layouts/headers/header.js';
 import '../../ui/layouts/sidebars/sidebar.js';
+
+// For testing Only
+import '../../ui/pages/auth/login/login.js';
 
 // Page(s)
 import '../../ui/pages/auth/login/login.js';
@@ -52,3 +58,17 @@ FlowRouter.notFound = {
         });
     },
 };
+
+// Testing Only
+FlowRouter.route('/configurationTesting', {
+    name: 'configuration-testing',
+    action() {
+        if(!Meteor.userId()) {
+            BlazeLayout.render('App_body', {
+                main: 'Configuration_Testing',
+            });
+        } else {
+            FlowRouter.go('/');
+        }
+    },
+});

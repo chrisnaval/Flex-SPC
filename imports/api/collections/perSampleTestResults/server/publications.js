@@ -3,7 +3,7 @@
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-// Collection(s)
+// Mongo Collection(s)
 import { PerSampleTestResults } from '../perSampleTestResults.js';
 
 Meteor.publish('perSampleTestResults.all', function() {

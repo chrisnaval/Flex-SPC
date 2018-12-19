@@ -3,9 +3,9 @@
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-// Collections(s)
+// Mongo Collections(s)
 import { HistogramData } from '../histogramData.js';
 
 Meteor.publish('histogramData.all', function() {
-  return HistogramData.find({});
+    return HistogramData.find({});
 });

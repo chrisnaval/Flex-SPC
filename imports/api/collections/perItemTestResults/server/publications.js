@@ -3,7 +3,7 @@
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-// Collection(s)
+// Mongo Collection(s)
 import { PerItemTestResults } from '../perItemTestResults.js';
 
 Meteor.publish('perItemTestResults.all', function() {

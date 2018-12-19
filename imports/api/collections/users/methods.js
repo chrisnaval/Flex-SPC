@@ -4,7 +4,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
-// Collection(s)
+// Mongo Collection(s)
 import { UserProfiles } from './userProfiles.js';
 
 Meteor.methods({
@@ -16,7 +16,7 @@ Meteor.methods({
             userProfile: Object
         });
 
-        // Validation of data from the client using schema
+        // Validation of Data from the Client using the Collection's Schema
         UserProfiles.schema.validate(userData.userProfile);
 
         try {

@@ -1,0 +1,64 @@
+<template name="Configuration_Testing">
+    <form class="insert-data">
+        <!-- dropdown -->
+        Product:<select>
+            {{#each products}}
+                <option data-id="{{_id}}" value="{{name}}">{{name}}</option><br>
+            {{/each}}
+        </select><br>
+        sampleSize:<input type="number" name="sampleSize"><br>
+        <!-- dropdown -->
+        Parameters:<select>
+            {{#each parameters}}
+                <option data-id="{{_id}}" value="{{name}}">{{name}}</option><br>
+            {{/each}}
+        </select><br>
+
+        <!-- lookup -->
+        Testers:<select>
+                {{#each testers}}
+                    <option data-id="{{_id}}" value="{{name}}">{{name}}</option><br>
+                {{/each}}
+            </select><br>
+
+        Upper Control Limit:<input type="number" name="upperControlLimit"><br>
+        Lower Control Limit:<input type="number" name="lowerControlLimit"><br>
+        Upper Spec Limit:<input type="number" name="upperSpecLimit"><br>
+        Lower Spec Limit:<input type="number" name="lowerSpecLimit"><br>
+        <input type="submit" name="submit" value="submit">
+        <p id="error-msg" style="color: #F16362;"></p>
+      </form>
+
+      <table border="1">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>sampleSize</th>
+                <th>Tester</th>
+                <th>Parameter</th>
+                <th>Upper Control Limit</th>
+                <th>Lower Control Limit</th>
+                <th>Upper Spec Limit</th>
+                <th>Lower Spec Limit</th>
+                <th>action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each configurations}}
+              <tr>
+                <td>{{product.name}}</td>
+                <td>{{sampleSize}}</td>
+                <td>{{tester.name}}</td>
+                <td>{{parameter.name}}</td>
+                <td>{{controlLimit.upper}}</td>
+                <td>{{controlLimit.lower}}</td>
+                <td>{{specLimit.upper}}</td>
+                <td>{{specLimit.lower}}</td>
+                <td>
+                    <button id="delete" class="btn-danger">Delete</button>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+  </template>

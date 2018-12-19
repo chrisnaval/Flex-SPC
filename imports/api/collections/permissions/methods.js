@@ -3,13 +3,12 @@
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-// Collection
+// Mongo Collection(s)
 import { Permissions } from './permissions.js';
 
 Meteor.methods({
   'permission.insert': function(permissionData) {
-
-    // Validation of data from the client using schema
+    // Validation of Data from the Client using the Collection's Schema
 	Permissions.schema.validate(permissionData);
 
     try {

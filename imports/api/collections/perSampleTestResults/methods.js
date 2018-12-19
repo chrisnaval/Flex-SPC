@@ -9,7 +9,7 @@ import { PerSampleTestResults } from './perSampleTestResults.js';
 Meteor.methods({
     'perSampleTestResults.insert': function(perSampleTestResultData) {
 
-        // Validation of data from the client using schema
+        // Validation of Data from the Client using the Collection's Schema
         PerSampleTestResults.schema.validate(perSampleTestResultData);
 
         if(!this.userId) {
@@ -40,7 +40,7 @@ Meteor.methods({
     },
     'perSampleTestResults.update': function(perSampleTestResultsId, perSampleTestResultData) {
 
-        // Validation of data from the client using schema
+        // Validation of Data from the Client using the Collection's Schema
         PerSampleTestResults.schema.validate(perSampleTestResultData);
 
         const eidtPerSampleTestResults = PerSampleTestResults.findOne(perSampleTestResultsId);

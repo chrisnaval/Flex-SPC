@@ -3,7 +3,7 @@
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-// Collection(s)
+// Mongo Collection(s)
 import { Permissions } from '../permissions.js';
 
 Meteor.publish('permissions.all', function() {

@@ -3,9 +3,14 @@
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-// Collection(s)
+// Mongo Collection(s)
 import { Testers } from '../testers.js';
 
-Meteor.publish('testers.all', function() {
-  return Testers.find({});
+Meteor.publish('testersData', function() {
+    return Testers.find({}, {
+        fields: {
+            _id: 1,
+            name: 1
+        }
+    });
 });
