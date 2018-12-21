@@ -1,34 +1,3 @@
-<!-- configuration modal -->
-<template name="Parameter">
-    <div id="parameterModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5>Parameter</h5>
-            </div>
-            <div class="modal-body" style="height: 400px;">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each parameters}}
-                            <tr>
-                                <td class="parameter" data-id="{{_id}}">{{name}}</td>
-                            </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-modal modal-default cancel">Cancel</button>
-                <button type="button" class="btn-modal modal-info select-data">Select</button>
-            </div>
-        </div>
-    </div>
-</template>
-
 <!-- custom dashboard modal -->
 <template name="Custom_dashboard">
     <div id="formModal" class="modal">
@@ -121,6 +90,99 @@
             <div class="modal-footer">
                 <button type="button" class="btn-modal modal-default cancel">Cancel</button>
                 <button type="button" class="btn-modal modal-danger remove">Delete</button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!--tester-->
+<template name="Tester">
+    <div id="testerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Tester</h5>
+            </div>
+            <div class="modal-body" style="height: 400px;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tester</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each testers}}
+                            <tr>
+                                <td class="tester" data-id="{{_id}}">{{name}}</td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal modal-default cancel">Cancel</button>
+                <button type="button" class="btn-modal modal-info select-tester">Select</button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- parameter modal -->
+<template name="Parameter">
+    <div id="parameterModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Parameter</h5>
+            </div>
+            <div class="modal-body" style="height: 400px;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each parameters}}
+                            <tr>
+                                <td class="parameter" data-id="{{_id}}">{{name}}</td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal modal-default cancel">Cancel</button>
+                <button type="button" class="btn-modal modal-info select-params">Select</button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!--product-->
+<template name="Product">
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Parameter</h5>
+            </div>
+            <div class="modal-body" style="height: 400px;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each products}}
+                            <tr>
+                                <td class="product" data-id="{{_id}}">{{name}}</td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal modal-default cancel">Cancel</button>
+                <button type="button" class="btn-modal modal-info select-product">Select</button>
             </div>
         </div>
     </div>
