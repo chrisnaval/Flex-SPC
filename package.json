@@ -8,6 +8,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "bcrypt": "^3.0.2",
+    "cron": "^1.6.0",
     "import": "0.0.6",
     "knex": "^0.16.2",
     "meteor-node-stubs": "^0.4.1",
