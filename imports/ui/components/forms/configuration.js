@@ -1,9 +1,5 @@
 import './configuration.html';
 
-// API(s)
-import { Testers } from '/imports/api/collections/testers/testers.js';
-import { Products } from '/imports/api/collections/products/products.js';
-
 // Components(s)
 import '../../components/modals/modals.js';
 
