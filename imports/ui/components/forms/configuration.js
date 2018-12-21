@@ -28,12 +28,32 @@ Template.Configuration.helpers({
 
 // Events
 Template.Configuration.events({
-    'click .choose'(event) {
+    //tester
+    'click .chooseTester'(event) {
+        event.preventDefault();
+        var modal = document.getElementById('testerModal');
+        modal.style.display = "block";
+    },
+    'click .select-tester'(event) {
+        event.preventDefault();
+        var data = document.getElementsByClassName('selected');
+        var dataselected = data[0].getElementsByClassName('tester')[0].innerText;
+        var dataid = data[0].getElementsByClassName('tester')[0].getAttribute('data-id');
+
+        document.getElementById('tester').value = dataselected;
+        document.getElementById('tester_id').value = dataid;
+
+        var modal = document.getElementById('testerModal');
+        modal.style.display = "none";
+    },
+
+    //parameter
+    'click .chooseParameter'(event) {
         event.preventDefault();
         var modal = document.getElementById('parameterModal');
         modal.style.display = "block";
     },
-    'click .select-data'(event) {
+    'click .select-params'(event) {
         event.preventDefault();
         var data = document.getElementsByClassName('selected');
         var dataselected = data[0].getElementsByClassName('parameter')[0].innerText;
@@ -43,6 +63,25 @@ Template.Configuration.events({
         document.getElementById('parameter_id').value = dataid;
 
         var modal = document.getElementById('parameterModal');
+        modal.style.display = "none";
+    },
+
+    //product
+    'click .chooseProduct'(event) {
+        event.preventDefault();
+        var modal = document.getElementById('productModal');
+        modal.style.display = "block";
+    },
+    'click .select-product'(event) {
+        event.preventDefault();
+        var data = document.getElementsByClassName('selected');
+        var dataselected = data[0].getElementsByClassName('product')[0].innerText;
+        var dataid = data[0].getElementsByClassName('product')[0].getAttribute('data-id');
+
+        document.getElementById('product').value = dataselected;
+        document.getElementById('product_id').value = dataid;
+
+        var modal = document.getElementById('productModal');
         modal.style.display = "none";
     },
     'click tr'(event) {
@@ -60,12 +99,8 @@ Template.Configuration.events({
         event.preventDefault();
         const target = event.target;
 
-        var selectProduct = document.getElementById('product');
-        var productId = selectProduct.selectedOptions[0].getAttribute('data-id');
-
-        var selectTester = document.getElementById('tester');
-        var testerId = selectTester.selectedOptions[0].getAttribute('data-id');
-
+        var productId = target.product_id.value;
+        var testerId = target.tester_id.value;
         var parameter_id = target.parameter_id.value
         var product = target.product.value;
         var sampleSize = target.sampleSize.value;
