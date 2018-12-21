@@ -1,30 +1,11 @@
 import './configuration.html';
 
 // API(s)
-import { Products } from '/imports/api/collections/products/products.js';
 import { Testers } from '/imports/api/collections/testers/testers.js';
+import { Products } from '/imports/api/collections/products/products.js';
 
 // Components(s)
 import '../../components/modals/modals.js';
-
-// Created
-Template.Configuration.onCreated(function() {
-    Meteor.subscribe('productsData');
-    Meteor.subscribe('testersData');
-});
-
-// Helpers
-Template.Configuration.helpers({
-    parameters() {
-		return Parameters.find({});
-	},
-    products() {
-        return Products.find({});
-    },
-    testers() {
-		return Testers.find({});
-	},
-});
 
 // Events
 Template.Configuration.events({

@@ -57,7 +57,7 @@ Template.Tester.events({
         var modal = document.getElementById('testerModal');
         var tr = document.getElementsByTagName('tr');
 
-        for (var i = 0; i < tr.length; i++) {
+        for(var i = 0; i < tr.length; i++) {
             tr[i].classList.remove('selected');
          }
 
@@ -81,7 +81,7 @@ Template.Parameter.events({
         var modal = document.getElementById('parameterModal');
         var tr = document.getElementsByTagName('tr');
 
-        for (var i = 0; i < tr.length; i++) {
+        for(var i = 0; i < tr.length; i++) {
             tr[i].classList.remove('selected');
          }
 
@@ -105,7 +105,7 @@ Template.Product.events({
         var modal = document.getElementById('productModal');
         var tr = document.getElementsByTagName('tr');
 
-        for (var i = 0; i < tr.length; i++) {
+        for(var i = 0; i < tr.length; i++) {
             tr[i].classList.remove('selected');
          }
 
