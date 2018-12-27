@@ -1,29 +1,31 @@
 <template name="Product_list">
-    <div class="content-wrap page">
-        <div class="content">
-            <div class="card search-bar">
-                <i class="fa fa-search" aria-hidden="true"></i><input type="text" name="search" class="form-control search">
+    <div class="wrap">
+        <div class="card search-bar">
+            <i class="fa fa-search" aria-hidden="true"></i><input type="text" name="search" class="form-control search">
+        </div>
+        <div class="semi-nav">
+            <div class="semi-nav-menu">
+                <ul>
+                    <li class="active">
+                        <a href="">VIEW ALL</a>
+                    </li>
+                    <li>
+                        <a href="">TYPE</a>
+                    </li>
+                    <li>
+                        <a href="">COMPANIES</a>
+                    </li>
+                    <li>
+                        <a href="">LOCATION</a>
+                    </li>
+                </ul>
             </div>
-            <div class="semi-nav">
-                <div class="semi-nav-menu">
-                    <ul>
-                        <li class="active">
-                            <a href="">VIEW ALL</a>
-                        </li>
-                        <li>
-                            <a href="">TYPE</a>
-                        </li>
-                        <li>
-                            <a href="">COMPANIES</a>
-                        </li>
-                        <li>
-                            <a href="">LOCATION</a>
-                        </li>
-                    </ul>
-                </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+
             </div>
-            <div class="card">
-                <p id="error-msg" style="color: #F16362;"></p>
+            <div class="card-body">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -40,15 +42,18 @@
                     </thead>
                     <tbody>
                         {{#each config}}
-                            {{> Config_list}}
+                        {{> Config_list}}
                         {{/each}}
                     </tbody>
                 </table>
             </div>
-            <a href="/product/configuration" class="float-adduser">
-                <i class="fa fa-plus my-float"></i>
-            </a>
+            <div class="card-footer">
+
+            </div>
         </div>
+        <a href="/product/configuration" class="float-adduser">
+            <i class="fa fa-plus my-float"></i>
+        </a>
     </div>
     {{> Delete_modal}}
 </template>

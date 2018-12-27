@@ -1,64 +1,58 @@
 <!--create role form-->
 <template name="Roles_create">
     <div class="role-create-section">
-        <div class="content-wrap page">
-            <div class="content">
-                <div class="card form-page">
-                    <form class="createrole-form" id="createrole-form">
-                        <div class="form-title">
-                            <div class="row">
-                                <div class="col-12">
-                                    <p>CREATE ROLE</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-content">
-                            <div class="row">
-                                <div class="col-6 form-inputs">
-                                    <div class="forms">
-                                        <p id="error-msg" style="color: #F16362;"></p>
-                                        <div class="form-group">
-                                            <label>Role name</label>
-                                            <input type="text" class="form-control" name="firstName" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Description</label>
-                                            <textarea name="Description" id="Description" rows="7" class="form-control"></textarea>
-                                        </div>
+        <div class="wrap">
+            <div class="card">
+                <form class="createrole-form" id="createrole-form">
+                    <div class="card-header form-title">
+                        <span style="font-size:15px;">CREATE ROLE</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 form-inputs">
+                            <div class="card-body">
+                                <div class="forms">
+                                    <p id="error-msg" style="color: #F16362;"></p>
+                                    <div class="form-group">
+                                        <label>Role name</label>
+                                        <input type="text" class="form-control" name="firstName" required>
                                     </div>
-                                </div>
-                                <div class="col-3 form-inputs">
-                                    <div class="forms">
-                                        <p class="displaynone"></p>
-                                        <div class="module-list">
-                                            <table class="table table-hover">
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="role">test</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="role">User</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-3 form-role">
-                                    <div class="forms">
-                                        <label class="switch">
-                                            <input type="checkbox" id="togBtn" value="asgasd">
-                                            <div class="slider round">
-                                                <span class="on">ON</span>
-                                                <span class="off">OFF</span>
-                                            </div>
-                                        </label>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea name="Description" id="Description" rows="7" class="form-control"></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
+                        <div class="col-3 form-inputs">
+                            <div class="card-body">
+                                <p></p>
+                                <div class="module-list">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                            <tr>
+                                                <td class="role">test</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="role">User</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 form-role">
+                            <div class="forms">
+                                <label class="switch">
+                                    <input type="checkbox" id="togBtn" value="asgasd">
+                                    <div class="slider round">
+                                        <span class="on">ON</span>
+                                        <span class="off">OFF</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

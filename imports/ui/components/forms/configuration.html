@@ -1,76 +1,217 @@
 <template name="Configuration">
     <div class="configuration-section">
-        <div class="content-wrap page">
-            <div class="content">
-                <div class="card form-page">
-                    <form class="configuration-form" id="configuration-form">
-                        <div class="form-title">
-                            <div class="row">
-                                <div class="col-12">
-                                    <p>CONFIGURATION</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-content">
-                            <div class="row">
-                                <div class="col-6 form-inputs">
-                                    <div class="forms">
-                                        <p id="error-msg" style="color: #F16362;"></p>
-                                        <div class="form-group">
-                                            <label>Product</label>
-                                            <input type="hidden" name="product_id" id="product_id">
-                                            <input type="text" class="form-control lookup" name="product" id="product" required>
-                                            <a href="#" class="chooseProduct"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                                            {{> Product}}
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Sample Size</label>
-                                            <input type="number" class="form-control" name="sampleSize" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Tester</label>
-                                            <input type="hidden" name="tester_id" id="tester_id">
-                                            <input type="text" class="form-control lookup" name="tester" id="tester" required>
-                                            <a href="#" class="chooseTester"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                                            {{> Tester}}
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Parameter</label>
-                                            <input type="hidden" name="parameter_id" id="parameter_id">
-                                            <input type="text" class="form-control lookup" name="parameter" id="parameter" required>
-                                            <a href="javascript:void(0)" class="chooseParameter"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                                            {{> Parameter}}
-                                        </div>
+        <div class="wrap">
+            <div class="card">
+                <form class="configuration-form" id="configuration-form">
+                    <div class="card-header form-title">
+                        <span style="font-size:15px;">Configuration</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 form-inputs">
+                            <div class="card-body">
+                                <div class="forms">
+                                    <p id="error-msg" style="color: #F16362;"></p>
+                                    <div class="form-group">
+                                        <label>Product</label>
+                                        <input type="hidden" name="product_id" id="product_id">
+                                        <input type="text" class="form-control lookup" name="product" id="product"
+                                            required>
+                                        <a href="#" class="chooseProduct"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                                        {{> Product}}
                                     </div>
-                                </div>
-                                <div class="col-6 form-role">
-                                    <div class="forms">
-                                        <div class="form-group">
-                                            <label>Upper Control Limit</label>
-                                            <input type="number" class="form-control" name="upperControlLimit" id="role">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Lower Control Limit</label>
-                                            <input type="number" class="form-control" name="lowerControlLimit" id="role">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Upper Specification Limit</label>
-                                            <input type="number" class="form-control" name="upperSpecLimit" id="role">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Lower Specification Limit</label>
-                                            <input type="number" class="form-control" name="lowerSpecLimit" id="role">
-                                        </div>
-                                        <div class="submit-button">
-                                            <button class="button success configuration-form">Submit</button>
-                                        </div>
+                                    <div class="form-group">
+                                        <label>Sample Size</label>
+                                        <input type="number" class="form-control" name="sampleSize" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tester</label>
+                                        <input type="hidden" name="tester_id" id="tester_id">
+                                        <input type="text" class="form-control lookup" name="tester" id="tester"
+                                            required>
+                                        <a href="#" class="chooseTester"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                                        {{> Tester}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Parameter</label>
+                                        <input type="hidden" name="parameter_id" id="parameter_id">
+                                        <input type="text" class="form-control lookup" name="parameter" id="parameter"
+                                            required>
+                                        <a href="javascript:void(0)" class="chooseParameter"><i class="fa fa-ellipsis-h"
+                                                aria-hidden="true"></i></a>
+                                        {{> Parameter}}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
+                        <div class="col-6 form-role">
+                            <div class="card-body">
+                                <div class="forms">
+                                    <p></p>
+                                    <div class="form-group">
+                                        <label>Upper Control Limit</label>
+                                        <input type="number" class="form-control" name="upperControlLimit" id="role">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Lower Control Limit</label>
+                                        <input type="number" class="form-control" name="lowerControlLimit" id="role">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Upper Specification Limit</label>
+                                        <input type="number" class="form-control" name="upperSpecLimit" id="role">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Lower Specification Limit</label>
+                                        <input type="number" class="form-control" name="lowerSpecLimit" id="role">
+                                    </div>
+                                    <div class="submit-button">
+                                        <button class="button success configuration-form">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="card-body">
+                        <div class="row">
+                            <div class="col-6 form-inputs">
+                                <div class="forms">
+                                    <p id="error-msg" style="color: #F16362;"></p>
+                                    <div class="form-group">
+                                        <label>Product</label>
+                                        <input type="hidden" name="product_id" id="product_id">
+                                        <input type="text" class="form-control lookup" name="product" id="product"
+                                            required>
+                                        <a href="#" class="chooseProduct"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                                        {{> Product}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Sample Size</label>
+                                        <input type="number" class="form-control" name="sampleSize" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tester</label>
+                                        <input type="hidden" name="tester_id" id="tester_id">
+                                        <input type="text" class="form-control lookup" name="tester" id="tester"
+                                            required>
+                                        <a href="#" class="chooseTester"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                                        {{> Tester}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Parameter</label>
+                                        <input type="hidden" name="parameter_id" id="parameter_id">
+                                        <input type="text" class="form-control lookup" name="parameter" id="parameter"
+                                            required>
+                                        <a href="javascript:void(0)" class="chooseParameter"><i class="fa fa-ellipsis-h"
+                                                aria-hidden="true"></i></a>
+                                        {{> Parameter}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 form-role">
+                                <div class="forms">
+                                    <div class="form-group">
+                                        <label>Upper Control Limit</label>
+                                        <input type="number" class="form-control" name="upperControlLimit" id="role">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Lower Control Limit</label>
+                                        <input type="number" class="form-control" name="lowerControlLimit" id="role">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Upper Specification Limit</label>
+                                        <input type="number" class="form-control" name="upperSpecLimit" id="role">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Lower Specification Limit</label>
+                                        <input type="number" class="form-control" name="lowerSpecLimit" id="role">
+                                    </div>
+                                    <div class="submit-button">
+                                        <button class="button success configuration-form">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="card-footer">
+
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+    <!-- <div class="configuration-section">
+        <div class="wrap">
+            <div class="card form-page">
+                <form class="configuration-form" id="configuration-form">
+                    <div class="form-title">
+                        <div class="row">
+                            <div class="col-12">
+                                <p>CONFIGURATION</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-content">
+                        <div class="row">
+                            <div class="col-6 form-inputs">
+                                <div class="forms">
+                                    <p id="error-msg" style="color: #F16362;"></p>
+                                    <div class="form-group">
+                                        <label>Product</label>
+                                        <input type="hidden" name="product_id" id="product_id">
+                                        <input type="text" class="form-control lookup" name="product" id="product"
+                                            required>
+                                        <a href="#" class="chooseProduct"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                                        {{> Product}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Sample Size</label>
+                                        <input type="number" class="form-control" name="sampleSize" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tester</label>
+                                        <input type="hidden" name="tester_id" id="tester_id">
+                                        <input type="text" class="form-control lookup" name="tester" id="tester"
+                                            required>
+                                        <a href="#" class="chooseTester"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                                        {{> Tester}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Parameter</label>
+                                        <input type="hidden" name="parameter_id" id="parameter_id">
+                                        <input type="text" class="form-control lookup" name="parameter" id="parameter"
+                                            required>
+                                        <a href="javascript:void(0)" class="chooseParameter"><i class="fa fa-ellipsis-h"
+                                                aria-hidden="true"></i></a>
+                                        {{> Parameter}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 form-role">
+                                <div class="forms">
+                                    <div class="form-group">
+                                        <label>Upper Control Limit</label>
+                                        <input type="number" class="form-control" name="upperControlLimit" id="role">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Lower Control Limit</label>
+                                        <input type="number" class="form-control" name="lowerControlLimit" id="role">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Upper Specification Limit</label>
+                                        <input type="number" class="form-control" name="upperSpecLimit" id="role">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Lower Specification Limit</label>
+                                        <input type="number" class="form-control" name="lowerSpecLimit" id="role">
+                                    </div>
+                                    <div class="submit-button">
+                                        <button class="button success configuration-form">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> -->
 </template>

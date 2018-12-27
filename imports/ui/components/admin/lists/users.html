@@ -1,7 +1,6 @@
-<!-- user list -->
 <template name="Users_list">
-    <div class="content-wrap page">
-        <div class="content">
+    <div class="wrap">
+        <div class="content-wrap page">
             <div class="card search-bar">
                 <i class="fa fa-search" aria-hidden="true"></i><input type="text" name="search" class="form-control search">
             </div>
@@ -24,23 +23,28 @@
                 </div>
             </div>
             <div class="card">
-                <p id="error-msg" style="color: #F16362;"></p>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>User Type</th>
-                            <th>Address</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{ #each users }}
+                <div class="card-body">
+                    <p id="error-msg" style="color: #F16362;"></p>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Firstname</th>
+                                <th>Lastname</th>
+                                <th>User Type</th>
+                                <th>Address</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{ #each users }}
                             {{> User_data}}
-                        {{/each}}
-                    </tbody>
-                </table>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+
+                </div>
             </div>
             <a href="/admin/user/create" class="float-adduser">
                 <i class="fa fa-plus my-float"></i>
@@ -53,10 +57,10 @@
 <!-- list of user data-->
 <template name="User_data">
     <tr>
-        <td>{{ firstName }}</td>
-        <td>{{ lastName }}</td>
-        <td>{{ userType }}</td>
-        <td>{{ address}}</td>
+        <td>{{ Profile.firstName }}</td>
+        <td>{{ Profile.lastName }}</td>
+        <td>{{ Profile.userType }}</td>
+        <td>{{ Profile.address}}</td>
         <td>
             <a href="/admin/user/update/{{_id}}" class="icon icon-info" title="Edit User">
                 <i class="fa fa-edit"></i>
