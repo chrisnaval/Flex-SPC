@@ -4,7 +4,6 @@ import './dashboard.html';
 import { Session } from 'meteor/session'
 
 // Component(s)
-import '../../components/banner/banner.js';
 import '../../components/graphs/candlestick/candlestick.js';
 import '../../components/graphs/histograph/histograph.js';
 import '../../components/graphs/pareto/pareto.js';
