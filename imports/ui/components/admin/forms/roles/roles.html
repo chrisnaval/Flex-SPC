@@ -23,20 +23,48 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3 form-inputs">
-                            <div class="card-body">
-                                <p></p>
-                                <div class="module-list">
-                                    <table class="table table-hover">
-                                        <tbody>
-                                            <tr>
-                                                <td class="role">test</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="role">User</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                        <div class="form-content">
+                            <div class="row">
+                                <div class="col-6 form-inputs">
+                                    <div class="forms">
+                                        <p id="error-msg" style="color: #F16362;"></p>
+                                        <div class="form-group">
+                                            <label>Role name</label>
+                                            <input type="text" class="form-control" name="firstName" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea name="Description" id="Description" rows="7" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3 form-inputs">
+                                    <div class="forms">
+                                        <p class="displaynone"></p>
+                                        <div class="module-list">
+                                            <table class="table table-hover">
+                                                <tbody>
+                                                    <tr>
+                                                        <select>
+                                                            {{#each getModuleData}}
+                                                                <option name="type" value="{{type}}">{{type}}</option>
+                                                            {{/each}}
+                                                        </select>
+                                                            <!-- <input type="" name="type" value="{{type.user}}" disabled> -->
+                                                        <!-- <td class="role">test</td> -->
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="role">User</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            {{#each getModuleData}}
+                                                {{name}}<br>
+                                                {{module}}<br>
+                                                {{type}}<br>
+                                            {{/each}}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

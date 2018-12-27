@@ -23,22 +23,21 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-body">
-                    <p id="error-msg" style="color: #F16362;"></p>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
-                                <th>User Type</th>
-                                <th>Address</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{ #each users }}
+                <p id="error-msg" style="color: #F16362;"></p>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Contact Number</th>
+                            <th>Address</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each users}}
                             {{> User_data}}
-                            {{/each}}
+                        {{/each}}
                         </tbody>
                     </table>
                 </div>

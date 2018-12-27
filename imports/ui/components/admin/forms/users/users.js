@@ -2,6 +2,9 @@ import './users.html';
 
 import { ReactiveDict } from 'meteor/reactive-dict';
 
+// Import(s) testing only
+import { UserProfiles } from '/imports/api/collections/users/userProfiles.js';
+
 //user create
 Template.Users_create.onCreated(function() {
     this.show = new ReactiveDict();
@@ -15,14 +18,15 @@ Template.Users_create.helpers({
 });
 
 Template.Users_update.onCreated(function () {
-    Meteor.subscribe('users.all');
+    Meteor.subscribe('usersProfile.all');
 });
 
+// UserProfile instead of Meteor.users
 Template.Users_update.helpers({
     getUserById() {
-        var userId = FlowRouter.getParam('_id');
-        return Meteor.users.findOne({
-            _id: userId,
+        // var userId = FlowRouter.getParam('_id');
+        return UserProfiles.find({
+            // _id: userId,
         });
     },
 });
@@ -55,6 +59,7 @@ Template.Users_create.events({
         var firstName = target.firstName.value;
         var lastName = target.lastName.value;
         var address = target.address.value;
+        var contactNo = target.contactNo.value;
         var emailAddress = target.emailAddress.value;
         var password = target.password.value;
         var confirmPassword = target.confirmPassword.value;
@@ -74,6 +79,8 @@ Template.Users_create.events({
                 firstName: firstName,
                 lastName: lastName,
                 address: address,
+                contactNo: contactNo,
+                type: "user",
                 role: {
                     _id: "",
                     role: "",
@@ -86,7 +93,7 @@ Template.Users_create.events({
                 password: password,
                 userProfile
             };
-
+            console.log(userData);
             Meteor.call('users.insert', userData, function(error) {
                 if(error) {
                     document.getElementById('error-msg').innerHTML = error.reason;
@@ -105,13 +112,32 @@ Template.Users_update.events({
     
         var firstName = target.firstName.value;
         var lastName = target.lastName.value;
+        var contactNo = target.contactNo.value;
         var address = target.address.value;
+
+        // var userProfile = {
+        //     firstName: firstName,
+        //     lastName: lastName,
+        //     address: address,
+        //     contactNo: contactNo,
+        //     role: {
+        //         _id: "",
+        //         role: "",
+        //     }
+        // };
     
         var userData = {
             firstName: firstName,
             lastName: lastName,
+            contactNo: contactNo,
             address: address,
+            role: {
+                _id: "",
+                role: "",
+            }
+            // userProfile
         }
+        console.log(userData);
         var userProfileId = FlowRouter.getParam("_id");
         Meteor.call('users.update',userData, userProfileId, function(error) {
             if(error) {

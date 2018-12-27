@@ -20,11 +20,12 @@ Meteor.methods({
         UserProfiles.schema.validate(userData.userProfile);
 
         try {
-            return UserProfiles.insert({
+            UserProfiles.insert({
                 firstName: userData.userProfile.firstName,
                 lastName: userData.userProfile.lastName,
+                contactNo: userData.userProfile.contactNo,
                 address: userData.userProfile.address,
-                type: userData.type,
+                type: userData.userProfile.type,
                 role: userData.userProfile.role,
                 createdAt: new Date(),
             }, function(error, userProfileId) {
@@ -44,17 +45,52 @@ Meteor.methods({
         }
     },
     'users.update': function(userData, userProfileId) {
+        // check(userData, {
+        //     firstName: String,
+        //     lastName: String,
+        //     contactNo: String,
+        //     address: String,
+        //     role: Object
+        // });
 
         try{
             return UserProfiles.update({ _id: userProfileId }, {
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                updatedAt: new Date(),
-            }, function(error, response) {
-                var usersProfile = UserProfiles.findOne(response);
-                console.log(response, usersProfile);
+                $set: {
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    contactNo: userData.contactNo,
+                    address: userData.address,
+                    role: userData.role,
+                    updatedAt: new Date(),
+                }
+            }, function(error, reponse) {
+                var getProfile = UserProfiles.findOne(reponse);
+                console.log(reponse, getProfile);
             });
-            
+            // if(success) {
+            //     var getProfile = UserProfiles.find(success);
+            //     console.log(success, getProfile);
+            //     return null, success;
+            // } else {
+            //     throw new Meteor.Error("Something went wrong")
+            // }
+            // var getProfile = Meteor.users.update({ _id: userProfileId }, {
+            //     $set: {
+            //        "profile.firstName": "userData.firstName",
+            //         "profile.lastName": "userData.lastName",
+            //         "profile.contactNo": "userData.contactNo",
+            //         "profile.address": "userData.address",
+            //         "profile.role": "userData.role",
+            //         updatedAt: new Date(),
+            //     }
+            // }, function(error, userProfileId) {
+            //     if(error) {
+            //         throw new Meteor.Error('error', error.error);
+            //     } else {
+            //         var getProfile = UserProfiles.findOne(userProfileId);
+            //         console.log(userProfileId, getProfile);
+            //     }
+            // });
         } catch(error) {
             throw new Meteor.Error('error', error.error);
         }
