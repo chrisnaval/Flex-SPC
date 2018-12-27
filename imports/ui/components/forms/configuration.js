@@ -76,9 +76,9 @@ Template.Configuration.events({
         event.preventDefault();
         const target = event.target;
 
-        var productId = target.product_id.value;
-        var testerId = target.tester_id.value;
-        var parameter_id = target.parameter_id.value
+        var productId = target.productId.value;
+        var testerId = target.testerId.value;
+        var parameter_id = target.parameterId.value
         var product = target.product.value;
         var sampleSize = target.sampleSize.value;
         var tester = target.tester.value;

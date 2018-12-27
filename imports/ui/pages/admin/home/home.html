@@ -1,13 +1,11 @@
 <template name="Admin_home">
     <!-- main -->
     <main class="main">
-        <!-- page-container -->
-        <div class="page-container">
-            {{> Template.dynamic template=header}}
+        <div class="wrapper">
             {{> Template.dynamic template=sidebar}}
-            <!-- page-content -->
-            <div class="page-content">
-                <div class="wrap">
+            <div class="page-container">
+                {{> Template.dynamic template=header}}
+                <div class="content">
                     {{> Template.dynamic template=main}}
                 </div>
             </div>

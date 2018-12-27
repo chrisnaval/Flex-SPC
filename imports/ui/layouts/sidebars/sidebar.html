@@ -1,95 +1,53 @@
 <template name="Sidebar">
-    <div class="page-sidebar">
-        <div class="navbar-logo">
+    <div class="sidebar">
+        <div class="sidebar-content">
             <div class="logo">
-                <h1><a href="/">Flex</a></h1>
+                <a href="/" style="font-size:20px" class="mini-logo">FL</a>
+                <a href="/" style="font-size:20px" class="whole-logo">FLEX</a>
             </div>
-        </div>
-        <div class="menus">
-            <div class="profile-wrap align-center">
-                <div class="profile-image">
-                    <img src="/img/1.png" class="img-md rounded" alt="profile">
+            <div class="user">
+                <div class="user-img">
+                    <img src="/img/profile.jpg" alt="profile" class="img-profile-sm">
                 </div>
-                <div class="profile-desc">
-                    <a href="/">
-                        <span class="align-right dropdown-toggle">
-                            <i class="dropdown-caret"></i>
-                        </span>
-                        <p class="mnp-name">Danilo Benolirao</p>
-                        <span class="small-desc">User</span>
-                    </a>
+                <div class="user-info">
+                    <a href="#" class="username collapsed">
+                        <span>
+                            Danilo Benolirao
+                            <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                        </span></a>
                 </div>
             </div>
-            <div class="menu-list">
-                <ul class="list-group" id="list-group">
-                    <li class="list-header">navigation</li>
-                    <li class="list">
-                        <a href="/" class="button side-toggle active"
-                            aria-expanded="false">
-                            <i class="fa fa-home" aria-hidden="true"></i>
-                            <span class="menu-title">Dashboard</span>
+            <div class="sidebar-menu">
+                <ul>
+                    <li class="menu-item active">
+                        <a href="/" class="menu-link">
+                            <i class="fa fa-tachometer" aria-hidden="true"></i>
+                            <p>Dashboard</p>
                         </a>
                     </li>
-                    <li class="list">
-                        <a href="/reports" class="side-toggle" aria-expanded="false">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            <span class="menu-title">Reports</span>
+                    <li class="menu-item inactive">
+                        <a href="#" class="menu-link">
+                            <i class="fa fa-flag" aria-hidden="true"></i>
+                            <p>Reports
+                                <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                            </p>
                         </a>
-                    </li>
-                    <li class="list">
-                        <a href="/issue-tracker" class="side-toggle" aria-expanded="false">
-                            <i class="fa fa-columns" aria-hidden="true"></i>
-                            <span class="menu-title">Issue Tracker</span>
-                            <i class="fa fa-arrow"></i>
-                        </a>
-                    </li>
-                    <li class="list">
-                        <a href="javascript:void(0)" class="side-toggle" aria-expanded="false">
-                            <i class="fa fa-cog"></i>
-                            <span class="menu-title">Configuration</span>
-                            <span class="align-right dropdown-toggle">
-                                <i class="dropdown-caret"></i>
-                            </span>
-                        </a>
-                        <ul class="dropdown-wrap">
-                            <li><a href="/product">Product</a></li>
-                            <li><a href="/">Parameters</a></li>
-                            <li><a href="/">Testers</a></li>
-                        </ul>
+                        <div class="dropdown">
+                            <ul class="dropdown-menu">
+                                <li class="menu-item">
+                                    <a class="menu-link" href="/product">Product</a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class="menu-link" href="/">Parameters</a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class="menu-link" href="/">Testers</a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>
-        </div>
-        <div class="thin-menu displaynone">
-            <i class="fa fa-home"></i>
-            <div class="dropdown-content">
-                <a href="/"><span>Dashboard</span></a>
-                <div class="divide"></div>
-                <a href="/"><span>Layouts</span></a>
-            </div>
-        </div>
-        <div class="thin-menu displaynone">
-            <i class="fa fa-columns" aria-hidden="true"></i>
-            <div class="dropdown-content">
-                <a href="/"><span>Dashboard</span></a>
-                <div class="divide"></div>
-                <a href="/"><span>Layouts</span></a>
-            </div>
-        </div>
-        <div class="thin-menu displaynone">
-            <i class="fa fa-cog" aria-hidden="true"></i>
-        </div>
-        <div class="thin-menu displaynone">
-            <i class="fa fa-window-maximize" aria-hidden="true"></i>
-        </div>
-        <div class="thin-menu displaynone">
-            <i class="fa fa-commenting-o" aria-hidden="true"></i>
-        </div>
-        <div class="thin-menu displaynone">
-            <i class="fa fa-area-chart" aria-hidden="true"></i>
-        </div>
-        <div class="thin-menu displaynone">
-            <i class="fa fa-table" aria-hidden="true"></i>
         </div>
     </div>
 </template>
