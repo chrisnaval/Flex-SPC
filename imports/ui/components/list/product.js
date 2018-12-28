@@ -19,14 +19,14 @@ Template.Product_list.helpers({
 });
 //events
 Template.Product_list.events({
-    'click .remove-data'(event) {
+    'click .remove-data': function(event) {
 		event.preventDefault();
 
 		var modal = document.getElementById('deleteModal');
 		modal.style.display = 'block';
 		document.getElementById('delete_id').value = this._id;
 	},
-	'click .remove'(event) {
+	'click .remove': function(event) {
 		event.preventDefault();
 		
 		var _id = document.getElementById('delete_id').value;
