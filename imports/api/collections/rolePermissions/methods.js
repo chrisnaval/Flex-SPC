@@ -13,40 +13,54 @@ import { Roles } from '/imports/api/collections/roles/roles.js';
 import { moduleFunctions } from '/lib/constants.js';
 
 Meteor.methods({
-	'rolePermissions.insert': function() {
+	'rolePermissions.accessAll': function(roleData, permissionData) {
 		// Validation of Data from the Client using the Collection's Schema
-		// AppModules.schema.validate(appModuleData);
-		// Permissions.schema.validate(permissionsData);
-		// RolePermissions.schema.validate(rolePermissionData);
-		// Roles.schema.validate(roleData);
+		Permissions.schema.validate(permissionData);
+		Roles.schema.validate(roleData);
 
 		try {
 			Roles.insert({
-				role: "user",
-				description: " can destroy your system "
+				role: roleData.role,
+				description: roleData.description
 			}, function(error, roleId) {
 				if(error) {
 					throw new Meteor.error('error', error.reason);
 				} else {
 					var permissions = []; // Array for the created Permissions
 
-					for(var moduleFunction in moduleFunctions) {
-						var permissionId = Permissions.insert({
-							module: "element.module",
-							function: moduleFunctions[moduleFunction],
-							permission: "element.type" + '-' + "element.module "+ '.' + moduleFunctions[moduleFunction]
+					// for(var moduleFunction in moduleFunctions) {
+					permissionData.forEach(function(moduleName, functionName, permission) {
+						var getPermission = Permissions.insert({
+							moduleName: moduleName,
+							functionName: functionName,
+							permission: permission
 						});
+						console.log(getPermission);
+					});
 						permissions.push(Permissions.findOne(permissionId));
-					};
-					console.log(permissions, permissionId);
+
+					// console.log(permissions, permissionId);
+					// }
+					// var role = Roles.findOne(roleId);
+					// RolePermissions.insert({
+					// 	role,
+					// 	permissions
+					// });
 				}
 			});
-
-		var eat = "food";
-		console.log(eat);
-
 		} catch(error) {
 			throw new Meteor.error('error', error.reason);
 		}
-  	},
+	},
+	'rolePermissions.insert': function() {
+		// Validation of Data from the Client using the Collection's Schema
+		// Permissions.schema.validate(permissionData);
+		// Roles.schema.validate(roleData);
+
+		try {
+			
+		} catch(error) {
+
+		}
+	},
 });

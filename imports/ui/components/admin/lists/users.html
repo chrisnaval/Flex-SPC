@@ -23,34 +23,33 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-body">
-                    <p id="error-msg" style="color: #F16362;"></p>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
-                                <th>Contact Number</th>
-                                <th>Address</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{ #each users }}
-                            {{> User_data}}
+                <p id="error-msg" style="color: #F16362;"></p>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Contact Number</th>
+                            <th>Address</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each users}}
+                        {{> User_data}}
                         {{/each}}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer">
-
-                </div>
+                    </tbody>
+                </table>
             </div>
-            <a href="/admin/user/create" class="float-adduser">
-                <i class="fa fa-plus my-float"></i>
-            </a>
+            <div class="card-footer">
+
+            </div>
         </div>
+        <a href="/admin/user/create" class="float-adduser">
+            <i class="fa fa-plus my-float"></i>
+        </a>
     </div>
+
     {{> Delete_modal}}
 </template>
 

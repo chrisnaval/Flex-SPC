@@ -2,41 +2,35 @@ import './users.html';
 
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-// Import(s) testing only
-import { UserProfiles } from '/imports/api/collections/users/userProfiles.js';
-
-//user create
 Template.Users_create.onCreated(function() {
     this.show = new ReactiveDict();
     this.show.set('showtable', false);
 });
 
 Template.Users_create.helpers({
-    showtable() {
-        return Template.instance().show.get('showtable');
-    }
+
 });
 
-Template.Users_update.onCreated(function () {
-    Meteor.subscribe('usersProfile.all');
+Template.Users_update.onCreated(function() {
+    Meteor.subscribe('users.all');
 });
 
 // UserProfile instead of Meteor.users
 Template.Users_update.helpers({
     getUserById() {
-        // var userId = FlowRouter.getParam('_id');
-        return UserProfiles.find({
-            // _id: userId,
+        var userId = FlowRouter.getParam('_id');
+        return Meteor.users.find({
+            _id: userId,
         });
     },
 });
 
 Template.Users_create.events({
-    'click .choose'(event, template) {
+    'click .choose': function(event, template) {
         event.preventDefault();
         template.show.set('showtable', true);
     },
-    'click tr'(event, template){
+    'click tr': function(event, template){
         var tar = document.getElementsByTagName('tr');
 
         for(var i = 0; i < tar.length; i++) {
@@ -52,7 +46,7 @@ Template.Users_create.events({
 
         template.show.set('showtable', false);
     },
-    'submit .createuser-form'(event) {
+    'submit .createuserForm': function(event) {
         event.preventDefault();
         const target = event.target;
 
@@ -60,6 +54,7 @@ Template.Users_create.events({
         var lastName = target.lastName.value;
         var address = target.address.value;
         var contactNo = target.contactNo.value;
+        var type = target.type.value;
         var emailAddress = target.emailAddress.value;
         var password = target.password.value;
         var confirmPassword = target.confirmPassword.value;
@@ -80,10 +75,7 @@ Template.Users_create.events({
                 lastName: lastName,
                 address: address,
                 contactNo: contactNo,
-<<<<<<< HEAD
                 type: "user",
-=======
->>>>>>> a8a0628705ffe84924858190c0ae815479e315ed
                 role: {
                     _id: "",
                     role: "",
@@ -96,11 +88,6 @@ Template.Users_create.events({
                 password: password,
                 userProfile
             };
-<<<<<<< HEAD
-            console.log(userData);
-=======
-            console.log(userProfile, userData);
->>>>>>> a8a0628705ffe84924858190c0ae815479e315ed
             Meteor.call('users.insert', userData, function(error) {
                 if(error) {
                     document.getElementById('error-msg').innerHTML = error.reason;
@@ -111,9 +98,28 @@ Template.Users_create.events({
     },
 });
 
-// Testing Only
 Template.Users_update.events({
-    'submit .user-update'(event) {
+    'click .choose': function(event, template) {
+        event.preventDefault();
+        template.show.set('showtable', true);
+    },
+    'click tr': function(event, template){
+        var tar = document.getElementsByTagName('tr');
+
+        for(var i = 0; i < tar.length; i++) {
+            tar[i].classList.remove('selected');
+        }
+
+        const target = event.target.closest('tr');
+        target.classList.add('selected');
+
+        var data = document.getElementsByClassName("selected");
+        var data_value = data[0].getElementsByClassName("role")[0].innerText;
+        document.getElementById("role").value = data_value;
+
+        template.show.set('showtable', false);
+    },
+    'submit .userUpdate': function(event) {
         event.preventDefault();
         const target = event.target;
     
@@ -122,31 +128,24 @@ Template.Users_update.events({
         var contactNo = target.contactNo.value;
         var address = target.address.value;
 
-        // var userProfile = {
-        //     firstName: firstName,
-        //     lastName: lastName,
-        //     address: address,
-        //     contactNo: contactNo,
-        //     role: {
-        //         _id: "",
-        //         role: "",
-        //     }
-        // };
-    
-        var userData = {
+        var userProfile = {
             firstName: firstName,
             lastName: lastName,
-            contactNo: contactNo,
             address: address,
+            contactNo: contactNo,
+            type: "user",
             role: {
                 _id: "",
                 role: "",
             }
-            // userProfile
-        }
+        };
+
+        var userData = {
+            userProfile
+        };
         console.log(userData);
-        var userProfileId = FlowRouter.getParam("_id");
-        Meteor.call('users.update',userData, userProfileId, function(error) {
+        var userId = FlowRouter.getParam("_id");
+        Meteor.call('users.update', userData, userId, function(error) {
             if(error) {
                 document.getElementById('error-msg').innerHTML = error.reason;
             }

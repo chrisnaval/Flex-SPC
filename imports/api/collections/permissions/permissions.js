@@ -6,11 +6,11 @@ export const Permissions = new Mongo.Collection('permissions');
 
 // Schema
 Permissions.schema = new SimpleSchema({
-    module: {
+    moduleName: {
         type: String,
         optional: false
     },
-    function: {
+    functionName: {
         type: String,
         optional: false
     },

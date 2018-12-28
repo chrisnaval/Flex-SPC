@@ -14,13 +14,13 @@ Template.Users_list.helpers({
 });
 
 Template.Users_list.events({
-	'click .remove-user'(event) {
+	'click .remove-user': function(event) {
 		event.preventDefault();
 		var modal = document.getElementById('myModal');
 		modal.style.display = 'block';
 		document.getElementById('delete_id').value = this._id;
 	},
-	'click .remove'(event) {
+	'click .remove': function(event) {
 		event.preventDefault();
 		var _id = document.getElementById('delete_id').value;
 		document.getElementById('delete_id').value = '';
