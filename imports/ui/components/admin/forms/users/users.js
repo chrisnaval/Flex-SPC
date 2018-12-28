@@ -94,6 +94,26 @@ Template.Users_create.events({
 
 // Testing Only
 Template.Users_update.events({
+    'click .choose': function(event, template) {
+        event.preventDefault();
+        template.show.set('showtable', true);
+    },
+    'click tr': function(event, template){
+        var tar = document.getElementsByTagName('tr');
+
+        for(var i = 0; i < tar.length; i++) {
+            tar[i].classList.remove('selected');
+        }
+
+        const target = event.target.closest('tr');
+        target.classList.add('selected');
+
+        var data = document.getElementsByClassName("selected");
+        var data_value = data[0].getElementsByClassName("role")[0].innerText;
+        document.getElementById("role").value = data_value;
+
+        template.show.set('showtable', false);
+    },
     'submit .userUpdate': function(event) {
         event.preventDefault();
         const target = event.target;
