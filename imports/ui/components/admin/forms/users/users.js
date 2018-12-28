@@ -2,16 +2,13 @@ import './users.html';
 
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-//user create
 Template.Users_create.onCreated(function() {
     this.show = new ReactiveDict();
     this.show.set('showtable', false);
 });
 
 Template.Users_create.helpers({
-    showtable() {
-        return Template.instance().show.get('showtable');
-    }
+
 });
 
 Template.Users_update.onCreated(function () {
@@ -28,11 +25,11 @@ Template.Users_update.helpers({
 });
 
 Template.Users_create.events({
-    'click .choose'(event, template) {
+    'click .choose': function(event, template) {
         event.preventDefault();
         template.show.set('showtable', true);
     },
-    'click tr'(event, template){
+    'click tr': function(event, template){
         var tar = document.getElementsByTagName('tr');
 
         for(var i = 0; i < tar.length; i++) {
@@ -48,7 +45,7 @@ Template.Users_create.events({
 
         template.show.set('showtable', false);
     },
-    'submit .createuser-form'(event) {
+    'submit .createuserForm': function(event) {
         event.preventDefault();
         const target = event.target;
 
@@ -101,7 +98,7 @@ Template.Users_create.events({
 
 // Testing Only
 Template.Users_update.events({
-    'submit .user-update'(event) {
+    'submit .userUpdate': function(event) {
         event.preventDefault();
         const target = event.target;
     

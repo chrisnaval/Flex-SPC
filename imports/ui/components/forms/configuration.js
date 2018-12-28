@@ -6,12 +6,12 @@ import '../../components/modals/modals.js';
 // Events
 Template.Configuration.events({
     //tester
-    'click .chooseTester'(event) {
+    'click .chooseTester': function(event) {
         event.preventDefault();
         var modal = document.getElementById('testerModal');
         modal.style.display = "block";
     },
-    'click .select-tester'(event) {
+    'click .select-tester': function(event) {
         event.preventDefault();
         var data = document.getElementsByClassName('selected');
         var dataselected = data[0].getElementsByClassName('tester')[0].innerText;
@@ -25,12 +25,12 @@ Template.Configuration.events({
     },
 
     //parameter
-    'click .chooseParameter'(event) {
+    'click .chooseParameter': function(event) {
         event.preventDefault();
         var modal = document.getElementById('parameterModal');
         modal.style.display = "block";
     },
-    'click .select-params'(event) {
+    'click .select-params': function(event) {
         event.preventDefault();
         var data = document.getElementsByClassName('selected');
         var dataselected = data[0].getElementsByClassName('parameter')[0].innerText;
@@ -44,12 +44,12 @@ Template.Configuration.events({
     },
 
     //product
-    'click .chooseProduct'(event) {
+    'click .chooseProduct': function(event) {
         event.preventDefault();
         var modal = document.getElementById('productModal');
         modal.style.display = "block";
     },
-    'click .select-product'(event) {
+    'click .select-product': function(event) {
         event.preventDefault();
         var data = document.getElementsByClassName('selected');
         var dataselected = data[0].getElementsByClassName('product')[0].innerText;
@@ -61,7 +61,7 @@ Template.Configuration.events({
         var modal = document.getElementById('productModal');
         modal.style.display = "none";
     },
-    'click tr'(event) {
+    'click tr': function(event) {
         event.preventDefault();
         var tr = document.getElementsByTagName('tr');
 
@@ -72,7 +72,7 @@ Template.Configuration.events({
         const target = event.target.closest('tr');
         target.classList.add('selected');
     },
-    'submit .configuration-form'(event) {
+    'submit .configuration-form': function(event) {
         event.preventDefault();
         const target = event.target;
 

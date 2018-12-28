@@ -1,7 +1,7 @@
 import './home.html';
 
 Template.Admin_home.events({
-    'click .toggle'(event, temp) {
+    'click .toggle': function(event, temp) {
         temp.$('.page-sidebar').toggleClass('thin');
         temp.$('.page-content').toggleClass('padding-left');
         temp.$('.page-navbar').toggleClass('padding-left');
