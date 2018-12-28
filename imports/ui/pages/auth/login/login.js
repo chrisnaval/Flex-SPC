@@ -1,21 +1,27 @@
-// Import(s)
 import './login.html';
 
 // Template Events
 Template.Auth_login_page.events({
-  'submit .login-form': function(event) {
-    event.preventDefault();
+    'submit .login-form': function(event) {
+        event.preventDefault();
 
-    const target = event.target;
-    var emailAddress = target.email.value;
-    var password = target.password.value;
+        const target = event.target;
 
-    Meteor.loginWithPassword(emailAddress, password, (error) => {
-      if(error) {
-        document.getElementById('error-msg').innerHTML = error.reason;
-      } else {
-        FlowRouter.go('/');
-      }
-    });
-  },
+        var emailAddress = target.email.value;
+        var password = target.password.value;
+
+        Meteor.loginWithPassword(emailAddress, password, (error) => {
+            if(error) {
+                document.getElementById('error-msg').innerHTML = error.reason;
+            } else {
+                var user = Meteor.user();
+
+                if(user.profile.type == "Admin") {
+                    FlowRouter.go('/admin');
+                } else {
+                    FlowRouter.go('/');
+                }
+            }
+        });
+    },
 });

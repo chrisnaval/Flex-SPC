@@ -14,9 +14,11 @@ UserProfiles.schema = new SimpleSchema({
     },
     address: {
         type: String,
+        optional: true
     },
     contactNo: {
-        type: String
+        type: String,
+        optional: true
     },
     type: {
         type: String,

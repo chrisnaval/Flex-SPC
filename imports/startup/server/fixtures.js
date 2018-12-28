@@ -55,7 +55,7 @@ Meteor.startup(function() {
     if(Meteor.users.find().count() === 0) {
         Roles.insert({
             role: "Super Administrator",
-            description: "Super Administrator have access to all the application modules."
+            description: "Super Administrator have access to all the admin-type application modules."
         }, function(error, roleId) {
             if(error) {
                 throw new Meteor.Error('error', error.error);
@@ -85,19 +85,20 @@ Meteor.startup(function() {
                         throw new Meteor.Error('error', error.error);
                     } else {
                         UserProfiles.insert({
-                            firstName: "Admin",
+                            firstName: "Super",
                             lastName: "Administrator",
-                            address: "Cebu City",
-                            contactNo: "",
-                            type: "admin",
+                            address: "Salinas Drive, Cebu City, Cebu, Philippines 6000",
+                            contactNo: "09179244462",
+                            type: "Admin",
                             role,
                             createdAt: new Date(),
+                            updatedAt: new Date()
                         }, function(error, userProfileId) {
                             if(error) {
                                 throw new Meteor.Error('error', error.error);
                             } else {
                                 Accounts.createUser({
-                                    email: "admin@email.com",
+                                    email: "super-admin@email.com",
                                     password: "secret-passw0rt",
                                     username: "admin",
                                     profile: UserProfiles.findOne(userProfileId)

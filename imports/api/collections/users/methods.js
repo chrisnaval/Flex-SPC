@@ -25,8 +25,10 @@ Meteor.methods({
                 lastName: userData.userProfile.lastName,
                 address: userData.userProfile.address,
                 contactNo: userData.userProfile.contactNo,
+                type: userData.userProfile.type,
                 role: userData.userProfile.role,
                 createdAt: new Date(),
+                updatedAt: new Date()
             }, function(error, userProfileId) {
                 if(error) {
                     throw new Meteor.Error('error', error.error);
@@ -44,21 +46,6 @@ Meteor.methods({
         }
     },
     'users.update': function(userId, userData) {
-
-        // try{
-        //     return UserProfiles.update({ _id: userProfileId }, {
-        //         firstName: userData.firstName,
-        //         lastName: userData.lastName,
-        //         updatedAt: new Date(),
-        //     }, function(error, response) {
-        //         var usersProfile = UserProfiles.findOne(response);
-        //         console.log(response, usersProfile);
-        //     });
-            
-        // } catch(error) {
-        //     throw new Meteor.Error('error', error.error);
-        // }
-
         check(userData, {
             username: String,
             emailAddress: String,
@@ -73,23 +60,28 @@ Meteor.methods({
             var user = Meteor.users.findOne({_id: userId});
             var userProfileId = user.profile._id;
 
-            return UserProfiles.update({ _id:  userProfileId}, {
-                firstName: userData.userProfile.firstName,
-                lastName: userData.userProfile.lastName,
-                address: userData.userProfile.address,
-                // type: userData.type,
-                role: userData.userProfile.role,
-                updatedAt: new Date(),
+            return UserProfiles.update({ _id:  userProfileId }, {
+                $set: {
+                    firstName: userData.userProfile.firstName,
+                    lastName: userData.userProfile.lastName,
+                    address: userData.userProfile.address,
+                    contactNo: userData.userProfile.contactNo,
+                    role: userData.userProfile.role,
+                    updatedAt: new Date(),
+                }
             }, function(error, response) {
                 if(error) {
                     throw new Meteor.Error('error', error.error);
                 } else {
-                    Meteor.users.update({_id: userId}, {
-                        email: userData.emailAddress,
-                        // password: userData.password,
-                        username: userData.username,
-                        profile: UserProfiles.findOne(userProfileId),
+                    Meteor.users.update({ _id: userId }, {
+                        $set: {
+                            'emails.0.address': userData.emailAddress,
+                            username: userData.username,
+                            profile: UserProfiles.findOne(userProfileId),
+                        }
                     });
+                    
+                    Accounts.setPassword(userId, userData.password);
                 }
             });
         } catch(error) {
