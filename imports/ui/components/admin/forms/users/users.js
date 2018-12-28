@@ -108,14 +108,27 @@ Template.Users_update.events({
         var firstName = target.firstName.value;
         var lastName = target.lastName.value;
         var address = target.address.value;
-    
-        var userData = {
+
+        var userProfile = {
             firstName: firstName,
             lastName: lastName,
             address: address,
-        }
-        var userProfileId = FlowRouter.getParam("_id");
-        Meteor.call('users.update',userData, userProfileId, function(error) {
+            role: {
+                _id: "",
+                role: "",
+            }
+        };
+
+        var userData = {
+            username: "tae",
+            emailAddress: "super-user@email.com",
+            // password: password,
+            userProfile
+        };
+
+        var userId = FlowRouter.getParam("_id");
+
+        Meteor.call('users.update', userId, userData, function(error) {
             if(error) {
                 document.getElementById('error-msg').innerHTML = error.reason;
             }

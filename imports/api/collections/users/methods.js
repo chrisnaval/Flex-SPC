@@ -43,18 +43,55 @@ Meteor.methods({
             throw new Meteor.Error('error', error.error);
         }
     },
-    'users.update': function(userData, userProfileId) {
+    'users.update': function(userId, userData) {
 
-        try{
-            return UserProfiles.update({ _id: userProfileId }, {
-                firstName: userData.firstName,
-                lastName: userData.lastName,
+        // try{
+        //     return UserProfiles.update({ _id: userProfileId }, {
+        //         firstName: userData.firstName,
+        //         lastName: userData.lastName,
+        //         updatedAt: new Date(),
+        //     }, function(error, response) {
+        //         var usersProfile = UserProfiles.findOne(response);
+        //         console.log(response, usersProfile);
+        //     });
+            
+        // } catch(error) {
+        //     throw new Meteor.Error('error', error.error);
+        // }
+
+        check(userData, {
+            username: String,
+            emailAddress: String,
+            password: String,
+            userProfile: Object
+        });
+
+        // Validation of Data from the Client using the Collection's Schema
+        UserProfiles.schema.validate(userData.userProfile);
+
+        try {
+            var user = Meteor.users.findOne({_id: userId});
+            var userProfileId = user.profile._id;
+
+            return UserProfiles.update({ _id:  userProfileId}, {
+                firstName: userData.userProfile.firstName,
+                lastName: userData.userProfile.lastName,
+                address: userData.userProfile.address,
+                // type: userData.type,
+                role: userData.userProfile.role,
                 updatedAt: new Date(),
             }, function(error, response) {
-                var usersProfile = UserProfiles.findOne(response);
-                console.log(response, usersProfile);
+                if(error) {
+                    throw new Meteor.Error('error', error.error);
+                } else {
+                    Meteor.users.update({_id: userId}, {
+                        email: userData.emailAddress,
+                        // password: userData.password,
+                        username: userData.username,
+                        profile: UserProfiles.findOne(userProfileId),
+                    });
+                }
             });
-            
         } catch(error) {
             throw new Meteor.Error('error', error.error);
         }

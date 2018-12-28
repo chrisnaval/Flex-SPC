@@ -30,8 +30,8 @@
                             <tr>
                                 <th>Firstname</th>
                                 <th>Lastname</th>
-                                <th>Contact Number</th>
                                 <th>Address</th>
+                                <th>Contact No.</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -59,8 +59,8 @@
     <tr>
         <td>{{ profile.firstName }}</td>
         <td>{{ profile.lastName }}</td>
-        <td>{{ profile.contactNo }}</td>
         <td>{{ profile.address}}</td>
+        <td>{{ profile.contactNo }}</td>
         <td>
             <a href="/admin/user/update/{{_id}}" class="icon icon-info" title="Edit User">
                 <i class="fa fa-edit"></i>
