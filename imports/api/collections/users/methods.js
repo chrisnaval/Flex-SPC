@@ -25,7 +25,11 @@ Meteor.methods({
                 lastName: userData.userProfile.lastName,
                 contactNo: userData.userProfile.contactNo,
                 address: userData.userProfile.address,
+<<<<<<< HEAD
                 type: userData.userProfile.type,
+=======
+                contactNo: userData.userProfile.contactNo,
+>>>>>>> a8a0628705ffe84924858190c0ae815479e315ed
                 role: userData.userProfile.role,
                 createdAt: new Date(),
             }, function(error, userProfileId) {

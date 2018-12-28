@@ -80,20 +80,27 @@ Template.Users_create.events({
                 lastName: lastName,
                 address: address,
                 contactNo: contactNo,
+<<<<<<< HEAD
                 type: "user",
+=======
+>>>>>>> a8a0628705ffe84924858190c0ae815479e315ed
                 role: {
                     _id: "",
                     role: "",
                 }
             };
-
+            
             var userData = {
-                username: username,
                 emailAddress: emailAddress,
+                username: username,
                 password: password,
                 userProfile
             };
+<<<<<<< HEAD
             console.log(userData);
+=======
+            console.log(userProfile, userData);
+>>>>>>> a8a0628705ffe84924858190c0ae815479e315ed
             Meteor.call('users.insert', userData, function(error) {
                 if(error) {
                     document.getElementById('error-msg').innerHTML = error.reason;
