@@ -2,16 +2,9 @@ import './users.html';
 
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-//user create
 Template.Users_create.onCreated(function() {
     this.show = new ReactiveDict();
     this.show.set('showtable', false);
-});
-
-Template.Users_create.helpers({
-    showtable() {
-        return Template.instance().show.get('showtable');
-    }
 });
 
 Template.Users_update.onCreated(function () {
@@ -32,7 +25,7 @@ Template.Users_create.events({
         event.preventDefault();
         template.show.set('showtable', true);
     },
-    'click tr'(event, template){
+    'click tr'(event, template) {
         var tar = document.getElementsByTagName('tr');
 
         for(var i = 0; i < tar.length; i++) {
@@ -88,7 +81,7 @@ Template.Users_create.events({
                 password: password,
                 userProfile
             };
-            console.log(userProfile, userData);
+            
             Meteor.call('users.insert', userData, function(error) {
                 if(error) {
                     document.getElementById('error-msg').innerHTML = error.reason;
