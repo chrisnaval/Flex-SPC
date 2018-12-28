@@ -1,14 +1,13 @@
 import './users.html';
 import '../../modals/modals.js'
-import { UserProfiles } from '/imports/api/collections/users/userProfiles.js';
 
 Template.Users_list.onCreated(function () {
-	Meteor.subscribe('usersProfile.all');
+	Meteor.subscribe('users.all');
 });
 
 Template.Users_list.helpers({
 	users() {
-		return UserProfiles.find({
+		return Meteor.users.find({
 			deletedAt: null,
 		});
 	}

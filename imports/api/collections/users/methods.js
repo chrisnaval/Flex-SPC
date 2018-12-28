@@ -24,7 +24,7 @@ Meteor.methods({
                 firstName: userData.userProfile.firstName,
                 lastName: userData.userProfile.lastName,
                 address: userData.userProfile.address,
-                type: userData.type,
+                contactNo: userData.userProfile.contactNo,
                 role: userData.userProfile.role,
                 createdAt: new Date(),
             }, function(error, userProfileId) {
