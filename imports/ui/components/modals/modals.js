@@ -7,7 +7,7 @@ import { Products } from '/imports/api/collections/products/products.js';
 
 //custom dashboard
 Template.Custom_dashboard.events({
-    'click .cancel'() {
+    'click .cancel': function() {
         var modal = document.getElementById('formModal');
         var tr = document.getElementsByTagName('tr');
 
@@ -17,7 +17,7 @@ Template.Custom_dashboard.events({
 
         modal.style.display = 'none';
     },
-    'click tr'(event) {
+    'click tr': function(event) {
         var tar = document.getElementsByTagName('tr');
 
         for(var i = 0; i < tar.length; i++) {
@@ -31,11 +31,11 @@ Template.Custom_dashboard.events({
 
 //delete modal
 Template.Delete_modal.events({
-    'click .close-toggle'() {
+    'click .close-toggle': function() {
         var modal = document.getElementById('deleteModal');
         modal.style.display = 'none';
     },
-    'click .cancel'() {
+    'click .cancel': function() {
         var modal = document.getElementById('deleteModal');
         modal.style.display = 'none';
     }
@@ -53,7 +53,7 @@ Template.Tester.helpers({
 });
 
 Template.Tester.events({
-    'click .cancel'() {
+    'click .cancel': function() {
         var modal = document.getElementById('testerModal');
         var tr = document.getElementsByTagName('tr');
 
@@ -77,7 +77,7 @@ Template.Parameter.helpers({
 });
 
 Template.Parameter.events({
-    'click .cancel'() {
+    'click .cancel': function() {
         var modal = document.getElementById('parameterModal');
         var tr = document.getElementsByTagName('tr');
 
@@ -101,7 +101,7 @@ Template.Product.helpers({
 });
 
 Template.Product.events({
-    'click .cancel'() {
+    'click .cancel': function() {
         var modal = document.getElementById('productModal');
         var tr = document.getElementsByTagName('tr');
 
