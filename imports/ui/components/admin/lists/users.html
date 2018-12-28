@@ -30,7 +30,7 @@
                             <tr>
                                 <th>Firstname</th>
                                 <th>Lastname</th>
-                                <th>User Type</th>
+                                <th>Contact Number</th>
                                 <th>Address</th>
                                 <th>Action</th>
                             </tr>
@@ -57,10 +57,10 @@
 <!-- list of user data-->
 <template name="User_data">
     <tr>
-        <td>{{ Profile.firstName }}</td>
-        <td>{{ Profile.lastName }}</td>
-        <td>{{ Profile.userType }}</td>
-        <td>{{ Profile.address}}</td>
+        <td>{{ profile.firstName }}</td>
+        <td>{{ profile.lastName }}</td>
+        <td>{{ profile.contactNo }}</td>
+        <td>{{ profile.address}}</td>
         <td>
             <a href="/admin/user/update/{{_id}}" class="icon icon-info" title="Edit User">
                 <i class="fa fa-edit"></i>

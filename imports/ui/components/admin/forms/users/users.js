@@ -55,6 +55,7 @@ Template.Users_create.events({
         var firstName = target.firstName.value;
         var lastName = target.lastName.value;
         var address = target.address.value;
+        var contactNo = target.contactNo.value;
         var emailAddress = target.emailAddress.value;
         var password = target.password.value;
         var confirmPassword = target.confirmPassword.value;
@@ -74,19 +75,20 @@ Template.Users_create.events({
                 firstName: firstName,
                 lastName: lastName,
                 address: address,
+                contactNo: contactNo,
                 role: {
                     _id: "",
                     role: "",
                 }
             };
-
+            
             var userData = {
-                username: username,
                 emailAddress: emailAddress,
+                username: username,
                 password: password,
                 userProfile
             };
-
+            console.log(userProfile, userData);
             Meteor.call('users.insert', userData, function(error) {
                 if(error) {
                     document.getElementById('error-msg').innerHTML = error.reason;
