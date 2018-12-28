@@ -8,6 +8,9 @@ Template.Users_list.onCreated(function () {
 Template.Users_list.helpers({
 	users() {
 		return Meteor.users.find({
+			'profile.role.role': { 
+				$ne: "Super Administrator" 
+			},
 			deletedAt: null,
 		});
 	}
