@@ -43,6 +43,7 @@ Template.Users_list.events({
 		viewAdmins.parentElement.classList.remove('active');
 		viewUsers.parentElement.classList.remove('active');
 
+		// Retrieves all users except "Super Administrator" - is set on Session variable
 		Session.set('usersList', Meteor.users.find({
 			'profile.role.role': { 
 				$ne: "Super Administrator" 
@@ -59,6 +60,7 @@ Template.Users_list.events({
 		viewAll.parentElement.classList.remove('active');
 		viewUsers.parentElement.classList.remove('active');
 
+		// Retrieves all users with type "Admin" except "Super Administrator" - is set on Session variable
 		Session.set('usersList', Meteor.users.find({
 			'profile.type': { 
 				$eq: "Admin" 
@@ -78,6 +80,7 @@ Template.Users_list.events({
 		viewAll.parentElement.classList.remove('active');
 		viewAdmins.parentElement.classList.remove('active');
 
+		// Retrieves all users with type "User" except "Super Administrator" - is set on Session variable
 		Session.set('usersList', Meteor.users.find({
 			'profile.type': { 
 				$eq: "User" 
@@ -90,14 +93,17 @@ Template.Users_list.events({
 	},
 	'click .remove-user': function(event) {
 		event.preventDefault();
+
 		var modal = document.getElementById('myModal');
 		modal.style.display = 'block';
 		document.getElementById('delete_id').value = this._id;
 	},
 	'click .remove': function(event) {
 		event.preventDefault();
+
 		var _id = document.getElementById('delete_id').value;
 		document.getElementById('delete_id').value = '';
+
 		var modal = document.getElementById('myModal');
 		modal.style.display = 'none';
 	},
