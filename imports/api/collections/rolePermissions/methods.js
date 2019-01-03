@@ -5,12 +5,8 @@ import { Meteor } from 'meteor/meteor';
 
 // Collection(s)
 import { RolePermissions } from './rolePermissions.js';
-import { AppModules } from '/imports/api/collections/appModules/server/publications.js';
 import { Permissions } from '/imports/api/collections/permissions/permissions.js';
 import { Roles } from '/imports/api/collections/roles/roles.js';
-
-// Constants
-import { moduleFunctions } from '/lib/constants.js';
 
 Meteor.methods({
 	'rolePermissions.accessAll': function(roleData, permissionData) {
@@ -38,14 +34,6 @@ Meteor.methods({
 						console.log(getPermission);
 					});
 						permissions.push(Permissions.findOne(permissionId));
-
-					// console.log(permissions, permissionId);
-					// }
-					// var role = Roles.findOne(roleId);
-					// RolePermissions.insert({
-					// 	role,
-					// 	permissions
-					// });
 				}
 			});
 		} catch(error) {
@@ -53,9 +41,6 @@ Meteor.methods({
 		}
 	},
 	'rolePermissions.insert': function() {
-		// Validation of Data from the Client using the Collection's Schema
-		// Permissions.schema.validate(permissionData);
-		// Roles.schema.validate(roleData);
 
 		try {
 			
