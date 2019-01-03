@@ -15,11 +15,14 @@ Template.Auth_login_page.events({
                 document.getElementById('error-msg').innerHTML = error.reason;
             } else {
                 var user = Meteor.user();
+                var deletedAt = user.profile.deletedAt;
 
-                if(user.profile.type == "Admin") {
+                if(user.profile.type == "Admin" && (deletedAt == null || deletedAt == '')) {
                     FlowRouter.go('/admin');
-                } else {
+                } else if(user.profile.type == "User" && (deletedAt == null || deletedAt == '')) {
                     FlowRouter.go('/');
+                } else {
+                    document.getElementById('error-msg').innerHTML = "User not found";
                 }
             }
         });
