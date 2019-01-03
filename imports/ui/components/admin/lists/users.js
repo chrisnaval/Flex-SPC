@@ -8,6 +8,9 @@ Template.Users_list.onCreated(function() {
 					'profile.role.role': { 
 						$ne: "Super Administrator" 
 					},
+					'profile.deletedAt': { 
+						$eq: null
+					},
 					deletedAt: null,
 				}).fetch());
         });
@@ -20,6 +23,9 @@ Template.Users_list.onRendered(function() {
             Session.set('usersList', Meteor.users.find({
 					'profile.role.role': { 
 						$ne: "Super Administrator" 
+					},
+					'profile.deletedAt': { 
+						$eq: null
 					},
 					deletedAt: null,
 				}).fetch());
@@ -48,6 +54,9 @@ Template.Users_list.events({
 			'profile.role.role': { 
 				$ne: "Super Administrator" 
 			},
+			'profile.deletedAt': { 
+				$eq: null
+			},
 			deletedAt: null,
 		}).fetch());
 	},
@@ -68,6 +77,9 @@ Template.Users_list.events({
 			'profile.role.role': { 
 				$ne: "Super Administrator" 
 			},
+			'profile.deletedAt': { 
+				$eq: null
+			},
 			deletedAt: null,
 		}).fetch());
 	},
@@ -87,6 +99,9 @@ Template.Users_list.events({
 			},
 			'profile.role.role': { 
 				$ne: "Super Administrator" 
+			},
+			'profile.deletedAt': { 
+				$eq: null
 			},
 			deletedAt: null,
 		}).fetch());

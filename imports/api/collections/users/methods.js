@@ -38,9 +38,18 @@ Meteor.methods({
                         email: userData.emailAddress,
                         password: userData.password,
                         username: userData.username,
-                        profile: UserProfiles.findOne(userProfileId),
-                        updatedAt: new Date(),
-                        deletedAt: null,
+                        profile: UserProfiles.findOne(userProfileId)
+                    });
+
+                    var superAdmin = Meteor.users.findOne({
+                        'profile._id': userProfileId
+                    });
+
+                    Meteor.users.update({ _id: superAdmin._id }, {
+                        $set: {
+                            updatedAt: new Date(),
+                            deletedAt: null
+                        }
                     });
                 }
             });
@@ -82,6 +91,7 @@ Meteor.methods({
                             'emails.0.address': userData.emailAddress,
                             username: userData.username,
                             profile: UserProfiles.findOne(userProfileId),
+                            updatedAt: new Date()
                         }
                     });
                     
@@ -94,7 +104,7 @@ Meteor.methods({
     },
     'users.remove': function(userId) {
         try {
-            //Soft Delete for Configuration Collection
+            // Soft Delete for Configuration Collection
             Meteor.users.update({ _id: userId }, {
                 $set: {
                     deletedAt: new Date(),

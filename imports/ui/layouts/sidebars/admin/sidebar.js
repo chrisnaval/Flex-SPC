@@ -9,6 +9,11 @@ Template.Admin_sidebar.helpers({
 
 // Events
 Template.Admin_sidebar.events({
+    'click #logout-admin': function(event) {
+        event.preventDefault();
+        Meteor.logout();
+        FlowRouter.go('/login');
+    },
     'click .menu-item': function(event) {
         var elements = document.querySelector('.active');
 
