@@ -91,7 +91,7 @@ Meteor.methods({
     },
     'users.remove': function(userId) {
         try {
-            // Soft Delete for Configuration Collection
+            //Soft Delete for Configuration Collection
             Meteor.users.update({ _id: userId }, {
                 $set: {
                     deletedAt: new Date(),
