@@ -47,8 +47,8 @@ FlowRouter.route('/admin/role', {
     },
 });
 
-FlowRouter.route('/admin/user', {
-    name: 'admin-user-list-page',
+FlowRouter.route('/admin/users-list', {
+    name: 'admin-users-list-page',
     action() {
         if(Meteor.userId()) {
             BlazeLayout.render('Admin_home', {
@@ -62,7 +62,7 @@ FlowRouter.route('/admin/user', {
     },
 });
 
-FlowRouter.route('/admin/user/create', {
+FlowRouter.route('/admin/create-user', {
     name: 'admin-user-create-page',
     action() {
         if(Meteor.userId()) {
@@ -77,7 +77,7 @@ FlowRouter.route('/admin/user/create', {
     },
 });
 
-FlowRouter.route('/admin/user/update/:_id', {
+FlowRouter.route('/admin/edit-user/:_id', {
     name: 'admin-user-update-page',
     action() {
         if(Meteor.userId()) {

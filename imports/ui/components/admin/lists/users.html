@@ -11,39 +11,42 @@
                             <a href="">VIEW ALL</a>
                         </li>
                         <li>
-                            <a href="">TYPE</a>
+                            <a href="" id="logout-admin">ADMINISTRATORS</a>
                         </li>
                         <li>
-                            <a href="">COMPANIES</a>
-                        </li>
-                        <li>
-                            <a href="">LOCATION</a>
+                            <a href="">USERS</a>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="card">
-                <p id="error-msg" style="color: #F16362;"></p>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>Contact Number</th>
-                            <th>Address</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each users}}
-                        {{> User_data}}
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-footer">
+                <div class="card-body">
+                    <p id="error-msg" style="color: #F16362;"></p>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Address</th>
+                                <th>Contact No.</th>
+                                <th>Date Created</th>
+                                <th>Date Updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{ #each users }}
+                                {{> User_data}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
 
             </div>
+            <a href="/admin/create-user" class="float-adduser">
+                <i class="fa fa-plus my-float"></i>
+            </a>
         </div>
         <a href="/admin/user/create" class="float-adduser">
             <i class="fa fa-plus my-float"></i>
@@ -58,10 +61,12 @@
     <tr>
         <td>{{ profile.firstName }}</td>
         <td>{{ profile.lastName }}</td>
-        <td>{{ profile.contactNo }}</td>
         <td>{{ profile.address}}</td>
+        <td>{{ profile.contactNo }}</td>
+        <td>{{ createdAt }}</td>
+        <td>{{ profile.updatedAt }}</td>
         <td>
-            <a href="/admin/user/update/{{_id}}" class="icon icon-info" title="Edit User">
+            <a href="/admin/edit-user/{{_id}}" class="icon icon-info" title="Edit User">
                 <i class="fa fa-edit"></i>
             </a>
             <a href="javascript:void(0)" class="icon icon-danger remove-user" title="Remove User">

@@ -20,14 +20,15 @@ Meteor.methods({
         UserProfiles.schema.validate(userData.userProfile);
 
         try {
-            UserProfiles.insert({
+            return UserProfiles.insert({
                 firstName: userData.userProfile.firstName,
                 lastName: userData.userProfile.lastName,
-                contactNo: userData.userProfile.contactNo,
                 address: userData.userProfile.address,
+                contactNo: userData.userProfile.contactNo,
                 type: userData.userProfile.type,
                 role: userData.userProfile.role,
                 createdAt: new Date(),
+                updatedAt: new Date()
             }, function(error, userProfileId) {
                 if(error) {
                     throw new Meteor.Error('error', error.error);
@@ -45,33 +46,55 @@ Meteor.methods({
         }
     },
     'users.update': function(userId, userData) {
-        // check(userData, {
-        //     // userProfile: Object
-        // });
+        check(userData, {
+            username: String,
+            emailAddress: String,
+            password: String,
+            userProfile: Object
+        });
 
         // Validation of Data from the Client using the Collection's Schema
-        // UserProfiles.schema.validate(userData.userProfile);
+        UserProfiles.schema.validate(userData.userProfile);
 
         try {
             var user = Meteor.users.findOne({_id: userId});
             var userProfileId = user.profile._id;
 
-            return UserProfiles.insert({_id: userProfileId}, {
-                firstName: userData.userProfile.firstName,
-                lastName: userData.userProfile.lastName,
-                address: userData.userProfile.address,
-                contactNo: userData.userProfile.contactNo,
-                type: userData.userProfile.type,
-                role: userData.userProfile.role,
-                updatedAt: new Date(),
-            }, function(error, reponse) {
+            return UserProfiles.update({ _id:  userProfileId }, {
+                $set: {
+                    firstName: userData.userProfile.firstName,
+                    lastName: userData.userProfile.lastName,
+                    address: userData.userProfile.address,
+                    contactNo: userData.userProfile.contactNo,
+                    type: userData.userProfile.type,
+                    role: userData.userProfile.role,
+                    updatedAt: new Date(),
+                }
+            }, function(error, response) {
                 if(error) {
-                    console.log(reponse);
                     throw new Meteor.Error('error', error.error);
                 } else {
-                   Meteor.users.update({_id: userId}, {
-                        profile: UserProfiles.findOne(userProfileId),
+                    Meteor.users.update({ _id: userId }, {
+                        $set: {
+                            'emails.0.address': userData.emailAddress,
+                            username: userData.username,
+                            profile: UserProfiles.findOne(userProfileId),
+                        }
                     });
+                    
+                    Accounts.setPassword(userId, userData.password);
+                }
+            });
+        } catch(error) {
+            throw new Meteor.Error('error', error.error);
+        }
+    },
+    'users.remove': function(userId) {
+        try {
+            // Soft Delete for Configuration Collection
+            Meteor.users.update({ _id: userId }, {
+                $set: {
+                    deletedAt: new Date(),
                 }
             });
         } catch(error) {
