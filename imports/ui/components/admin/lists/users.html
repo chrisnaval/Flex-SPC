@@ -8,13 +8,13 @@
                 <div class="semi-nav-menu">
                     <ul>
                         <li class="active">
-                            <a href="">VIEW ALL</a>
+                            <a href="" id="view-all">VIEW ALL</a>
                         </li>
                         <li>
-                            <a href="" id="logout-admin">ADMINISTRATORS</a>
+                            <a href="" id="view-admins">ADMINISTRATORS</a>
                         </li>
                         <li>
-                            <a href="">USERS</a>
+                            <a href="" id="view-users">USERS</a>
                         </li>
                     </ul>
                 </div>
@@ -35,8 +35,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{ #each users }}
-                            {{> User_data}}
+                            {{#each users}}
+                                {{> User_data}}
                             {{/each}}
                         </tbody>
                     </table>

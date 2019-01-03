@@ -32,8 +32,8 @@ FlowRouter.route('/admin', {
     },
 });
 
-FlowRouter.route('/admin/role', {
-    name: 'admin-user-list-page',
+FlowRouter.route('/admin/roles-list', {
+    name: 'admin-roles-list-page',
     action() {
         if(Meteor.userId()) {
             BlazeLayout.render('Admin_home', {
