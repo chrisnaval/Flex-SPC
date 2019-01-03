@@ -28,7 +28,8 @@ Meteor.methods({
                 type: userData.userProfile.type,
                 role: userData.userProfile.role,
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                deletedAt: null
             }, function(error, userProfileId) {
                 if(error) {
                     throw new Meteor.Error('error', error.error);
@@ -38,6 +39,8 @@ Meteor.methods({
                         password: userData.password,
                         username: userData.username,
                         profile: UserProfiles.findOne(userProfileId),
+                        updatedAt: new Date(),
+                        deletedAt: null,
                     });
                 }
             });

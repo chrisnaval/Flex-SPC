@@ -59,7 +59,6 @@ Template.Users_create.events({
         var lastName = target.lastName.value;
         var address = target.address.value;
         var contactNo = target.contactNo.value;
-        var type = target.type.value;
         var emailAddress = target.emailAddress.value;
         var password = target.password.value;
         var confirmPassword = target.confirmPassword.value;

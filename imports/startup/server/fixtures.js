@@ -92,7 +92,8 @@ Meteor.startup(function() {
                             type: "Admin",
                             role,
                             createdAt: new Date(),
-                            updatedAt: new Date()
+                            updatedAt: new Date(),
+                            deletedAt: null
                         }, function(error, userProfileId) {
                             if(error) {
                                 throw new Meteor.Error('error', error.error);
@@ -100,8 +101,10 @@ Meteor.startup(function() {
                                 Accounts.createUser({
                                     email: "super-admin@email.com",
                                     password: "secret-passw0rt",
-                                    username: "admin",
-                                    profile: UserProfiles.findOne(userProfileId)
+                                    username: "super-admin",
+                                    profile: UserProfiles.findOne(userProfileId),
+                                    updatedAt: new Date(),
+                                    deletedAt: null,
                                 });
                             }
                         });
