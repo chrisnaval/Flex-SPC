@@ -102,9 +102,18 @@ Meteor.startup(function() {
                                     email: "super-admin@email.com",
                                     password: "secret-passw0rt",
                                     username: "super-admin",
-                                    profile: UserProfiles.findOne(userProfileId),
-                                    updatedAt: new Date(),
-                                    deletedAt: null,
+                                    profile: UserProfiles.findOne(userProfileId)
+                                });
+
+                                var superAdmin = Meteor.users.findOne({
+                                    'profile._id': userProfileId
+                                });
+
+                                Meteor.users.update({ _id: superAdmin._id }, {
+                                    $set: {
+                                        updatedAt: new Date(),
+                                        deletedAt: null
+                                    }
                                 });
                             }
                         });
