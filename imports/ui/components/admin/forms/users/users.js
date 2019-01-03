@@ -14,6 +14,7 @@ Template.Users_update.onCreated(function () {
     this.state.set('userId', FlowRouter.getParam('_id'));
 });
 
+// UserProfile instead of Meteor.users
 Template.Users_update.helpers({
     getUserById() {
         return Meteor.users.findOne({
@@ -58,6 +59,7 @@ Template.Users_create.events({
         var lastName = target.lastName.value;
         var address = target.address.value;
         var contactNo = target.contactNo.value;
+        var type = target.type.value;
         var emailAddress = target.emailAddress.value;
         var password = target.password.value;
         var confirmPassword = target.confirmPassword.value;
@@ -134,6 +136,7 @@ Template.Users_update.events({
 
         var firstName = target.firstName.value;
         var lastName = target.lastName.value;
+        var contactNo = target.contactNo.value;
         var address = target.address.value;
         var contactNo = target.contactNo.value;
         var emailAddress = target.emailAddress.value;

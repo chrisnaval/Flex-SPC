@@ -22,7 +22,6 @@ UserProfiles.schema = new SimpleSchema({
     },
     type: {
         type: String,
-        optional: true,
     },
     role: {
         type: Object,

@@ -66,6 +66,7 @@ Meteor.methods({
                     lastName: userData.userProfile.lastName,
                     address: userData.userProfile.address,
                     contactNo: userData.userProfile.contactNo,
+                    type: userData.userProfile.type,
                     role: userData.userProfile.role,
                     updatedAt: new Date(),
                 }
@@ -82,6 +83,18 @@ Meteor.methods({
                     });
                     
                     Accounts.setPassword(userId, userData.password);
+                }
+            });
+        } catch(error) {
+            throw new Meteor.Error('error', error.error);
+        }
+    },
+    'users.remove': function(userId) {
+        try {
+            //Soft Delete for Configuration Collection
+            Meteor.users.update({ _id: userId }, {
+                $set: {
+                    deletedAt: new Date(),
                 }
             });
         } catch(error) {

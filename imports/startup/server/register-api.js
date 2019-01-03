@@ -2,6 +2,7 @@
 
 // AppModules
 import '../../api/collections/appModules/server/publications.js';
+import '../../api/collections/appModules/appModules.js';
 
 // Configurations
 import '../../api/collections/configurations/methods.js';
@@ -18,12 +19,20 @@ import '../../api/collections/parameters/server/publications.js';
 import '../../api/collections/perItemTestResults/methods.js';
 import '../../api/collections/perItemTestResults/server/publications.js';
 
+// Permissions
+import '../../api/collections/permissions/methods.js';
+import '../../api/collections/permissions/server/publications.js';
+
 // PerSampleTestResults
 import '../../api/collections/perSampleTestResults/methods.js';
 import '../../api/collections/perSampleTestResults/server/publications.js';
 
 // Products
 import '../../api/collections/products/server/publications.js';
+
+// Roles
+import '../../api/collections/roles/methods.js';
+import '../../api/collections/roles/server/publications.js';
 
 // RolePermissions
 import '../../api/collections/rolePermissions/methods.js';
