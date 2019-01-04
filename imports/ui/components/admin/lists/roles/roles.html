@@ -1,0 +1,64 @@
+<template name="Roles_list">
+    <div class="wrap">
+        <div class="content-wrap page">
+            <div class="card search-bar">
+                <i class="fa fa-search" aria-hidden="true"></i><input type="text" name="search" class="form-control search">
+            </div>
+            <div class="semi-nav">
+                <div class="semi-nav-menu">
+                    <ul>
+                        <li class="active">
+                            <a href="" id="view-all">VIEW ALL</a>
+                        </li>
+                        <li>
+                            <a href="" id="view-admins">ADMINISTRATORS</a>
+                        </li>
+                        <li>
+                            <a href="" id="view-users">USERS</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <p id="error-msg" style="color: #F16362;"></p>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Role</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each roles}}
+                                {{> Roles_data}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                </div>
+            </div>
+        </div>
+        <a href="/admin/roles-create" class="float-adduser">
+            <i class="fa fa-plus my-float"></i>
+        </a>
+    </div>
+    {{> Delete_modal}}
+</template>
+
+<template name="Roles_data">
+    <tr>
+        <td>{{ role.role }}</td>
+        <td>{{ role.description }}</td>
+        <td>
+            <a href="/admin/edit-user/{{_id}}" class="icon icon-info" title="Edit User">
+                <i class="fa fa-edit"></i>
+            </a>
+            <a href="javascript:void(0)" class="icon icon-danger remove-user" title="Remove User">
+                <i class="fa fa-times"></i>
+            </a>
+        </td>
+    </tr>
+</template>
