@@ -4,7 +4,10 @@ import '../../modals/modals.js';
 Template.Users_list.onCreated(function() {
 	this.autorun(function() {
 		Meteor.subscribe('users.all', function() {
-            Session.set('usersList', Meteor.users.find({
+			var currentUser = Meteor.user();
+			
+			if(currentUser && currentUser.profile.role.role == "Super Administrator") {
+				Session.set('usersList', Meteor.users.find({
 					'profile.role.role': { 
 						$ne: "Super Administrator" 
 					},
@@ -13,6 +16,7 @@ Template.Users_list.onCreated(function() {
 					},
 					deletedAt: null,
 				}).fetch());
+			}
         });
 	});
 });
@@ -20,7 +24,10 @@ Template.Users_list.onCreated(function() {
 Template.Users_list.onRendered(function() {
 	this.autorun(function() {
 		Meteor.subscribe('users.all', function() {
-            Session.set('usersList', Meteor.users.find({
+            var currentUser = Meteor.user();
+			
+			if(currentUser && currentUser.profile.role.role == "Super Administrator") {
+				Session.set('usersList', Meteor.users.find({
 					'profile.role.role': { 
 						$ne: "Super Administrator" 
 					},
@@ -29,14 +36,42 @@ Template.Users_list.onRendered(function() {
 					},
 					deletedAt: null,
 				}).fetch());
+			}
         });
 	});
 });
 
 Template.Users_list.helpers({
+	isSuperAdmin() {
+		var user = Meteor.user();
+		
+		if(user && user.profile.role.role == "Super Administrator") {
+			return user.profile.role.role;
+		} else {
+			var viewUsers = document.getElementById('view-users');
+			
+			if(viewUsers) {
+				viewUsers.parentElement.classList.add('active');
+			}
+
+			// Retrieves all users with type "User" except "Super Administrator" - is set on Session variable
+			Session.set('usersList', Meteor.users.find({
+				'profile.type': { 
+					$eq: "User" 
+				},
+				'profile.role.role': { 
+					$ne: "Super Administrator" 
+				},
+				'profile.deletedAt': { 
+					$eq: null
+				},
+				deletedAt: null,
+			}).fetch());
+		}
+	},
 	users() {
 		return Session.get('usersList');
-	}
+	},
 });
 
 Template.Users_list.events({

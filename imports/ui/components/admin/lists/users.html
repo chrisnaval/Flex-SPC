@@ -7,12 +7,14 @@
             <div class="semi-nav">
                 <div class="semi-nav-menu">
                     <ul>
+                        {{#if isSuperAdmin}}
                         <li class="active">
                             <a href="" id="view-all">VIEW ALL</a>
                         </li>
                         <li>
                             <a href="" id="view-admins">ADMINISTRATORS</a>
                         </li>
+                        {{/if}}
                         <li>
                             <a href="" id="view-users">USERS</a>
                         </li>
@@ -27,10 +29,9 @@
                             <tr>
                                 <th>First Name</th>
                                 <th>Last Name</th>
-                                <th>Address</th>
-                                <th>Contact No.</th>
                                 <th>Date Created</th>
                                 <th>Date Updated</th>
+                                <th>User Type</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -57,10 +58,9 @@
     <tr>
         <td>{{ profile.firstName }}</td>
         <td>{{ profile.lastName }}</td>
-        <td>{{ profile.address}}</td>
-        <td>{{ profile.contactNo }}</td>
         <td>{{ createdAt }}</td>
-        <td>{{ profile.updatedAt }}</td>
+        <td>{{ updatedAt }}</td>
+        <td>{{ profile.type }}</td>
         <td>
             <a href="/admin/edit-user/{{_id}}" class="icon icon-info" title="Edit User">
                 <i class="fa fa-edit"></i>
