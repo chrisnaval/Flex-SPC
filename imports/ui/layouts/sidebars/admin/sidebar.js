@@ -1,5 +1,9 @@
 import './sidebar.html';
 
+Template.Admin_sidebar.onCreated(function() {
+    var currentRoutePath = FlowRouter.current().route.path;
+});
+
 // Helpers
 Template.Admin_sidebar.helpers({
     currentAdmin() {
@@ -16,7 +20,7 @@ Template.Admin_sidebar.events({
 	        if(error) {
 	            throw new Meteor.Error("Log out failed!");
 	        } else {
-	        	FlowRouter.go("/login");
+	        	FlowRouter.go('/login');
 	        }
     	});
     },
