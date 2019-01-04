@@ -18,6 +18,12 @@ import '../../../ui/layouts/sidebars/admin/sidebar.js';
 import '../../../ui/pages/admin/home/home.js';
 
 // Set up all routes for the admin side
+var adminRoutes = FlowRouter.group({
+    prefix: '/admin',
+    name: 'admin'
+});
+
+// Admin's Home Page (Dashboard)
 FlowRouter.route('/admin', {
     name: 'admin-home-page',
     action() {
@@ -33,7 +39,8 @@ FlowRouter.route('/admin', {
     },
 });
 
-FlowRouter.route('/admin/roles-create', {
+// Handling /admin/create-role
+adminRoutes.route('/create-role', {
     name: 'admin-roles-list-page',
     action() {
         if(Meteor.userId()) {
@@ -48,7 +55,8 @@ FlowRouter.route('/admin/roles-create', {
     },
 });
 
-FlowRouter.route('/admin/roles-list', {
+// Handling /admin/roles-list
+adminRoutes.route('/roles-list', {
     name: 'admin-roles-list-page',
     action() {
         if(Meteor.userId()) {
@@ -63,7 +71,8 @@ FlowRouter.route('/admin/roles-list', {
     },
 });
 
-FlowRouter.route('/admin/users-list', {
+// Handling /admin/users-list
+adminRoutes.route('/users-list', {
     name: 'admin-users-list-page',
     action() {
         if(Meteor.userId()) {
@@ -78,7 +87,8 @@ FlowRouter.route('/admin/users-list', {
     },
 });
 
-FlowRouter.route('/admin/create-user', {
+// Handling /admin/create-user
+adminRoutes.route('/create-user', {
     name: 'admin-user-create-page',
     action() {
         if(Meteor.userId()) {
@@ -93,7 +103,8 @@ FlowRouter.route('/admin/create-user', {
     },
 });
 
-FlowRouter.route('/admin/edit-user/:_id', {
+// Handling /admin/edit-user
+adminRoutes.route('/edit-user/:_id', {
     name: 'admin-user-update-page',
     action() {
         if(Meteor.userId()) {
