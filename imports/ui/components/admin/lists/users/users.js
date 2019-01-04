@@ -142,17 +142,23 @@ Template.Users_list.events({
 	'click .remove-user': function(event) {
 		event.preventDefault();
 
-		var modal = document.getElementById('myModal');
+		var modal = document.getElementById('deleteModal');
 		modal.style.display = 'block';
 		document.getElementById('delete_id').value = this._id;
 	},
 	'click .remove': function(event) {
 		event.preventDefault();
 
-		var _id = document.getElementById('delete_id').value;
-		document.getElementById('delete_id').value = '';
+		var userId = document.getElementById('delete_id').value;
 
-		var modal = document.getElementById('myModal');
+		Meteor.call('users.remove', userId, function(error) {
+            if(error) {
+                document.getElementById('error-msg').innerHTML = error.reason;
+            }
+		});
+
+		document.getElementById('delete_id').value = '';
+		var modal = document.getElementById('deleteModal');
 		modal.style.display = 'none';
-	},
+	}
 });

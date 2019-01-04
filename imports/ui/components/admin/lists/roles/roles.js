@@ -35,3 +35,28 @@ Template.Roles_list.helpers({
 		return Session.get('rolesList');
 	}
 });
+
+Template.Roles_list.events({
+    'click .remove-role': function() {
+        event.preventDefault();
+
+		var modal = document.getElementById('deleteModal');
+		modal.style.display = 'block';
+		document.getElementById('delete_id').value = this._id;
+    },
+    'click .remove': function(event) {
+		event.preventDefault();
+
+		var rolePermissionId = document.getElementById('delete_id').value;
+
+		Meteor.call('rolePermissions.remove', rolePermissionId, function(error) {
+            if(error) {
+                document.getElementById('error-msg').innerHTML = error.reason;
+            }
+		});
+
+		document.getElementById('delete_id').value = '';
+		var modal = document.getElementById('deleteModal');
+		modal.style.display = 'none';
+	}
+});
