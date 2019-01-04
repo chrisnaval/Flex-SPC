@@ -1,12 +1,10 @@
 import './configuration.html';
-
-// Components(s)
 import '../../components/modals/modals.js';
 
 // Events
 Template.Configuration.events({
     //tester
-    'click .chooseTester': function(event) {
+    'click .choose-tester': function(event) {
         event.preventDefault();
         var modal = document.getElementById('testerModal');
         modal.style.display = "block";
@@ -25,7 +23,7 @@ Template.Configuration.events({
     },
 
     //parameter
-    'click .chooseParameter': function(event) {
+    'click .choose-parameter': function(event) {
         event.preventDefault();
         var modal = document.getElementById('parameterModal');
         modal.style.display = "block";
@@ -44,7 +42,7 @@ Template.Configuration.events({
     },
 
     //product
-    'click .chooseProduct': function(event) {
+    'click .choose-product': function(event) {
         event.preventDefault();
         var modal = document.getElementById('productModal');
         modal.style.display = "block";
