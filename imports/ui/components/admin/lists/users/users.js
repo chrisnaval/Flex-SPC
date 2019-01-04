@@ -1,5 +1,5 @@
 import './users.html';
-import '../../modals/modals.js';
+import '../../../modals/modals.js';
 
 Template.Users_list.onCreated(function() {
 	this.autorun(function() {
