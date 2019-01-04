@@ -23,22 +23,4 @@ Permissions.schema = new SimpleSchema({
 	'permissions.$.permission': {
 		type: String
     },
-    // permissions: {
-	// 	type: Array,
-    //     optional: true,
-    // },
-    // permissions: {
-    //     type: Object,
-    //     blackbox: true,
-    //     optional: true,
-    // },
-    // 'permissions.module': {
-	// 	type: String
-	// },
-	// 'permissions.functionName': {
-	// 	type: String
-	// },
-	// 'permissions.permission': {
-	// 	type: String
-	// },
 });
