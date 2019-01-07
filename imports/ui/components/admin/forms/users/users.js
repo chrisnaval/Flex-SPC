@@ -97,7 +97,7 @@ Template.Users_create.events({
                 password: password,
                 userProfile
             };
-
+            console.log(userData);
             Meteor.call('users.insert', userData, function(error) {
                 if(error) {
                     document.getElementById('error-msg').innerHTML = error.reason;
@@ -143,6 +143,8 @@ Template.Users_update.events({
         var password = target.password.value;
         var confirmPassword = target.confirmPassword.value;
 
+        var type = target.type.value;
+
         var emailAddressFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
         if(!emailAddress.match(emailAddressFormat)) {
@@ -160,6 +162,7 @@ Template.Users_update.events({
                 lastName: lastName,
                 address: address,
                 contactNo: contactNo,
+                type: type,
                 role: {
                     _id: "",
                     role: "",
@@ -174,7 +177,6 @@ Template.Users_update.events({
             };
 
             var userId = FlowRouter.getParam("_id");
-
             Meteor.call('users.update', userId, userData, function(error) {
                 if(error) {
                     document.getElementById('error-msg').innerHTML = error.reason;

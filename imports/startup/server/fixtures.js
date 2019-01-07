@@ -89,7 +89,7 @@ Meteor.startup(function() {
                             lastName: "Administrator",
                             address: "Salinas Drive, Cebu City, Cebu, Philippines 6000",
                             contactNo: "09179244462",
-                            type: "Admin",
+                            type: "Super-Admin",
                             role,
                             createdAt: new Date(),
                             updatedAt: new Date(),
