@@ -20,13 +20,15 @@ Meteor.methods({
         UserProfiles.schema.validate(userData.userProfile);
 
         try {
+            var userRole = Roles.findOne({ role: userData.userProfile.role });
+
             return UserProfiles.insert({
                 firstName: userData.userProfile.firstName,
                 lastName: userData.userProfile.lastName,
                 address: userData.userProfile.address,
                 contactNo: userData.userProfile.contactNo,
                 type: userData.userProfile.type,
-                role: userData.userProfile.role,
+                role: userRole,
                 createdAt: new Date(),
                 updatedAt: new Date()
             }, function(error, userProfileId) {
@@ -38,6 +40,17 @@ Meteor.methods({
                         password: userData.password,
                         username: userData.username,
                         profile: UserProfiles.findOne(userProfileId),
+                    });
+
+                    var user = Meteor.users.findOne({
+                        'profile._id': userProfileId
+                    });
+
+                    Meteor.users.update({ _id: user._id }, {
+                        $set: {
+                            updatedAt: new Date(),
+                            deletedAt: null
+                        }
                     });
                 }
             });
@@ -57,7 +70,7 @@ Meteor.methods({
         UserProfiles.schema.validate(userData.userProfile);
 
         try {
-            var user = Meteor.users.findOne({_id: userId});
+            var user = Meteor.users.findOne({ _id: userId });
             var userProfileId = user.profile._id;
 
             return UserProfiles.update({ _id:  userProfileId }, {
@@ -70,7 +83,7 @@ Meteor.methods({
                     role: userData.userProfile.role,
                     updatedAt: new Date(),
                 }
-            }, function(error, response) {
+            }, function(error) {
                 if(error) {
                     throw new Meteor.Error('error', error.error);
                 } else {
@@ -79,6 +92,7 @@ Meteor.methods({
                             'emails.0.address': userData.emailAddress,
                             username: userData.username,
                             profile: UserProfiles.findOne(userProfileId),
+                            updatedAt: new Date()
                         }
                     });
                     

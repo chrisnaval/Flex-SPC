@@ -3,20 +3,43 @@ import './users.html';
 // Meteor Package(s)
 import { ReactiveDict } from 'meteor/reactive-dict';
 
+// Mongo Collection(s)
+import { Roles } from '/imports/api/collections/roles/roles.js';
+
 Template.Users_create.onCreated(function() {
+    Meteor.subscribe('roles.all');
+
     this.show = new ReactiveDict();
     this.show.set('showtable', false);
 });
 
 Template.Users_update.onCreated(function () {
     Meteor.subscribe('users.all');
+    Meteor.subscribe('roles.all');
 
     this.state = new ReactiveDict();
     this.state.set('userId', FlowRouter.getParam('_id'));
 });
 
-// UserProfile instead of Meteor.users
+// Template Helper(s)
+Template.Users_create.helpers({
+    roles() {
+        return Roles.find({
+            role: {
+                $ne: "Super Administrator"
+            },
+        });
+    },
+});
+
 Template.Users_update.helpers({
+    roles() {
+        return Roles.find({
+            role: {
+                $ne: "Super Administrator"
+            },
+        });
+    },
     getUserById() {
         return Meteor.users.findOne({
             _id: Template.instance().state.get('userId'),
@@ -67,6 +90,8 @@ Template.Users_create.events({
         var userType = target.userType;
         var userType = userType.options[userType.selectedIndex].value;
 
+        var role = target.role.value;
+
         var emailAddressFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
         if(!emailAddress.match(emailAddressFormat)) {
@@ -85,10 +110,7 @@ Template.Users_create.events({
                 address: address,
                 contactNo: contactNo,
                 type: userType,
-                role: {
-                    _id: "",
-                    role: "",
-                }
+                role: role
             };
             
             var userData = {
