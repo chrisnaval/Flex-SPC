@@ -165,6 +165,9 @@ Template.Users_update.events({
         var password = target.password.value;
         var confirmPassword = target.confirmPassword.value;
 
+        var type = target.type.value;
+        var role = target.role.value;
+
         var emailAddressFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
         if(!emailAddress.match(emailAddressFormat)) {
@@ -182,10 +185,8 @@ Template.Users_update.events({
                 lastName: lastName,
                 address: address,
                 contactNo: contactNo,
-                role: {
-                    _id: "",
-                    role: "",
-                }
+                type: type,
+                role: role
             };
             
             var userData = {
@@ -196,7 +197,6 @@ Template.Users_update.events({
             };
 
             var userId = FlowRouter.getParam("_id");
-
             Meteor.call('users.update', userId, userData, function(error) {
                 if(error) {
                     document.getElementById('error-msg').innerHTML = error.reason;

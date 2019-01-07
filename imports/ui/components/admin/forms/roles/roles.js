@@ -1,6 +1,6 @@
 import './roles.html'
 
-// Mpngo Collection(s)
+// Collection(s)
 import { AppModules } from '/imports/api/collections/appModules/appModules.js';
 
 Template.Roles_create.onCreated(function () {
@@ -83,7 +83,7 @@ Template.Roles_create.events({
         var role = {
             role: roles,
             description: descriptions
-        }
+        };
 
         for (var i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
@@ -91,6 +91,7 @@ Template.Roles_create.events({
                 var functionName = checkboxes[i].value.split('.')[1];
 
                 var permissionDatas = {
+                    name: "Issue Tracker",
                     module: modules,
                     functionName: functionName,
                     permission: permissions + '-' + modules + '.' + functionName
