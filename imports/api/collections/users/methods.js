@@ -28,13 +28,15 @@ Meteor.methods({
         } else {
             // Email can only create once, throw an error if the email is already exist
             if(!userExists) {
+                var userRole = Roles.findOne({ role: userData.userProfile.role });
+                
                 return UserProfiles.insert({
                     firstName: userData.userProfile.firstName,
                     lastName: userData.userProfile.lastName,
                     address: userData.userProfile.address,
                     contactNo: userData.userProfile.contactNo,
                     type: userData.userProfile.type,
-                    role: userData.userProfile.role,
+                    role: userRole,
                     createdAt: new Date(),
                     updatedAt: new Date()
                 }, function(error, userProfileId) {
@@ -46,6 +48,17 @@ Meteor.methods({
                             password: userData.password,
                             username: userData.username,
                             profile: UserProfiles.findOne(userProfileId),
+                        });
+
+                        var user = Meteor.users.findOne({
+                            'profile._id': userProfileId
+                        });
+    
+                        Meteor.users.update({ _id: user._id }, {
+                            $set: {
+                                updatedAt: new Date(),
+                                deletedAt: null
+                            }
                         });
                     }
                 });
@@ -73,7 +86,8 @@ Meteor.methods({
         } else {
 
             var user = Meteor.users.findOne({_id: userId});
-        var userProfileId = user.profile._id;
+            var userProfileId = user.profile._id;
+            var userRole = Roles.findOne({ role: userData.userProfile.role });
         
             return UserProfiles.update({ _id:  userProfileId }, {
                 $set: {
@@ -82,10 +96,10 @@ Meteor.methods({
                     address: userData.userProfile.address,
                     contactNo: userData.userProfile.contactNo,
                     type: userData.userProfile.type,
-                    role: userData.userProfile.role,
+                    role: userRole,
                     updatedAt: new Date(),
                 }
-            }, function(error, response) {
+            }, function(error) {
                 if(error) {
                     throw new Meteor.Error('error', error.error);
                 } else {
@@ -94,6 +108,7 @@ Meteor.methods({
                             'emails.0.address': userData.emailAddress,
                             username: userData.username,
                             profile: UserProfiles.findOne(userProfileId),
+                            updatedAt: new Date()
                         }
                     });
                     Accounts.setPassword(userId, userData.password);

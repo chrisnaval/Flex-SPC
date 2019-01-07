@@ -19,7 +19,7 @@ Template.Users_list.onCreated(function() {
 				viewAdmins: false,
 				viewUsers: false
 			});
-		} else if(user.profile.type == "Admin" && user.profile.role.role != "Super Administrator") {
+		} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 			this.state.set({
 				viewAll: false,
 				viewAdmins: true,
@@ -77,7 +77,7 @@ Template.Users_list.onCreated(function() {
 				} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 					Session.set('usersList', Meteor.users.find({
 						'profile.type': { 
-							$eq: "Admin" 
+							$eq: "admin" 
 						},
 						'profile.role.role': { 
 							$ne: "Super Administrator" 
@@ -110,7 +110,7 @@ Template.Users_list.onRendered(function() {
 				viewAdmins: false,
 				viewUsers: false
 			});
-		} else if(user.profile.type == "Admin" && user.profile.role.role != "Super Administrator") {
+		} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 			this.state.set({
 				viewAll: false,
 				viewAdmins: true,
@@ -138,10 +138,10 @@ Template.Users_list.onRendered(function() {
 					},
 					deletedAt: null,
 				}, { $sort : { createdAt: -1} }).fetch());
-			} else if(user.profile.type == "Admin" && user.profile.role.role != "Super Administrator") {
+			} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 				Session.set('usersList', Meteor.users.find({
 					'profile.type': { 
-						$eq: "Admin" 
+						$eq: "admin" 
 					},
 					'profile.role.role': { 
 						$ne: "Super Administrator" 
@@ -165,10 +165,10 @@ Template.Users_list.onRendered(function() {
 						},
 						deletedAt: null,
 					}, { $sort : { createdAt: -1} }).fetch());
-				} else if(user.profile.type == "Admin" && user.profile.role.role != "Super Administrator") {
+				} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 					Session.set('usersList', Meteor.users.find({
 						'profile.type': { 
-							$eq: "Admin" 
+							$eq: "admin" 
 						},
 						'profile.role.role': { 
 							$ne: "Super Administrator" 
@@ -200,7 +200,7 @@ Template.Users_list.helpers({
 		if(user) {
 			if(user.profile.role.role == "Super Administrator") {
 				return true;
-			} else if(user.profile.type == "Admin" && user.profile.role.role != "Super Administrator") {
+			} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 				var viewAdmins = document.getElementById('view-admins');
 				if(viewAdmins) {
 					viewAdmins.parentElement.classList.add('active');
@@ -215,7 +215,7 @@ Template.Users_list.helpers({
 		var instance = Template.instance();
 
 		if(user) {
-			if(user.profile.type == "Admin" && user.profile.role.role != "Super Administrator") {
+			if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 				if(instance.state.get('viewAdmin')) {
 					return !instance.state.get('viewAdmin');
 				} else if(instance.state.get('viewUsers')) {
@@ -223,7 +223,7 @@ Template.Users_list.helpers({
 				} else {
 					return false;
 				}
-			} else if(user.profile.type == "User") { 
+			} else if(user.profile.type == "user") { 
 				return false;
 			} else {
 				return true;
@@ -236,7 +236,7 @@ Template.User_data.helpers({
 	viewActions() {
 		var user = Meteor.user();
 		if(user) {
-			if(user.profile.type == "Admin" && user.profile.role.role != "Super Administrator") {
+			if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 				if(globalObj.viewAll) {
 					return !globalObj.viewAll;
 				} else if(globalObj.viewUsers) {
@@ -244,7 +244,7 @@ Template.User_data.helpers({
 				} else {
 					return false;
 				}
-			} else if(user.profile.type == "User") { 
+			} else if(user.profile.type == "user") { 
 				return false;
 			} else {
 				return true;
@@ -301,7 +301,7 @@ Template.Users_list.events({
 		// Retrieves all users with type "Admin" except "Super Administrator" - is set on Session variable
 		Session.set('usersList', Meteor.users.find({
 			'profile.type': { 
-				$eq: "Admin" 
+				$eq: "admin" 
 			},
 			'profile.role.role': { 
 				$ne: "Super Administrator" 
@@ -338,7 +338,7 @@ Template.Users_list.events({
 		// Retrieves all users with type "User" except "Super Administrator" - is set on Session variable
 		Session.set('usersList', Meteor.users.find({
 			'profile.type': { 
-				$eq: "User" 
+				$eq: "user" 
 			},
 			'profile.role.role': { 
 				$ne: "Super Administrator" 
