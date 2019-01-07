@@ -55,7 +55,8 @@ Meteor.startup(function() {
     if(Meteor.users.find().count() === 0) {
         Roles.insert({
             role: "Super Administrator",
-            description: "Super Administrator have access to all the admin-type application modules."
+            description: "Super Administrator have access to all the admin-type application modules.",
+            type: "admin"
         }, function(error, roleId) {
             if(error) {
                 throw new Meteor.Error('error', error.error);
@@ -89,7 +90,7 @@ Meteor.startup(function() {
                             lastName: "Administrator",
                             address: "Salinas Drive, Cebu City, Cebu, Philippines 6000",
                             contactNo: "09179244462",
-                            type: "Admin",
+                            type: "admin",
                             role,
                             createdAt: new Date(),
                             updatedAt: new Date(),

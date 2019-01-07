@@ -90,22 +90,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td class="role">Admin</td>
-                                                    <td>Access all</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="role">User</td>
-                                                    <td>can delete</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="role">Mini User</td>
-                                                    <td>View Only</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="role">Super User</td>
-                                                    <td>View and Edit</td>
-                                                </tr>
+                                                {{#each roles}}
+                                                    <tr>
+                                                        <td class="role">{{role}}</td>
+                                                        <td>{{description}}</td>
+                                                    </tr>
+                                                {{/each}}
                                             </tbody>
                                         </table>
                                     </div>
@@ -216,22 +206,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td class="role">Admin</td>
-                                                    <td>Access all</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="role">User</td>
-                                                    <td>can delete</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="role">Mini User</td>
-                                                    <td>View Only</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="role">Super User</td>
-                                                    <td>View and Edit</td>
-                                                </tr>
+                                                {{#each roles}}
+                                                    <tr>
+                                                        <td class="role">{{role}}</td>
+                                                        <td>{{description}}</td>
+                                                    </tr>
+                                                {{/each}}
                                             </tbody>
                                         </table>
                                     </div>

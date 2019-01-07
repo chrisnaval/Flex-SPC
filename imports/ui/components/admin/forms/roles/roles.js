@@ -1,6 +1,6 @@
 import './roles.html'
 
-// Collection(s)
+// Mpngo Collection(s)
 import { AppModules } from '/imports/api/collections/appModules/appModules.js';
 
 Template.Roles_create.onCreated(function () {
