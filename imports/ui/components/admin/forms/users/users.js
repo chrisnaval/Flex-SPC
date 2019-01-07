@@ -97,7 +97,6 @@ Template.Users_create.events({
                 password: password,
                 userProfile
             };
-            console.log(userData);
             Meteor.call('users.insert', userData, function(error) {
                 if(error) {
                     document.getElementById('error-msg').innerHTML = error.reason;
