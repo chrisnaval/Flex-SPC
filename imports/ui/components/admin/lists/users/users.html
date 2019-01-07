@@ -7,9 +7,11 @@
             <div class="semi-nav">
                 <div class="semi-nav-menu">
                     <ul>
-                        <li class="active">
-                            <a href="" id="view-all">VIEW ALL</a>
-                        </li>
+                        {{#if isSuperAdmin}}
+                            <li class="active">
+                                <a href="" id="view-all">VIEW ALL</a>
+                            </li>
+                        {{/if}}
                         <li>
                             <a href="" id="view-admins">ADMINISTRATORS</a>
                         </li>
@@ -30,7 +32,9 @@
                                 <th>Date Created</th>
                                 <th>Date Updated</th>
                                 <th>User Type</th>
-                                <th>Actions</th>
+                                {{#if viewActions}}
+                                    <th>Actions</th>
+                                {{/if}}
                             </tr>
                         </thead>
                         <tbody>
@@ -59,7 +63,7 @@
         <td>{{ createdAt }}</td>
         <td>{{ updatedAt }}</td>
         <td>{{ profile.type }}</td>
-        <!-- {{#if isSuperAdmin}} -->
+        {{#if viewActions}}
             <td>
                 <a href="/admin/edit-user/{{_id}}" class="icon icon-info" title="Edit User">
                     <i class="fa fa-edit"></i>
@@ -68,6 +72,6 @@
                     <i class="fa fa-times"></i>
                 </a>
             </td>
-        <!-- {{/if}} -->
+        {{/if}}
     </tr>
 </template>

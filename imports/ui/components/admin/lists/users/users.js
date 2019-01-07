@@ -6,10 +6,42 @@ import '../../../modals/modals.js';
 // Meteor Package(s)
 import { ReactiveDict } from 'meteor/reactive-dict';
 
+var globalObj = {};
+
 Template.Users_list.onCreated(function() {
 	this.state = new ReactiveDict();
 
+	var user = Meteor.user();
+	if(user && user.profile.role.role == "Super Administrator") {
+		this.state.set({
+			viewAll: true,
+			viewAdmins: false,
+			viewUsers: false
+		});
+	} else {
+		this.state.set({
+			viewAll: false,
+			viewAdmins: true,
+			viewUsers: false
+		});
+
+		var viewAdmins = document.getElementById('view-admins');
+		if(viewAdmins) {
+			viewAdmins.parentElement.classList.add('active');
+		}
+	}
+
 	this.autorun(function() {
+		Session.set('usersList', Meteor.users.find({
+			'profile.role.role': { 
+				$ne: "Super Administrator" 
+			},
+			'profile.deletedAt': { 
+				$eq: null
+			},
+			deletedAt: null,
+		}, { $sort : { createdAt: -1} }).fetch());
+
 		Meteor.subscribe('users.all', function() {
 			Session.set('usersList', Meteor.users.find({
 				'profile.role.role': { 
@@ -20,14 +52,50 @@ Template.Users_list.onCreated(function() {
 				},
 				deletedAt: null,
 			}, { $sort : { createdAt: -1} }).fetch());
-        });
+		});
 	});
 
-	this.state.set('usersList', Session.get('usersList'));
+	globalObj = {
+		viewAll: this.state.get('viewAll'),
+		viewAdmins: this.state.get('viewAdmins'),
+		viewUsers: this.state.get('viewUsers')
+	};
 });
 
 Template.Users_list.onRendered(function() {
+	this.state = new ReactiveDict();
+	
+	var user = Meteor.user();
+	if(user && user.profile.role.role == "Super Administrator") {
+		this.state.set({
+			viewAll: true,
+			viewAdmins: false,
+			viewUsers: false
+		});
+	} else {
+		this.state.set({
+			viewAll: false,
+			viewAdmins: true,
+			viewUsers: false
+		});
+
+		var viewAdmins = document.getElementById('view-admins');
+		if(viewAdmins) {
+			viewAdmins.parentElement.classList.add('active');
+		}
+	}
+
 	this.autorun(function() {
+		Session.set('usersList', Meteor.users.find({
+			'profile.role.role': { 
+				$ne: "Super Administrator" 
+			},
+			'profile.deletedAt': { 
+				$eq: null
+			},
+			deletedAt: null,
+		}, { $sort : { createdAt: -1} }).fetch());
+		
 		Meteor.subscribe('users.all', function() {
             Session.set('usersList', Meteor.users.find({
 				'profile.role.role': { 
@@ -38,29 +106,69 @@ Template.Users_list.onRendered(function() {
 				},
 				deletedAt: null,
 			}, { $sort : { createdAt: -1} }).fetch());
-        });
+		});
 	});
 
-	this.state.set('usersList', Session.get('usersList'));
+	globalObj = {
+		viewAll: this.state.get('viewAll'),
+		viewAdmins: this.state.get('viewAdmins'),
+		viewUsers: this.state.get('viewUsers')
+	};
 });
 
 // Template Helpers
 Template.Users_list.helpers({
 	users() {
-		var session = Session.get('usersList');
-		var instance = Template.instance().state.get('usersList');
-
-		return (instance !== null) ? instance : session; 
 		return Session.get('usersList');
 	},
+	isSuperAdmin() {
+		var user = Meteor.user();
+
+		if(user && user.profile.role.role == "Super Administrator") {
+			return true;
+		} else {
+			var viewAdmins = document.getElementById('view-admins');
+			if(viewAdmins) {
+				viewAdmins.parentElement.classList.add('active');
+			}
+		}
+	},
+	viewActions() {
+		var user = Meteor.user();
+		var instance = Template.instance();
+
+		if(user) {
+			if(user.profile.role.role == "Super Administrator" && instance.state.get('viewAll')) {
+				return instance.state.get('viewAll');
+			} else if(user.profile.type == "Admin") {
+				if(instance.state.get('viewAdmin')) {
+					return !instance.state.get('viewAdmin');
+				} else if(instance.state.get('viewUsers')) {
+					return instance.state.get('viewUsers');
+				} else {
+					return false;
+				}
+			} 
+		}
+	}, 
 });
 
 Template.User_data.helpers({
-	isSuperAdmin() {
+	viewActions() {
 		var user = Meteor.user();
-		
-		if(user && user.profile.role.role == "Super Administrator") {
-			return user.profile.role.role;
+
+		if(user) {
+			if(user.profile.role.role == "Super Administrator" && globalObj.viewAll) {
+				return globalObj.viewAll;
+			} else if(user.profile.type == "Admin") {
+				if(globalObj.viewAll) {
+					return !globalObj.viewAll;
+				} else if(globalObj.viewUsers) {
+					return globalObj.viewUsers;
+				} else {
+					return false;
+				}
+			} 
 		}
 	},
 });
@@ -86,8 +194,18 @@ Template.Users_list.events({
 			},
 			deletedAt: null,
 		}, { $sort : { createdAt: -1} }).fetch());
+		
+		instance.state.set({
+			viewAll: true,
+			viewAdmins: false,
+			viewUsers: false
+		});
 
-		instance.state.set('usersList', Session.get('usersList'));
+		globalObj = {
+			viewAll: instance.state.get('viewAll'),
+			viewAdmins: instance.state.get('viewAdmins'),
+			viewUsers: instance.state.get('viewUsers')
+		};
 	},
 	'click #view-admins': function(event, instance) {
 		event.target.parentElement.classList.add('active');
@@ -95,7 +213,9 @@ Template.Users_list.events({
 		var viewAll = document.getElementById('view-all');
 		var viewUsers = document.getElementById('view-users');
 		
-		viewAll.parentElement.classList.remove('active');
+		if(viewAll) {
+			viewAll.parentElement.classList.remove('active');
+		}
 		viewUsers.parentElement.classList.remove('active');
 
 		// Retrieves all users with type "Admin" except "Super Administrator" - is set on Session variable
@@ -112,7 +232,17 @@ Template.Users_list.events({
 			deletedAt: null,
 		}, { $sort : { createdAt: -1} }).fetch());
 
-		instance.state.set('usersList', Session.get('usersList'));
+		instance.state.set({
+			viewAll: false,
+			viewAdmins: true,
+			viewUsers: false
+		});
+
+		globalObj = {
+			viewAll: instance.state.get('viewAll'),
+			viewAdmins: instance.state.get('viewAdmins'),
+			viewUsers: instance.state.get('viewUsers')
+		};
 	},
 	'click #view-users': function(event, instance) {
 		event.target.parentElement.classList.add('active');
@@ -120,7 +250,9 @@ Template.Users_list.events({
 		var viewAll = document.getElementById('view-all');
 		var viewAdmins = document.getElementById('view-admins');
 		
-		viewAll.parentElement.classList.remove('active');
+		if(viewAll) {
+			viewAll.parentElement.classList.remove('active');
+		}
 		viewAdmins.parentElement.classList.remove('active');
 
 		// Retrieves all users with type "User" except "Super Administrator" - is set on Session variable
@@ -137,7 +269,17 @@ Template.Users_list.events({
 			deletedAt: null,
 		}, { $sort : { createdAt: -1} }).fetch());
 
-		instance.state.set('usersList', Session.get('usersList'));
+		instance.state.set({
+			viewAll: false,
+			viewAdmins: false,
+			viewUsers: true
+		});;
+
+		globalObj = {
+			viewAll: instance.state.get('viewAll'),
+			viewAdmins: instance.state.get('viewAdmins'),
+			viewUsers: instance.state.get('viewUsers')
+		};
 	},
 	'click .remove-user': function(event) {
 		event.preventDefault();
