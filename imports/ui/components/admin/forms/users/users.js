@@ -1,6 +1,6 @@
 import './users.html';
 
-
+// Meteor Package(s)
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 Template.Users_create.onCreated(function() {
@@ -103,7 +103,7 @@ Template.Users_create.events({
                     document.getElementById('error-msg').innerHTML = error.reason;
                 }
             });
-
+            
             FlowRouter.go('/admin/users-list');
         }
     },
