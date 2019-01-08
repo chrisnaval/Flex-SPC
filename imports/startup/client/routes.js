@@ -20,6 +20,37 @@ import '../../ui/pages/home/home.js';
 import '../../ui/pages/not-found/not-found.js';
 
 // Set up all routes in the app
+// Login
+FlowRouter.route('/login', {
+    name: 'login-page',
+    action() {
+        if(!Meteor.userId()) {
+            BlazeLayout.render('App_body', {
+                main: 'Auth_login_page',
+            });
+        } else {
+            var currentUser = Meteor.user();
+            if(currentUser) {
+                var currentUserType = currentUser.profile.type;
+
+                if(currentUserType == "user") {
+                    FlowRouter.go('/');
+                } else {
+                    FlowRouter.go('/admin');
+                }
+            }
+        }
+    },
+});
+// Not Found
+FlowRouter.notFound = {
+    action() {
+        BlazeLayout.render('App_body', {
+            main: 'App_notFound_page'
+        });
+    },
+};
+
 FlowRouter.route('/', {
     name: 'home-page',
     action() {
@@ -31,19 +62,6 @@ FlowRouter.route('/', {
             });
         } else {
             FlowRouter.go('/login');
-        }
-    },
-});
-
-FlowRouter.route('/login', {
-    name: 'login-page',
-    action() {
-        if(!Meteor.userId()) {
-            BlazeLayout.render('App_body', {
-                main: 'Auth_login_page',
-            });
-        } else {
-            FlowRouter.go('/');
         }
     },
 });
@@ -92,12 +110,3 @@ FlowRouter.route('/kanban', {
         }
     },
 });
-
-// Not Found
-FlowRouter.notFound = {
-    action() {
-        BlazeLayout.render('App_body', {
-            main: 'App_notFound_page'
-        });
-    },
-};

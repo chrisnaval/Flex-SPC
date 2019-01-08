@@ -5,14 +5,14 @@ Template.Admin_sidebar.onCreated(function() {
     var currentRoutePath = FlowRouter.current().route.path;
 });
 
-// Helpers
+// Template Helpers
 Template.Admin_sidebar.helpers({
     currentAdmin() {
         return Meteor.user();
     }
 });
 
-// Events
+// Template Events
 Template.Admin_sidebar.events({
     'click #logout-admin': function(event) {
         event.preventDefault();
