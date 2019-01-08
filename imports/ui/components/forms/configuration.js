@@ -70,7 +70,7 @@ Template.Configuration.events({
         const target = event.target.closest('tr');
         target.classList.add('selected');
     },
-    'submit .configuration-form': function(event) {
+    'submit form': function(event) {
         event.preventDefault();
         const target = event.target;
 
