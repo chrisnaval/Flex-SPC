@@ -1,9 +1,8 @@
 import './sidebar.html';
+
+// Component(s)
 import '../../../components/modals/modals.js';
 
-Template.Admin_sidebar.onCreated(function() {
-    var currentRoutePath = FlowRouter.current().route.path;
-});
 
 // Template Helpers
 Template.Admin_sidebar.helpers({
