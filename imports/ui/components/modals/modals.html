@@ -221,53 +221,55 @@
                 <h5>View Role</h5>
             </div>
             <div class="modal-body" style="height: 400px;">
-                <div class="card modal-card">
-                    <div class="row">
-                        <div class="col-6 form-inputs">
-                            <div class="card-body">
-                                <div class="forms">
-                                    <p id="error-msg" style="color: #F16362;"></p>
-                                    <div class="form-group">
-                                        <label>Role name</label>
-                                        <input type="text" class="form-control" name="roleName" value="{{getRolesData.role.role}}"
-                                            disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Description</label>
-                                        <textarea name="description" id="Description" rows="7" class="form-control"
-                                            value="{{getRolesData.role.description}}" disabled></textarea>
+                <div class="wrap">
+                    <div class="card modal-card">
+                        <div class="row">
+                            <div class="col-6 form-inputs">
+                                <div class="card-body">
+                                    <div class="forms">
+                                        <p id="error-msg" style="color: #F16362;"></p>
+                                        <div class="form-group">
+                                            <label>Role name</label>
+                                            <input type="text" class="form-control" name="roleName" value="{{getRolesData.role.role}}"
+                                                disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea name="description" id="Description" rows="7" class="form-control"
+                                                value="{{getRolesData.role.description}}" disabled></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-3 form-inputs" style="height: 307px;">
-                            <div class="card-body">
-                                <p></p>
-                                <p>Choose Usertype</p>
-                                <div class="form-group">
-                                    <select name="module" id="select_module" class="form-control" disabled>
-                                        <option value="admin">{{getRolesData.role.type}}</option>
-                                    </select>
-                                </div>
-                                <div class="module-list" style="margin-top: 20px;">
-                                    <table class="table table-hover">
-                                        <tbody>
-                                            {{#each getModule}}
-                                            <tr>
-                                                <td class="module" module-value="{{module}}">{{name}}</td>
-                                            </tr>
-                                            {{/each}}
-                                        </tbody>
-                                    </table>
+                            <div class="col-3 form-inputs" style="height: 307px;">
+                                <div class="card-body">
+                                    <p></p>
+                                    <p>Choose Usertype</p>
+                                    <div class="form-group">
+                                        <select name="module" id="select_module" class="form-control" disabled>
+                                            <option value="admin">{{getRolesData.role.type}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="module-list" style="margin-top: 20px;">
+                                        <table class="table table-hover">
+                                            <tbody>
+                                                {{#each getModule}}
+                                                <tr>
+                                                    <td class="module" module-value="{{module}}">{{name}}</td>
+                                                </tr>
+                                                {{/each}}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-3 form-role" id="or">
-                            <div class="card-body">
-                                <p></p>
-                                <p>Permissions</p>
-                                <div class="permission">
+                            <div class="col-3 form-role" id="or">
+                                <div class="card-body">
+                                    <p></p>
+                                    <p>Permissions</p>
+                                    <div class="permission">
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -299,7 +301,8 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label>First Name</label>
-                                                    <input type="text" class="form-control" name="firstName" value="{{getUserData.profile.firstName}}" disabled>
+                                                    <input type="text" class="form-control" name="firstName" value="{{getUserData.profile.firstName}}"
+                                                        disabled>
                                                 </div>
                                             </div>
                                             <div class="col-6">
