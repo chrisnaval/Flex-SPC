@@ -75,8 +75,8 @@ Template.Roles_list.events({
         var element_value = element[0].getAttribute('data-id');
         document.getElementById('roleId').value = element_value;
         Session.set('roleId', element_value)
-        // var modal = document.getElementById('role_fetch');
-        var modal = document.getElementById('read_user');
+        var modal = document.getElementById('role_fetch');
+        // var modal = document.getElementById('read_user');
 		modal.style.display = 'block';
     }
 });
