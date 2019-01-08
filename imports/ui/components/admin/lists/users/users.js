@@ -6,6 +6,7 @@ import '../../../modals/modals.js';
 // Meteor Package(s)
 import { ReactiveDict } from 'meteor/reactive-dict';
 
+// Global Object for View Navigation
 var globalObj = {};
 
 Template.Users_list.onCreated(function() {
@@ -46,7 +47,7 @@ Template.Users_list.onCreated(function() {
 						$eq: null
 					},
 					deletedAt: null,
-				}, { $sort : { createdAt: -1} }).fetch());
+				}, { sort: {createdAt: -1} }).fetch());
 			} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 				Session.set('usersList', Meteor.users.find({
 					'profile.type': { 
@@ -59,7 +60,7 @@ Template.Users_list.onCreated(function() {
 						$eq: null
 					},
 					deletedAt: null,
-				}, { $sort : { createdAt: -1} }).fetch());
+				}, { sort: {createdAt: -1} }).fetch());
 			}
 
 			// Subscription
@@ -73,7 +74,7 @@ Template.Users_list.onCreated(function() {
 							$eq: null
 						},
 						deletedAt: null,
-					}, { $sort : { createdAt: -1} }).fetch());
+					}, { sort: {createdAt: -1} }).fetch());
 				} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 					Session.set('usersList', Meteor.users.find({
 						'profile.type': { 
@@ -86,7 +87,7 @@ Template.Users_list.onCreated(function() {
 							$eq: null
 						},
 						deletedAt: null,
-					}, { $sort : { createdAt: -1} }).fetch());
+					}, { sort: {createdAt: -1} }).fetch());
 				}
 			});
 		}
@@ -137,7 +138,7 @@ Template.Users_list.onRendered(function() {
 						$eq: null
 					},
 					deletedAt: null,
-				}, { $sort : { createdAt: -1} }).fetch());
+				}, { sort: {createdAt: -1} }).fetch());
 			} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 				Session.set('usersList', Meteor.users.find({
 					'profile.type': { 
@@ -150,7 +151,7 @@ Template.Users_list.onRendered(function() {
 						$eq: null
 					},
 					deletedAt: null,
-				}, { $sort : { createdAt: -1} }).fetch());
+				}, { sort: {createdAt: -1} }).fetch());
 			}
 
 			// Subscription
@@ -164,7 +165,7 @@ Template.Users_list.onRendered(function() {
 							$eq: null
 						},
 						deletedAt: null,
-					}, { $sort : { createdAt: -1} }).fetch());
+					}, { sort: {createdAt: -1} }).fetch());
 				} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 					Session.set('usersList', Meteor.users.find({
 						'profile.type': { 
@@ -177,7 +178,7 @@ Template.Users_list.onRendered(function() {
 							$eq: null
 						},
 						deletedAt: null,
-					}, { $sort : { createdAt: -1} }).fetch());
+					}, { sort: {createdAt: -1} }).fetch());
 				}
 			});
 		}
@@ -273,7 +274,7 @@ Template.Users_list.events({
 				$eq: null
 			},
 			deletedAt: null,
-		}, { $sort : { createdAt: -1} }).fetch());
+		}, { sort: {createdAt: -1} }).fetch());
 		
 		instance.state.set({
 			viewAll: true,
@@ -310,7 +311,7 @@ Template.Users_list.events({
 				$eq: null
 			},
 			deletedAt: null,
-		}, { $sort : { createdAt: -1} }).fetch());
+		}, { sort: {createdAt: -1} }).fetch());
 
 		instance.state.set({
 			viewAll: false,
@@ -347,7 +348,7 @@ Template.Users_list.events({
 				$eq: null
 			},
 			deletedAt: null,
-		}, { $sort : { createdAt: -1} }).fetch());
+		}, { sort: {createdAt: -1} }).fetch());
 
 		instance.state.set({
 			viewAll: false,
