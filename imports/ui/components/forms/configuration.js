@@ -7,7 +7,7 @@ Template.Configuration.events({
     'click .choose-tester': function(event) {
         event.preventDefault();
         var modal = document.getElementById('testerModal');
-        modal.style.display = "block";
+        modal.style.display = 'block';
     },
     'click .select-tester': function(event) {
         event.preventDefault();
@@ -19,14 +19,14 @@ Template.Configuration.events({
         document.getElementById('tester_id').value = dataid;
 
         var modal = document.getElementById('testerModal');
-        modal.style.display = "none";
+        modal.style.display = 'none';
     },
 
     //parameter
     'click .choose-parameter': function(event) {
         event.preventDefault();
         var modal = document.getElementById('parameterModal');
-        modal.style.display = "block";
+        modal.style.display = 'block';
     },
     'click .select-params': function(event) {
         event.preventDefault();
@@ -38,14 +38,14 @@ Template.Configuration.events({
         document.getElementById('parameter_id').value = dataid;
 
         var modal = document.getElementById('parameterModal');
-        modal.style.display = "none";
+        modal.style.display = 'none';
     },
 
     //product
     'click .choose-product': function(event) {
         event.preventDefault();
         var modal = document.getElementById('productModal');
-        modal.style.display = "block";
+        modal.style.display = 'block';
     },
     'click .select-product': function(event) {
         event.preventDefault();
@@ -57,7 +57,7 @@ Template.Configuration.events({
         document.getElementById('product_id').value = dataid;
 
         var modal = document.getElementById('productModal');
-        modal.style.display = "none";
+        modal.style.display = 'none';
     },
     'click tr': function(event) {
         event.preventDefault();

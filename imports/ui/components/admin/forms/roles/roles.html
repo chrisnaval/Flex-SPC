@@ -23,13 +23,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3 form-inputs">
+                        <div class="col-3 form-inputs" style="height: 307px;">
                             <div class="card-body">
                                 <p></p>
-                                <p>Select Module</p>
+                                <p>Choose Usertype</p>
                                 <div class="form-group">
-                                    <select name="module" id="module" class="form-control">
-                                        <option value="" selected disabled>-- Choose Module --</option>
+                                    <select name="module" id="select_module" class="form-control">
                                         <option value="admin">Admin</option>
                                         <option value="user">User</option>
                                     </select>
@@ -40,14 +39,13 @@
                                             {{#if showAdmin}}
                                                 {{#each getModuleAdminType}}
                                                     <tr>
-                                                        <td class="role">{{module}}</td>
+                                                        <td class="module" module-value="{{module}}">{{name}}</td>
                                                     </tr>
                                                 {{/each}}
-                                            {{/if}}
-                                            {{#if showUser}}
+                                            {{else}}
                                                 {{#each getModuleUserType}}
                                                     <tr>
-                                                        <td class="role">{{module}}</td>
+                                                        <td class="module" module-value="{{module}}">{{name}}</td>
                                                     </tr>
                                                 {{/each}}
                                             {{/if}}
@@ -59,26 +57,14 @@
                         <div class="col-3 form-role" id="or">
                             <div class="card-body">
                                 <p></p>
-                                {{#if showAdmin}}
-                                    <div class="group">
-                                        {{#each getModuleAdminType}}
-                                        <div class="module" id="{{module}}" style="display:none;">
-                                            {{> Check_boxes}}
-                                        </div>
-                                        {{/each}}
-                                    </div>
-                                {{/if}}
-                                {{#if showUser}}
-                                    <div class="group">
-                                        {{#each getModuleUserType}}
-                                        <div class="module" id="{{module}}" style="display:none;">
-                                            {{> Check_boxes}}
-                                        </div>
-                                        {{/each}}
-                                    </div>
-                                {{/if}}
+                                <p>Permissions</p>
+                                <div class="permission">
+
+                                </div>
+                                {{> Check_boxes}}
                                 <div class="submit-button">
-                                    <button class="button success">Submit</button>
+                                    <button class="button submit create-user-form">Create</button>
+                                    <button class="button cancel create-user-form">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +80,7 @@
         <div class="form-group">
             <p>CREATE</p>
             <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" id="togBtn" value="{{module}}.create">
+                <input type="checkbox" class="functionName" id="togBtn" value="create">
                 <div class="slider round">
                     <span class="on">ON</span>
                     <span class="off">OFF</span>
@@ -104,7 +90,7 @@
         <div class="form-group">
             <p>VIEW</p>
             <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" id="togBtn" value="{{module}}.read">
+                <input type="checkbox" class="functionName" id="togBtn" value="read">
                 <div class="slider round">
                     <span class="on">ON</span>
                     <span class="off">OFF</span>
@@ -114,7 +100,7 @@
         <div class="form-group">
             <p>EDIT</p>
             <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" id="togBtn" value="{{module}}.update">
+                <input type="checkbox" class="functionName" id="togBtn" value="update">
                 <div class="slider round">
                     <span class="on">ON</span>
                     <span class="off">OFF</span>
@@ -124,7 +110,7 @@
         <div class="form-group">
             <p>DELETE</p>
             <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" id="togBtn" value="{{module}}.delete">
+                <input type="checkbox" class="functionName" id="togBtn" value="delete">
                 <div class="slider round">
                     <span class="on">ON</span>
                     <span class="off">OFF</span>
