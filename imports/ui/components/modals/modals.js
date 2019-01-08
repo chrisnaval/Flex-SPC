@@ -80,6 +80,17 @@ Template.Read_role.events({
         modal.style.display = 'none';
     },
 });
+
+//read user
+Template.Read_user.helpers({
+    getUserData() {
+        var userId = Session.get('userId');
+
+        return Meteor.users.findOne({
+            _id: userId,
+        });
+    }
+});
 Template.Read_user.events({
     'click .close-toggle': function() {
         var modal = document.getElementById('read_user');

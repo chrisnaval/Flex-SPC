@@ -61,11 +61,12 @@
         </a>
     </div>
     {{> Delete_modal}}
+    {{> Read_user}}
 </template>
 
 <!-- list of user data-->
 <template name="User_data">
-    <tr>
+    <tr class="user-list" data-id="{{_id}}">
         <td>{{ profile.firstName }}</td>
         <td>{{ profile.lastName }}</td>
         <td>{{ formatDate createdAt }}</td>
