@@ -33,6 +33,12 @@ UserProfiles.schema = new SimpleSchema({
     'role.role': {
         type: String,
     },
+    'role.description': {
+        type: String,
+    },
+    'role.type': {
+        type: String,
+    },
     createdAt: {
         type: Date,
         optional: true,

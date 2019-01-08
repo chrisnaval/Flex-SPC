@@ -6,29 +6,84 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 // Mongo Collection(s)
 import { Roles } from '/imports/api/collections/roles/roles.js';
 
+// Template Created
 Template.Users_create.onCreated(function() {
-    Meteor.subscribe('roles.all');
-
     this.show = new ReactiveDict();
     this.show.set('showtable', false);
+
+    // Autorun
+    this.autorun(function() {
+        Meteor.subscribe('roles.all', function() {
+            Session.set('roles', Roles.find({
+                role: {
+                    $ne: "Super Administrator"
+                },
+                type: {
+                    $eq: "admin"
+                }
+            }).fetch());
+        });
+    });
 });
 
 Template.Users_update.onCreated(function () {
-    Meteor.subscribe('users.all');
-    Meteor.subscribe('roles.all');
-
     this.state = new ReactiveDict();
     this.state.set('userId', FlowRouter.getParam('_id'));
+
+    // Autorun
+    this.autorun(function() {
+        Meteor.subscribe('users.all');
+        Meteor.subscribe('roles.all', function() {
+            Session.set('roles', Roles.find({
+                role: {
+                    $ne: "Super Administrator"
+                },
+                type: {
+                    $eq: "admin"
+                }
+            }).fetch());
+        });
+    });
+});
+
+// Template Rendered
+Template.Users_create.onRendered(function() {
+     // Autorun
+     this.autorun(function() {
+        Meteor.subscribe('roles.all', function() {
+            Session.set('roles', Roles.find({
+                role: {
+                    $ne: "Super Administrator"
+                },
+                type: {
+                    $eq: "admin"
+                }
+            }).fetch());
+        });
+    });
+});
+
+Template.Users_update.onRendered(function() {
+     // Autorun
+     this.autorun(function() {
+        Meteor.subscribe('users.all');
+        Meteor.subscribe('roles.all', function() {
+            Session.set('roles', Roles.find({
+                role: {
+                    $ne: "Super Administrator"
+                },
+                type: {
+                    $eq: "admin"
+                }
+            }).fetch());
+        });
+    });
 });
 
 // Template Helper(s)
 Template.Users_create.helpers({
     roles() {
-        return Roles.find({
-            role: {
-                $ne: "Super Administrator"
-            },
-        });
+        return Session.get('roles');
     },
 });
 
@@ -55,6 +110,30 @@ Template.Users_update.helpers({
 });
 
 Template.Users_create.events({
+    'change #user-type': function(event) {
+        const target = event.target;
+
+        var userType = target.options[target.selectedIndex].value;
+        if(userType == "admin") {
+            Session.set('roles', Roles.find({
+                role: {
+                    $ne: "Super Administrator"
+                },
+                type: {
+                    $eq: "admin"
+                }
+            }).fetch());
+        } else {
+            Session.set('roles', Roles.find({
+                role: {
+                    $ne: "Super Administrator"
+                },
+                type: {
+                    $eq: "user"
+                }
+            }).fetch());
+        }
+    },
     'click .choose': function(event, template) {
         event.preventDefault();
         template.show.set('showtable', true);
@@ -104,13 +183,16 @@ Template.Users_create.events({
             var username = emailAddress.split("@");
             username = username[0];
 
+            // Find specific role to get the whole document
+            role = Roles.findOne({ role: role });
+
             var userProfile = {
                 firstName: firstName,
                 lastName: lastName,
                 address: address,
                 contactNo: contactNo,
                 type: userType,
-                role: role
+                role
             };
             
             var userData = {
@@ -180,13 +262,16 @@ Template.Users_update.events({
             var username = emailAddress.split("@");
             username = username[0];
 
+            // Find specific role to get the whole document
+            role = Roles.findOne({ role: role });
+
             var userProfile = {
                 firstName: firstName,
                 lastName: lastName,
                 address: address,
                 contactNo: contactNo,
                 type: type,
-                role: role
+                role
             };
             
             var userData = {
