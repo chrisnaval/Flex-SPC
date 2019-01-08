@@ -60,9 +60,9 @@
     <tr>
         <td>{{ profile.firstName }}</td>
         <td>{{ profile.lastName }}</td>
-        <td>{{ createdAt }}</td>
-        <td>{{ updatedAt }}</td>
-        <td>{{ profile.type }}</td>
+        <td>{{ formatDate createdAt }}</td>
+        <td>{{ formatDate updatedAt }}</td>
+        <td>{{ ucFirst profile.type }}</td>
         {{#if viewActions}}
             <td>
                 <a href="/admin/edit-user/{{_id}}" class="icon icon-info" title="Edit User">

@@ -15,28 +15,27 @@ Meteor.methods({
             password: String,
             userProfile: Object
         });
-
         // Validation of Data from the Client using the Collection's Schema
         UserProfiles.schema.validate(userData.userProfile);
 
-        var currentUserType = Meteor.user().profile.type;
-        var userExists = Accounts.findUserByEmail(userData.emailAddress);
-
-        // Validation of Super admin can only create another admin, and admin can only create user
-        if(currentUserType == "admin" && userData.userProfile.type == "admin") {
-            throw new Meteor.Error("Create-error", "Super Admin can only create another admin");
+        var currentUser = Meteor.user();
+        // Get the current user's type and role for validating insertion purpose
+        var currentUserType = currentUser.profile.type;
+        var currentUserRole = currentUser.profile.role.role;
+        
+        if(currentUserType == "admin" && currentUserRole != "Super Administrator" && userData.userProfile.type == "admin") {
+            throw new Meteor.Error("Create-error", "Admin can only create user-type user");
         } else {
-            // Email can only create once, throw an error if the email is already exist
+            // The email address must be unique
+            var userExists = Accounts.findUserByEmail(userData.emailAddress);
             if(!userExists) {
-                var userRole = Roles.findOne({ role: userData.userProfile.role });
-                
                 return UserProfiles.insert({
                     firstName: userData.userProfile.firstName,
                     lastName: userData.userProfile.lastName,
                     address: userData.userProfile.address,
                     contactNo: userData.userProfile.contactNo,
                     type: userData.userProfile.type,
-                    role: userRole,
+                    role: userData.userProfile.role,
                     createdAt: new Date(),
                     updatedAt: new Date()
                 }, function(error, userProfileId) {
@@ -74,20 +73,19 @@ Meteor.methods({
             password: String,
             userProfile: Object
         });
-
         // Validation of Data from the Client using the Collection's Schema
         UserProfiles.schema.validate(userData.userProfile);
 
-        var currentUserType = Meteor.user().profile.type;
+        var currentUser = Meteor.user();
+        // Get the current user's type and role for validating insertion purpose
+        var currentUserType = currentUser.profile.type;
+        var currentUserRole = currentUser.profile.role.role;
         
-        // Validation of Super admin can only create another admin, and admin can only create user
-        if(currentUserType == "admin" && userData.userProfile.type == "admin") {
-            throw new Meteor.Error("Create-error", "Super Admin can only edit another admin");
+        if(currentUserType == "admin" && currentUserRole != "Super Administrator" && userData.userProfile.type == "admin") {
+            throw new Meteor.Error('create-error', 'Admin can only create user-type user');
         } else {
-
             var user = Meteor.users.findOne({_id: userId});
             var userProfileId = user.profile._id;
-            var userRole = Roles.findOne({ role: userData.userProfile.role });
         
             return UserProfiles.update({ _id:  userProfileId }, {
                 $set: {
@@ -96,7 +94,7 @@ Meteor.methods({
                     address: userData.userProfile.address,
                     contactNo: userData.userProfile.contactNo,
                     type: userData.userProfile.type,
-                    role: userRole,
+                    role: userData.userProfile.role,
                     updatedAt: new Date(),
                 }
             }, function(error) {
@@ -117,20 +115,23 @@ Meteor.methods({
         }
     },
     'users.remove': function(userId) {
+        var currentUser = Meteor.user();
+        // Get the current user's type and role for validating deletion purpose
+        var currentUserType = currentUser.profile.type;
+        var currentUserRole = currentUser.profile.role.role;
 
-        var currentUserType = Meteor.user().profile.type;
-        var type = Meteor.users.findOne({'profile.type': "admin"});
+        // Get the user to identify its type before deletion
+        var user = Meteor.users.findOne({ _id: userId });
 
-
-        if(currentUserType == "admin" && type) {
-            throw new Meteor.Error("Create-error", "Super Admin can only delete another admin");
+        if(currentUserType == "admin" && currentUserRole != "Super Administrator" && user.profile.type == "admin") {
+            throw new Meteor.Error('delete-error', 'Admin can only delete user-type user');
         } else {
-        //Soft Delete for Configuration Collection
-        Meteor.users.update({ _id: userId }, {
-            $set: {
-                deletedAt: new Date(),
-            }
-        });
+            // Soft Delete
+            Meteor.users.update({ _id: userId }, {
+                $set: {
+                    deletedAt: new Date(),
+                }
+            });
         }
     }
 });
