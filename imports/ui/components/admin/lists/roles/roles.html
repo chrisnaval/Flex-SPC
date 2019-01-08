@@ -46,10 +46,12 @@
         </a>
     </div>
     {{> Delete_modal}}
+    <!-- {{> Read_role}} -->
+    {{> Read_user}}
 </template>
 
 <template name="Roles_data">
-    <tr>
+    <tr class="role-list" data-id="{{_id}}">
         <td>{{ role.role }}</td>
         <td>{{ role.description }}</td>
         <td>

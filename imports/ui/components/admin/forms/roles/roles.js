@@ -6,13 +6,16 @@ import { AppModules } from '/imports/api/collections/appModules/appModules.js';
 Template.Roles_create.onCreated(function () {
     Meteor.subscribe('appModules.all');
 
-    this.module = new ReactiveDict();
-    this.module.set('showAdminModule', false);
-    this.module.set('showUserModule', false);
-    this.module.set('showRadioButtons', false);
+    this.reactive = new ReactiveDict();
+
+    this.reactive.set({
+        showAdminModule: true,
+        showUserModule: false,
+        showRadioButtons: false,
+        permissions:[]
+    });
 });
 
-// UserProfile instead of Meteor.users
 Template.Roles_create.helpers({
     getModuleAdminType() {
         return AppModules.find({
@@ -25,13 +28,13 @@ Template.Roles_create.helpers({
         });
     },
     showAdmin() {
-        return Template.instance().module.get('showAdminModule');
+        return Template.instance().reactive.get('showAdminModule');
     },
     showUser() {
-        return Template.instance().module.get('showUserModule');
+        return Template.instance().reactive.get('showUserModule');
     },
     showRadio() {
-        return Template.instance().module.get('showRadioButtons');
+        return Template.instance().reactive.get('showRadioButtons');
     }
 });
 
@@ -39,24 +42,20 @@ Template.Roles_create.events({
     'change select': function (event, template) {
         event.preventDefault();
 
-        var selectModule = document.getElementById('module').value;
+        var selectModule = document.getElementById('select_module').value;
 
-        if (selectModule === 'admin') {
-            template.module.set('showAdminModule', true);
-            template.module.set('showUserModule', false);
+        if (selectModule === 'user') {
+            template.reactive.set('showAdminModule', false);
+            template.reactive.set('showUserModule', true);
         } else {
-            template.module.set('showUserModule', true);
-            template.module.set('showAdminModule', false);
+            template.reactive.set('showUserModule', false);
+            template.reactive.set('showAdminModule', true);
         }
     },
-    'click tr': function (event) {
+    'click tr': function (event, instance) {
         event.preventDefault();
-        var modules = document.getElementsByClassName('module');
-        var tar = document.getElementsByTagName('tr');
 
-        for (var m = 0; m < modules.length; m++) {
-            modules[m].style.display = 'none';
-        }
+        var tar = document.getElementsByTagName('tr');
 
         for (var i = 0; i < tar.length; i++) {
             tar[i].classList.remove('selected');
@@ -66,8 +65,18 @@ Template.Roles_create.events({
         target.classList.add('selected');
 
         var data = document.getElementsByClassName('selected');
-        var data_value = data[0].getElementsByClassName('role')[0].innerText;
-        document.getElementById(data_value).style.display = 'block';
+        var module = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
+        var permissions = {
+            module: module,
+        }
+        var radioElement = document.getElementsByClassName('functionName');
+        for (var i = 0; i < radioElement.length; i++) {
+            if (radioElement[i].checked) {
+                console.log(radioElement[i].value);
+            }
+        }
+        console.log(permissions);
+
     },
     'submit form': function (event) {
         event.preventDefault();

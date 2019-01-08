@@ -1,9 +1,16 @@
 import './modals.html';
 
+//packages
+import { Session } from 'meteor/session'
+
 //api imports
+import { AppModules } from '/imports/api/collections/appModules/appModules.js';
+import { RolePermissions } from '/imports/api/collections/rolePermissions/rolePermissions.js';
 import { Testers } from '/imports/api/collections/testers/testers.js';
 import { Parameters } from '/imports/api/collections/parameters/parameters.js';
 import { Products } from '/imports/api/collections/products/products.js';
+
+
 
 //custom dashboard
 Template.Custom_dashboard.events({
@@ -39,6 +46,45 @@ Template.Delete_modal.events({
         var modal = document.getElementById('deleteModal');
         modal.style.display = 'none';
     }
+});
+
+//fetch role
+Template.Read_role.onCreated(function () {
+    Meteor.subscribe('appModules.all');
+});
+Template.Read_role.helpers({
+    getRolesData() {
+        var roleId = Session.get('roleId');
+
+        return RolePermissions.findOne({
+            _id: roleId
+        });
+    },
+    getModule() {
+        var roleId = Session.get('roleId');
+
+        var getModule = RolePermissions.findOne({
+            _id: roleId
+        });
+
+        var type = getModule.role.role;
+        return  AppModules.find({
+            type: type
+        });
+    },
+});
+
+Template.Read_role.events({
+    'click .close-toggle': function() {
+        var modal = document.getElementById('role_fetch');
+        modal.style.display = 'none';
+    },
+});
+Template.Read_user.events({
+    'click .close-toggle': function() {
+        var modal = document.getElementById('read_user');
+        modal.style.display = 'none';
+    },
 });
 
 //tester

@@ -1,4 +1,5 @@
 import './sidebar.html';
+import '../../../components/modals/modals.js';
 
 Template.Admin_sidebar.onCreated(function() {
     var currentRoutePath = FlowRouter.current().route.path;
@@ -33,5 +34,11 @@ Template.Admin_sidebar.events({
         }
 
         event.target.parentElement.classList.add('active');
+    },
+    'click #change_pass': function(event) {
+        event.preventDefault();
+
+        var modal = document.getElementById('changePassword');
+		modal.style.display = 'block';
     }
 });
