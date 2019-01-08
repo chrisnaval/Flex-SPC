@@ -40,14 +40,12 @@
                                 <th>Date Created</th>
                                 <th>Date Updated</th>
                                 <th>User Type</th>
-                                {{#if viewActions}}
-                                <th>Actions</th>
-                                {{/if}}
+                                {{#if viewActions}}<th>Actions</th>{{/if}}
                             </tr>
                         </thead>
                         <tbody>
                             {{#each users}}
-                            {{> User_data}}
+                                {{> User_data}}
                             {{/each}}
                         </tbody>
                     </table>

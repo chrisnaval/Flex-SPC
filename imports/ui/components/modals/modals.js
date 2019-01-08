@@ -49,18 +49,18 @@ Template.Read_role.helpers({
         var roleId = Session.get('roleId');
 
         return RolePermissions.findOne({
-            _id: roleId
+            'role._id': roleId
         });
     },
     getModule() {
-        var roleId = Session.get('roleId');
+        var rolePermissionId = Session.get('rolePermissionId');
 
         var getModule = RolePermissions.findOne({
-            _id: roleId
+            _id: rolePermissionId
         });
 
         var type = getModule.role.role;
-        return  AppModules.find({
+        return AppModules.find({
             type: type
         });
     },

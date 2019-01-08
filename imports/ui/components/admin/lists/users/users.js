@@ -4,7 +4,9 @@ import './users.html';
 import '../../../modals/modals.js';
 
 // Meteor Package(s)
+import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
+
 
 // Global Object for View Navigation
 var globalObj = {};
@@ -212,9 +214,8 @@ Template.Users_list.helpers({
 		}
 	},
 	viewActions() {
-		var user = Meteor.user();
 		var instance = Template.instance();
-
+		var user = Meteor.user();
 		if(user) {
 			if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 				if(instance.state.get('viewAdmin')) {
@@ -299,7 +300,7 @@ Template.Users_list.events({
 		}
 		viewUsers.parentElement.classList.remove('active');
 
-		// Retrieves all users with type "Admin" except "Super Administrator" - is set on Session variable
+		// Retrieves all users with type "admin" except "Super Administrator" - is set on Session variable
 		Session.set('usersList', Meteor.users.find({
 			'profile.type': { 
 				$eq: "admin" 
@@ -336,7 +337,7 @@ Template.Users_list.events({
 		}
 		viewAdmins.parentElement.classList.remove('active');
 
-		// Retrieves all users with type "User" except "Super Administrator" - is set on Session variable
+		// Retrieves all users with type "user" except "Super Administrator" - is set on Session variable
 		Session.set('usersList', Meteor.users.find({
 			'profile.type': { 
 				$eq: "user" 
