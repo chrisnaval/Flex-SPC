@@ -7,8 +7,16 @@
             <div class="semi-nav">
                 <div class="semi-nav-menu">
                     <ul>
-                        <li class="active">
-                            <a href="" id="view-all">VIEW ALL</a>
+                        {{#if isSuperAdmin}}
+                            <li class="active">
+                                <a href="" id="view-all">VIEW ALL</a>
+                            </li>
+                        {{/if}}
+                        <li>
+                            <a href="" id="view-admins">ADMINISTRATORS</a>
+                        </li>
+                        <li>
+                            <a href="" id="view-users">USERS</a>
                         </li>
                         <li style="float:right">
                             <div class="header-search align-right">
@@ -18,12 +26,6 @@
                                 </a>
                             </div>
                         </li>
-                        <!-- <li>
-                            <a href="" id="view-admins">ADMINISTRATORS</a>
-                        </li>
-                        <li>
-                            <a href="" id="view-users">USERS</a>
-                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -35,12 +37,13 @@
                             <tr>
                                 <th>Role</th>
                                 <th>Description</th>
-                                <th>Actions</th>
+                                <th>Role Type</th>
+                                {{#if viewActions}}<th>Actions</th>{{/if}}
                             </tr>
                         </thead>
                         <tbody>
                             {{#each roles}}
-                            {{> Roles_data}}
+                                {{> Roles_data}}
                             {{/each}}
                         </tbody>
                     </table>
@@ -53,19 +56,24 @@
             <i class="fa fa-plus my-float"></i>
         </a>
     </div>
-    {{> Delete_modal}}
-    {{> Read_role}}
-    <!-- {{> Read_user}} -->
+    <!-- {{> Delete_modal}}
+    {{> Read_role}} -->
 </template>
 
 <template name="Roles_data">
     <tr class="role-list" data-id="{{_id}}">
-        <td>{{ role.role }}</td>
-        <td>{{ role.description }}</td>
+        <td>{{ role }}</td>
+        <td>{{ description }}</td>
+        <td>{{ ucFirst type }}</td>
+        {{#if viewActions}}
         <td>
-            <a href="javascript:void(0)" class="icon icon-danger remove-role" title="Remove role">
+            <a href="/admin/edit-role/{{_id}}" class="icon icon-info" title="Edit Role">
+                <i class="fa fa-edit"></i>
+            </a>
+            <a href="javascript:void(0)" class="icon icon-danger remove-role" title="Remove Role">
                 <i class="fa fa-times"></i>
             </a>
         </td>
+        {{/if}}
     </tr>
 </template>
