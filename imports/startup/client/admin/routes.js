@@ -28,11 +28,20 @@ FlowRouter.route('/admin', {
     name: 'admin-home-page',
     action() {
         if(Meteor.userId()) {
-            BlazeLayout.render('Admin_home', {
-                header: 'Admin_header',
-                sidebar: 'Admin_sidebar',
-                main: 'Admin_dashboard'
-            });
+            var currentUser = Meteor.user();
+            if(currentUser) {
+                var currentUserType = currentUser.profile.type;
+
+                if(currentUserType == "admin") {
+                    BlazeLayout.render('Admin_home', {
+                        header: 'Admin_header',
+                        sidebar: 'Admin_sidebar',
+                        main: 'Admin_dashboard'
+                    });
+                } else {
+                    FlowRouter.go('/');
+                }
+            }
         } else {
             FlowRouter.go('/login');
         }
@@ -43,7 +52,12 @@ FlowRouter.route('/admin', {
 adminRoutes.route('/create-role', {
     name: 'admin-roles-list-page',
     action() {
-        if(Meteor.userId()) {
+        var currentUser = Meteor.user();
+        if(currentUser) {
+            var currentUserType = currentUser.profile.type;
+        }
+
+        if(Meteor.userId() && currentUserType == "admin") {
             BlazeLayout.render('Admin_home', {
                 header: 'Admin_header',
                 sidebar: 'Admin_sidebar',
@@ -59,7 +73,12 @@ adminRoutes.route('/create-role', {
 adminRoutes.route('/roles-list', {
     name: 'admin-roles-list-page',
     action() {
-        if(Meteor.userId()) {
+        var currentUser = Meteor.user();
+        if(currentUser) {
+            var currentUserType = currentUser.profile.type;
+        }
+
+        if(Meteor.userId() && currentUserType == "admin") {
             BlazeLayout.render('Admin_home', {
                 header: 'Admin_header',
                 sidebar: 'Admin_sidebar',
@@ -75,7 +94,12 @@ adminRoutes.route('/roles-list', {
 adminRoutes.route('/users-list', {
     name: 'admin-users-list-page',
     action() {
-        if(Meteor.userId()) {
+        var currentUser = Meteor.user();
+        if(currentUser) {
+            var currentUserType = currentUser.profile.type;
+        }
+
+        if(Meteor.userId() && currentUserType == "admin") {
             BlazeLayout.render('Admin_home', {
                 header: 'Admin_header',
                 sidebar: 'Admin_sidebar',
@@ -91,7 +115,12 @@ adminRoutes.route('/users-list', {
 adminRoutes.route('/create-user', {
     name: 'admin-user-create-page',
     action() {
-        if(Meteor.userId()) {
+        var currentUser = Meteor.user();
+        if(currentUser) {
+            var currentUserType = currentUser.profile.type;
+        }
+
+        if(Meteor.userId() && currentUserType == "admin") {
             BlazeLayout.render('Admin_home', {
                 header: 'Admin_header',
                 sidebar: 'Admin_sidebar',
@@ -107,7 +136,12 @@ adminRoutes.route('/create-user', {
 adminRoutes.route('/edit-user/:_id', {
     name: 'admin-user-update-page',
     action() {
-        if(Meteor.userId()) {
+        var currentUser = Meteor.user();
+        if(currentUser) {
+            var currentUserType = currentUser.profile.type;
+        }
+        
+        if(Meteor.userId() && currentUserType == "admin") {
             BlazeLayout.render('Admin_home', {
                 header: 'Admin_header',
                 sidebar: 'Admin_sidebar',
