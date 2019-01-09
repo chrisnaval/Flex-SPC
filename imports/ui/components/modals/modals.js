@@ -68,19 +68,17 @@ Template.Role_view.helpers({
         });
     },
 });
-//User_profile
+// User_profile
 Template.User_profile.helpers({
-    getProfileData() {
+    userProfileData() {
         return Meteor.user();
     }
 });
 // User_view
 Template.User_view.helpers({
-    getUserData() {
-        var userId = Session.get('userId');
-
+    userData() {
         return Meteor.users.findOne({
-            _id: userId,
+            _id: Session.get('userId'),
         });
     }
 });
@@ -166,13 +164,14 @@ Template.Role_view.events({
         modal.style.display = 'none';
     },
 });
-// User_view
+// User_profile
 Template.User_profile.events({
     'click .close-toggle': function() {
         var modal = document.getElementById('user-profile');
         modal.style.display = 'none';
     },
 });
+// User_view
 Template.User_view.events({
     'click .close-toggle': function() {
         var modal = document.getElementById('user-view');

@@ -1,4 +1,50 @@
-<!--create role form-->
+<!-- Check_boxes -->
+<template name="Check_boxes">
+    <div class="forms checkboxes">
+        <div class="form-group">
+            <p>CREATE</p>
+            <label class="switch" style="float:right;">
+                <input type="checkbox" class="functionName" id="togBtn" value="create">
+                <div class="slider round">
+                    <span class="on">ON</span>
+                    <span class="off">OFF</span>
+                </div>
+            </label>
+        </div>
+        <div class="form-group">
+            <p>VIEW</p>
+            <label class="switch" style="float:right;">
+                <input type="checkbox" class="functionName" id="togBtn" value="read">
+                <div class="slider round">
+                    <span class="on">ON</span>
+                    <span class="off">OFF</span>
+                </div>
+            </label>
+        </div>
+        <div class="form-group">
+            <p>EDIT</p>
+            <label class="switch" style="float:right;">
+                <input type="checkbox" class="functionName" id="togBtn" value="update">
+                <div class="slider round">
+                    <span class="on">ON</span>
+                    <span class="off">OFF</span>
+                </div>
+            </label>
+        </div>
+        <div class="form-group">
+            <p>DELETE</p>
+            <label class="switch" style="float:right;">
+                <input type="checkbox" class="functionName" id="togBtn" value="delete">
+                <div class="slider round">
+                    <span class="on">ON</span>
+                    <span class="off">OFF</span>
+                </div>
+            </label>
+        </div>
+    </div>
+</template>
+
+<!-- Roles_create -->
 <template name="Roles_create">
     <div class="role-create-section">
         <div class="wrap">
@@ -71,51 +117,6 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
-</template>
-
-<template name="Check_boxes">
-    <div class="forms checkboxes">
-        <div class="form-group">
-            <p>CREATE</p>
-            <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" id="togBtn" value="create">
-                <div class="slider round">
-                    <span class="on">ON</span>
-                    <span class="off">OFF</span>
-                </div>
-            </label>
-        </div>
-        <div class="form-group">
-            <p>VIEW</p>
-            <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" id="togBtn" value="read">
-                <div class="slider round">
-                    <span class="on">ON</span>
-                    <span class="off">OFF</span>
-                </div>
-            </label>
-        </div>
-        <div class="form-group">
-            <p>EDIT</p>
-            <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" id="togBtn" value="update">
-                <div class="slider round">
-                    <span class="on">ON</span>
-                    <span class="off">OFF</span>
-                </div>
-            </label>
-        </div>
-        <div class="form-group">
-            <p>DELETE</p>
-            <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" id="togBtn" value="delete">
-                <div class="slider round">
-                    <span class="on">ON</span>
-                    <span class="off">OFF</span>
-                </div>
-            </label>
         </div>
     </div>
 </template>

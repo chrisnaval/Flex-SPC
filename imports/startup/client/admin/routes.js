@@ -41,13 +41,13 @@ FlowRouter.route('/admin', {
 
 // Handling /admin/create-role
 adminRoutes.route('/create-role', {
-    name: 'admin-roles-list-page',
+    name: 'admin-role-create-page',
     action() {
         if(Meteor.userId()) {
             BlazeLayout.render('Admin_home', {
                 header: 'Admin_header',
                 sidebar: 'Admin_sidebar',
-                main: 'Roles_create'
+                main: 'Role_create'
             });
         } else {
             FlowRouter.go('/login');
@@ -95,7 +95,7 @@ adminRoutes.route('/create-user', {
             BlazeLayout.render('Admin_home', {
                 header: 'Admin_header',
                 sidebar: 'Admin_sidebar',
-                main: 'Users_create'
+                main: 'User_create'
             });
         } else {
             FlowRouter.go('/login');
@@ -111,7 +111,7 @@ adminRoutes.route('/edit-user/:_id', {
             BlazeLayout.render('Admin_home', {
                 header: 'Admin_header',
                 sidebar: 'Admin_sidebar',
-                main: 'Users_update'
+                main: 'User_update'
             });
         } else {
             FlowRouter.go('/login');

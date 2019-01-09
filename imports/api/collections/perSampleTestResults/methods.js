@@ -68,9 +68,7 @@ Meteor.methods({
             }
         }, function(error) {
             if(error) {
-            throw new Meteor.Error(500, error.message);
-            } else {
-                console.log("Update Successful");
+                throw new Meteor.Error(500, error.message);
             }
         });
     },
