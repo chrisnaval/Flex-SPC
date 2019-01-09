@@ -7,7 +7,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Roles } from '/imports/api/collections/roles/roles.js';
 
 // Template Created
-Template.Users_create.onCreated(function() {
+Template.User_create.onCreated(function() {
     this.show = new ReactiveDict();
     this.show.set('showtable', false);
 
@@ -26,7 +26,7 @@ Template.Users_create.onCreated(function() {
     });
 });
 
-Template.Users_update.onCreated(function () {
+Template.User_create.onCreated(function () {
     this.state = new ReactiveDict();
     this.state.set('userId', FlowRouter.getParam('_id'));
 
@@ -47,7 +47,7 @@ Template.Users_update.onCreated(function () {
 });
 
 // Template Rendered
-Template.Users_create.onRendered(function() {
+Template.User_create.onRendered(function() {
      // Autorun
      this.autorun(function() {
         Meteor.subscribe('roles.all', function() {
@@ -63,7 +63,7 @@ Template.Users_create.onRendered(function() {
     });
 });
 
-Template.Users_update.onRendered(function() {
+Template.User_update.onRendered(function() {
      // Autorun
      this.autorun(function() {
         Meteor.subscribe('users.all');
@@ -81,13 +81,13 @@ Template.Users_update.onRendered(function() {
 });
 
 // Template Helper(s)
-Template.Users_create.helpers({
+Template.User_create.helpers({
     roles() {
         return Session.get('roles');
     },
 });
 
-Template.Users_update.helpers({
+Template.User_update.helpers({
     roles() {
         return Roles.find({
             role: {
@@ -95,12 +95,12 @@ Template.Users_update.helpers({
             },
         });
     },
-    getUserById() {
+    userData() {
         return Meteor.users.findOne({
             _id: Template.instance().state.get('userId'),
         });
     },
-    getUserEmailById() {
+    userEmailAddress() {
         var user = Meteor.users.findOne({
             _id: Template.instance().state.get('userId'),
         });
@@ -109,7 +109,7 @@ Template.Users_update.helpers({
     },
 });
 
-Template.Users_create.events({
+Template.User_create.events({
     'change #user-type': function(event) {
         const target = event.target;
 
@@ -213,7 +213,7 @@ Template.Users_create.events({
     },
 });
 
-Template.Users_update.events({
+Template.User_update.events({
     'click .choose': function(event, template) {
         event.preventDefault();
         template.show.set('showtable', true);

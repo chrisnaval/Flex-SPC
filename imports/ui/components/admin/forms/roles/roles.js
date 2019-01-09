@@ -39,12 +39,11 @@ Template.Roles_create.helpers({
 });
 
 Template.Roles_create.events({
-    'change select': function (event, template) {
+    'change select': function(event, template) {
         event.preventDefault();
 
         var selectModule = document.getElementById('select_module').value;
-
-        if (selectModule === 'user') {
+        if(selectModule == "user") {
             template.reactive.set('showAdminModule', false);
             template.reactive.set('showUserModule', true);
         } else {
@@ -52,7 +51,7 @@ Template.Roles_create.events({
             template.reactive.set('showAdminModule', true);
         }
     },
-    'click tr': function (event, instance) {
+    'click tr': function(event, instance) {
         event.preventDefault();
 
         var tar = document.getElementsByTagName('tr');
@@ -68,17 +67,16 @@ Template.Roles_create.events({
         var module = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
         var permissions = {
             module: module,
-        }
+        };
+        
         var radioElement = document.getElementsByClassName('functionName');
-        for (var i = 0; i < radioElement.length; i++) {
-            if (radioElement[i].checked) {
+        for(var i = 0; i < radioElement.length; i++) {
+            if(radioElement[i].checked) {
                 console.log(radioElement[i].value);
             }
         }
-        console.log(permissions);
-
     },
-    'submit form': function (event) {
+    'submit form': function(event) {
         event.preventDefault();
         const target = event.target;
 
@@ -94,7 +92,7 @@ Template.Roles_create.events({
             description: descriptions
         };
 
-        for (var i = 0; i < checkboxes.length; i++) {
+        for(var i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
                 var modules = checkboxes[i].value.split('.')[0];
                 var functionName = checkboxes[i].value.split('.')[1];

@@ -1,5 +1,5 @@
-<!--create user form-->
-<template name="Users_create">
+<!-- User_create -->
+<template name="User_create">
     <div class="wrap">
         <div class="user-create-section">
             <div class="card">
@@ -113,8 +113,8 @@
     </div>
 </template>
 
-<!--update user form-->
-<template name="Users_update">
+<!-- User_update -->
+<template name="User_update">
     <div class="wrap">
         <div class="user-create-section">
             <div class="card">
@@ -131,14 +131,14 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label>First Name</label>
-                                                <input type="text" class="form-control" name="firstName" value="{{getUserById.profile.firstName}}"
+                                                <input type="text" class="form-control" name="firstName" value="{{userData.profile.firstName}}"
                                                     required>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <input type="text" class="form-control" name="lastName" value="{{getUserById.profile.lastName}}"
+                                                <input type="text" class="form-control" name="lastName" value="{{userData.profile.lastName}}"
                                                     required>
                                             </div>
                                         </div>
@@ -147,7 +147,7 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>Address</label>
-                                                <input type="text" class="form-control" name="address" value="{{getUserById.profile.address}}">
+                                                <input type="text" class="form-control" name="address" value="{{userData.profile.address}}">
                                             </div>
                                         </div>
                                     </div>
@@ -155,13 +155,13 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label>Contact No.</label>
-                                                <input type="text" class="form-control" name="contactNo" value="{{getUserById.profile.contactNo}}">
+                                                <input type="text" class="form-control" name="contactNo" value="{{userData.profile.contactNo}}">
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label>Email Address</label>
-                                                <input type="text" class="form-control" name="emailAddress" value="{{getUserEmailById}}"
+                                                <input type="text" class="form-control" name="emailAddress" value="{{userEmailAddress}}"
                                                     required>
                                             </div>
                                         </div>
@@ -191,12 +191,12 @@
                                     <div class="form-group">
                                         <label>User Type</label>
                                         <select name="type" id="userType" class="form-control" disabled>
-                                            <option value="{{getUserById.profile.type}}" class="form-control">{{ucFirst getUserById.profile.type}}</option>
+                                            <option value="{{userData.profile.type}}" class="form-control">{{ucFirst userData.profile.type}}</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Role</label>
-                                        <input type="text" class="form-control" name="role" id="role" value="{{getUserById.profile.role.role}}">
+                                        <input type="text" class="form-control" name="role" id="role" value="{{userData.profile.role.role}}">
                                     </div>
                                     <div class="table-selection">
                                         <table class="table table-hover">

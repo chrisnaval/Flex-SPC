@@ -323,14 +323,14 @@ Template.Roles_list.events({
 			viewUsers: instance.state.get('viewUsers')
 		};
 	},
-    'click .remove-role': function(event) {
+    'click .delete-role': function(event) {
         event.preventDefault();
 
 		var modal = document.getElementById('deleteModal');
 		modal.style.display = 'block';
 		document.getElementById('delete_id').value = this._id;
     },
-    'click .remove': function(event) {
+    'click .delete': function(event) {
 		event.preventDefault();
 
 		var rolePermissionId = document.getElementById('delete_id').value;
