@@ -17,9 +17,7 @@ Template.Auth_login_page.events({
                 var user = Meteor.user();
                 var deletedAt = user.profile.deletedAt;
 
-                if(user.profile.type == "Super-Admin" && (deletedAt == null || deletedAt == '')) {
-                    FlowRouter.go('/admin');
-                } else if(user.profile.type == "User" && (deletedAt == null || deletedAt == '')) {
+                if(user.profile.type == "user" && (deletedAt == null || deletedAt == '')) {
                     FlowRouter.go('/');
                 } else if(user.profile.type == "admin" && (deletedAt == null || deletedAt == '')) {
                     FlowRouter.go('/admin');
