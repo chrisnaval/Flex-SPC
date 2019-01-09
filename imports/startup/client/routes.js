@@ -66,8 +66,8 @@ FlowRouter.route('/', {
     },
 });
 
-FlowRouter.route('/product', {
-    name: 'update-configuration-page',
+FlowRouter.route('/products', {
+    name: 'products-page',
     action() {
         if(Meteor.userId()) {
             BlazeLayout.render('Home', {
