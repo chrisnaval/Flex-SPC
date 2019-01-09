@@ -98,7 +98,7 @@ Meteor.methods({
 			});
 
 		} catch(error) {
-			throw new Meteor.Error("error", error.reason);
+			throw new Meteor.Error('error', error.reason);
 		}
 	},
 	'rolePermissions.remove': function(rolePermissionId) {
@@ -128,7 +128,7 @@ Meteor.methods({
 				throw new Meteor.error('error', error.reason);
 			}	
 		} catch(error) {
-			throw new Meteor.error("Remove-role", "Cannot remove this role since currently used by users!");
+			throw new Meteor.error('Remove-role', 'Cannot remove this role since currently used by users!');
 		}
 	},
 });
