@@ -72,7 +72,7 @@ Template.Roles_create.events({
         var radioElement = document.getElementsByClassName('functionName');
         for(var i = 0; i < radioElement.length; i++) {
             if(radioElement[i].checked) {
-                console.log(radioElement[i].value);
+                //
             }
         }
     },
