@@ -8,9 +8,9 @@
                 <div class="semi-nav-menu">
                     <ul>
                         {{#if isSuperAdmin}}
-                            <li class="active">
-                                <a href="" id="view-all">VIEW ALL</a>
-                            </li>
+                        <li class="active">
+                            <a href="" id="view-all">VIEW ALL</a>
+                        </li>
                         {{/if}}
                         <li>
                             <a href="" id="view-admins">ADMINISTRATORS</a>
@@ -43,7 +43,7 @@
                         </thead>
                         <tbody>
                             {{#each roles}}
-                                {{> Roles_data}}
+                            {{> Roles_data}}
                             {{/each}}
                         </tbody>
                     </table>
@@ -61,10 +61,12 @@
 </template>
 
 <template name="Roles_data">
-    <tr class="role-list" data-id="{{_id}}">
-        <td>{{ role }}</td>
-        <td>{{ description }}</td>
-        <td>{{ ucFirst type }}</td>
+    <tr data-id="{{_id}}">
+        <div class="role-list list">
+            <td>{{ role }}</td>
+            <td>{{ description }}</td>
+            <td>{{ ucFirst type }}</td>
+        </div>
         {{#if viewActions}}
         <td>
             <a href="/admin/edit-role/{{_id}}" class="icon icon-info" title="Edit Role">
