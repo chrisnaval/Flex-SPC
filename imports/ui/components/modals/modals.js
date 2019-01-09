@@ -68,6 +68,12 @@ Template.Role_view.helpers({
         });
     },
 });
+//User_profile
+Template.User_profile.helpers({
+    getProfileData() {
+        return Meteor.user();
+    }
+});
 // User_view
 Template.User_view.helpers({
     getUserData() {
@@ -88,6 +94,12 @@ Template.Tester.helpers({
 
 // Template Events
 // Custom Dashboard
+Template.Change_pass.events({
+    'click .cancel': function() {
+        var modal = document.getElementById('change-password');
+        modal.style.display = 'none';
+    },
+});
 Template.Custom_dashboard.events({
     'click .cancel': function() {
         var modal = document.getElementById('formModal');
@@ -155,6 +167,12 @@ Template.Role_view.events({
     },
 });
 // User_view
+Template.User_profile.events({
+    'click .close-toggle': function() {
+        var modal = document.getElementById('user-profile');
+        modal.style.display = 'none';
+    },
+});
 Template.User_view.events({
     'click .close-toggle': function() {
         var modal = document.getElementById('user-view');

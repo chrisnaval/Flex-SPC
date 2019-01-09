@@ -20,4 +20,10 @@ Template.Sidebar.events({
 	        }
     	});
     },
+    'click #change-pass': function(event) {
+        event.preventDefault();
+
+        var modal = document.getElementById('change-password');
+		modal.style.display = 'block';
+    }
 });
