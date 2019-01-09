@@ -386,9 +386,9 @@ Template.Users_list.events({
 		modal.style.display = 'none';
 	},
 	'click .user-list': function(event) {
-        event.preventDefault();
+		event.preventDefault();
+		
         var tar = document.getElementsByTagName('tr');
-
         for(var i = 0; i < tar.length; i++) {
             tar[i].classList.remove('selected');
         }
@@ -396,11 +396,12 @@ Template.Users_list.events({
         const target = event.target.closest('tr');
         target.classList.add('selected');
 
-        var element = document.getElementsByClassName("selected");
-        var element_value = element[0].getAttribute('data-id');
-        document.getElementById('userId').value = element_value;
-        Session.set('userId', element_value)
-        var modal = document.getElementById('read_user');
+        var element = document.getElementsByClassName('selected');
+        var elementVal = element[0].getAttribute('data-id');
+		
+		Session.set('userId', elementVal);
+		
+		var modal = document.getElementById('user-view');
 		modal.style.display = 'block';
     }
 });

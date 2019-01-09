@@ -1,7 +1,7 @@
 import './modals.html';
 
 // Meteor Package(s)
-import { Session } from 'meteor/session'
+import { Session } from 'meteor/session';
 
 // Mongo Collection(s)
 import { AppModules } from '/imports/api/collections/appModules/appModules.js';
@@ -20,9 +20,10 @@ Template.Parameter.onCreated(function() {
 Template.Product.onCreated(function() {
     Meteor.subscribe('productsData');
 });
-// Read_role
-Template.Read_role.onCreated(function () {
+// Role_view
+Template.Role_view.onCreated(function () {
     Meteor.subscribe('appModules.all');
+    Meteor.subscribe('rolePermissions.all');
 });
 // Tester
 Template.Tester.onCreated(function() {
@@ -43,30 +44,30 @@ Template.Product.helpers({
         return Products.find({});
     }
 });
-// Read_role
-Template.Read_role.helpers({
-    getRolesData() {
+// Role_view
+Template.Role_view.helpers({
+    appModules() {
+        var roleId = Session.get('roleId');
+        var rolePermision = RolePermissions.findOne({
+            'role._id': roleId
+        });
+
+        var type = rolePermision.role.type;
+        
+        return AppModules.find({
+            type: type
+        });
+    },
+    rolePermission() {
         var roleId = Session.get('roleId');
 
         return RolePermissions.findOne({
             'role._id': roleId
         });
     },
-    getModule() {
-        var rolePermissionId = Session.get('rolePermissionId');
-
-        var getModule = RolePermissions.findOne({
-            _id: rolePermissionId
-        });
-
-        var type = getModule.role.role;
-        return AppModules.find({
-            type: type
-        });
-    },
 });
-// Read_user
-Template.Read_user.helpers({
+// User_view
+Template.User_view.helpers({
     getUserData() {
         var userId = Session.get('userId');
 
@@ -144,6 +145,20 @@ Template.Product.events({
         modal.style.display = 'none';
     }
 });
+// Role_view
+Template.Role_view.events({
+    'click .close-toggle': function() {
+        var modal = document.getElementById('role-view');
+        modal.style.display = 'none';
+    },
+});
+// User_view
+Template.User_view.events({
+    'click .close-toggle': function() {
+        var modal = document.getElementById('user-view');
+        modal.style.display = 'none';
+    },
+});
 // Tester
 Template.Tester.events({
     'click .cancel': function() {
@@ -156,18 +171,4 @@ Template.Tester.events({
 
         modal.style.display = 'none';
     }
-});
-// Read_role
-Template.Read_role.events({
-    'click .close-toggle': function() {
-        var modal = document.getElementById('role_fetch');
-        modal.style.display = 'none';
-    },
-});
-// Read_user
-Template.Read_user.events({
-    'click .close-toggle': function() {
-        var modal = document.getElementById('read_user');
-        modal.style.display = 'none';
-    },
 });
