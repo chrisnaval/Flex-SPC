@@ -44,8 +44,8 @@
     </div>
 </template>
 
-<!-- Roles_create -->
-<template name="Roles_create">
+<!-- Role_create -->
+<template name="Role_create">
     <div class="role-create-section">
         <div class="wrap">
             <div class="card">
@@ -59,7 +59,7 @@
                                 <div class="forms">
                                     <p id="error-msg" style="color: #F16362;"></p>
                                     <div class="form-group">
-                                        <label>Role name</label>
+                                        <label>Role</label>
                                         <input type="text" class="form-control" name="roleName" required>
                                     </div>
                                     <div class="form-group">
@@ -72,7 +72,7 @@
                         <div class="col-3 form-inputs" style="height: 307px;">
                             <div class="card-body">
                                 <p></p>
-                                <p>Choose Usertype</p>
+                                <p>Choose Role Type</p>
                                 <div class="form-group">
                                     <select name="module" id="select_module" class="form-control">
                                         <option value="admin">Admin</option>
@@ -83,13 +83,13 @@
                                     <table class="table table-hover">
                                         <tbody>
                                             {{#if showAdmin}}
-                                                {{#each getModuleAdminType}}
+                                                {{#each adminAppModules}}
                                                     <tr>
                                                         <td class="module" module-value="{{module}}">{{name}}</td>
                                                     </tr>
                                                 {{/each}}
                                             {{else}}
-                                                {{#each getModuleUserType}}
+                                                {{#each userAppModules}}
                                                     <tr>
                                                         <td class="module" module-value="{{module}}">{{name}}</td>
                                                     </tr>

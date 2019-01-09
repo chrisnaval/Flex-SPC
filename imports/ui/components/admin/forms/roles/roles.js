@@ -3,7 +3,7 @@ import './roles.html'
 // Collection(s)
 import { AppModules } from '/imports/api/collections/appModules/appModules.js';
 
-Template.Roles_create.onCreated(function () {
+Template.Role_create.onCreated(function () {
     Meteor.subscribe('appModules.all');
 
     this.reactive = new ReactiveDict();
@@ -16,15 +16,15 @@ Template.Roles_create.onCreated(function () {
     });
 });
 
-Template.Roles_create.helpers({
-    getModuleAdminType() {
+Template.Role_create.helpers({
+    adminAppModules() {
         return AppModules.find({
-            type: 'admin'
+            type: "admin"
         });
     },
-    getModuleUserType() {
+    userAppModules() {
         return AppModules.find({
-            type: 'user'
+            type: "user"
         });
     },
     showAdmin() {
@@ -38,7 +38,7 @@ Template.Roles_create.helpers({
     }
 });
 
-Template.Roles_create.events({
+Template.Role_create.events({
     'change select': function(event, template) {
         event.preventDefault();
 
