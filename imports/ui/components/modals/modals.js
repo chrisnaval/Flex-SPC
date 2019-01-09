@@ -52,11 +52,13 @@ Template.Role_view.helpers({
             'role._id': roleId
         });
 
-        var type = rolePermision.role.type;
+        if(rolePermision) {
+            var type = rolePermision.role.type;
         
-        return AppModules.find({
-            type: type
-        });
+            return AppModules.find({
+                type: type
+            });
+        }
     },
     rolePermission() {
         var roleId = Session.get('roleId');
