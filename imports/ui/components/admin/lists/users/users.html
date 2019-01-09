@@ -8,9 +8,9 @@
                 <div class="semi-nav-menu">
                     <ul>
                         {{#if isSuperAdmin}}
-                            <li class="active">
-                                <a href="" id="view-all">VIEW ALL</a>
-                            </li>
+                        <li class="active">
+                            <a href="" id="view-all">VIEW ALL</a>
+                        </li>
                         {{/if}}
                         <li>
                             <a href="" id="view-admins">ADMINISTRATORS</a>
@@ -45,7 +45,7 @@
                         </thead>
                         <tbody>
                             {{#each users}}
-                                {{> User_data}}
+                            {{> User_data}}
                             {{/each}}
                         </tbody>
                     </table>
@@ -64,12 +64,15 @@
 
 <!-- list of user data-->
 <template name="User_data">
-    <tr class="user-list" data-id="{{_id}}">
-        <td>{{ profile.firstName }}</td>
-        <td>{{ profile.lastName }}</td>
-        <td>{{ formatDate createdAt }}</td>
-        <td>{{ formatDate updatedAt }}</td>
-        <td>{{ ucFirst profile.type }}</td>
+    <tr data-id="{{_id}}">
+        <div class="user-list list">
+            <td>{{ profile.firstName }}</td>
+            <td>{{ profile.lastName }}</td>
+            <td>{{ formatDate createdAt }}</td>
+            <td>{{ formatDate updatedAt }}</td>
+            <td>{{ ucFirst profile.type }}</td>
+        </div>
+
         {{#if viewActions}}
         <td>
             <a href="/admin/edit-user/{{_id}}" class="icon icon-info" title="Edit User">
