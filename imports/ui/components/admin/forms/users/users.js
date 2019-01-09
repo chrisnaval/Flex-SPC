@@ -148,9 +148,9 @@ Template.User_create.events({
         const target = event.target.closest('tr');
         target.classList.add('selected');
 
-        var data = document.getElementsByClassName("selected");
-        var data_value = data[0].getElementsByClassName("role")[0].innerText;
-        document.getElementById("role").value = data_value;
+        var data = document.getElementsByClassName('selected');
+        var data_value = data[0].getElementsByClassName('role')[0].innerText;
+        document.getElementById('role').value = data_value;
 
         template.show.set('showtable', false);
     },
