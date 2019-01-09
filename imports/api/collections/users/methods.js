@@ -62,7 +62,7 @@ Meteor.methods({
                     }
                 });
             } else {
-                throw new Meteor.Error("Email-error", "Email is already exist !");
+                throw new Meteor.Error("Email-error", "Email already exist !");
             }
         }
     },

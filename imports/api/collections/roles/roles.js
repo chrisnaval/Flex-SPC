@@ -14,4 +14,7 @@ Roles.schema = new SimpleSchema({
 		type: String,
 		optional: false,
 	},
+	type: {
+        type: String
+	},
 });
