@@ -32,9 +32,10 @@ FlowRouter.route('/login', {
             var currentUser = Meteor.user();
             if(currentUser) {
                 var currentUserType = currentUser.profile.type;
-                if(currentUserType == "user") {
+                var currentUserDeletedAt = currentUser.deletedAt;
+                if(currentUserType == "user" && (currentUserDeletedAt == null || currentUserDeletedAt == '')) {
                     FlowRouter.go('/');
-                } else if(currentUserType == "admin") {
+                } else if(currentUserType == "admin" && (currentUserDeletedAt == null || currentUserDeletedAt == '')) {
                     FlowRouter.go('/admin');
                 } 
             }
