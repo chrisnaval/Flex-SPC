@@ -359,10 +359,9 @@ Template.Roles_list.events({
         var element = document.getElementsByClassName('selected');
         var elementVal = element[0].getAttribute('data-id');
 
-        // document.getElementById('roleId').value = elementVal;
-        Session.set('rolePermissionId', elementVal);
+        Session.set('roleId', elementVal);
         
-        var modal = document.getElementById('role_fetch');
+		var modal = document.getElementById('role-view');
 		modal.style.display = 'block';
     }
 });

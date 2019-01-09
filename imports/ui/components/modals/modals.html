@@ -1,3 +1,26 @@
+<!--change password-->
+<template name="Change_pass">
+    <div id="changePassword" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Change Password</h5>
+            </div>
+            <div class="modal-body" style="height: 400px;">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="password">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="changePassword">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal modal-default cancel">Cancel</button>
+                <button type="button" class="btn-modal modal-info select-product">Select</button>
+            </div>
+        </div>
+    </div>
+</template>
+
 <!-- custom dashboard modal -->
 <template name="Custom_dashboard">
     <div id="formModal" class="modal">
@@ -95,37 +118,6 @@
     </div>
 </template>
 
-<!--tester-->
-<template name="Tester">
-    <div id="testerModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5>Tester</h5>
-            </div>
-            <div class="modal-body" style="height: 400px;">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Tester</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each testers}}
-                        <tr>
-                            <td class="tester" data-id="{{_id}}">{{name}}</td>
-                        </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-modal modal-default cancel">Cancel</button>
-                <button type="button" class="btn-modal modal-info select-tester">Select</button>
-            </div>
-        </div>
-    </div>
-</template>
-
 <!-- parameter modal -->
 <template name="Parameter">
     <div id="parameterModal" class="modal">
@@ -188,32 +180,9 @@
     </div>
 </template>
 
-<!--change password-->
-<template name="Change_pass">
-    <div id="changePassword" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5>Change Password</h5>
-            </div>
-            <div class="modal-body" style="height: 400px;">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="password">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="changePassword">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-modal modal-default cancel">Cancel</button>
-                <button type="button" class="btn-modal modal-info select-product">Select</button>
-            </div>
-        </div>
-    </div>
-</template>
-
-<!--read role-->
-<template name="Read_role">
-    <div id="role_fetch" class="modal">
+<!-- Role_view -->
+<template name="Role_view">
+    <div id="role-view" class="modal">
         <input type="hidden" id="roleId">
         <div class="modal-content">
             <div class="modal-header">
@@ -230,13 +199,13 @@
                                         <p id="error-msg" style="color: #F16362;"></p>
                                         <div class="form-group">
                                             <label>Role</label>
-                                            <input type="text" class="form-control" name="roleName" value="{{getRolesData.role.role}}"
+                                            <input type="text" class="form-control" name="roleName" value="{{rolePermission.role.role}}"
                                                 disabled>
                                         </div>
                                         <div class="form-group">
                                             <label>Description</label>
                                             <textarea name="description" id="Description" rows="7" class="form-control"
-                                                value="{{getRolesData.role.description}}" disabled></textarea>
+                                                value="{{rolePermission.role.description}}" disabled></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -244,16 +213,16 @@
                             <div class="col-3 form-inputs" style="height: 307px;">
                                 <div class="card-body">
                                     <p></p>
-                                    <p>Usertype</p>
+                                    <p>Role Type</p>
                                     <div class="form-group">
                                         <select name="module" id="select_module" class="form-control" disabled>
-                                            <option value="admin">{{getRolesData.role.type}}</option>
+                                            <option value="admin">{{ucFirst rolePermission.role.type}}</option>
                                         </select>
                                     </div>
                                     <div class="module-list" style="margin-top: 20px;">
                                         <table class="table table-hover">
                                             <tbody>
-                                                {{#each getModule}}
+                                                {{#each appModules}}
                                                 <tr>
                                                     <td class="module" module-value="{{module}}">{{name}}</td>
                                                 </tr>
@@ -280,9 +249,9 @@
     </div>
 </template>
 
-<!--read user-->
-<template name="Read_user">
-    <div id="read_user" class="modal">
+<!-- User_view -->
+<template name="User_view">
+    <div id="user-view" class="modal">
         <input type="hidden" id="userId">
         <div class="modal-content" style="height: 450px;">
             <div class="modal-header">
@@ -364,6 +333,37 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!--tester-->
+<template name="Tester">
+    <div id="testerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Tester</h5>
+            </div>
+            <div class="modal-body" style="height: 400px;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tester</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each testers}}
+                        <tr>
+                            <td class="tester" data-id="{{_id}}">{{name}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal modal-default cancel">Cancel</button>
+                <button type="button" class="btn-modal modal-info select-tester">Select</button>
             </div>
         </div>
     </div>
