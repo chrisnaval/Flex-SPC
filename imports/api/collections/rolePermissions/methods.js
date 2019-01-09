@@ -10,10 +10,10 @@ import { Permissions } from '/imports/api/collections/permissions/permissions.js
 import { Roles } from '/imports/api/collections/roles/roles.js';
 
 Meteor.methods({
-	'rolePermissions.insert': function(role, permissions) {
+	'rolePermissions.insert': function(roleData, permissionsData) {
 		// Validation of Data from the Client using the Collection's Schema
-		Roles.schema.validate(role);
-		// Permissions.schema.validate(permissions);
+		Roles.schema.validate(roleData);
+		// Permissions.schema.validate(permissionsData);
 		// check(permissions, {
         //     module: String,
         //     functionName: String,
@@ -21,32 +21,32 @@ Meteor.methods({
 		// });
 		
 		try {
-			const roles = Roles.findOne({role: role.role});
+			var roles = Roles.findOne({ role: roleData.role });
 
 			if(roles == undefined) {
 				Roles.insert({
-					role: role.role,
-					description: role.description
+					role: roleData.role,
+					description: roleData.description,
+					type: roleData.type
 				}, function(error, roleId) {
 					if(error) {
 						throw new Meteor.error('error', error.reason);
 					} else {
 						
-						var permissionDatas = []; // Array for the created Permissions
-	
-						permissions.forEach(element => {
+						var permissions = []; // Array for the created Permissions
+
+						permissionsData.forEach(element => {
 							var permissionId = Permissions.insert({
-								name: element.name,
 								module: element.module,
 								functionName: element.functionName,
 								permission: element.permission
 							});
-							permissionDatas.push(Permissions.findOne(permissionId));
+							permissions.push(Permissions.findOne(permissionId));
 						});
-						var role = Roles.findOne(roleId);
+						var role = Roles.findOne({ _id: roleId });
 						RolePermissions.insert({
 							role,
-							permissionDatas
+							permissions
 						});
 					}
 				});
@@ -54,7 +54,51 @@ Meteor.methods({
 				throw new Meteor.Error('error', error.reason);
 			}	
 		} catch(error) {
-			throw new Meteor.Error("Role-name", "Role is already exist !");
+			throw new Meteor.Error('Role-name', 'Role already exist!');
+		}
+	},
+	'rolePermissions.update': function(rolePermissionId, rolePermissionData) {
+		// Validation of Data from the Client using the Collection's Schema
+		Roles.schema.validate(rolePermissionData.roleData);
+		
+		try {
+			var rolePermission = RolePermissions.findOne({ _id: rolePermissionId});
+			var roleId = rolePermission.role._id;
+			var permissions = rolePermission.permissions;
+
+			Roles.update({_id: roleId}, {
+				$set: {
+					role: rolePermissionData.roleData.role,
+					description: rolePermissionData.roleData.description,
+					type: rolePermissionData.roleData.type,
+				}
+			});
+			// Delete all the Permissions before it will be replaced by the new one
+			permissions.forEach(element => {
+				Permissions.remove({_id: element._id});
+			});
+
+			var permissions = []; // Array for the created Permissions
+
+			rolePermissionData.permissionsData.forEach(element => {
+				var permissionId = Permissions.insert({
+					module: element.module,
+					functionName: element.functionName,
+					permission: element.permission
+				});
+				 
+				permissions.push(Permissions.findOne(permissionId));
+			});
+
+			RolePermissions.update({ _id: rolePermissionId }, {
+				$set: {
+					role: rolePermissionData.roleData,
+					permissions: permissions,
+				}
+			});
+
+		} catch(error) {
+			throw new Meteor.Error("error", error.reason);
 		}
 	},
 	'rolePermissions.remove': function(rolePermissionId) {
@@ -65,12 +109,12 @@ Meteor.methods({
 
 			// check if the role has been used by atleast one user
 			var user = Meteor.users.findOne({'profile.role._id': roleId});
-			var permissions = rolePermission.permissionDatas;
+			var permissions = rolePermission.permissions;
 
 			if(user == null) {
 				RolePermissions.remove({
 					_id: rolePermissionId
-				}, function(error, response) {
+				}, function(error) {
 					if(error) {
 						throw new Meteor.error('error', error.reason);
 					} else {
@@ -81,10 +125,10 @@ Meteor.methods({
 					}
 				});
 			} else {
-				throw new Meteor.error("Remove-role", "Cant remove role, some user using this !");
+				throw new Meteor.error('error', error.reason);
 			}	
 		} catch(error) {
-			throw new Meteor.error('error', error.reason);
+			throw new Meteor.error("Remove-role", "Cannot remove this role since currently used by users!");
 		}
 	},
 });
