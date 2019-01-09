@@ -55,6 +55,22 @@ adminRoutes.route('/create-role', {
     },
 });
 
+// Handling /admin/edit-role
+adminRoutes.route('/edit-role/:_id', {
+    name: 'admin-role-update-page',
+    action() {
+        if(Meteor.userId()) {
+            BlazeLayout.render('Admin_home', {
+                header: 'Admin_header',
+                sidebar: 'Admin_sidebar',
+                main: 'Role_create'
+            });
+        } else {
+            FlowRouter.go('/login');
+        }
+    },
+});
+
 // Handling /admin/roles-list
 adminRoutes.route('/roles-list', {
     name: 'admin-roles-list-page',
@@ -64,22 +80,6 @@ adminRoutes.route('/roles-list', {
                 header: 'Admin_header',
                 sidebar: 'Admin_sidebar',
                 main: 'Roles_list'
-            });
-        } else {
-            FlowRouter.go('/login');
-        }
-    },
-});
-
-// Handling /admin/users-list
-adminRoutes.route('/users-list', {
-    name: 'admin-users-list-page',
-    action() {
-        if(Meteor.userId()) {
-            BlazeLayout.render('Admin_home', {
-                header: 'Admin_header',
-                sidebar: 'Admin_sidebar',
-                main: 'Users_list'
             });
         } else {
             FlowRouter.go('/login');
@@ -112,6 +112,22 @@ adminRoutes.route('/edit-user/:_id', {
                 header: 'Admin_header',
                 sidebar: 'Admin_sidebar',
                 main: 'Users_update'
+            });
+        } else {
+            FlowRouter.go('/login');
+        }
+    },
+});
+
+// Handling /admin/users-list
+adminRoutes.route('/users-list', {
+    name: 'admin-users-list-page',
+    action() {
+        if(Meteor.userId()) {
+            BlazeLayout.render('Admin_home', {
+                header: 'Admin_header',
+                sidebar: 'Admin_sidebar',
+                main: 'Users_list'
             });
         } else {
             FlowRouter.go('/login');
