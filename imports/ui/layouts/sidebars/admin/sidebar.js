@@ -34,10 +34,10 @@ Template.Admin_sidebar.events({
 
         event.target.parentElement.classList.add('active');
     },
-    'click #change_pass': function(event) {
+    'click #change-pass': function(event) {
         event.preventDefault();
 
-        var modal = document.getElementById('changePassword');
+        var modal = document.getElementById('change-password');
 		modal.style.display = 'block';
     }
 });
