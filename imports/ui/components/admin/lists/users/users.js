@@ -12,18 +12,25 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 var globalObj = {};
 
 Template.Users_list.onCreated(function() {
-	this.state = new ReactiveDict();
+	// Reactive Dictionary and Variables Initialization
+	var instance = this;
+	instance.state = new ReactiveDict();
+	instance.limit = new ReactiveVar(10);
+	instance.loaded = new ReactiveVar(0);
+	instance.searching = new ReactiveVar(false);
+	instance.searchKeyword = new ReactiveVar();
 
+	// Check the user who is currently logged in
 	var user = Meteor.user();
 	if(user) {
 		if(user.profile.role.role == "Super Administrator") {
-			this.state.set({
+			instance.state.set({
 				viewAll: true,
 				viewAdmins: false,
 				viewUsers: false
 			});
 		} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
-			this.state.set({
+			instance.state.set({
 				viewAll: false,
 				viewAdmins: true,
 				viewUsers: false
@@ -37,37 +44,37 @@ Template.Users_list.onCreated(function() {
 	}
 
 	// Autorun
-	this.autorun(function() {
+	instance.autorun(function() {
 		var user = Meteor.user();
 		if(user) {
 			if(user.profile.role.role == "Super Administrator") {
-				Session.set('usersList', Meteor.users.find({
-					'profile.role.role': { 
-						$ne: "Super Administrator" 
-					},
-					'profile.deletedAt': { 
-						$eq: null
-					},
-					deletedAt: null,
-				}, { sort: {createdAt: -1} }).fetch());
-			} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
-				Session.set('usersList', Meteor.users.find({
-					'profile.type': { 
-						$eq: "Admin" 
-					},
-					'profile.role.role': { 
-						$ne: "Super Administrator" 
-					},
-					'profile.deletedAt': { 
-						$eq: null
-					},
-					deletedAt: null,
-				}, { sort: {createdAt: -1} }).fetch());
-			}
-
-			// Subscription
-			Meteor.subscribe('users.all', function() {
-				if(user.profile.role.role == "Super Administrator") {
+				if(instance.state.get('viewAdmins')) {
+					Session.set('usersList', Meteor.users.find({
+						'profile.type': { 
+							$eq: "admin" 
+						},
+						'profile.role.role': { 
+							$ne: "Super Administrator" 
+						},
+						'profile.deletedAt': { 
+							$eq: null
+						},
+						deletedAt: null,
+					}, { sort: {createdAt: -1} }).fetch());
+				} else if(instance.state.get('viewUsers')) {
+					Session.set('usersList', Meteor.users.find({
+						'profile.type': { 
+							$eq: "user" 
+						},
+						'profile.role.role': { 
+							$ne: "Super Administrator" 
+						},
+						'profile.deletedAt': { 
+							$eq: null
+						},
+						deletedAt: null,
+					}, { sort: {createdAt: -1} }).fetch());
+				} else {
 					Session.set('usersList', Meteor.users.find({
 						'profile.role.role': { 
 							$ne: "Super Administrator" 
@@ -77,7 +84,22 @@ Template.Users_list.onCreated(function() {
 						},
 						deletedAt: null,
 					}, { sort: {createdAt: -1} }).fetch());
-				} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
+				}
+			} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
+				if(instance.state.get('viewUsers')) {
+					Session.set('usersList', Meteor.users.find({
+						'profile.type': { 
+							$eq: "user" 
+						},
+						'profile.role.role': { 
+							$ne: "Super Administrator" 
+						},
+						'profile.deletedAt': { 
+							$eq: null
+						},
+						deletedAt: null,
+					}, { sort: {createdAt: -1} }).fetch());
+				} else {
 					Session.set('usersList', Meteor.users.find({
 						'profile.type': { 
 							$eq: "admin" 
@@ -91,112 +113,133 @@ Template.Users_list.onCreated(function() {
 						deletedAt: null,
 					}, { sort: {createdAt: -1} }).fetch());
 				}
+			}
+
+			// Limit Per Query
+			var limit = instance.limit.get();
+
+			// Subscription(s)
+			var querySubscription = Meteor.subscribe('users.list', {
+				limit: limit, 
+				sort: {createdAt: -1}
 			});
+			// If querySubscription is ready, set new limit
+			if(querySubscription.ready()) {
+				instance.loaded.set(limit);
+			}
+
+			var searchSubscription = Meteor.subscribe('users.search', instance.searchKeyword.get(), () => {
+				setTimeout( () => {
+					instance.searching.set(false);
+				}, 100);
+			});
+			// If searchSubscription is ready, set new limit
+			if(searchSubscription.ready()) {
+				instance.loaded.set(limit);
+			}
 		}
 	});
 
+	instance.foundUsers = function() {
+		var keyword = instance.searchKeyword.get();
+		
+		if(instance.state.get('viewAdmins')) {
+			return Meteor.users.find({
+				'profile.type': { 
+					$eq: "admin" 
+				},
+				'profile.role.role': { 
+					$ne: "Super Administrator" 
+				},
+				'profile.deletedAt': { 
+					$eq: null
+				},
+				deletedAt: null,
+				$or: [
+					{
+						'profile.firstName': {
+							$regex: ".*" + keyword + ".*",
+							$options: "i"
+						}
+					}, 
+					{
+						'profile.lastName': {
+							$regex: ".*" + keyword + ".*",
+							$options: "i"
+						} 
+					}
+				] 
+			}, { limit: instance.loaded.get(), sort: {createdAt: -1} }).fetch();
+		} else if(instance.state.get('viewUsers')) {
+			return Meteor.users.find({
+				'profile.type': { 
+					$eq: "user" 
+				},
+				'profile.role.role': { 
+					$ne: "Super Administrator" 
+				},
+				'profile.deletedAt': { 
+					$eq: null
+				},
+				deletedAt: null,
+				$or: [
+					{
+						'profile.firstName': {
+							$regex: ".*" + keyword + ".*",
+							$options: "i"
+						}
+					}, 
+					{
+						'profile.lastName': {
+							$regex: ".*" + keyword + ".*",
+							$options: "i"
+						} 
+					}
+				] 
+			}, { limit: instance.loaded.get(), sort: {createdAt: -1} }).fetch();
+		} else {
+			return Meteor.users.find({
+				'profile.role.role': { 
+					$ne: "Super Administrator" 
+				},
+				'profile.deletedAt': { 
+					$eq: null
+				},
+				deletedAt: null,
+				$or: [
+					{
+						'profile.firstName': {
+							$regex: ".*" + keyword + ".*",
+							$options: "i"
+						}
+					}, 
+					{
+						'profile.lastName': {
+							$regex: ".*" + keyword + ".*",
+							$options: "i"
+						} 
+					}
+				] 
+			}, { limit: instance.loaded.get(), sort: {createdAt: -1} }).fetch();
+		}
+	};
+
 	globalObj = {
-		viewAll: this.state.get('viewAll'),
-		viewAdmins: this.state.get('viewAdmins'),
-		viewUsers: this.state.get('viewUsers')
+		viewAll: instance.state.get('viewAll'),
+		viewAdmins: instance.state.get('viewAdmins'),
+		viewUsers: instance.state.get('viewUsers')
 	};
 });
 
 Template.Users_list.onRendered(function() {
-	this.state = new ReactiveDict();
-	
-	var user = Meteor.user();
-	if(user) {
-		if(user.profile.role.role == "Super Administrator") {
-			this.state.set({
-				viewAll: true,
-				viewAdmins: false,
-				viewUsers: false
-			});
-		} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
-			this.state.set({
-				viewAll: false,
-				viewAdmins: true,
-				viewUsers: false
-			});
-	
-			var viewAdmins = document.getElementById('view-admins');
-			if(viewAdmins) {
-				viewAdmins.parentElement.classList.add('active');
-			}
-		} 
-	}
-
-	// Autorun
-	this.autorun(function() {
-		var user = Meteor.user();
-		if(user) {
-			if(user.profile.role.role == "Super Administrator") {
-				Session.set('usersList', Meteor.users.find({
-					'profile.role.role': { 
-						$ne: "Super Administrator" 
-					},
-					'profile.deletedAt': { 
-						$eq: null
-					},
-					deletedAt: null,
-				}, { sort: {createdAt: -1} }).fetch());
-			} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
-				Session.set('usersList', Meteor.users.find({
-					'profile.type': { 
-						$eq: "admin" 
-					},
-					'profile.role.role': { 
-						$ne: "Super Administrator" 
-					},
-					'profile.deletedAt': { 
-						$eq: null
-					},
-					deletedAt: null,
-				}, { sort: {createdAt: -1} }).fetch());
-			}
-
-			// Subscription
-			Meteor.subscribe('users.all', function() {
-				if(user.profile.role.role == "Super Administrator") {
-					Session.set('usersList', Meteor.users.find({
-						'profile.role.role': { 
-							$ne: "Super Administrator" 
-						},
-						'profile.deletedAt': { 
-							$eq: null
-						},
-						deletedAt: null,
-					}, { sort: {createdAt: -1} }).fetch());
-				} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
-					Session.set('usersList', Meteor.users.find({
-						'profile.type': { 
-							$eq: "admin" 
-						},
-						'profile.role.role': { 
-							$ne: "Super Administrator" 
-						},
-						'profile.deletedAt': { 
-							$eq: null
-						},
-						deletedAt: null,
-					}, { sort: {createdAt: -1} }).fetch());
-				}
-			});
-		}
-	});
-
-	globalObj = {
-		viewAll: this.state.get('viewAll'),
-		viewAdmins: this.state.get('viewAdmins'),
-		viewUsers: this.state.get('viewUsers')
-	};
+	//
 });
 
 // Template Helpers
-Template.Users_list.helpers({
-	users() {
-		return Session.get('usersList');
+Template.Users_list.helpers({	
+	// Found Users from Search Keyword
+	foundUsers() {
+		return Template.instance().foundUsers();
 	},
 	isSuperAdmin() {
 		var user = Meteor.user();
@@ -212,6 +255,21 @@ Template.Users_list.helpers({
 				return false;
 			}
 		}
+	},
+	// Nothing Found from Search Keyword
+	nothingFound() {
+		return Template.instance().foundUsers().length == 0;
+	},
+	// Searching Users
+	searching() {
+		return Template.instance().searching.get();
+	},
+	// Keyword to Search from Users
+	searchKeyword() {
+		return Template.instance().searchKeyword.get();
+	},
+	users() {
+		return Session.get('usersList');
 	},
 	viewActions() {
 		var instance = Template.instance();
@@ -403,5 +461,16 @@ Template.Users_list.events({
 		
 		var modal = document.getElementById('user-view');
 		modal.style.display = 'block';
-    }
+	},
+	'keyup #search': function(event, instance) {
+		var code = event.which;
+    	if(code == 13) {
+			event.preventDefault();
+		} else {
+			instance.searching.set(true);
+
+			var searchVal = instance.find("#search").value;
+			instance.searchKeyword.set(searchVal);
+		}
+	},
 });
