@@ -148,32 +148,5 @@ Template.Role_create.events({
                 permissions.push(rolePermission[i].permissions[key]);
             }
         }
-
-        var role = {
-            role: roles,
-            description: descriptions
-        };
-
-        for(var i = 0; i < permissions.length; i++) {
-                var modules = permissions[i].split('.')[0];
-                var functionName = permissions[i].split('.')[1];
-                console.log(modules, functionName);
-                // var permissionDatas = {
-                //     name: "Issue Tracker",
-                //     module: modules,
-                //     functionName: functionName,
-                //     permission: permissions + '-' + modules + '.' + functionName
-                // }
-
-                // permissionData.push(permissionDatas);
-            }
-        }
-        // console.log(permissionData, role);
-        // Meteor.call('rolePermissions.insert', role, permissionData, function(error) {
-        //     if(error) {
-        //         document.getElementById('error-msg').innerHTML = error.reason;
-        //     }
-        // });
-        // FlowRouter.go('/admin/roles-list');
     }
 });
