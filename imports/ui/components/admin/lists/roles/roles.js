@@ -15,8 +15,15 @@ import { Roles } from '/imports/api/collections/roles/roles.js';
 var globalObj = {};
 
 Template.Roles_list.onCreated(function() {
-    this.state = new ReactiveDict();
+    // Reactive Dictionary and Variables Initialization
+	var instance = this;
+	instance.state = new ReactiveDict();
+	instance.limit = new ReactiveVar(10);
+	instance.loaded = new ReactiveVar(0);
+	instance.searching = new ReactiveVar(false);
+	instance.searchKeyword = new ReactiveVar();
 
+	// Check the user who is currently logged in
     var user = Meteor.user();
 	if(user) {
 		if(user.profile.role.role == "Super Administrator") {
@@ -40,48 +47,142 @@ Template.Roles_list.onCreated(function() {
     }
     
     // Autorun
-	this.autorun(function() {
+	instance.autorun(function() {
 		var user = Meteor.user();
 		if(user) {
 			if(user.profile.role.role == "Super Administrator") {
-				Session.set('rolesList', Roles.find({
-                    'role': { 
-                        $ne: "Super Administrator" 
-                    },
-                }).fetch());
+				if(instance.state.get('viewAdmins')) {
+					Session.set('rolesList', Roles.find({
+						'role': { 
+							$ne: "Super Administrator" 
+						},
+						'type': { 
+							$eq: "admin" 
+						}
+					}).fetch());
+				} else if(instance.state.get('viewUsers')) {
+					Session.set('rolesList', Roles.find({
+						'role': { 
+							$ne: "Super Administrator" 
+						},
+						'type': { 
+							$eq: "user" 
+						}
+					}).fetch());
+				} else {
+					Session.set('rolesList', Roles.find({
+						'role': { 
+							$ne: "Super Administrator" 
+						},
+					}).fetch());
+				}
 			} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
-				Session.set('rolesList', Roles.find({
-                    'role': { 
-                        $ne: "Super Administrator" 
-                    },
-                    'type': {
-                        $eq: "admin"
-                    }
-                }).fetch());
+				if(instance.state.get('viewUsers')) {
+					Session.set('rolesList', Roles.find({
+						'role': { 
+							$ne: "Super Administrator" 
+						},
+						'type': {
+							$eq: "user"
+						}
+					}).fetch());
+				} else {
+					Session.set('rolesList', Roles.find({
+						'role': { 
+							$ne: "Super Administrator" 
+						},
+						'type': {
+							$eq: "admin"
+						}
+					}).fetch());
+				}
 			}
 
-            // Subscription
-            Meteor.subscribe('roles.all', function() {
-                if(user.profile.role.role == "Super Administrator") {
-					Session.set('rolesList', Roles.find({
-                        'role': { 
-                            $ne: "Super Administrator" 
-                        },
-                    }).fetch());
-				} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
-					Session.set('rolesList', Roles.find({
-                        'role': { 
-                            $ne: "Super Administrator" 
-                        },
-                        'type': {
-                            $eq: "admin"
-                        }
-                    }).fetch());
-				}
-            });
+			// Limit Per Query
+			var limit = instance.limit.get();
+
+			// Subscription(s)
+			var querySubscription = Meteor.subscribe('roles.list', {
+				limit: limit, 
+				sort: {createdAt: -1}
+			});
+			// If querySubscription is ready, set new limit
+			if(querySubscription.ready()) {
+				instance.loaded.set(limit);
+			}
+
+			var searchSubscription = Meteor.subscribe('roles.search', instance.searchKeyword.get(), () => {
+				setTimeout( () => {
+					instance.searching.set(false);
+				}, 100);
+			});
+			// If searchSubscription is ready, set new limit
+			if(searchSubscription.ready()) {
+				instance.loaded.set(limit);
+			}
 		}
     });
-    
+	
+	instance.foundRoles = function() {
+		var keyword = instance.searchKeyword.get();
+		
+		if(instance.state.get('viewAdmins')) {
+			return Roles.find({
+				'type': {
+					$eq: "admin"
+				},
+				$and: [
+					{
+						'role': { 
+							$ne: "Super Administrator" 
+						}
+					}, 
+					{
+						'role': {
+							$regex: ".*" + keyword + ".*",
+							$options: "i"
+						}
+					}
+				]
+			}, { limit: instance.loaded.get(), sort: {createdAt: -1} }).fetch();
+		} else if(instance.state.get('viewUsers')) {
+			return Roles.find({
+				'type': {
+					$eq: "user"
+				},
+				$and: [
+					{
+						'role': { 
+							$ne: "Super Administrator" 
+						}
+					}, 
+					{
+						'role': {
+							$regex: ".*" + keyword + ".*",
+							$options: "i"
+						}
+					}
+				]
+			}, { limit: instance.loaded.get(), sort: {createdAt: -1} }).fetch();
+		} else {
+			return Roles.find({
+				$and: [
+					{
+						'role': { 
+							$ne: "Super Administrator" 
+						}
+					}, 
+					{
+						'role': {
+							$regex: ".*" + keyword + ".*",
+							$options: "i"
+						}
+					}
+				]
+			}, { limit: instance.loaded.get(), sort: {createdAt: -1} }).fetch();
+		}
+	};
+
     globalObj = {
 		viewAll: this.state.get('viewAll'),
 		viewAdmins: this.state.get('viewAdmins'),
@@ -90,87 +191,17 @@ Template.Roles_list.onCreated(function() {
 });
 
 Template.Roles_list.onRendered(function() {
-    this.state = new ReactiveDict();
-	
-	var user = Meteor.user();
-	if(user) {
-		if(user.profile.role.role == "Super Administrator") {
-			this.state.set({
-				viewAll: true,
-				viewAdmins: false,
-				viewUsers: false
-			});
-		} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
-			this.state.set({
-				viewAll: false,
-				viewAdmins: true,
-				viewUsers: false
-			});
-	
-			var viewAdmins = document.getElementById('view-admins');
-			if(viewAdmins) {
-				viewAdmins.parentElement.classList.add('active');
-			}
-		} 
-    }
-    
-    // Autorun
-	this.autorun(function() {
-		var user = Meteor.user();
-		if(user) {
-			if(user.profile.role.role == "Super Administrator") {
-				Session.set('rolesList', Roles.find({
-                    'role.role': { 
-                        $ne: "Super Administrator" 
-                    },
-                }).fetch());
-			} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
-				Session.set('rolesList', Roles.find({
-                    'role': { 
-                        $ne: "Super Administrator" 
-                    },
-                    'type': {
-                        $eq: "admin"
-                    }
-                }).fetch());
-			}
-
-            // Subscription
-            Meteor.subscribe('roles.all', function() {
-                if(user.profile.role.role == "Super Administrator") {
-					Session.set('rolesList', Roles.find({
-                        'role': { 
-                            $ne: "Super Administrator" 
-                        },
-                    }).fetch());
-				} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
-					Session.set('rolesList', Roles.find({
-                        'role': { 
-                            $ne: "Super Administrator" 
-                        },
-                        'type': {
-                            $eq: "admin"
-                        }
-                    }).fetch());
-				}
-            });
-		}
-    });
-    
-    globalObj = {
-		viewAll: this.state.get('viewAll'),
-		viewAdmins: this.state.get('viewAdmins'),
-		viewUsers: this.state.get('viewUsers')
-	};
+    //
 });
 
 // Template Helpers
 // Roles_list
-Template.Roles_list.helpers({
-    roles() {
-		return Session.get('rolesList');
-    },
-    isSuperAdmin() {
+Template.Roles_list.helpers({	
+	// Found Roles from Search Keyword
+	foundRoles() {
+		return Template.instance().foundRoles();
+	},
+	isSuperAdmin() {
 		var user = Meteor.user();
 		if(user) {
 			if(user.profile.role.role == "Super Administrator") {
@@ -184,6 +215,21 @@ Template.Roles_list.helpers({
 				return false;
 			}
 		}
+	},
+	// Nothing Found from Search Keyword
+	nothingFound() {
+		return Template.instance().foundRoles().length == 0;
+	},
+    roles() {
+		return Session.get('rolesList');
+    },
+	// Searching Roles
+	searching() {
+		return Template.instance().searching.get();
+	},
+	// Keyword to Search from Roles
+	searchKeyword() {
+		return Template.instance().searchKeyword.get();
 	},
 	viewActions() {
 		var instance = Template.instance();
@@ -363,5 +409,16 @@ Template.Roles_list.events({
         
 		var modal = document.getElementById('role-view');
 		modal.style.display = 'block';
-    }
+	},
+	'keyup #search': function(event, instance) {
+		var code = event.which;
+    	if(code == 13) {
+			event.preventDefault();
+		} else {
+			instance.searching.set(true);
+
+			var searchVal = instance.find("#search").value;
+			instance.searchKeyword.set(searchVal);
+		}
+	},
 });

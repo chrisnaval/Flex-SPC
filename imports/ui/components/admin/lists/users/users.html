@@ -31,24 +31,55 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <p id="error-msg" style="color: #F16362;"></p>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Date Created</th>
-                                <th>Date Updated</th>
-                                <th>User Type</th>
-                                {{#if viewActions}}<th>Actions</th>{{/if}}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each users}}
-                                {{> User_data}}
-                            {{/each}}
-                        </tbody>
-                    </table>
+                    {{#if searching}}
+                        <p class="col-xs-12" style="color: #384D68; font-weight: bold;">Searching...</p>
+                    {{else}}
+                        {{#if searchKeyword}}
+                        <table class="table table-hover">
+                            {{#if foundUsers}}
+                            <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Date Created</th>
+                                    <th>Date Updated</th>
+                                    <th>User Type</th>
+                                    {{#if viewActions}}<th>Actions</th>{{/if}}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each foundUsers}}
+                                    {{> User_data}}
+                                {{/each}}
+                            </tbody>
+                            {{else}}
+                            <p class="col-xs-12" style="color: #F16362; font-weight: bold;">Nothing found for {{searchKeyword}}.</p>
+                            {{/if}}
+                        </table>
+                        {{else}}
+                        <table class="table table-hover">
+                            {{#if users}}
+                            <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Date Created</th>
+                                    <th>Date Updated</th>
+                                    <th>User Type</th>
+                                    {{#if viewActions}}<th>Actions</th>{{/if}}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each users}}
+                                    {{> User_data}} 
+                                {{/each}}
+                            </tbody>
+                            {{else}}
+                                <p class="col-xs-12" style="color: #F16362; font-weight: bold;">No Results Found</p>
+                            {{/if}}
+                        </table>
+                        {{/if}}
+                    {{/if}}
                 </div>
                 <div class="card-footer">
                 </div>

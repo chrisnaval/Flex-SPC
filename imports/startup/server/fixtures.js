@@ -20,13 +20,13 @@ Meteor.startup(function() {
                 type: "admin"
             },
             {
-                name: "Users",
-                module: "users",
+                name: "Roles",
+                module: "roles",
                 type: "admin"
             },
             {
-                name: "Roles",
-                module: "roles",
+                name: "Users",
+                module: "users",
                 type: "admin"
             },
             {
