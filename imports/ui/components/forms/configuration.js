@@ -66,7 +66,7 @@ Template.Configuration.events({
         event.preventDefault();
         var tr = document.getElementsByTagName('tr');
 
-        for (var i = 0; i < tr.length; i++) {
+        for(var i = 0; i < tr.length; i++) {
             tr[i].classList.remove('selected');
          }
 
