@@ -35,18 +35,18 @@ Meteor.methods({
 						var permissions = []; // Array for the created Permissions
 
 						permissionsData.forEach(element => {
-							var getPermission = element.permission;
+							var getPermissions = element.permission;
 
-							var s = Permissions.findOne({permission: getPermission});
+							var permission = Permissions.findOne({permission: getPermissions});
 
-							if(s == null) {
+							if(permission == null) {
 								Permissions.insert({
 									module: element.module,
 									functionName: element.functionName,
 									permission: element.permission
 								});
 							}
-							permissions.push(Permissions.findOne({permission: getPermission}));
+							permissions.push(Permissions.findOne({permission: getPermissions}));
 						});
 						RolePermissions.insert({
 							role: Roles.findOne({ _id: roleId }),
