@@ -2,7 +2,7 @@ import './users.html';
 
 // Component(s)
 import '../../../modals/modals.js';
-
+import '../../../alert-message/alert-message.js'
 // Meteor Package(s)
 import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';

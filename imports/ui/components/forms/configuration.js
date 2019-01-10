@@ -1,5 +1,8 @@
 import './configuration.html';
+
+//components
 import '../../components/modals/modals.js';
+import '../alert-message/alert-message.js';
 
 // Events
 Template.Configuration.events({
@@ -112,9 +115,12 @@ Template.Configuration.events({
         
         Meteor.call('configurations.insert', configData, function(error) {
             if(error) {
-                document.getElementById('error-msg').innerHTML = error.reason;
+                Session.set('failure', error.reason);
+            } else {
+                FlowRouter.go('/');
+                Session.set('success', 'Successfully Created');
             }
         });
-        FlowRouter.go('/');
+        
     }
 });

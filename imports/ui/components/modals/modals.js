@@ -95,9 +95,15 @@ Template.Tester.helpers({
 Template.Change_pass.events({
     'click .cancel': function() {
         var modal = document.getElementById('change-password');
-        modal.style.display = 'none';
+		modal.style.display = 'none';
     },
+    'click .submit': function() {
+       var oldPass = document.getElementById('oldPassword').value;
+       var newPass = document.getElementById('newPassword').value;
+       var changePass = document.getElementById('changePassword').value;
+   }
 });
+//custom dashboard
 Template.Custom_dashboard.events({
     'click .cancel': function() {
         var modal = document.getElementById('formModal');

@@ -4,7 +4,7 @@
         <div class="form-group">
             <p>CREATE</p>
             <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" id="togBtn" value="create">
+                <input type="checkbox" class="functionName" value="create">
                 <div class="slider round">
                     <span class="on">ON</span>
                     <span class="off">OFF</span>
@@ -14,7 +14,7 @@
         <div class="form-group">
             <p>VIEW</p>
             <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" id="togBtn" value="read">
+                <input type="checkbox" class="functionName" value="read">
                 <div class="slider round">
                     <span class="on">ON</span>
                     <span class="off">OFF</span>
@@ -24,7 +24,7 @@
         <div class="form-group">
             <p>EDIT</p>
             <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" id="togBtn" value="update">
+                <input type="checkbox" class="functionName" value="update">
                 <div class="slider round">
                     <span class="on">ON</span>
                     <span class="off">OFF</span>
@@ -34,7 +34,7 @@
         <div class="form-group">
             <p>DELETE</p>
             <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" id="togBtn" value="delete">
+                <input type="checkbox" class="functionName" value="delete">
                 <div class="slider round">
                     <span class="on">ON</span>
                     <span class="off">OFF</span>
@@ -54,7 +54,7 @@
                         <span style="font-size:15px;">CREATE ROLE</span>
                     </div>
                     <div class="row">
-                        <div class="col-6 form-inputs">
+                        <div class="col-5 form-inputs">
                             <div class="card-body">
                                 <div class="forms">
                                     <p id="error-msg" style="color: #F16362;"></p>
@@ -74,7 +74,7 @@
                                 <p></p>
                                 <p>Choose Role Type</p>
                                 <div class="form-group">
-                                    <select name="module" id="select_module" class="form-control">
+                                    <select name="module" id="module" class="form-control">
                                         <option value="admin">Admin</option>
                                         <option value="user">User</option>
                                     </select>
@@ -100,16 +100,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3 form-role" id="or">
+                        <div class="col-4 form-role" id="or">
                             <div class="card-body">
                                 <p></p>
-                                <p>Permissions</p>
-                                <div class="permission">
-
+                                <div class="form-group">
+                                    <a href="javascript:void(0);" class="select-all align-right" id="select-all" style="text-decoration: none;color: inherit;">Select All</a>
                                 </div>
+                                <br>
                                 {{> Check_boxes}}
                                 <div class="submit-button">
-                                    <button class="button submit create-user-form">Create</button>
+                                    <button class="button submit">Create</button>
                                     <a href="/admin/roles-list" class="button cancel create-user-form">Cancel</a>
                                 </div>
                             </div>
