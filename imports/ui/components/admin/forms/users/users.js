@@ -1,15 +1,22 @@
 import './users.html';
 
+//components
+import '../../../alert-message/alert-message.js';
+
 // Meteor Package(s)
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { Session } from 'meteor/session';
 
 // Mongo Collection(s)
 import { Roles } from '/imports/api/collections/roles/roles.js';
 
 // Template Created
 Template.User_create.onCreated(function() {
-    this.show = new ReactiveDict();
-    this.show.set('showtable', false);
+    Session.keys = {}
+    this.reactive = new ReactiveDict();
+    this.reactive.set({
+        showtable: false
+    });
 
     // Autorun
     this.autorun(function() {
@@ -26,7 +33,7 @@ Template.User_create.onCreated(function() {
     });
 });
 
-Template.User_create.onCreated(function () {
+Template.User_update.onCreated(function () {
     this.state = new ReactiveDict();
     this.state.set('userId', FlowRouter.getParam('_id'));
 
@@ -48,6 +55,7 @@ Template.User_create.onCreated(function () {
 
 // Template Rendered
 Template.User_create.onRendered(function() {
+    Session.keys = {}
      // Autorun
      this.autorun(function() {
         Meteor.subscribe('roles.all', function() {
@@ -96,9 +104,11 @@ Template.User_update.helpers({
         });
     },
     userData() {
+        // var test = FlowRouter.getParam('_id');
         return Meteor.users.findOne({
             _id: Template.instance().state.get('userId'),
         });
+        // console.log(test);
     },
     userEmailAddress() {
         var user = Meteor.users.findOne({
@@ -136,7 +146,7 @@ Template.User_create.events({
     },
     'click .choose': function(event, template) {
         event.preventDefault();
-        template.show.set('showtable', true);
+        template.reactive.set('showtable', true);
     },
     'click tr': function(event, template){
         var tar = document.getElementsByTagName('tr');
@@ -152,7 +162,7 @@ Template.User_create.events({
         var data_value = data[0].getElementsByClassName('role')[0].innerText;
         document.getElementById('role').value = data_value;
 
-        template.show.set('showtable', false);
+        template.reactive.set('showtable', false);
     },
     'submit form': function(event) {
         event.preventDefault();
@@ -173,12 +183,17 @@ Template.User_create.events({
 
         var emailAddressFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+        var alertMessage = document.getElementById('alert-message');
+
         if(!emailAddress.match(emailAddressFormat)) {
-            document.getElementById('error-msg').innerHTML = 'Invalid email address format.';
+            Session.set('failure', 'Invalid email address format.');
+            alertMessage.style.display = 'block';
         } else if(password.trim().length < 8) {
-            document.getElementById('error-msg').innerHTML = 'Password must be at least 8 characters.';
+            Session.set('failure', 'Password must be at least 8 characters.');
+            alertMessage.style.display = 'block';
         } else if(password !== confirmPassword) {
-            document.getElementById('error-msg').innerHTML = 'Password dont match.';
+            Session.set('failure', 'Password dont match.');
+            alertMessage.style.display = 'block';
         } else {
             var username = emailAddress.split("@");
             username = username[0];
@@ -204,11 +219,14 @@ Template.User_create.events({
 
             Meteor.call('users.insert', userData, function(error) {
                 if(error) {
-                    document.getElementById('error-msg').innerHTML = error.reason;
+                    Session.set('failure', error.reason);
+                    alertMessage.style.display = 'block';
+                } else {
+                    Session.set('success', 'Successfully Created');
+                    alertMessage.style.display = 'block';
+                    FlowRouter.go('/admin/users-list');
                 }
             });
-            
-            FlowRouter.go('/admin/users-list');
         }
     },
 });
@@ -216,7 +234,7 @@ Template.User_create.events({
 Template.User_update.events({
     'click .choose': function(event, template) {
         event.preventDefault();
-        template.show.set('showtable', true);
+        template.reactive.set('showtable', true);
     },
     'click tr': function(event, template){
         var tar = document.getElementsByTagName('tr');
@@ -229,10 +247,10 @@ Template.User_update.events({
         target.classList.add('selected');
 
         var data = document.getElementsByClassName("selected");
-        var data_value = data[0].getElementsByClassName("role")[0].innerText;
+        var data_value = data[0].getElementsByClassName("updateRole")[0].innerText;
         document.getElementById("role").value = data_value;
 
-        template.show.set('showtable', false);
+        template.reactive.set('showtable', false);
     },
     'submit form': function(event) {
         event.preventDefault();
@@ -252,12 +270,17 @@ Template.User_update.events({
 
         var emailAddressFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+        var alertMessage = document.getElementById('alert-message');
+
         if(!emailAddress.match(emailAddressFormat)) {
-            document.getElementById('error-msg').innerHTML = 'Invalid email address format.';
+            Session.set('failure', 'Invalid email address format.');
+            alertMessage.style.display = 'block';
         } else if(password && password.trim().length < 8) {
-            document.getElementById('error-msg').innerHTML = 'Password must be at least 8 characters.';
+            Session.set('failure', 'Password must be at least 8 characters.');
+            alertMessage.style.display = 'block';
         } else if(password !== confirmPassword) {
-            document.getElementById('error-msg').innerHTML = 'Password dont match.';
+            Session.set('failure', 'Password dont match.');
+            alertMessage.style.display = 'block';
         } else {
             var username = emailAddress.split("@");
             username = username[0];
@@ -280,15 +303,17 @@ Template.User_update.events({
                 password: password,
                 userProfile
             };
-
             var userId = FlowRouter.getParam("_id");
             Meteor.call('users.update', userId, userData, function(error) {
                 if(error) {
-                    document.getElementById('error-msg').innerHTML = error.reason;
+                    Session.set('failure', error.reason);
+                    alertMessage.style.display = 'block';
+                } else {
+                    Session.set('success', 'Successfully Created');
+                    FlowRouter.go('/admin/users-list');
                 }
             });
-
-            FlowRouter.go('/admin/users-list');
+            
         }
     }
 });

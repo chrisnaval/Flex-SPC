@@ -1,6 +1,7 @@
 <!-- User_create -->
 <template name="User_create">
     <div class="wrap">
+        {{> Alert_message}}
         <div class="user-create-section">
             <div class="card">
                 <form class="user-form" id="create-user-form">
@@ -116,6 +117,7 @@
 <!-- User_update -->
 <template name="User_update">
     <div class="wrap">
+        {{> Alert_message}}
         <div class="user-create-section">
             <div class="card">
                 <form class="user-form" id="update-user-form">
@@ -196,7 +198,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Role</label>
-                                        <input type="text" class="form-control" name="role" id="role" value="{{userData.profile.role.role}}">
+                                        <input type="text" class="form-control" name="role" id="updateRole" value="{{userData.profile.role.role}}">
                                     </div>
                                     <div class="table-selection">
                                         <table class="table table-hover">

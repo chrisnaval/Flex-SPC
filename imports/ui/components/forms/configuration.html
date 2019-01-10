@@ -1,6 +1,7 @@
 <template name="Configuration">
     <div class="configuration-section">
         <div class="wrap">
+            {{Alert_message}}
             <div class="card">
                 <form class="configuration-form" id="configuration-form">
                     <div class="card-header form-title">
@@ -49,19 +50,19 @@
                                     <p></p>
                                     <div class="form-group">
                                         <label>Upper Control Limit</label>
-                                        <input type="number" class="form-control" name="upperControlLimit" id="role">
+                                        <input type="number" class="form-control" name="upperControlLimit">
                                     </div>
                                     <div class="form-group">
                                         <label>Lower Control Limit</label>
-                                        <input type="number" class="form-control" name="lowerControlLimit" id="role">
+                                        <input type="number" class="form-control" name="lowerControlLimit">
                                     </div>
                                     <div class="form-group">
                                         <label>Upper Specification Limit</label>
-                                        <input type="number" class="form-control" name="upperSpecLimit" id="role">
+                                        <input type="number" class="form-control" name="upperSpecLimit">
                                     </div>
                                     <div class="form-group">
                                         <label>Lower Specification Limit</label>
-                                        <input type="number" class="form-control" name="lowerSpecLimit" id="role">
+                                        <input type="number" class="form-control" name="lowerSpecLimit">
                                     </div>
                                     <div class="submit-button">
                                             <button class="button submit">Create</button>

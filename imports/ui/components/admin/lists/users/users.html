@@ -1,5 +1,6 @@
 <template name="Users_list">
     <div class="wrap">
+        {{> Alert_message}}
         <div class="content-wrap page">
             <!-- <div class="card search-bar">
                 <i class="fa fa-search" aria-hidden="true"></i><input type="text" name="search" class="form-control search">
@@ -47,6 +48,7 @@
                             {{#each users}}
                                 {{> User_data}}
                             {{/each}}
+                            
                         </tbody>
                     </table>
                 </div>
@@ -58,6 +60,7 @@
             <i class="fa fa-plus my-float"></i>
         </a>
     </div>
+    
     {{> Delete_modal}}
     {{> User_view}}
 </template>

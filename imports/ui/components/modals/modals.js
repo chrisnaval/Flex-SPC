@@ -95,9 +95,24 @@ Template.Tester.helpers({
 Template.Change_pass.events({
     'click .cancel': function() {
         var modal = document.getElementById('change-password');
-        modal.style.display = 'none';
+		modal.style.display = 'none';
     },
+    'click .submit': function() {
+       var oldPass = document.getElementById('oldPassword').value;
+       var newPass = document.getElementById('newPassword').value;
+       var changePass = document.getElementById('changePassword').value;
+       console.log(oldPass, newPass, changePass);
+
+        // if(newPass.trim().length < 8) {
+        //     Session.set('failure', 'Password must be at least 8 characters.');
+        //     document.getElementById('alert-message').style.display = 'block';
+        // } else if(newPass !== changePass) {
+        //     Session.set('failure', 'Password dont match.');
+        //     document.getElementById('alert-message').style.display = 'block';
+        // } else {
+   }
 });
+//custom dashboard
 Template.Custom_dashboard.events({
     'click .cancel': function() {
         var modal = document.getElementById('formModal');

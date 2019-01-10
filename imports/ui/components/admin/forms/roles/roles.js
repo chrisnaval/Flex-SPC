@@ -12,7 +12,7 @@ Template.Role_create.onCreated(function () {
         showAdminModule: true,
         showUserModule: false,
         showRadioButtons: false,
-        permissions:[]
+        rolePermission:[]
     });
 });
 
@@ -35,14 +35,14 @@ Template.Role_create.helpers({
     },
     showRadio() {
         return Template.instance().reactive.get('showRadioButtons');
-    }
+    },
 });
 
 Template.Role_create.events({
     'change select': function(event, template) {
         event.preventDefault();
 
-        var selectModule = document.getElementById('select_module').value;
+        var selectModule = document.getElementById('module').value;
         if(selectModule == "user") {
             template.reactive.set('showAdminModule', false);
             template.reactive.set('showUserModule', true);
@@ -51,30 +51,83 @@ Template.Role_create.events({
             template.reactive.set('showAdminModule', true);
         }
     },
-    'click tr': function(event, instance) {
+    'click tr': function (event) {
         event.preventDefault();
-
+        var radioElement = document.getElementsByClassName('functionName');
         var tar = document.getElementsByTagName('tr');
 
+        for (var i = 0; i < radioElement.length; i++) {
+            radioElement[i].checked = false;
+        }
         for (var i = 0; i < tar.length; i++) {
             tar[i].classList.remove('selected');
         }
 
         const target = event.target.closest('tr');
         target.classList.add('selected');
-
-        var data = document.getElementsByClassName('selected');
-        var module = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
-        var permissions = {
-            module: module,
-        };
-        
+    },
+    'change .functionName': function() {
         var radioElement = document.getElementsByClassName('functionName');
-        for(var i = 0; i < radioElement.length; i++) {
-            if(radioElement[i].checked) {
-                //
+        var data = document.getElementsByClassName('selected');
+        var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
+        var permission = [];
+
+        for (var i = 0; i < radioElement.length; i++) {
+            if (radioElement[i].checked) {
+                var permissions = moduleData+'.'+radioElement[i].value;
+                permission.push(permissions);
             }
         }
+
+        var rolePermission = {
+            module:moduleData,
+            permissions: permission
+        }
+        var rolePermissions = Template.instance().reactive.get('rolePermission');
+
+        for (var i =0; i < rolePermissions.length; i++) {
+            if (rolePermissions[i].module === moduleData) {
+                rolePermissions.splice(i,1);
+                break;
+            }
+        }
+        
+        rolePermissions.push(rolePermission);
+        Template.instance().reactive.set('rolePermission', rolePermissions);
+    },
+    'click #select-all': function() {
+        var radioElement = document.getElementsByClassName('functionName');
+        for (var i = 0; i < radioElement.length; i++) {
+            radioElement[i].checked = true;
+        }
+
+        var radioElement = document.getElementsByClassName('functionName');
+        var data = document.getElementsByClassName('selected');
+        var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
+        var permission = [];
+
+        for (var i = 0; i < radioElement.length; i++) {
+            if (radioElement[i].checked) {
+                var permissions = moduleData+'.'+radioElement[i].value;
+                permission.push(permissions);
+            }
+        }
+
+        var rolePermission = {
+            module:moduleData,
+            permissions: permission
+        }
+        var rolePermissions = Template.instance().reactive.get('rolePermission');
+
+        for (var i =0; i < rolePermissions.length; i++) {
+            if (rolePermissions[i].module === moduleData) {
+                rolePermissions.splice(i,1);
+                break;
+            }
+        }
+        
+        rolePermissions.push(rolePermission);
+        Template.instance().reactive.set('rolePermission', rolePermissions);
     },
     'submit form': function(event) {
         event.preventDefault();
@@ -84,34 +137,43 @@ Template.Role_create.events({
         var descriptions = target.description.value;
         var element = document.getElementById('module');
         var permissions = element.options[element.selectedIndex].value;
-        var checkboxes = document.getElementsByClassName('functionName');
         var permissionData = [];
+
+
+        var rolePermission = Template.instance().reactive.get('rolePermission');
+        var permissions = [];
+
+        for (var i = 0; i < rolePermission.length; i++) {
+            for (var key in rolePermission[i].permissions) {
+                permissions.push(rolePermission[i].permissions[key]);
+            }
+        }
 
         var role = {
             role: roles,
             description: descriptions
         };
 
-        for(var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked) {
-                var modules = checkboxes[i].value.split('.')[0];
-                var functionName = checkboxes[i].value.split('.')[1];
+        for(var i = 0; i < permissions.length; i++) {
+                var modules = permissions[i].split('.')[0];
+                var functionName = permissions[i].split('.')[1];
+                console.log(modules, functionName);
+                // var permissionDatas = {
+                //     name: "Issue Tracker",
+                //     module: modules,
+                //     functionName: functionName,
+                //     permission: permissions + '-' + modules + '.' + functionName
+                // }
 
-                var permissionDatas = {
-                    name: "Issue Tracker",
-                    module: modules,
-                    functionName: functionName,
-                    permission: permissions + '-' + modules + '.' + functionName
-                }
-
-                permissionData.push(permissionDatas);
+                // permissionData.push(permissionDatas);
             }
         }
-        Meteor.call('rolePermissions.insert', role, permissionData, function(error) {
-            if(error) {
-                document.getElementById('error-msg').innerHTML = error.reason;
-            }
-        });
-        FlowRouter.go('/admin/roles-list');
+        // console.log(permissionData, role);
+        // Meteor.call('rolePermissions.insert', role, permissionData, function(error) {
+        //     if(error) {
+        //         document.getElementById('error-msg').innerHTML = error.reason;
+        //     }
+        // });
+        // FlowRouter.go('/admin/roles-list');
     }
 });

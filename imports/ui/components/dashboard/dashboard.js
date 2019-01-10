@@ -11,6 +11,7 @@ import '../../components/graphs/range/range.js';
 import '../../components/graphs/xbar/xbar.js';
 import '../../components/graphs/yield/yield.js';
 import '../../components/modals/modals.js';
+import '../alert-message/alert-message.js'
 
 Template.Dashboard.helpers({
     chart() {
