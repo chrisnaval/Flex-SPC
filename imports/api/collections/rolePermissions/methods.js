@@ -19,11 +19,10 @@ Meteor.methods({
         //     functionName: String,
         //     permission: String,
 		// });
-		
 		try {
 			var roles = Roles.findOne({ role: roleData.role });
 
-			if(roles == undefined) {
+			if(roles === undefined) {
 				Roles.insert({
 					role: roleData.role,
 					description: roleData.description,
@@ -36,25 +35,30 @@ Meteor.methods({
 						var permissions = []; // Array for the created Permissions
 
 						permissionsData.forEach(element => {
-							var permissionId = Permissions.insert({
-								module: element.module,
-								functionName: element.functionName,
-								permission: element.permission
-							});
-							permissions.push(Permissions.findOne(permissionId));
+							var getPermissions = element.permission;
+
+							var permission = Permissions.findOne({permission: getPermissions});
+
+							if(permission == null) {
+								Permissions.insert({
+									module: element.module,
+									functionName: element.functionName,
+									permission: element.permission
+								});
+							}
+							permissions.push(Permissions.findOne({permission: getPermissions}));
 						});
-						var role = Roles.findOne({ _id: roleId });
 						RolePermissions.insert({
-							role,
+							role: Roles.findOne({ _id: roleId }),
 							permissions
 						});
 					}
 				});
 			} else {
-				throw new Meteor.Error('error', error.reason);
-			}	
+				throw new Meteor.Error('Role-name', 'Role already exist!');
+			}
 		} catch(error) {
-			throw new Meteor.Error('Role-name', 'Role already exist!');
+			throw new Meteor.Error('error', error.reason);
 		}
 	},
 	'rolePermissions.update': function(rolePermissionId, rolePermissionData) {
