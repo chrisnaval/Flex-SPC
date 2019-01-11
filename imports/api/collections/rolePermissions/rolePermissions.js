@@ -19,6 +19,9 @@ RolePermissions.schema = new SimpleSchema({
 	'role.description': {
 		type: String
 	},
+	'role.roleType': {
+		type: String
+	},
 	permissions: {
 		type: Array,
 		optional: false
@@ -33,7 +36,7 @@ RolePermissions.schema = new SimpleSchema({
 	'permissions.$.module': {
 		type: String
 	},
-	'permissions.$.function': {
+	'permissions.$.functionName': {
 		type: String
 	},
 	'permissions.$.permission': {

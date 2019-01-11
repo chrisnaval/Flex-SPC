@@ -58,6 +58,7 @@
                             <thead>
                                 <tr>
                                     <th>Role</th>
+                                    <th>Description</th>
                                     {{#if viewActions}}<th>Actions</th>{{/if}}
                                 </tr>
                             </thead>
@@ -88,7 +89,8 @@
 <template name="Roles_data">
     <tr data-id="{{_id}}">
         <div class="role-list list">
-            <td>{{ role }}</td>
+            <td>{{ role.role }}</td>
+            <td>{{ role.description }}</td>
         </div>
         {{#if viewActions}}
         <td>

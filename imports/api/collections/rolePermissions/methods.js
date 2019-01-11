@@ -26,7 +26,7 @@ Meteor.methods({
 				Roles.insert({
 					role: roleData.role,
 					description: roleData.description,
-					type: roleData.type
+					roleType: roleData.roleType
 				}, function(error, roleId) {
 					if(error) {
 						throw new Meteor.error('error', error.reason);

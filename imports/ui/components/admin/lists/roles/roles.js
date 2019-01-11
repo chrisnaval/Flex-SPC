@@ -8,7 +8,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Session } from 'meteor/session';
 
 // Mongo Collection(s)
-import { Roles } from '/imports/api/collections/roles/roles.js';
+import { RolePermissions } from '/imports/api/collections/rolePermissions/rolePermissions.js';
 
 
 // Global Object for View Navigation
@@ -52,46 +52,46 @@ Template.Roles_list.onCreated(function() {
 		if(user) {
 			if(user.profile.role.role == "Super Administrator") {
 				if(instance.state.get('viewAdmins')) {
-					Session.set('rolesList', Roles.find({
-						'role': { 
+					Session.set('rolesList', RolePermissions.find({
+						'role.role': { 
 							$ne: "Super Administrator" 
 						},
-						'type': { 
+						'role.type': { 
 							$eq: "admin" 
 						}
 					}).fetch());
 				} else if(instance.state.get('viewUsers')) {
-					Session.set('rolesList', Roles.find({
-						'role': { 
+					Session.set('rolesList', RolePermissions.find({
+						'role.role': { 
 							$ne: "Super Administrator" 
 						},
-						'type': { 
+						'role.type': { 
 							$eq: "user" 
 						}
 					}).fetch());
 				} else {
-					Session.set('rolesList', Roles.find({
-						'role': { 
+					Session.set('rolesList', RolePermissions.find({
+						'role.role': { 
 							$ne: "Super Administrator" 
 						},
 					}).fetch());
 				}
 			} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 				if(instance.state.get('viewUsers')) {
-					Session.set('rolesList', Roles.find({
-						'role': { 
+					Session.set('rolesList', RolePermissions.find({
+						'role.role': { 
 							$ne: "Super Administrator" 
 						},
-						'type': {
+						'role.type': {
 							$eq: "user"
 						}
 					}).fetch());
 				} else {
-					Session.set('rolesList', Roles.find({
-						'role': { 
+					Session.set('rolesList', RolePermissions.find({
+						'role.role': { 
 							$ne: "Super Administrator" 
 						},
-						'type': {
+						'role.type': {
 							$eq: "admin"
 						}
 					}).fetch());
@@ -102,7 +102,7 @@ Template.Roles_list.onCreated(function() {
 			var limit = instance.limit.get();
 
 			// Subscription(s)
-			var querySubscription = Meteor.subscribe('roles.list', {
+			var querySubscription = Meteor.subscribe('rolePermissions.list', {
 				limit: limit, 
 				sort: {createdAt: -1}
 			});
@@ -111,7 +111,7 @@ Template.Roles_list.onCreated(function() {
 				instance.loaded.set(limit);
 			}
 
-			var searchSubscription = Meteor.subscribe('roles.search', instance.searchKeyword.get(), () => {
+			var searchSubscription = Meteor.subscribe('rolePermissions.search', instance.searchKeyword.get(), () => {
 				setTimeout( () => {
 					instance.searching.set(false);
 				}, 100);
@@ -127,18 +127,18 @@ Template.Roles_list.onCreated(function() {
 		var keyword = instance.searchKeyword.get();
 		
 		if(instance.state.get('viewAdmins')) {
-			return Roles.find({
-				'type': {
+			return RolePermissions.find({
+				'role.type': {
 					$eq: "admin"
 				},
 				$and: [
 					{
-						'role': { 
+						'role.role': { 
 							$ne: "Super Administrator" 
 						}
 					}, 
 					{
-						'role': {
+						'role.role': {
 							$regex: ".*" + keyword + ".*",
 							$options: "i"
 						}
@@ -146,18 +146,18 @@ Template.Roles_list.onCreated(function() {
 				]
 			}, { limit: instance.loaded.get(), sort: {createdAt: -1} }).fetch();
 		} else if(instance.state.get('viewUsers')) {
-			return Roles.find({
-				'type': {
+			return RolePermissions.find({
+				'role.type': {
 					$eq: "user"
 				},
 				$and: [
 					{
-						'role': { 
+						'role.role': { 
 							$ne: "Super Administrator" 
 						}
 					}, 
 					{
-						'role': {
+						'role.role': {
 							$regex: ".*" + keyword + ".*",
 							$options: "i"
 						}
@@ -165,15 +165,15 @@ Template.Roles_list.onCreated(function() {
 				]
 			}, { limit: instance.loaded.get(), sort: {createdAt: -1} }).fetch();
 		} else {
-			return Roles.find({
+			return RolePermissions.find({
 				$and: [
 					{
-						'role': { 
+						'role.role': { 
 							$ne: "Super Administrator" 
 						}
 					}, 
 					{
-						'role': {
+						'role.role': {
 							$regex: ".*" + keyword + ".*",
 							$options: "i"
 						}
@@ -285,8 +285,8 @@ Template.Roles_list.events({
 		viewUsers.parentElement.classList.remove('active');
 
 		// Retrieves all roles except "Super Administrator" - is set on Session variable
-		Session.set('rolesList', Roles.find({
-            'role': { 
+		Session.set('rolesList', RolePermissions.find({
+            'role.role': { 
                 $ne: "Super Administrator" 
             },
         }).fetch());
@@ -315,11 +315,11 @@ Template.Roles_list.events({
 		viewUsers.parentElement.classList.remove('active');
 
 		// Retrieves all roles with type "admin" except "Super Administrator" - is set on Session variable
-		Session.set('rolesList', Roles.find({
-            'role': { 
+		Session.set('rolesList', RolePermissions.find({
+            'role.role': { 
                 $ne: "Super Administrator" 
             },
-            'type': {
+            'role.type': {
                 $eq: "admin"
             }
         }).fetch());
@@ -348,11 +348,11 @@ Template.Roles_list.events({
 		viewAdmins.parentElement.classList.remove('active');
 
 		// Retrieves all roles with type "user" except "Super Administrator" - is set on Session variable
-		Session.set('rolesList', Roles.find({
-            'role': { 
+		Session.set('rolesList', RolePermissions.find({
+            'role.role': { 
                 $ne: "Super Administrator" 
             },
-            'type': {
+            'role.type': {
                 $eq: "user"
             }
         }).fetch());
