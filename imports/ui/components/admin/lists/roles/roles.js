@@ -1,6 +1,7 @@
 import './roles.html';
 
 // Component(s)
+import '../../../alert-message/alert-message.js'
 import '../../../modals/modals.js';
 
 // Meteor Package(s)
@@ -400,13 +401,18 @@ Template.Roles_list.events({
     },
     'click .delete': function(event) {
 		event.preventDefault();
-
+		
 		var rolePermissionId = document.getElementById('delete_id').value;
+		var alertMessage = document.getElementById('alert-message');
 
 		Meteor.call('rolePermissions.remove', rolePermissionId, function(error) {
             if(error) {
-                document.getElementById('error-msg').innerHTML = error.reason;
-            }
+                Session.set('failure', error.reason);
+				alertMessage.style.display = 'block';
+			} else {
+				Session.set('success', 'Successfully Deleted');
+				alertMessage.style.display = 'block';
+			}
 		});
 
 		document.getElementById('delete_id').value = '';

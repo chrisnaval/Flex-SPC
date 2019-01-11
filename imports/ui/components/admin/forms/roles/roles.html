@@ -1,6 +1,16 @@
 <!-- Check_boxes -->
 <template name="Check_boxes">
     <div class="forms checkboxes">
+        <div class="form-group" style="border-bottom: solid 2px #f3f3f3;padding-bottom: 25px;">
+            <p>ACCESS ALL</p>
+            <label class="switch" style="float:right;">
+                <input type="checkbox" id="access-all" value="create">
+                <div class="slider round">
+                    <span class="on">ON</span>
+                    <span class="off">OFF</span>
+                </div>
+            </label>
+        </div>
         <div class="form-group">
             <p>CREATE</p>
             <label class="switch" style="float:right;">
@@ -44,7 +54,7 @@
     </div>
 </template>
 
-<!-- Role_create -->
+<!--Role create-->
 <template name="Role_create">
     <div class="role-create-section">
         <div class="wrap">
@@ -80,18 +90,18 @@
                                         <option value="user">User</option>
                                     </select>
                                 </div>
-                                <div class="module-list" style="margin-top: 20px;">
+                                <div class="modules" style="margin-top: 20px;">
                                     <table class="table table-hover">
                                         <tbody>
                                             {{#if showAdmin}}
                                                 {{#each adminAppModules}}
-                                                    <tr>
+                                                    <tr class="module-list">
                                                         <td class="module" module-value="{{module}}">{{name}}</td>
                                                     </tr>
                                                 {{/each}}
                                             {{else}}
                                                 {{#each userAppModules}}
-                                                    <tr>
+                                                    <tr class="module-list">
                                                         <td class="module" module-value="{{module}}">{{name}}</td>
                                                     </tr>
                                                 {{/each}}
@@ -104,13 +114,89 @@
                         <div class="col-4 form-role" id="or">
                             <div class="card-body">
                                 <p></p>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <a href="javascript:void(0);" class="select-all align-right" id="select-all" style="text-decoration: none;color: inherit;">Select All</a>
-                                </div>
+                                </div> -->
                                 <br>
                                 {{> Check_boxes}}
                                 <div class="submit-button">
                                     <button class="button submit">Create</button>
+                                    <a href="/admin/roles-list" class="button cancel create-user-form">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!--role update-->
+<template name="Role_update">
+    <div class="role-update-section">
+        <div class="wrap">
+            {{> Alert_message}}
+            <div class="card">
+                <form class="createrole-form" id="createrole-form">
+                    <div class="card-header form-title">
+                        <span style="font-size:15px;">CREATE ROLE</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 form-inputs">
+                            <div class="card-body">
+                                <div class="forms">
+                                    <p id="error-msg" style="color: #F16362;"></p>
+                                    <div class="form-group">
+                                        <label>Role</label>
+                                        <input type="text" class="form-control" name="roleName" value="{{roleData.role.role}}"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea name="description" id="Description" rows="7" class="form-control"
+                                            value="{{roleData.role.description}}"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 form-inputs" style="height: 307px;">
+                            <div class="card-body">
+                                <p></p>
+                                <p>Choose Role Type</p>
+                                <div class="form-group">
+                                    <select name="module" id="module" class="form-control" disabled>
+                                        <option value="{{roleData.role.type}}" selected>{{ucFirst roleData.role.type}}</option>
+                                    </select>
+                                </div>
+                                <div class="module-list" style="margin-top: 20px;">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                            {{#if showAdmin}}
+                                            {{#each adminAppModules}}
+                                            <tr>
+                                                <td class="module" module-value="{{module}}">{{name}}</td>
+                                            </tr>
+                                            {{/each}}
+                                            {{else}}
+                                            {{#each userAppModules}}
+                                            <tr>
+                                                <td class="module" module-value="{{module}}">{{name}}</td>
+                                            </tr>
+                                            {{/each}}
+                                            {{/if}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 form-role" id="or">
+                            <div class="card-body">
+                                <p></p>
+                                <br>
+                                {{> Check_boxes}}
+                                <div class="submit-button">
+                                    <button class="button submit">Save</button>
                                     <a href="/admin/roles-list" class="button cancel create-user-form">Cancel</a>
                                 </div>
                             </div>

@@ -26,7 +26,7 @@ Meteor.methods({
 				Roles.insert({
 					role: roleData.role,
 					description: roleData.description,
-					roleType: roleData.roleType
+					type: roleData.type
 				}, function(error, roleId) {
 					if(error) {
 						throw new Meteor.error('error', error.reason);
@@ -129,10 +129,10 @@ Meteor.methods({
 					}
 				});
 			} else {
-				throw new Meteor.error('error', error.reason);
+				throw new Meteor.Error('remove-error', 'Cannot remove this role since currently used by users!');
 			}	
 		} catch(error) {
-			throw new Meteor.error('Remove-role', 'Cannot remove this role since currently used by users!');
+			throw new Meteor.Error('error', error.reason);
 		}
 	},
 });

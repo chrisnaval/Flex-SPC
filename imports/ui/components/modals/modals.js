@@ -53,10 +53,8 @@ Template.Role_view.helpers({
         });
 
         if(rolePermision) {
-            var type = rolePermision.role.roleType;
-        
             return AppModules.find({
-                type: type
+                type: rolePermision.role.type
             });
         }
     },
@@ -126,6 +124,7 @@ Template.Custom_dashboard.events({
         target.classList.add('selected');
     },
 });
+
 // Delete_modal
 Template.Delete_modal.events({
     'click .close-toggle': function() {
@@ -137,6 +136,7 @@ Template.Delete_modal.events({
         modal.style.display = 'none';
     }
 });
+
 // Parameter
 Template.Parameter.events({
     'click .cancel': function() {
