@@ -31,7 +31,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                        {{#if searching}}
+                    {{#if searching}}
                         <p class="col-xs-12" style="color: #384D68; font-weight: bold;">Searching...</p>
                     {{else}}
                         {{#if searchKeyword}}
@@ -40,6 +40,7 @@
                             <thead>
                                 <tr>
                                     <th>Role</th>
+                                    <th>Type</th>
                                     {{#if viewActions}}<th>Actions</th>{{/if}}
                                 </tr>
                             </thead>
@@ -58,7 +59,7 @@
                             <thead>
                                 <tr>
                                     <th>Role</th>
-                                    <th>Description</th>
+                                    <th>Type</th>
                                     {{#if viewActions}}<th>Actions</th>{{/if}}
                                 </tr>
                             </thead>
@@ -89,8 +90,8 @@
 <template name="Roles_data">
     <tr data-id="{{_id}}">
         <div class="role-list list">
-            <td>{{ role.role }}</td>
-            <td>{{ role.description }}</td>
+            <td>{{ role }}</td>
+            <td>{{ type }}</td>
         </div>
         {{#if viewActions}}
         <td>

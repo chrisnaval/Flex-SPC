@@ -2,9 +2,12 @@
 
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
+import { publishPagination } from 'meteor/kurounin:pagination';
 
 // Mongo Collection(s)
 import { Roles } from '../roles.js';
+
+publishPagination(Roles);
 
 Meteor.publish('roles.all', function() {
     return Roles.find({});
