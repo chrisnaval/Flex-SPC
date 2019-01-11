@@ -63,7 +63,7 @@ adminRoutes.route('/edit-role/:_id', {
             BlazeLayout.render('Admin_home', {
                 header: 'Admin_header',
                 sidebar: 'Admin_sidebar',
-                main: 'Role_create'
+                main: 'Role_update'
             });
         } else {
             FlowRouter.go('/login');
