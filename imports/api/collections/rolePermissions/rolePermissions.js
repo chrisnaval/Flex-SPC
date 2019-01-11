@@ -19,7 +19,7 @@ RolePermissions.schema = new SimpleSchema({
 	'role.description': {
 		type: String
 	},
-	'role.roleType': {
+	'role.type': {
 		type: String
 	},
 	permissions: {

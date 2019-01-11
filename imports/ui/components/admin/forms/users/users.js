@@ -223,7 +223,6 @@ Template.User_create.events({
                     alertMessage.style.display = 'block';
                 } else {
                     Session.set('success', 'Successfully Created');
-                    alertMessage.style.display = 'block';
                     FlowRouter.go('/admin/users-list');
                 }
             });
