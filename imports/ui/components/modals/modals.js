@@ -49,11 +49,11 @@ Template.Role_view.helpers({
     appModules() {
         var roleId = Session.get('roleId');
         var rolePermision = RolePermissions.findOne({
-            'role._id': roleId
+            _id: roleId
         });
 
         if(rolePermision) {
-            var type = rolePermision.role.type;
+            var type = rolePermision.role.roleType;
         
             return AppModules.find({
                 type: type
@@ -64,7 +64,7 @@ Template.Role_view.helpers({
         var roleId = Session.get('roleId');
 
         return RolePermissions.findOne({
-            'role._id': roleId
+            _id: roleId
         });
     },
 });
@@ -101,7 +101,7 @@ Template.Change_pass.events({
        var oldPass = document.getElementById('oldPassword').value;
        var newPass = document.getElementById('newPassword').value;
        var changePass = document.getElementById('changePassword').value;
-   }
+   },
 });
 //custom dashboard
 Template.Custom_dashboard.events({

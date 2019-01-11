@@ -1,4 +1,4 @@
-import './roles.html'
+import './roles.html';
 
 //component
 import '../../../alert-message/alert-message.js';
@@ -155,9 +155,10 @@ Template.Role_create.events({
 
         var roleData = {
             role: roles,
-            description: descriptions
+            description: descriptions,
+            roleType: roleType
         };
-
+        console.log(roleData);
         for(var i = 0; i < permissionsList.length; i++) {
             var modules = permissionsList[i].split('.')[0];
             var functionName = permissionsList[i].split('.')[1];
@@ -169,7 +170,7 @@ Template.Role_create.events({
 
             permissionsData.push(permissionDatas);
         }
-        
+        console.log(permissionsData);
         Meteor.call('rolePermissions.insert', roleData, permissionsData, function(error) {
             if(error) {
                 Session.set('failure', error.reason);
