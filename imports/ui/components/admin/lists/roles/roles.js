@@ -23,12 +23,6 @@ Template.Roles_list.onCreated(function() {
 	instance.loaded = new ReactiveVar(0);
 	instance.searching = new ReactiveVar(false);
 	instance.searchKeyword = new ReactiveVar();
-
-	instance.pagination = new Meteor.Pagination(Roles, {
-        sort: {
-            createdAt: -1
-        }
-	});
 	
 	// Check the user who is currently logged in
     var user = Meteor.user();
@@ -208,19 +202,6 @@ Template.Roles_list.helpers({
 	foundRoles() {
 		return Template.instance().foundRoles();
 	},
-	isReady() {
-        return Template.instance().pagination.ready();
-	},
-	documents() {
-        return Template.instance().pagination.getPage();
-    },
-    // optional helper used to return a callback that should be executed before changing the page
-    clickEvent() {
-        return function(e, templateInstance, clickedPage) {
-            e.preventDefault();
-            console.log('Changing page from ', templateInstance.data.pagination.currentPage(), ' to ', clickedPage);
-        };
-    },
 	isSuperAdmin() {
 		var user = Meteor.user();
 		if(user) {
@@ -251,9 +232,6 @@ Template.Roles_list.helpers({
 	searchKeyword() {
 		return Template.instance().searchKeyword.get();
 	},
-    templatePagination() {
-        return Template.instance().pagination;
-    },
 	viewActions() {
 		var instance = Template.instance();
         var user = Meteor.user();

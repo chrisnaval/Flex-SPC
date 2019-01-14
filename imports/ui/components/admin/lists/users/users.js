@@ -2,7 +2,7 @@ import './users.html';
 
 // Component(s)
 import '../../../modals/modals.js';
-import '../../../alert-message/alert-message.js'
+
 // Meteor Package(s)
 import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
@@ -15,7 +15,7 @@ Template.Users_list.onCreated(function() {
 	// Reactive Dictionary and Variables Initialization
 	var instance = this;
 	instance.state = new ReactiveDict();
-	instance.limit = new ReactiveVar(10);
+	instance.limit = new ReactiveVar(20);
 	instance.loaded = new ReactiveVar(0);
 	instance.searching = new ReactiveVar(false);
 	instance.searchKeyword = new ReactiveVar();
@@ -428,20 +428,15 @@ Template.Users_list.events({
 		modal.style.display = 'block';
 		document.getElementById('delete_id').value = this._id;
 	},
-	'click .delete': function(event) {
+	'click .remove': function(event) {
 		event.preventDefault();
 
 		var userId = document.getElementById('delete_id').value;
-		var alertMessage = document.getElementById('alert-message');
 
 		Meteor.call('users.remove', userId, function(error) {
             if(error) {
-                Session.set('failure', error.reason);
-				alertMessage.style.display = 'block';
-			} else {
-				Session.set('success', 'Successfully Deleted');
-				alertMessage.style.display = 'block';
-			}
+                document.getElementById('error-msg').innerHTML = error.reason;
+            }
 		});
 
 		document.getElementById('delete_id').value = '';
