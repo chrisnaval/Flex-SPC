@@ -4,7 +4,7 @@
         <div class="form-group" style="border-bottom: solid 2px #f3f3f3;padding-bottom: 25px;">
             <p>ACCESS ALL</p>
             <label class="switch" style="float:right;">
-                <input type="checkbox" id="access-all" value="create">
+                <input type="checkbox" id="access-all" value="access-all">
                 <div class="slider round">
                     <span class="on">ON</span>
                     <span class="off">OFF</span>
@@ -14,7 +14,7 @@
         <div class="form-group">
             <p>CREATE</p>
             <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" value="create">
+                <input type="checkbox" class="functionName" id="create" value="create">
                 <div class="slider round">
                     <span class="on">ON</span>
                     <span class="off">OFF</span>
@@ -24,7 +24,7 @@
         <div class="form-group">
             <p>VIEW</p>
             <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" value="read">
+                <input type="checkbox" class="functionName" id="read" value="read">
                 <div class="slider round">
                     <span class="on">ON</span>
                     <span class="off">OFF</span>
@@ -34,7 +34,7 @@
         <div class="form-group">
             <p>EDIT</p>
             <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" value="update">
+                <input type="checkbox" class="functionName" id="update" value="update">
                 <div class="slider round">
                     <span class="on">ON</span>
                     <span class="off">OFF</span>
@@ -44,7 +44,7 @@
         <div class="form-group">
             <p>DELETE</p>
             <label class="switch" style="float:right;">
-                <input type="checkbox" class="functionName" value="delete">
+                <input type="checkbox" class="functionName" id="delete" value="delete">
                 <div class="slider round">
                     <span class="on">ON</span>
                     <span class="off">OFF</span>
@@ -114,9 +114,6 @@
                         <div class="col-4 form-role" id="or">
                             <div class="card-body">
                                 <p></p>
-                                <!-- <div class="form-group">
-                                    <a href="javascript:void(0);" class="select-all align-right" id="select-all" style="text-decoration: none;color: inherit;">Select All</a>
-                                </div> -->
                                 <br>
                                 {{> Check_boxes}}
                                 <div class="submit-button">
@@ -169,21 +166,21 @@
                                         <option value="{{roleData.role.type}}" selected>{{ucFirst roleData.role.type}}</option>
                                     </select>
                                 </div>
-                                <div class="module-list" style="margin-top: 20px;">
+                                <div class="modules" style="margin-top: 20px;">
                                     <table class="table table-hover">
                                         <tbody>
                                             {{#if showAdmin}}
-                                            {{#each adminAppModules}}
-                                            <tr>
-                                                <td class="module" module-value="{{module}}">{{name}}</td>
-                                            </tr>
-                                            {{/each}}
+                                                {{#each adminAppModules}}
+                                                <tr class="module-list">
+                                                    <td class="module" module-value="{{module}}">{{name}}</td>
+                                                </tr>
+                                                {{/each}}
                                             {{else}}
-                                            {{#each userAppModules}}
-                                            <tr>
-                                                <td class="module" module-value="{{module}}">{{name}}</td>
-                                            </tr>
-                                            {{/each}}
+                                                {{#each userAppModules}}
+                                                <tr class="module-list">
+                                                    <td class="module" module-value="{{module}}">{{name}}</td>
+                                                </tr>
+                                                {{/each}}
                                             {{/if}}
                                         </tbody>
                                     </table>

@@ -468,7 +468,14 @@ Template.Roles_list.events({
     'click .role-list': function(event) {
         event.preventDefault();
 
-        var tar = document.getElementsByTagName('tr');
+		var radioButton = document.getElementsByClassName('functionName');
+		var tar = document.getElementsByTagName('tr');
+		document.getElementById('access-all').setAttribute('disabled', true);
+
+		for(var i = 0; i < radioButton.length; i++) {
+			radioButton[i].setAttribute('disabled', true);
+		}
+
         for(var i = 0; i < tar.length; i++) {
             tar[i].classList.remove('selected');
         }

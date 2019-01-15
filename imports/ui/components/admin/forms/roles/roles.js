@@ -22,7 +22,7 @@ Template.Role_create.onCreated(function () {
 });
 
 Template.Role_update.onCreated(function () {
-
+    Meteor.subscribe('appModules.all');
     this.reactive = new ReactiveDict();
 
     this.reactive.set('roleId', FlowRouter.getParam('_id'));
@@ -100,19 +100,21 @@ Template.Role_create.events({
     },
     'click tr': function (event) {
         event.preventDefault();
-        document.getElementById('access-all').checked = false;
         var radioElement = document.getElementsByClassName('functionName');
+        var accessAll = document.getElementById('access-all');
         var tar = document.getElementsByTagName('tr');
 
-        for(var i = 0; i < radioElement.length; i++) {
-            radioElement[i].checked = false;
+        if(!accessAll.checked) {
+            for(var i = 0; i < radioElement.length; i++) {
+                radioElement[i].checked = false;
+            }
+            for(var l = 0; l < tar.length; l++) {
+                tar[l].classList.remove('selected');
+            }
+    
+            const target = event.target.closest('tr');
+            target.classList.add('selected');
         }
-        for(var i = 0; i < tar.length; i++) {
-            tar[i].classList.remove('selected');
-        }
-
-        const target = event.target.closest('tr');
-        target.classList.add('selected');
     },
     'change .functionName': function () {
         var radioElement = document.getElementsByClassName('functionName');
@@ -139,43 +141,64 @@ Template.Role_create.events({
                 break;
             }
         }
-
         rolePermissions.push(rolePermission);
         Template.instance().reactive.set('rolePermission', rolePermissions);
     },
     'click #access-all': function () {
-        var radioElement = document.getElementsByClassName('functionName');
-        for(var i = 0; i < radioElement.length; i++) {
-            radioElement[i].checked = true;
-        }
-
+        var accessAll = document.getElementById('access-all');
         var radioElement = document.getElementsByClassName('functionName');
         var data = document.getElementsByClassName('selected');
-        var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
-        var permission = [];
+        
 
-        for(var i = 0; i < radioElement.length; i++) {
-            if (radioElement[i].checked) {
-                var permissions = moduleData + '.' + radioElement[i].value;
-                permission.push(permissions);
+        if(accessAll.checked) {   
+            var moduleListSelected = document.getElementsByClassName('module-list');
+            var permission = [];
+            var moduleList = [];
+
+            for(var r in radioElement) {
+                radioElement[r].checked = true;
             }
-        }
 
-        var rolePermission = {
-            module: moduleData,
-            permissions: permission
-        }
-        var rolePermissions = Template.instance().reactive.get('rolePermission');
-
-        for(var i = 0; i < rolePermissions.length; i++) {
-            if (rolePermissions[i].module === moduleData) {
-                rolePermissions.splice(i, 1);
-                break;
+            for(var m = 0; m < moduleListSelected.length; m++) {
+                moduleListSelected[m].classList.add('selected');
             }
-        }
 
-        rolePermissions.push(rolePermission);
-        Template.instance().reactive.set('rolePermission', rolePermissions);
+            for(var i = 0; i < data.length; i++) {
+                var moduleElement = data[i].getElementsByClassName('module');
+                for(var o = 0; o < moduleElement.length; o++ ) {
+                    var moduleValue = moduleElement[o].getAttribute('module-value');
+                    moduleList.push(moduleValue);
+                }
+            }
+            
+            var rolePermission = [{
+                permissions: permission
+            }];
+
+            for(var a = 0; a < moduleList.length; a++) {
+                var moduleData = moduleList[a];
+                for(var b = 0; b < radioElement.length; b++) {
+                    if (radioElement[b].checked) {
+                        var permissions = moduleData + '.' + radioElement[b].value;
+                        permission.push(permissions);
+                    }
+                }
+            }
+            Template.instance().reactive.set('rolePermission', rolePermission);
+        } else {
+            var tar = document.getElementsByTagName('tr');
+
+            for(var l = 0; l < radioElement.length; l++) {
+                radioElement[l].checked = false;
+            }
+
+            for(var e = 0; e < tar.length; e++) {
+                tar[e].classList.remove('selected');
+            }
+            rolePermissions = [];
+
+            Template.instance().reactive.set('rolePermission', rolePermissions);
+        }
     },
     'submit form': function (event) {
         event.preventDefault();
@@ -225,7 +248,6 @@ Template.Role_create.events({
                 FlowRouter.go('/admin/roles-list');
             }
         });
-        
     }
 });
 
@@ -245,17 +267,37 @@ Template.Role_update.events({
     'click tr': function (event) {
         event.preventDefault();
         var radioElement = document.getElementsByClassName('functionName');
+        var accessAll = document.getElementById('access-all');
         var tar = document.getElementsByTagName('tr');
 
-        for(var i = 0; i < radioElement.length; i++) {
-            radioElement[i].checked = false;
-        }
-        for(var i = 0; i < tar.length; i++) {
-            tar[i].classList.remove('selected');
+        if(!accessAll.checked) {
+
+            for(var i = 0; i < radioElement.length; i++) {
+                radioElement[i].checked = false;
+            }
+
+            for(var i = 0; i < tar.length; i++) {
+                tar[i].classList.remove('selected');
+            }
+    
+            const target = event.target.closest('tr');
+            target.classList.add('selected');
+
+            var data = document.getElementsByClassName('selected');
+            var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
+            rolePermissionId = FlowRouter.getParam('_id');
+            
+            var rolePermission = RolePermissions.findOne({ _id: rolePermissionId });
+            var permission = rolePermission.permissions;
+
+            permission.forEach(element => {
+                if(element.module === moduleData) {
+                    document.getElementById(element.functionName).checked = true;
+                }
+            })
         }
 
-        const target = event.target.closest('tr');
-        target.classList.add('selected');
+        
     },
     'change .functionName': function () {
         var radioElement = document.getElementsByClassName('functionName');
@@ -274,6 +316,7 @@ Template.Role_update.events({
             module: moduleData,
             permissions: permission
         }
+
         var rolePermissions = Template.instance().reactive.get('rolePermission');
 
         for(var i = 0; i < rolePermissions.length; i++) {
@@ -286,39 +329,62 @@ Template.Role_update.events({
         rolePermissions.push(rolePermission);
         Template.instance().reactive.set('rolePermission', rolePermissions);
     },
-    'click #select-all': function () {
-        var radioElement = document.getElementsByClassName('functionName');
-        for(var i = 0; i < radioElement.length; i++) {
-            radioElement[i].checked = true;
-        }
-
+    'click #access-all': function () {
+        var accessAll = document.getElementById('access-all');
         var radioElement = document.getElementsByClassName('functionName');
         var data = document.getElementsByClassName('selected');
-        var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
-        var permission = [];
+        
 
-        for(var i = 0; i < radioElement.length; i++) {
-            if (radioElement[i].checked) {
-                var permissions = moduleData + '.' + radioElement[i].value;
-                permission.push(permissions);
+        if(accessAll.checked) {   
+            var moduleListSelected = document.getElementsByClassName('module-list');
+            var permission = [];
+            var moduleList = [];
+
+            for(var r in radioElement) {
+                radioElement[r].checked = true;
             }
-        }
 
-        var rolePermission = {
-            module: moduleData,
-            permissions: permission
-        }
-        var rolePermissions = Template.instance().reactive.get('rolePermission');
-
-        for(var i = 0; i < rolePermissions.length; i++) {
-            if (rolePermissions[i].module === moduleData) {
-                rolePermissions.splice(i, 1);
-                break;
+            for(var m = 0; m < moduleListSelected.length; m++) {
+                moduleListSelected[m].classList.add('selected');
             }
-        }
 
-        rolePermissions.push(rolePermission);
-        Template.instance().reactive.set('rolePermission', rolePermissions);
+            for(var i = 0; i < data.length; i++) {
+                var moduleElement = data[i].getElementsByClassName('module');
+                for(var o = 0; o < moduleElement.length; o++ ) {
+                    var moduleValue = moduleElement[o].getAttribute('module-value');
+                    moduleList.push(moduleValue);
+                }
+            }
+            
+            var rolePermission = [{
+                permissions: permission
+            }];
+
+            for(var a = 0; a < moduleList.length; a++) {
+                var moduleData = moduleList[a];
+                for(var b = 0; b < radioElement.length; b++) {
+                    if (radioElement[b].checked) {
+                        var permissions = moduleData + '.' + radioElement[b].value;
+                        permission.push(permissions);
+                    }
+                }
+            }
+            Template.instance().reactive.set('rolePermission', rolePermission);
+        } else {
+            var tar = document.getElementsByTagName('tr');
+
+            for(var l = 0; l < radioElement.length; l++) {
+                radioElement[l].checked = false;
+            }
+
+            for(var e = 0; e < tar.length; e++) {
+                tar[e].classList.remove('selected');
+            }
+            
+            rolePermissions = [];
+
+            Template.instance().reactive.set('rolePermission', rolePermissions);
+        }
     },
     'submit form': function (event) {
         event.preventDefault();
@@ -370,7 +436,7 @@ Template.Role_update.events({
                 Session.set('failure', error.reason);
                 alertMessage.style.display = 'block';
             } else {
-                Session.set('success', 'Successfully Created');
+                Session.set('success', 'Successfully Updated');
                 FlowRouter.go('/admin/roles-list');
             }
         });
