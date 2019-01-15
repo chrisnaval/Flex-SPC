@@ -474,7 +474,7 @@ Template.Users_list.events({
 		modal.style.display = 'block';
 		document.getElementById('delete_id').value = this._id;
 	},
-	'click .remove': function(event) {
+	'click .delete': function(event) {
 		event.preventDefault();
 
 		var userId = document.getElementById('delete_id').value;

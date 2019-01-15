@@ -96,7 +96,7 @@ Meteor.methods({
 
 			RolePermissions.update({ _id: rolePermissionId }, {
 				$set: {
-					role: rolePermissionData.roleData,
+					role: Roles.findOne({ _id: roleId}),
 					permissions: permissions,
 				}
 			});
@@ -109,30 +109,28 @@ Meteor.methods({
 
 		try {
 			var rolePermission = RolePermissions.findOne({ _id: rolePermissionId});
-			var roleId = rolePermission.role.role;
-			var role = rolePermission.role.role;
+			var roleId = rolePermission.role._id;
 
 			// check if the role has been used by atleast one user
-			var userRoleId = Meteor.users.findOne({'profile.role.role': roleId});
-			var userHasDeleted = userRoleId.deletedAt;
+			var user = Meteor.users.findOne({'profile.role._id': roleId});
 			var permissions = rolePermission.permissions;
 
-			if(userRoleId != undefined && userHasDeleted != null) {
+			if(user && user.deletedAt == null) {
+				throw new Meteor.Error('remove-error', 'Cannot remove this role since currently used by users!');
+			} else {
 				RolePermissions.remove({
 					_id: rolePermissionId
 				}, function(error) {
 					if(error) {
 						throw new Meteor.Error('error', error.reason);
 					} else {
-						Roles.remove({ role: role });
+						Roles.remove({ _id: roleId });
 						permissions.forEach(element => {
 							Permissions.remove(element);
 						});
 					}
 				});
-			} else {
-				throw new Meteor.Error('remove-error', 'Cannot remove this role since currently used by users!');
-			}	
+			}
 		} catch(error) {
 			throw new Meteor.Error('error', error.reason);
 		}
