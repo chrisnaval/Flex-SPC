@@ -38,12 +38,12 @@ Template.Role_update.onCreated(function () {
 Template.Role_create.helpers({
     adminAppModules() {
         return AppModules.find({
-            type: "admin"
+            type: 'admin'
         });
     },
     userAppModules() {
         return AppModules.find({
-            type: "user"
+            type: 'user'
         });
     },
     showAdmin() {
@@ -65,12 +65,12 @@ Template.Role_update.helpers({
     },
     adminAppModules() {
         return AppModules.find({
-            type: "admin"
+            type: 'admin'
         });
     },
     userAppModules() {
         return AppModules.find({
-            type: "user"
+            type: 'user'
         });
     },
     showAdmin() {
@@ -90,7 +90,7 @@ Template.Role_create.events({
         event.preventDefault();
 
         var selectModule = document.getElementById('module').value;
-        if (selectModule == "user") {
+        if (selectModule == 'user') {
             template.reactive.set('showAdminModule', false);
             template.reactive.set('showUserModule', true);
         } else {
@@ -107,6 +107,7 @@ Template.Role_create.events({
         if(!accessAll.checked) {
             for(var i = 0; i < radioElement.length; i++) {
                 radioElement[i].checked = false;
+                radioElement[i].removeAttribute('disabled');
             }
             for(var l = 0; l < tar.length; l++) {
                 tar[l].classList.remove('selected');
@@ -114,6 +115,93 @@ Template.Role_create.events({
     
             const target = event.target.closest('tr');
             target.classList.add('selected');
+
+            var data = document.getElementsByClassName('selected');
+            var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
+            var permission = [];
+
+            if(moduleData == 'dashboard') {
+                for(var k = 0; k < radioElement.length;k++) {
+                    radioElement[k].checked = true;
+                    radioElement[k].setAttribute('disabled', true);
+                    if (radioElement[k].checked) {
+                        var permissions = moduleData + '.' + radioElement[k].value;
+                        permission.push(permissions);
+                    }
+                }
+
+                var rolePermission = {
+                    module: moduleData,
+                    permissions: permission
+                }
+
+                var rolePermissions = Template.instance().reactive.get('rolePermission');
+        
+                for(var i = 0; i < rolePermissions.length; i++) {
+                    if (rolePermissions[i].module === moduleData) {
+                        rolePermissions.splice(i, 1);
+                        break;
+                    }
+                }
+                rolePermissions.push(rolePermission);
+                Template.instance().reactive.set('rolePermission', rolePermissions);
+
+            } else if(moduleData == 'roles') {
+                document.getElementById('read').checked = true;
+                document.getElementById('read').setAttribute('disabled', true);
+
+                for(var k = 0; k < radioElement.length;k++) {
+                    if (radioElement[k].checked) {
+                        var permissions = moduleData + '.' + radioElement[k].value;
+                        permission.push(permissions);
+                    }
+                }
+
+                var rolePermission = {
+                    module: moduleData,
+                    permissions: permission
+                }
+
+                var rolePermissions = Template.instance().reactive.get('rolePermission');
+        
+                for(var i = 0; i < rolePermissions.length; i++) {
+                    if (rolePermissions[i].module === moduleData) {
+                        rolePermissions.splice(i, 1);
+                        break;
+                    }
+                }
+                rolePermissions.push(rolePermission);
+                Template.instance().reactive.set('rolePermission', rolePermissions);
+
+            } else {
+                document.getElementById('create').checked = true;
+                document.getElementById('read').checked = true;
+                document.getElementById('create').setAttribute('disabled', true);
+                document.getElementById('read').setAttribute('disabled', true);
+
+                for(var k = 0; k < radioElement.length;k++) {
+                    if (radioElement[k].checked) {
+                        var permissions = moduleData + '.' + radioElement[k].value;
+                        permission.push(permissions);
+                    }
+                }
+
+                var rolePermission = {
+                    module: moduleData,
+                    permissions: permission
+                }
+
+                var rolePermissions = Template.instance().reactive.get('rolePermission');
+        
+                for(var i = 0; i < rolePermissions.length; i++) {
+                    if (rolePermissions[i].module === moduleData) {
+                        rolePermissions.splice(i, 1);
+                        break;
+                    }
+                }
+                rolePermissions.push(rolePermission);
+                Template.instance().reactive.set('rolePermission', rolePermissions);
+            }
         }
     },
     'change .functionName': function () {
@@ -210,14 +298,21 @@ Template.Role_create.events({
         var alertMessage = document.getElementById('alert-message');
         var roleType = element.options[element.selectedIndex].value;
         var permissionsData = [];
+        var permissionsList = [];
 
 
         var rolePermission = Template.instance().reactive.get('rolePermission');
-        var permissionsList = [];
 
-        for(var i = 0; i < rolePermission.length; i++) {
-            for(var key in rolePermission[i].permissions) {
-                permissionsList.push(rolePermission[i].permissions[key]);
+        if(rolePermission.length == 0) {
+            var permissionDefaultData = ['dashboard.create', 'dashboard.read', 'dashboard.update', 'dashboard.delete', 'roles.read', 'users.create', 'users.read'];
+            for(var i = 0; i < permissionDefaultData.length; i++) {
+                permissionsList.push(permissionDefaultData[i]);
+            }
+        } else {
+            for(var i = 0; i < rolePermission.length; i++) {
+                for(var key in rolePermission[i].permissions) {
+                    permissionsList.push(rolePermission[i].permissions[key]);
+                }
             }
         }
 
@@ -256,7 +351,7 @@ Template.Role_update.events({
         const target = event.target;
 
         var selectModule = target.options[target.selectedIndex].value;
-        if (selectModule == "user") {
+        if (selectModule == 'user') {
             template.reactive.set('showAdminModule', false);
             template.reactive.set('showUserModule', true);
         } else {
