@@ -443,12 +443,12 @@ Template.Roles_list.events({
 
 		var modal = document.getElementById('deleteModal');
 		modal.style.display = 'block';
-		document.getElementById('delete_id').value = this._id;
+		document.getElementById('delete-id').value = this._id;
     },
     'click .delete': function(event) {
 		event.preventDefault();
 		
-		var rolePermissionId = document.getElementById('delete_id').value;
+		var rolePermissionId = document.getElementById('delete-id').value;
 		var alertMessage = document.getElementById('alert-message');
 
 		Meteor.call('rolePermissions.remove', rolePermissionId, function(error) {
@@ -461,7 +461,7 @@ Template.Roles_list.events({
 			}
 		});
 
-		document.getElementById('delete_id').value = '';
+		document.getElementById('delete-id').value = '';
 		var modal = document.getElementById('deleteModal');
 		modal.style.display = 'none';
     },

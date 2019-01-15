@@ -108,7 +108,6 @@ Template.User_update.helpers({
         return Meteor.users.findOne({
             _id: Template.instance().state.get('userId'),
         });
-        // console.log(test);
     },
     userEmailAddress() {
         var user = Meteor.users.findOne({
