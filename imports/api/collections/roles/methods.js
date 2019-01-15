@@ -18,7 +18,7 @@ Meteor.methods({
 				type: roleData.type
 			});
 		} catch(error) {
-			throw new Meteor.error('error', error.reason);
+			throw new Meteor.Error('error', error.reason);
 		}
 	},
 });
