@@ -10,6 +10,7 @@ import { Session } from 'meteor/session';
 
 // Mongo Collection(s)
 import { RolePermissions } from '/imports/api/collections/rolePermissions/rolePermissions.js';
+import { copyFile } from 'fs';
 
 
 // Global Object for View Navigation
@@ -37,7 +38,8 @@ Template.Roles_list.onCreated(function() {
 			this.state.set({
 				viewAll: false,
 				viewAdmins: true,
-				viewUsers: false
+				viewUsers: false,
+				viewEditButton: false,
 			});
 	
 			var viewAdmins = document.getElementById('view-admins');
@@ -187,7 +189,8 @@ Template.Roles_list.onCreated(function() {
     globalObj = {
 		viewAll: this.state.get('viewAll'),
 		viewAdmins: this.state.get('viewAdmins'),
-		viewUsers: this.state.get('viewUsers')
+		viewUsers: this.state.get('viewUsers'),
+		viewEditButton: this.state.get('viewEditButton')
 	};
 });
 
@@ -250,6 +253,28 @@ Template.Roles_list.helpers({
 				return true;
 			}
 		}
+	},
+	viewCreateButton() {
+		var user = Meteor.user();
+		var userRoleId = user.profile.role._id;
+		var rolePermissions = RolePermissions.findOne({'role._id': userRoleId});
+		var permissions = rolePermissions.permissions;
+
+		var hasPermissionToCreate = false;
+
+		if(user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
+			hasPermissionToCreate = true;
+		} else {
+			permissions.forEach(element => {
+				var permission = element.functionName;
+	
+				if(permission == 'create') {
+					hasPermissionToCreate = true;
+				}
+			});
+		}
+
+		return hasPermissionToCreate;
 	}, 
 });
 // Roles_data
@@ -271,6 +296,50 @@ Template.Roles_data.helpers({
 				return true;
 			}
 		}
+	},
+	viewEditButton() {
+		var user = Meteor.user();
+		var userRoleId = user.profile.role._id;
+		var rolePermissions = RolePermissions.findOne({'role._id': userRoleId});
+		var permissions = rolePermissions.permissions;
+
+		var hasPermissionToEdit = false;
+
+		if(user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
+			hasPermissionToEdit = true;
+		} else {
+			permissions.forEach(element => {
+				var permission = element.functionName;
+	
+				if(permission == 'update') {
+					hasPermissionToEdit = true;
+				}
+			});
+		}
+
+		return hasPermissionToEdit;
+	},
+	viewDeleteButton() {
+		var user = Meteor.user();
+		var userRoleId = user.profile.role._id;
+		var rolePermissions = RolePermissions.findOne({'role._id': userRoleId});
+		var permissions = rolePermissions.permissions;
+
+		var hasPermissionToDelete = false;
+
+		if(user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
+			hasPermissionToDelete = true;
+		} else {
+			permissions.forEach(element => {
+				var permission = element.functionName;
+	
+				if(permission == 'delete') {
+					hasPermissionToDelete = true;
+				}
+			});
+		}
+
+		return hasPermissionToDelete;
 	},
 });
 

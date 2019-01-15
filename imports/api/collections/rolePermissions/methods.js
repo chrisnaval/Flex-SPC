@@ -29,7 +29,7 @@ Meteor.methods({
 					type: roleData.type
 				}, function(error, roleId) {
 					if(error) {
-						throw new Meteor.error('error', error.reason);
+						throw new Meteor.Error('error', error.reason);
 					} else {
 						
 						var permissions = []; // Array for the created Permissions
@@ -70,7 +70,7 @@ Meteor.methods({
 			var roleId = rolePermission.role._id;
 			var permissions = rolePermission.permissions;
 
-			Roles.update({_id: roleId}, {
+			var getRoleId = Roles.update({_id: roleId}, {
 				$set: {
 					role: rolePermissionData.roleData.role,
 					description: rolePermissionData.roleData.description,
@@ -109,20 +109,22 @@ Meteor.methods({
 
 		try {
 			var rolePermission = RolePermissions.findOne({ _id: rolePermissionId});
-			var roleId = rolePermission.role._id;
+			var roleId = rolePermission.role.role;
+			var role = rolePermission.role.role;
 
 			// check if the role has been used by atleast one user
-			var user = Meteor.users.findOne({'profile.role._id': roleId});
+			var userRoleId = Meteor.users.findOne({'profile.role.role': roleId});
+			var userHasDeleted = userRoleId.deletedAt;
 			var permissions = rolePermission.permissions;
 
-			if(user == null) {
+			if(userRoleId != undefined && userHasDeleted != null) {
 				RolePermissions.remove({
 					_id: rolePermissionId
 				}, function(error) {
 					if(error) {
-						throw new Meteor.error('error', error.reason);
+						throw new Meteor.Error('error', error.reason);
 					} else {
-						Roles.remove({ _id: roleId });
+						Roles.remove({ role: role });
 						permissions.forEach(element => {
 							Permissions.remove(element);
 						});

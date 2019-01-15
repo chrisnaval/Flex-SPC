@@ -8,6 +8,7 @@
             <div class="semi-nav">
                 <div class="semi-nav-menu">
                     <ul>
+                        {{viewButton}}
                         {{#if isSuperAdmin}}
                         <li class="active">
                             <a href="" id="view-all">VIEW ALL</a>
@@ -79,9 +80,11 @@
                 </div>
             </div>
         </div>
-        <a href="/admin/create-role" class="float-add">
-            <i class="fa fa-plus my-float"></i>
-        </a>
+        {{#if viewCreateButton}}
+            <a href="/admin/create-role" class="float-add">
+                <i class="fa fa-plus my-float"></i>
+            </a>
+        {{/if}}
     </div>
     {{> Delete_modal}}
     {{> Role_view}}
@@ -95,13 +98,17 @@
         </div>
         {{#if viewActions}}
         <td>
-            <a href="/admin/edit-role/{{_id}}" class="icon icon-info" title="Edit Role">
-                <i class="fa fa-edit"></i>
-            </a>
-            <a href="javascript:void(0)" class="icon icon-danger delete-role" title="Delete Role">
-                <i class="fa fa-times"></i>
-            </a>
+            {{#if viewEditButton}}
+                <a href="/admin/edit-role/{{_id}}" class="icon icon-info" title="Edit Role">
+                    <i class="fa fa-edit"></i>
+                </a>
+            {{/if}}
+            {{#if viewDeleteButton}}
+                <a href="javascript:void(0)" class="icon icon-danger delete-role" title="Delete Role">
+                    <i class="fa fa-times"></i>
+                </a>
+            {{/if}}
         </td>
-        {{/if}}
+        {{/if}} 
     </tr>
 </template>
