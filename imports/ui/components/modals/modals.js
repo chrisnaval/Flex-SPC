@@ -1,5 +1,8 @@
 import './modals.html';
 
+//components
+import '../admin/forms/roles/roles.js';
+
 // Meteor Package(s)
 import { Session } from 'meteor/session';
 
@@ -168,6 +171,36 @@ Template.Role_view.events({
     'click .close-toggle': function() {
         var modal = document.getElementById('role-view');
         modal.style.display = 'none';
+    },
+    'click tr': function (event) {
+        event.preventDefault();
+        var radioElement = document.getElementsByClassName('functionName');
+        var accessAll = document.getElementById('access-all');
+        var tar = document.getElementsByTagName('tr');
+
+        if(!accessAll.checked) {
+            for(var i = 0; i < radioElement.length; i++) {
+                radioElement[i].checked = false;
+            }
+            for(var i = 0; i < tar.length; i++) {
+                tar[i].classList.remove('selected');
+            }
+    
+            const target = event.target.closest('tr');
+            target.classList.add('selected');
+        }
+
+        var data = document.getElementsByClassName('selected');
+        var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
+        rolePermissionId = Session.get('roleId');
+        
+        var rolePermission = RolePermissions.findOne({ _id: rolePermissionId });
+        var permission = rolePermission.permissions;
+        permission.forEach(element => {
+            if(element.module === moduleData) {
+                document.getElementById(element.functionName).checked = true;
+            }
+        })
     },
 });
 // User_profile

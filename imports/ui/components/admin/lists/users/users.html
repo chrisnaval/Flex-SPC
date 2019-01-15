@@ -86,11 +86,14 @@
                 </div>
             </div>
         </div>
-        <a href="/admin/create-user" class="float-add">
-            <i class="fa fa-plus my-float"></i>
-        </a>
+        {{#if viewActions}}
+            {{#if createButton}}
+                <a href="/admin/create-user" class="float-add">
+                    <i class="fa fa-plus my-float"></i>
+                </a>
+            {{/if}}
+        {{/if}}
     </div>
-    
     {{> Delete_modal}}
     {{> User_view}}
 </template>

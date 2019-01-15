@@ -2,16 +2,21 @@ import './users.html';
 
 // Component(s)
 import '../../../modals/modals.js';
+import '../../../alert-message/alert-message.js'
 
 // Meteor Package(s)
 import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
+// Mongo Collection(s)
+import { RolePermissions } from '/imports/api/collections/rolePermissions/rolePermissions.js';
 
 // Global Object for View Navigation
 var globalObj = {};
 
 Template.Users_list.onCreated(function() {
+
+	Meteor.subscribe('rolePermissions.all');
 	// Reactive Dictionary and Variables Initialization
 	var instance = this;
 	instance.state = new ReactiveDict();
@@ -237,7 +242,48 @@ Template.Users_list.onRendered(function() {
 
 // Template Helpers
 Template.Users_list.helpers({	
-	// Found Users from Search Keyword
+	//button permission
+	createButton() {
+		var user = Meteor.user();
+		var userRoleId = user.profile.role._id;
+		var roleId = RolePermissions.findOne({'role._id': userRoleId});
+		var permission = roleId.permissions;
+		var hasPermissionToCreate = false;
+
+		if(user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
+			hasPermissionToCreate = true;
+		} else {
+			permission.forEach(element => {
+				var permission = element.functionName;
+	
+				if(permission == 'create') {
+					hasPermissionToCreate = true;
+				}
+			});
+		}
+		return hasPermissionToCreate;
+	},
+	editButton() {
+		var user = Meteor.user();
+		var userRoleId = user.profile.role_id;
+		var roleId = RolePermissions.findOne({ 'role._id': userRoleId});
+		var permissions = roleId.permissions;
+
+		var hasPermissionToEdit = false;
+
+		if(user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
+			hasPermissionToEdit = true;
+		} else {
+			permissions.forEach(element => {
+				var permission = element.functionName;
+	
+				if(permission == 'edit') {
+					hasPermissionToEdit = true;
+				}
+			});
+		}
+		return hasPermissionToEdit;
+	},
 	foundUsers() {
 		return Template.instance().foundUsers();
 	},

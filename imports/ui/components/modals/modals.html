@@ -192,7 +192,7 @@
 
 <!-- Role_view -->
 <template name="Role_view">
-    <div id="role-view" class="modal">
+    <div id="role-view" class="modal" disabled>
         <input type="hidden" id="roleId">
         <div class="modal-content">
             <div class="modal-header">
@@ -247,7 +247,7 @@
                                     <p></p>
                                     <p>Permissions</p>
                                     <div class="permission">
-
+                                        {{> Check_boxes}}
                                     </div>
                                 </div>
                             </div>
