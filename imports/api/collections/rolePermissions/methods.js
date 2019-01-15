@@ -70,7 +70,7 @@ Meteor.methods({
 			var roleId = rolePermission.role._id;
 			var permissions = rolePermission.permissions;
 
-			var getRoleId = Roles.update({_id: roleId}, {
+			Roles.update({_id: roleId}, {
 				$set: {
 					role: rolePermissionData.roleData.role,
 					description: rolePermissionData.roleData.description,
