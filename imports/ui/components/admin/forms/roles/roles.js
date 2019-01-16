@@ -147,8 +147,8 @@ Template.Role_create.events({
                 Template.instance().reactive.set('rolePermission', rolePermissions);
 
             } else if(moduleData == 'roles') {
-                document.getElementById('read').checked = true;
-                document.getElementById('read').setAttribute('disabled', true);
+                document.getElementById('view').checked = true;
+                document.getElementById('view').setAttribute('disabled', true);
 
                 for(var k = 0; k < radioElement.length;k++) {
                     if (radioElement[k].checked) {
@@ -175,9 +175,9 @@ Template.Role_create.events({
 
             } else if(moduleData == 'users'){
                 document.getElementById('create').checked = true;
-                document.getElementById('read').checked = true;
+                document.getElementById('view').checked = true;
                 document.getElementById('create').setAttribute('disabled', true);
-                document.getElementById('read').setAttribute('disabled', true);
+                document.getElementById('view').setAttribute('disabled', true);
 
                 for(var k = 0; k < radioElement.length;k++) {
                     if (radioElement[k].checked) {
@@ -304,7 +304,7 @@ Template.Role_create.events({
         var rolePermission = Template.instance().reactive.get('rolePermission');
 
         if(rolePermission.length == 0) {
-            var permissionDefaultData = ['dashboard.create', 'dashboard.read', 'dashboard.update', 'dashboard.delete', 'roles.read', 'users.create', 'users.read'];
+            var permissionDefaultData = ['dashboard.create', 'dashboard.view', 'dashboard.update', 'dashboard.delete', 'roles.view', 'users.create', 'users.view'];
             for(var i = 0; i < permissionDefaultData.length; i++) {
                 permissionsList.push(permissionDefaultData[i]);
             }
@@ -327,13 +327,12 @@ Template.Role_create.events({
             var functionName = permissionsList[i].split('.')[1];
             var permissionDatas = {
                 module: modules,
-                functionName: functionName,
+                function: functionName,
                 permission: roleType + '-' + modules + '.' + functionName
             }
 
             permissionsData.push(permissionDatas);
         }
-
         Meteor.call('rolePermissions.insert', roleData, permissionsData, function(error) {
             if(error) {
                 Session.set('failure', error.reason);
@@ -387,12 +386,10 @@ Template.Role_update.events({
 
             permission.forEach(element => {
                 if(element.module === moduleData) {
-                    document.getElementById(element.functionName).checked = true;
+                    document.getElementById(element.function).checked = true;
                 }
             })
-        }
-
-        
+        }        
     },
     'change .functionName': function () {
         var radioElement = document.getElementsByClassName('functionName');

@@ -17,7 +17,7 @@ Permissions.schema = new SimpleSchema({
     'permissions.$.module': {
 		type: String
 	},
-	'permissions.$.functionName': {
+	'permissions.$.function': {
 		type: String
 	},
 	'permissions.$.permission': {

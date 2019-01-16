@@ -16,7 +16,7 @@ Meteor.methods({
 		// Permissions.schema.validate(permissionsData);
 		// check(permissions, {
         //     module: String,
-        //     functionName: String,
+        //     function: String,
         //     permission: String,
 		// });
 		try {
@@ -42,7 +42,7 @@ Meteor.methods({
 							if(permission == null) {
 								Permissions.insert({
 									module: element.module,
-									functionName: element.functionName,
+									function: element.function,
 									permission: element.permission
 								});
 							}
@@ -87,7 +87,7 @@ Meteor.methods({
 			rolePermissionData.permissionsData.forEach(element => {
 				var permissionId = Permissions.insert({
 					module: element.module,
-					functionName: element.functionName,
+					function: element.function,
 					permission: element.permission
 				});
 				 
