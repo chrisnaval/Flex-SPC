@@ -264,7 +264,7 @@ Template.Roles_list.helpers({
 			hasPermissionToCreate = true;
 		} else {
 			permissions.forEach(element => {
-				var permission = element.functionName;
+				var permission = element.function;
 	
 				if(permission == 'create') {
 					hasPermissionToCreate = true;
@@ -307,7 +307,7 @@ Template.Roles_data.helpers({
 			hasPermissionToEdit = true;
 		} else {
 			permissions.forEach(element => {
-				var permission = element.functionName;
+				var permission = element.function;
 	
 				if(permission == 'update') {
 					hasPermissionToEdit = true;
@@ -329,7 +329,7 @@ Template.Roles_data.helpers({
 			hasPermissionToDelete = true;
 		} else {
 			permissions.forEach(element => {
-				var permission = element.functionName;
+				var permission = element.function;
 	
 				if(permission == 'delete') {
 					hasPermissionToDelete = true;

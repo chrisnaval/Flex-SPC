@@ -21,7 +21,7 @@ Template.Alert_message.helpers({
 
 Template.Alert_message.events({	
     'click .close': function() {	
-         document.getElementById('alert-message').style.display = 'none'	
+         document.getElementById('alert-message').style.display = 'none';
          Session.keys = {}	
     },	
  }); 

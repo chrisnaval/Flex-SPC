@@ -198,7 +198,7 @@ Template.Role_view.events({
         var permission = rolePermission.permissions;
         permission.forEach(element => {
             if(element.module === moduleData) {
-                document.getElementById(element.functionName).checked = true;
+                document.getElementById(element.function).checked = true;     
             }
         })
     },

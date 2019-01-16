@@ -12,7 +12,6 @@ import { Roles } from '/imports/api/collections/roles/roles.js';
 
 // Template Created
 Template.User_create.onCreated(function() {
-
     Session.keys = {}
     this.reactive = new ReactiveDict();
     this.reactive.set({

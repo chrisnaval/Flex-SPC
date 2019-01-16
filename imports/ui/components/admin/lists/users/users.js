@@ -254,7 +254,7 @@ Template.Users_list.helpers({
 			hasPermissionToCreate = true;
 		} else {
 			permission.forEach(element => {
-				var permission = element.functionName;
+				var permission = element.function;
 	
 				if(permission == 'create') {
 					hasPermissionToCreate = true;
@@ -275,7 +275,7 @@ Template.Users_list.helpers({
 			hasPermissionToEdit = true;
 		} else {
 			permissions.forEach(element => {
-				var permission = element.functionName;
+				var permission = element.function;
 	
 				if(permission == 'edit') {
 					hasPermissionToEdit = true;
