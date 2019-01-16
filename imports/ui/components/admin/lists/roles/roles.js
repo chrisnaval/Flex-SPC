@@ -16,7 +16,6 @@ import { RolePermissions } from '/imports/api/collections/rolePermissions/rolePe
 var globalObj = {};
 
 Template.Roles_list.onCreated(function() {
-    // Reactive Dictionary and Variables Initialization
 	var instance = this;
 	instance.state = new ReactiveDict();
 	instance.limit = new ReactiveVar(20);
@@ -490,6 +489,9 @@ Template.Roles_list.events({
         
 		var modal = document.getElementById('role-view');
 		modal.style.display = 'block';
+	},
+	'click a': function() {
+		Session.keys = {}
 	},
 	'keyup #search': function(event, instance) {
 		var code = event.which;

@@ -173,7 +173,7 @@ Template.Role_create.events({
                 rolePermissions.push(rolePermission);
                 Template.instance().reactive.set('rolePermission', rolePermissions);
 
-            } else {
+            } else if(moduleData == 'users'){
                 document.getElementById('create').checked = true;
                 document.getElementById('read').checked = true;
                 document.getElementById('create').setAttribute('disabled', true);

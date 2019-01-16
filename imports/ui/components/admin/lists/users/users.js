@@ -512,6 +512,9 @@ Template.Users_list.events({
 		var modal = document.getElementById('user-view');
 		modal.style.display = 'block';
 	},
+	'click a': function() {
+		Session.keys = {}
+	},
 	'keyup #search': function(event, instance) {
 		var code = event.which;
     	if(code == 13) {

@@ -39,5 +39,8 @@ Template.Admin_sidebar.events({
 
         var modal = document.getElementById('change-password');
 		modal.style.display = 'block';
+    },
+    'click a': function() {
+        Session.keys = {}
     }
 });
