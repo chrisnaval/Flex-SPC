@@ -389,9 +389,7 @@ Template.Role_update.events({
                     document.getElementById(element.function).checked = true;
                 }
             })
-        }
-
-        
+        }        
     },
     'change .functionName': function () {
         var radioElement = document.getElementsByClassName('functionName');
