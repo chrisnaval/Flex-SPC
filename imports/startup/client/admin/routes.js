@@ -92,6 +92,7 @@ adminRoutes.route('/create-user', {
     name: 'admin-user-create-page',
     action() {
         if(Meteor.userId()) {
+            Session.keys = {}
             BlazeLayout.render('Admin_home', {
                 header: 'Admin_header',
                 sidebar: 'Admin_sidebar',
