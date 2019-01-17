@@ -3,7 +3,7 @@
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-// Collection
+// Mongo Collection(s)
 import { Roles } from './roles.js';
 
 Meteor.methods({
