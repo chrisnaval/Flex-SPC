@@ -454,14 +454,22 @@ Template.Role_update.events({
         } else {
             var tar = document.getElementsByTagName('tr');
 
-            for(var l = 0; l < radioElement.length; l++) {
-                radioElement[l].checked = false;
-            }
-
             for(var e = 0; e < tar.length; e++) {
                 tar[e].classList.remove('selected');
             }
-            
+
+            var row = document.getElementsByClassName('module-list')[0];
+            row.classList.add('selected');
+            var data = document.getElementsByClassName('selected');
+            var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
+
+            if(moduleData == 'dashboard') {
+                for(var k = 0; k < radioElement.length;k++) {
+                    radioElement[k].checked = true;
+                    radioElement[k].setAttribute('disabled', true);
+                }
+            } 
+
             rolePermissions = [];
 
             Template.instance().reactive.set('rolePermission', rolePermissions);
