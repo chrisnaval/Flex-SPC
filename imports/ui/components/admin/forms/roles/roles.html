@@ -171,8 +171,7 @@
                                         <tbody>
                                             {{#if showAdmin}}
                                                 {{#each adminAppModules}}
-                                               
-                                                <tr class="module-list">
+                                                <tr class="module-list {{#if dashboard module}} selected {{/if}}">
                                                     <td class="module" module-value="{{module}}">{{name}}</td>
                                                 </tr>
                                                 {{/each}}

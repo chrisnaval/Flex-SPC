@@ -33,6 +33,13 @@ Template.Tester.onCreated(function() {
     Meteor.subscribe('testersData');
 });
 
+//template onrendered
+Template.Role_view.onRendered(function() {
+	var radioElement = document.getElementsByClassName('functionName');
+     for(var i = 0; i < radioElement.length;i++) {
+        radioElement[i].checked = true;
+    }
+});
 
 // Template Helpers
 // Parameter
@@ -60,6 +67,10 @@ Template.Role_view.helpers({
                 type: rolePermision.role.type
             });
         }
+    },
+    dashboard(module) {
+        var dashboard = 'dashboard';
+        return dashboard === module;
     },
     rolePermission() {
         var roleId = Session.get('roleId');
@@ -193,8 +204,9 @@ Template.Role_view.events({
         var data = document.getElementsByClassName('selected');
         var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
         rolePermissionId = Session.get('roleId');
-        
+        console.log(rolePermissionId);
         var rolePermission = RolePermissions.findOne({ _id: rolePermissionId });
+        console.log(rolePermission);
         var permission = rolePermission.permissions;
         permission.forEach(element => {
             if(element.module === moduleData) {
@@ -203,6 +215,7 @@ Template.Role_view.events({
         })
     },
 });
+
 // User_profile
 Template.User_profile.events({
     'click .close-toggle': function() {
