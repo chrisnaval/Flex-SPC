@@ -472,7 +472,7 @@ Template.Roles_list.events({
 		document.getElementById('access-all').setAttribute('disabled', true);
 
 		for(var i = 0; i < radioButton.length; i++) {
-			radioButton[i].setAttribute('disabled', true);
+			radioButton[i].setAttribute("readonly", true);
 		}
 
         for(var i = 0; i < tar.length; i++) {
