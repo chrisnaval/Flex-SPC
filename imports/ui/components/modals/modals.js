@@ -204,9 +204,9 @@ Template.Role_view.events({
         var data = document.getElementsByClassName('selected');
         var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
         rolePermissionId = Session.get('roleId');
-        console.log(rolePermissionId);
+
         var rolePermission = RolePermissions.findOne({ _id: rolePermissionId });
-        console.log(rolePermission);
+        
         var permission = rolePermission.permissions;
         permission.forEach(element => {
             if(element.module === moduleData) {
