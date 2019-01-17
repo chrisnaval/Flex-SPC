@@ -88,7 +88,7 @@
         </div>
         {{#if viewActions}}
             {{#if createButton}}
-                <a href="/admin/create-user" class="float-add">
+                <a href="/admin/create-user" class="float-add session">
                     <i class="fa fa-plus my-float"></i>
                 </a>
             {{/if}}
@@ -111,7 +111,7 @@
 
         {{#if viewActions}}
         <td>
-            <a href="/admin/edit-user/{{_id}}" class="icon icon-info" title="Edit User">
+            <a href="/admin/edit-user/{{_id}}" class="icon icon-info session" title="Edit User">
                 <i class="fa fa-edit"></i>
             </a>
             <a href="javascript:void(0)" class="icon icon-danger remove-user" title="Delete User">

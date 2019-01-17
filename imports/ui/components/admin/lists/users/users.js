@@ -512,7 +512,7 @@ Template.Users_list.events({
 		var modal = document.getElementById('user-view');
 		modal.style.display = 'block';
 	},
-	'click a': function() {
+	'click .session': function() {
 		Session.keys = {}
 	},
 	'keyup #search': function(event, instance) {
