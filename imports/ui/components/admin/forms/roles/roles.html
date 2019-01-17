@@ -54,7 +54,7 @@
     </div>
 </template>
 
-<!--Role create-->
+<!-- Role_create -->
 <template name="Role_create">
     <div class="role-create-section">
         <div class="wrap">
@@ -71,7 +71,7 @@
                                     <p id="error-msg" style="color: #F16362;"></p>
                                     <div class="form-group">
                                         <label>Role</label>
-                                        <input type="text" class="form-control" name="roleName" required>
+                                        <input type="text" class="form-control" name="role" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Description</label>
@@ -129,7 +129,7 @@
     </div>
 </template>
 
-<!--role update-->
+<!-- Role_update -->
 <template name="Role_update">
     <div class="role-update-section">
         <div class="wrap">
@@ -146,7 +146,7 @@
                                     <p id="error-msg" style="color: #F16362;"></p>
                                     <div class="form-group">
                                         <label>Role</label>
-                                        <input type="text" class="form-control" name="roleName" value="{{roleData.role.role}}"
+                                        <input type="text" class="form-control" name="role" value="{{roleData.role.role}}"
                                             disabled>
                                     </div>
                                     <div class="form-group">
