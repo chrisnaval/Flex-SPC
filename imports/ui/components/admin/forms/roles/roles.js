@@ -234,7 +234,7 @@ Template.Role_create.events({
             for(var e = 0; e < tar.length; e++) {
                 tar[e].classList.remove('selected');
             }
-            
+
             var row = document.getElementsByClassName('module-list')[0];
             row.classList.add('selected');
             var data = document.getElementsByClassName('selected');
