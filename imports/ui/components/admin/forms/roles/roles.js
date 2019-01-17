@@ -256,7 +256,7 @@ Template.Role_create.events({
         event.preventDefault();
         const target = event.target;
 
-        var roles = target.roleName.value;
+        var role = target.role.value;
         var descriptions = target.description.value;
         var element = document.getElementById('module');
         var alertMessage = document.getElementById('alert-message');
@@ -305,7 +305,7 @@ Template.Role_create.events({
         }
 
         var roleData = {
-            role: roles,
+            role: role,
             description: descriptions,
             type: roleType
         }
@@ -479,7 +479,7 @@ Template.Role_update.events({
         event.preventDefault();
         const target = event.target;
 
-        var roles = target.roleName.value;
+        var role = target.role.value;
         var descriptions = target.description.value;
         var element = document.getElementById('module');
         var alertMessage = document.getElementById('alert-message');
