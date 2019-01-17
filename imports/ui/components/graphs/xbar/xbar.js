@@ -1,4 +1,5 @@
 import './xbar.html';
+
 Template.Xbar.rendered = function () {
     var chartData = generateChartData();
     var chart = AmCharts.makeChart("linechart", {

@@ -101,7 +101,7 @@
                                                 {{/each}}
                                             {{else}}
                                                 {{#each userAppModules}}
-                                                    <tr class="module-list">
+                                                    <tr class="module-list {{#if dashboard module}} selected {{/if}}">
                                                         <td class="module" module-value="{{module}}">{{name}}</td>
                                                     </tr>
                                                 {{/each}}
@@ -147,7 +147,7 @@
                                     <div class="form-group">
                                         <label>Role</label>
                                         <input type="text" class="form-control" name="roleName" value="{{roleData.role.role}}"
-                                            required>
+                                            disabled>
                                     </div>
                                     <div class="form-group">
                                         <label>Description</label>

@@ -214,6 +214,9 @@ Template.Role_view.events({
             }
         })
     },
+    'click .functionName': function() {
+        return false;
+    }
 });
 
 // User_profile
