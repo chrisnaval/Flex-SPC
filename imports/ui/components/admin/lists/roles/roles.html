@@ -82,7 +82,7 @@
             </div>
         </div>
         {{#if viewCreateButton}}
-            <a href="/admin/create-role" class="float-add">
+            <a href="/admin/create-role" class="float-add session">
                 <i class="fa fa-plus my-float"></i>
             </a>
         {{/if}}
@@ -100,7 +100,7 @@
         {{#if viewActions}}
         <td>
             {{#if viewEditButton}}
-                <a href="/admin/edit-role/{{_id}}" class="icon icon-info" title="Edit Role">
+                <a href="/admin/edit-role/{{_id}}" class="icon icon-info edit-role session" title="Edit Role">
                     <i class="fa fa-edit"></i>
                 </a>
             {{/if}}

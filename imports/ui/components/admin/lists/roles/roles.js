@@ -490,7 +490,7 @@ Template.Roles_list.events({
 		var modal = document.getElementById('role-view');
 		modal.style.display = 'block';
 	},
-	'click a': function() {
+	'click .session': function() {
 		Session.keys = {}
 	},
 	'keyup #search': function(event, instance) {

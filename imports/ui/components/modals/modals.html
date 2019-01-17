@@ -233,7 +233,7 @@
                                         <table class="table table-hover">
                                             <tbody>
                                                 {{#each appModules}}
-                                                <tr>
+                                                <tr class="module-list {{#if dashboard module}} selected {{/if}}">
                                                     <td class="module" module-value="{{module}}">{{name}}</td>
                                                 </tr>
                                                 {{/each}}

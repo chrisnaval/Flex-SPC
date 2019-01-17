@@ -2,7 +2,7 @@
 <template name="Check_boxes">
     <div class="forms checkboxes">
         <div class="form-group" style="border-bottom: solid 2px #f3f3f3;padding-bottom: 25px;">
-            <p>ACCESS ALL</p>
+            <p style="font-weight:600;">ACCESS ALL</p>
             <label class="switch" style="float:right;">
                 <input type="checkbox" id="access-all" value="access-all">
                 <div class="slider round">
@@ -12,7 +12,7 @@
             </label>
         </div>
         <div class="form-group">
-            <p>CREATE</p>
+            <p style="font-weight:600;">CREATE</p>
             <label class="switch" style="float:right;">
                 <input type="checkbox" class="functionName" id="create" value="create">
                 <div class="slider round">
@@ -22,7 +22,7 @@
             </label>
         </div>
         <div class="form-group">
-            <p>VIEW</p>
+            <p style="font-weight:600;">VIEW</p>
             <label class="switch" style="float:right;">
                 <input type="checkbox" class="functionName" id="view" value="view">
                 <div class="slider round">
@@ -32,7 +32,7 @@
             </label>
         </div>
         <div class="form-group">
-            <p>EDIT</p>
+            <p style="font-weight:600;">EDIT</p>
             <label class="switch" style="float:right;">
                 <input type="checkbox" class="functionName" id="edit" value="edit">
                 <div class="slider round">
@@ -42,7 +42,7 @@
             </label>
         </div>
         <div class="form-group">
-            <p>DELETE</p>
+            <p style="font-weight:600;">DELETE</p>
             <label class="switch" style="float:right;">
                 <input type="checkbox" class="functionName" id="delete" value="delete">
                 <div class="slider round">
@@ -83,7 +83,7 @@
                         <div class="col-3 form-inputs" style="height: 307px;">
                             <div class="card-body">
                                 <p></p>
-                                <p>Choose Role Type</p>
+                                <label>Choose Role Type</label>
                                 <div class="form-group">
                                     <select name="module" id="module" class="form-control">
                                         <option value="admin">Admin</option>
@@ -95,7 +95,7 @@
                                         <tbody>
                                             {{#if showAdmin}}
                                                 {{#each adminAppModules}}
-                                                    <tr class="module-list">
+                                                    <tr class="module-list {{#if dashboard module}} selected {{/if}}">
                                                         <td class="module" module-value="{{module}}">{{name}}</td>
                                                     </tr>
                                                 {{/each}}
@@ -167,11 +167,11 @@
                                     </select>
                                 </div>
                                 <div class="modules" style="margin-top: 20px;">
-                                    <table class="table table-hover">
+                                    <table class="table table-hover" id="table">
                                         <tbody>
                                             {{#if showAdmin}}
                                                 {{#each adminAppModules}}
-                                                <tr class="module-list">
+                                                <tr class="module-list {{#if dashboard module}} selected {{/if}}">
                                                     <td class="module" module-value="{{module}}">{{name}}</td>
                                                 </tr>
                                                 {{/each}}
