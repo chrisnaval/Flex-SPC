@@ -8,24 +8,15 @@ export const Testers = new Mongo.Collection('testers');
 Testers.schema = new SimpleSchema({
 	name: {
 		type: String,
-		optional: true,
+		optional: true
 	},
 	createdAt: {
-		type: Date,
-		autoValue: function() {
-			return new Date()
-		}
+		type: Date
 	},
 	updatedAt: {
-		type: Date,
-		autoValue: function() {
-			return new Date()
-		}
+		type: Date
 	},
 	deletedAt: {
-		type: Date,
-		autoValue: function() {
-			return null
-		}
-	},
+		type: Date
+	}
 });

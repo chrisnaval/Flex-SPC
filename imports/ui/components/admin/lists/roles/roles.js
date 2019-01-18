@@ -450,7 +450,7 @@ Template.Roles_list.events({
 		var rolePermissionId = document.getElementById('delete-id').value;
 		var alertMessage = document.getElementById('alert-message');
 
-		Meteor.call('rolePermissions.remove', rolePermissionId, function(error) {
+		Meteor.call('deleteRoleWithPermissions', rolePermissionId, function(error) {
             if(error) {
                 Session.set('failure', error.reason);
 				alertMessage.style.display = 'block';

@@ -323,7 +323,7 @@ Template.Role_create.events({
 
             permissionsData.push(permissionDatas);
         }
-        Meteor.call('rolePermissions.insert', roleData, permissionsData, function(error) {
+        Meteor.call('createRoleWithPermissions', roleData, permissionsData, function(error) {
             if(error) {
                 Session.set('failure', error.reason);
                 alertMessage.style.display = 'block';
@@ -586,7 +586,7 @@ Template.Role_update.events({
             roleData
         };
 
-        Meteor.call('rolePermissions.update', rolePermissionId, rolePermissionData, function(error) {
+        Meteor.call('updateRoleWithPermissions', rolePermissionId, rolePermissionData, function(error) {
             if(error) {
                 Session.set('failure', error.reason);
                 alertMessage.style.display = 'block';

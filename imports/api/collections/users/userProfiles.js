@@ -7,10 +7,10 @@ export const UserProfiles = new Mongo.Collection('userProfiles');
 // Schema
 UserProfiles.schema = new SimpleSchema({
     firstName: {
-        type: String,
+        type: String
     },
     lastName: {
-        type: String,
+        type: String
     },
     address: {
         type: String,
@@ -25,26 +25,37 @@ UserProfiles.schema = new SimpleSchema({
         optional: true
     },
     role: {
-        type: Object,
+        type: Object
     },
     'role._id': {
-        type: String,
+        type: String
     },
     'role.role': {
-        type: String,
+        type: String
     },
     'role.description': {
-        type: String,
+        type: String
     },
     'role.type': {
+        type: String
+    },
+    charts: {
+        type: Array,
+        optional: true
+    },
+    'charts.$': {
         type: String,
+        optional: true
     },
     createdAt: {
         type: Date,
-        optional: true,
+        optional: true
     },
     updatedAt: {
         type: Date,
-        optional: true,
+        optional: true
     },
+    deletedAt: {
+        type: Date
+	}
 });

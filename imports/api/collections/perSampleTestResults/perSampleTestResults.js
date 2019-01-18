@@ -7,31 +7,31 @@ export const PerSampleTestResults = new Mongo.Collection('perSampleTestResults')
 // Schema
 PerSampleTestResults.schema = new SimpleSchema({
 	sampleItems: {
-		type: Array,
+		type: Array
 	},
 	'sampleItems.$': {
 		type: Object
 	},
 	xBarResult: {
-		type: Number,
+		type: Number
 	},
 	rChartResult: {
-		type: Number,
+		type: Number
 	},
 	minimum: {
-		type: Number,
+		type: Number
 	},
 	firstQuartile: {
-		type: Number,
+		type: Number
 	},
 	median: {
-		type: Number,
+		type: Number
 	},
 	thirdQuartile: {
-		type: Number,
+		type: Number
 	},
 	maximum: {
-		type: Number,
+		type: Number
 	},
 	createdAt: {
 		type: Date,

@@ -6,15 +6,15 @@ import { check } from 'meteor/check';
 
 // Mongo Collection(s)
 import { Permissions } from '/imports/api/collections/permissions/permissions.js';
-import { Roles } from '/imports/api/collections/roles/roles.js';
 import { RolePermissions } from '/imports/api/collections/rolePermissions/rolePermissions.js';
+import { Roles } from '/imports/api/collections/roles/roles.js';
 
 Meteor.methods({
-	'rolePermissions.insert': function(roleData, permissionsData) {
+	'createRoleWithPermissions': function(roleData, permissionsData) {
 		// Validation of Data from the Client using the Collection's Schema
 		Roles.schema.validate(roleData);
 		// Permissions.schema.validate(permissionsData);
-		// Checking of the permissions data array
+		// Checking of the Permissions Data Array
 		check(permissionsData, [{
             module: String,
             function: String,
@@ -63,19 +63,17 @@ Meteor.methods({
 			throw new Meteor.Error('error', error.reason);
 		}
 	},
-	'rolePermissions.update': function(rolePermissionId, rolePermissionData) {
+	'updateRoleWithPermissions': function(rolePermissionId, rolePermissionData) {
 		// Validation of Data from the Client using the Collection's Schema
 		Roles.schema.validate(rolePermissionData.roleData);
 		
 		try {
 			var rolePermission = RolePermissions.findOne({ _id: rolePermissionId });
-
-			// Check the permissions of Super Admin
+			// Check the Permissions of Super Admin
 			var user = Meteor.users.findOne({ 'profile.role.role': 'Super Administrator' });
 			var usersRoleId = user.profile.role._id;
 			var rolePermissionRoleId = RolePermissions.findOne({ 'role._id': usersRoleId });
 			var permissionData = rolePermissionRoleId.permissions;
-
 			var roleId = rolePermission.role._id;
 			var permissions = rolePermission.permissions;
 
@@ -96,7 +94,7 @@ Meteor.methods({
 				});
 			}
 
-			var permissions = []; // Array for the created Permissions
+			var permissions = []; // Array for the Created Permissions
 
 			rolePermissionData.permissionsData.forEach(element => {
 				var permissionData = element.permission;
@@ -123,11 +121,10 @@ Meteor.methods({
 			throw new Meteor.Error('error', error.reason);
 		}
 	},
-	'rolePermissions.remove': function(rolePermissionId) {
+	'deleteRoleWithPermissions': function(rolePermissionId) {
 		try {
 			var rolePermission = RolePermissions.findOne({ _id: rolePermissionId});
 			var roleId = rolePermission.role._id;
-
 			// Check if the role has been used by at least one user
 			var user = Meteor.users.findOne({'profile.role._id': roleId});
 			var permissions = rolePermission.permissions;

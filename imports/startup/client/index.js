@@ -2,3 +2,4 @@
 
 import './admin/routes.js';
 import './routes.js';
+import './template-helpers.js';

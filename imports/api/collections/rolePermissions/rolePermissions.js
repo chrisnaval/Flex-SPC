@@ -41,5 +41,5 @@ RolePermissions.schema = new SimpleSchema({
 	},
 	'permissions.$.permission': {
 		type: String
-	},
+	}
 });

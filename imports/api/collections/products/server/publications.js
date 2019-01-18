@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 // Mongo Collection(s)
 import { Products } from '../products.js';
 
-Meteor.publish('productsData', function() {
+Meteor.publish('products.all', function() {
     return Products.find({}, {
         fields: {
             _id: 1,
