@@ -1,8 +1,5 @@
 import './modals.html';
 
-//components
-import '../admin/forms/roles/roles.js';
-
 // Meteor Package(s)
 import { Session } from 'meteor/session';
 
@@ -109,11 +106,28 @@ Template.Change_pass.events({
         var modal = document.getElementById('change-password');
 		modal.style.display = 'none';
     },
-    'click .submit': function() {
-       var oldPass = document.getElementById('oldPassword').value;
-       var newPass = document.getElementById('newPassword').value;
-       var changePass = document.getElementById('changePassword').value;
-   },
+    'click .submit': function(event) {
+        event.preventDefault();
+
+        var oldPass = document.getElementById('oldPassword').value;
+        var newPass = document.getElementById('newPassword').value;
+        var changePass = document.getElementById('changePassword').value;
+
+        if(newPass === changePass) {
+            Accounts.changePassword(oldPass, newPass, function(error) {
+                if(error) {
+                    Session.set('failure', error.reason);
+                    alertMessage.style.display = 'block';
+                } else {
+                    Session.set('success', 'Successfully Updated');
+                }
+            });
+        } else {
+            Session.set('failure', 'New Password and Confirm Password dont match !');
+        }
+        var modal = document.getElementById('change-password');
+        modal.style.display = 'none';
+    },
 });
 //custom dashboard
 Template.Custom_dashboard.events({

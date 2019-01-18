@@ -2,7 +2,7 @@
 
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
-// import { check } from 'meteor/check';
+import { check } from 'meteor/check';
 
 // Mongo Collection(s)
 import { Permissions } from '/imports/api/collections/permissions/permissions.js';
@@ -14,11 +14,12 @@ Meteor.methods({
 		// Validation of Data from the Client using the Collection's Schema
 		Roles.schema.validate(roleData);
 		// Permissions.schema.validate(permissionsData);
-		// check(permissions, {
-        //     module: String,
-        //     function: String,
-        //     permission: String,
-        // });
+		// Checking of the permissions data array
+		check(permissionsData, [{
+            module: String,
+            function: String,
+            permission: String,
+        }]);
         
 		try {
 			var roles = Roles.findOne({ role: roleData.role });
@@ -68,6 +69,13 @@ Meteor.methods({
 		
 		try {
 			var rolePermission = RolePermissions.findOne({ _id: rolePermissionId });
+
+			// Check the permissions of Super Admin
+			var user = Meteor.users.findOne({ 'profile.role.role': 'Super Administrator' });
+			var usersRoleId = user.profile.role._id;
+			var rolePermissionRoleId = RolePermissions.findOne({ 'role._id': usersRoleId });
+			var permissionData = rolePermissionRoleId.permissions;
+
 			var roleId = rolePermission.role._id;
 			var permissions = rolePermission.permissions;
 
@@ -77,23 +85,32 @@ Meteor.methods({
 					description: rolePermissionData.roleData.description,
 					type: rolePermissionData.roleData.type,
 				}
-            });
-            
-			// Delete all the permissions to be replaced by the new ones
-			permissions.forEach(element => {
-				Permissions.remove({_id: element._id});
 			});
+			
+			// Delete all the permissions to be replaced by the new ones
+			if(permissions == permissionData) {
+				throw new Meteor.Error('error', error.reason);
+			} else {
+				permissions.forEach(element => {
+					Permissions.remove({_id: element._id});
+				});
+			}
 
-			var permissions = []; // Array for the Created Permissions
+			var permissions = []; // Array for the created Permissions
 
 			rolePermissionData.permissionsData.forEach(element => {
-				var permissionId = Permissions.insert({
-					module: element.module,
-					function: element.function,
-					permission: element.permission
-				});
-				 
-				permissions.push(Permissions.findOne(permissionId));
+				var permissionData = element.permission;
+
+				var permission = Permissions.findOne({permission: permissionData});
+
+				if(permission == null) {
+					Permissions.insert({
+						module: element.module,
+						function: element.function,
+						permission: element.permission
+					});
+				}
+				permissions.push(Permissions.findOne({permission: permissionData}));
 			});
 
 			RolePermissions.update({ _id: rolePermissionId }, {
