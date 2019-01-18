@@ -18,11 +18,11 @@ var globalObj = {};
 Template.Roles_list.onCreated(function() {
 	var instance = this;
 	instance.state = new ReactiveDict();
-	instance.limit = new ReactiveVar(20);
+	instance.limit = new ReactiveVar(10);
 	instance.loaded = new ReactiveVar(0);
 	instance.searching = new ReactiveVar(false);
 	instance.searchKeyword = new ReactiveVar();
-	
+
 	// Check the user who is currently logged in
     var user = Meteor.user();
 	if(user) {
