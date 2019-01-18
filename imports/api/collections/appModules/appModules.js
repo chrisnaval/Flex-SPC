@@ -7,7 +7,7 @@ export const AppModules = new Mongo.Collection('appModules');
 // Schema
 AppModules.schema = new SimpleSchema({
     name: {
-      	type: String,
+      	type: String
     },
     module: {
         type: String

@@ -7,27 +7,27 @@ export const HistogramData = new Mongo.Collection('histogramData');
 // Schema
 HistogramData.schema = new SimpleSchema({
 	bin: {
-		type: Number,
+		type: Number
 	},
 	binRange: {
-		type: Number,
+		type: Number
 	},
 	binCount: {
-		type: Number,
+		type: Number
 	},
 	sampleId: {
-		type: String,
+		type: String
 	},
 	createdAt: {
 		type: Date,
-		optional: true,
+		optional: true
 	},
 	updatedAt: {
 		type: Date,
-		optional: true,
+		optional: true
 	},
 	deletedAt: {
 		type: Date,
-		optional: true,
-	},
+		optional: true
+	}
 });

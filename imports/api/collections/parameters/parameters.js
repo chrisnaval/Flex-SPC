@@ -7,7 +7,7 @@ export const Parameters = new Mongo.Collection('parameters');
 // Schema
 Parameters.schema = new SimpleSchema({
   	name: {
-    	type: String,
+    	type: String
   	},
 	createdAt: {
 		type: Date,
@@ -20,5 +20,5 @@ Parameters.schema = new SimpleSchema({
 	deletedAt: {
 		type: Date,
 		optional: true
-	},
+	}
 });

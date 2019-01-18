@@ -6,15 +6,15 @@ export const Permissions = new Mongo.Collection('permissions');
 
 // Schema
 Permissions.schema = new SimpleSchema({
-    permissions: {
+	permissions: {
 		type: Array,
 		optional: false
-    },
-    'permissions.$': {
+	},
+	'permissions.$': {
 		type: Object,
 		optional: false
 	},
-    'permissions.$.module': {
+	'permissions.$.module': {
 		type: String
 	},
 	'permissions.$.function': {
@@ -22,5 +22,5 @@ Permissions.schema = new SimpleSchema({
 	},
 	'permissions.$.permission': {
 		type: String
-    },
+	}
 });
