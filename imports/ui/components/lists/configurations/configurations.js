@@ -1,24 +1,22 @@
-import './product.html'
+import './configurations.html';
+import '../../modals/modals.js';
 
-//components
-import '../modals/modals.js'
-
-//api
+// Mongo Collection(s)
 import { Configurations } from '/imports/api/collections/configurations/configurations.js';
 
-Template.Product_list.onCreated(function() {
+Template.Configurations_list.onCreated(function() {
 	Meteor.subscribe('configurations.all');
 });
 
-Template.Product_list.helpers({
+Template.Configurations_list.helpers({
 	config() {
 		return Configurations.find({
 			deletedAt: null,
 		});
 	}
 });
-//events
-Template.Product_list.events({
+
+Template.Configurations_list.events({
     'click .remove-data': function(event) {
 		event.preventDefault();
 

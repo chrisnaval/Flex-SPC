@@ -1,6 +1,6 @@
-import './histograph.html';
+import './histogram.html';
 
-Template.Histograph.rendered = function () {
+Template.Histogram.rendered = function () {
     var data = [
         ['10', 10000],
         ['15', 12000],
@@ -12,10 +12,11 @@ Template.Histograph.rendered = function () {
 
     var chart = anychart.column();
     var series = chart.column(data);
+    
     chart.title('Histogram per Sample (Parameter)');
     chart.barGroupsPadding(0);
     chart.xAxis().title('Bin');
     chart.yAxis().title('Frequency');
-    chart.container('histograph');
+    chart.container('histogram');
     chart.draw();
 };

@@ -1,11 +1,9 @@
-import './configuration.html';
-
-//components
-import '../../components/modals/modals.js';
-import '../alert-message/alert-message.js';
+import './configurations.html';
+import '../../modals/modals.js';
+import '../../alert-message/alert-message.js';
 
 // Events
-Template.Configuration.events({
+Template.Configuration_create.events({
     //tester
     'click .choose-tester': function(event) {
         event.preventDefault();
@@ -121,6 +119,5 @@ Template.Configuration.events({
                 Session.set('success', 'Successfully Created');
             }
         });
-        
     }
 });

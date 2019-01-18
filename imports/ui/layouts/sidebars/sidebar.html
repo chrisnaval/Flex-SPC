@@ -30,32 +30,29 @@
             </div>
             <div class="sidebar-menu">
                 <ul>
-                    <li class="menu-item active">
+                    <li class="menu-item {{#if currentRouteIs 'home-page'}} active {{else}} inactive {{/if}}">
                         <a href="/" class="menu-link">
                             <i class="fa fa-tachometer" aria-hidden="true"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li class="menu-item inactive">
-                        <a href="/" class="menu-link">
-                            <i class="fa fa-flag" aria-hidden="true"></i>
-                            <p>Reports
-                                <i class="fa fa-sort-desc" aria-hidden="true"></i>
-                            </p>
+                    <li class="menu-item {{#if currentRouteIs 'configurations-list-page'}} active {{else}} inactive {{/if}}">
+                        <a href="/configurations-list" class="menu-link">
+                            <i class="fa fa-cogs" aria-hidden="true"></i>
+                            <p>Configurations</p>
                         </a>
-                        <div class="dropdown">
-                            <ul class="dropdown-menu">
-                                <li class="menu-item">
-                                    <a class="menu-link" href="/products">Products</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a class="menu-link" href="/">Parameters</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a class="menu-link" href="/">Testers</a>
-                                </li>
-                            </ul>
-                        </div>
+                    </li>
+                    <li class="menu-item {{#if currentRouteIs 'reports-page'}} active {{else}} inactive {{/if}}">
+                        <a href="/reports" class="menu-link">
+                            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                            <p>Reports</p>
+                        </a>
+                    </li>
+                    <li class="menu-item {{#if currentRouteIs 'issue-tracker-page'}} active {{else}} inactive {{/if}}">
+                        <a href="/issue-tracker" class="menu-link">
+                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                            <p>Issue Tracker</p>
+                        </a>
                     </li>
                 </ul>
             </div>

@@ -1,4 +1,4 @@
-<template name="Product_list">
+<template name="Configurations_list">
     <div class="wrap">
         <!-- <div class="card search-bar">
             <i class="fa fa-search" aria-hidden="true"></i><input type="text" name="search" class="form-control search">
@@ -12,16 +12,10 @@
                     <li>
                         <a href="">TYPE</a>
                     </li>
-                    <li>
-                        <a href="">COMPANIES</a>
-                    </li>
-                    <li>
-                        <a href="">LOCATION</a>
-                    </li>
                     <li style="float:right">
                         <div class="header-search align-right">
-                            <input type="text" placeholder="Search....">
-                            <a href="#" class="search-button">
+                            <input type="text" id="search" name="search" placeholder="Search....">
+                            <a href="" class="search-button">
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </a>
                         </div>
@@ -50,7 +44,7 @@
                     </thead>
                     <tbody>
                         {{#each config}}
-                            {{> Config_list}}
+                            {{> Configuration_data}}
                         {{/each}}
                     </tbody>
                 </table>
@@ -66,7 +60,7 @@
     {{> Delete_modal}}
 </template>
 
-<template name="Config_list">
+<template name="Configuration_data">
     <tr>
         <td>{{product.name}}</td>
         <td>{{sampleSize}}</td>
