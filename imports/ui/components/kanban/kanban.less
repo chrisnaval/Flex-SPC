@@ -1,0 +1,74 @@
+.gu-mirror {
+    padding: 10px;
+    background-color: #fff;
+    border: solid 1px #dcdedf;
+    cursor: pointer;
+    border-radius: 4px;
+    height: 100px;
+    margin-bottom: 7px;
+}
+
+.gu-mirror .drag-title {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.kanban-card {
+    background-color: #f7f7f7;
+    border: solid 1px #dcdedf;
+    border-radius: 4px;
+
+    .data {
+        border-radius: 3px 3px 0px 0px;
+        background-color: #977cda;
+        height: 5px;
+        transition: background-color 250ms ease 0s;
+    }
+
+    .kanban-content {
+        padding: 10px;
+
+        .card-header {
+            font-size: 16px;
+            margin-bottom: 10px;
+            padding: 5px 0;
+        }
+
+        .card-body {
+
+            .dragdrop {
+                    height: auto;
+                    min-height: 50px;
+                
+                .draggable {
+                    padding: 10px;
+                    background-color: #fff;
+                    border: solid 1px #dcdedf;
+                    cursor: pointer;
+                    border-radius: 4px;
+                    margin-bottom: 7px;
+                }
+                .draggable:hover {
+                }
+            }
+
+            .add-content {
+                min-height: 40px;
+
+                .drag-button {
+                    padding: 4px;
+                    background-color: #fff;
+                    border: solid 1px #dcdedf;
+                    cursor: pointer;
+                    border-radius: 4px;
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    p {
+        font-weight: 500;
+        color: #494f5c;
+    }
+}

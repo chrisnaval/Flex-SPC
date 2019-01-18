@@ -37,19 +37,31 @@ Template.Role_update.onCreated(function () {
 });
 
 //onrendered
-Template.Role_create.onRendered(function() {
-	var radioElement = document.getElementsByClassName('functionName');
-     for(var i = 0; i < radioElement.length;i++) {
+Template.Role_create.onRendered(function () {
+    var radioElement = document.getElementsByClassName('functionName');
+    for (var i = 0; i < radioElement.length; i++) {
         radioElement[i].checked = true;
         radioElement[i].setAttribute('disabled', true);
     }
 });
 
-Template.Role_update.onRendered(function() {
-	var radioElement = document.getElementsByClassName('functionName');
-     for(var i = 0; i < radioElement.length;i++) {
+Template.Role_update.onRendered(function () {
+    var radioElement = document.getElementsByClassName('functionName');
+    
+    for (var i = 0; i < radioElement.length; i++) {
         radioElement[i].checked = true;
-        // radioElement[i].setAttribute('disabled', true);
+        radioElement[i].setAttribute('disabled', true);
+    }
+
+    var element = document.getElementById('module');
+    var roleType = element.options[element.selectedIndex].value;
+    
+    if(roleType === 'user') {
+        Template.instance().reactive.set('showAdminModule', false);
+        Template.instance().reactive.set('showUserModule', true);
+    } else {
+        Template.instance().reactive.set('showUserModule', false);
+        Template.instance().reactive.set('showAdminModule', true);
     }
 });
 //helpers
@@ -86,7 +98,7 @@ Template.Role_update.helpers({
     },
     roleData() {
         return RolePermissions.findOne({
-            _id:  Template.instance().reactive.get('roleId')
+            _id: Template.instance().reactive.get('roleId')
         });
     },
     adminAppModules() {
@@ -113,9 +125,9 @@ Template.Role_update.helpers({
 //events
 Template.Role_create.events({
     'change select': function (event, template) {
-        event.preventDefault();
+        const target = event.target;
 
-        var selectModule = document.getElementById('module').value;
+        var selectModule = target.options[target.selectedIndex].value;
         if (selectModule == 'user') {
             template.reactive.set('showAdminModule', false);
             template.reactive.set('showUserModule', true);
@@ -130,30 +142,30 @@ Template.Role_create.events({
         var accessAll = document.getElementById('access-all');
         var tar = document.getElementsByTagName('tr');
 
-        if(!accessAll.checked) {
-            for(var i = 0; i < radioElement.length; i++) {
+        if (!accessAll.checked) {
+            for (var i = 0; i < radioElement.length; i++) {
                 radioElement[i].checked = false;
                 radioElement[i].removeAttribute('disabled');
             }
-            for(var l = 0; l < tar.length; l++) {
+            for (var l = 0; l < tar.length; l++) {
                 tar[l].classList.remove('selected');
             }
-    
+
             const target = event.target.closest('tr');
             target.classList.add('selected');
 
             var data = document.getElementsByClassName('selected');
             var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
 
-            if(moduleData == 'dashboard') {
-                for(var k = 0; k < radioElement.length;k++) {
+            if (moduleData == 'dashboard') {
+                for (var k = 0; k < radioElement.length; k++) {
                     radioElement[k].checked = true;
                     radioElement[k].setAttribute('disabled', true);
                 }
-            } else if(moduleData == 'roles') {
+            } else if (moduleData == 'roles') {
                 document.getElementById('view').checked = true;
                 document.getElementById('view').setAttribute('disabled', true);
-            } else if(moduleData == 'users'){
+            } else if (moduleData == 'users') {
                 document.getElementById('create').checked = true;
                 document.getElementById('view').checked = true;
                 document.getElementById('create').setAttribute('disabled', true);
@@ -167,7 +179,7 @@ Template.Role_create.events({
         var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
         var permission = [];
 
-        for(var i = 0; i < radioElement.length; i++) {
+        for (var i = 0; i < radioElement.length; i++) {
             if (radioElement[i].checked) {
                 var permissions = moduleData + '.' + radioElement[i].value;
                 permission.push(permissions);
@@ -180,7 +192,7 @@ Template.Role_create.events({
         }
         var rolePermissions = Template.instance().reactive.get('rolePermission');
 
-        for(var i = 0; i < rolePermissions.length; i++) {
+        for (var i = 0; i < rolePermissions.length; i++) {
             if (rolePermissions[i].module === moduleData) {
                 rolePermissions.splice(i, 1);
                 break;
@@ -193,36 +205,37 @@ Template.Role_create.events({
         var accessAll = document.getElementById('access-all');
         var radioElement = document.getElementsByClassName('functionName');
         var data = document.getElementsByClassName('selected');
-        
 
-        if(accessAll.checked) {   
+
+        if (accessAll.checked) {
             var moduleListSelected = document.getElementsByClassName('module-list');
             var permission = [];
             var moduleList = [];
 
-            for(var r in radioElement) {
+            for (var r = 0; r < radioElement.length; r++) {
                 radioElement[r].checked = true;
+                radioElement[r].setAttribute('disabled', true);
             }
 
-            for(var m = 0; m < moduleListSelected.length; m++) {
+            for (var m = 0; m < moduleListSelected.length; m++) {
                 moduleListSelected[m].classList.add('selected');
             }
 
-            for(var i = 0; i < data.length; i++) {
+            for (var i = 0; i < data.length; i++) {
                 var moduleElement = data[i].getElementsByClassName('module');
-                for(var o = 0; o < moduleElement.length; o++ ) {
+                for (var o = 0; o < moduleElement.length; o++) {
                     var moduleValue = moduleElement[o].getAttribute('module-value');
                     moduleList.push(moduleValue);
                 }
             }
-            
+
             var rolePermission = [{
                 permissions: permission
             }];
 
-            for(var a = 0; a < moduleList.length; a++) {
+            for (var a = 0; a < moduleList.length; a++) {
                 var moduleData = moduleList[a];
-                for(var b = 0; b < radioElement.length; b++) {
+                for (var b = 0; b < radioElement.length; b++) {
                     if (radioElement[b].checked) {
                         var permissions = moduleData + '.' + radioElement[b].value;
                         permission.push(permissions);
@@ -233,7 +246,7 @@ Template.Role_create.events({
         } else {
             var tar = document.getElementsByTagName('tr');
 
-            for(var e = 0; e < tar.length; e++) {
+            for (var e = 0; e < tar.length; e++) {
                 tar[e].classList.remove('selected');
             }
 
@@ -242,12 +255,12 @@ Template.Role_create.events({
             var data = document.getElementsByClassName('selected');
             var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
 
-            if(moduleData == 'dashboard') {
-                for(var k = 0; k < radioElement.length;k++) {
+            if (moduleData == 'dashboard') {
+                for (var k = 0; k < radioElement.length; k++) {
                     radioElement[k].checked = true;
                     radioElement[k].setAttribute('disabled', true);
                 }
-            } 
+            }
 
             rolePermissions = [];
 
@@ -274,34 +287,64 @@ Template.Role_create.events({
             module.push(elementModules);
         });
 
-        if(rolePermission.length == 0) {
-            var permissionDefaultData = ['dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete', 'roles.view', 'users.create', 'users.view'];
-            for(var i = 0; i < permissionDefaultData.length; i++) {
-                permissionsList.push(permissionDefaultData[i]);
-            }
-        } else if(module != 0){
-            for(var i = 0; i < rolePermission.length; i++) {
+        if (roleType === 'admin') {
+            if (rolePermission.length == 0) {
+                var permissionDefaultData = ['dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete', 'roles.view', 'users.create', 'users.view'];
+                for (var i = 0; i < permissionDefaultData.length; i++) {
+                    permissionsList.push(permissionDefaultData[i]);
+                }
+            } else if (module != 0) {
                 var usersDashboardDefaultData = ['users.create', 'users.view', 'dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete'];
                 var rolesDashboardDefaultData = ['dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete', 'roles.view'];
 
-                if (rolePermission[i].module != 'users' && rolePermission[i].module != 'dashboard') {
-                    for(var a = 0; a < usersDashboardDefaultData.length; a++) {
-                        permissionsList.push(usersDashboardDefaultData[a]);
+                for (var i = 0; i < rolePermission.length; i++) {
+                    if (rolePermission[i].module != 'users' && rolePermission[i].module != 'dashboard') {
+                        for (var a = 0; a < usersDashboardDefaultData.length; a++) {
+                            permissionsList.push(usersDashboardDefaultData[a]);
+                        }
+                    } else if (rolePermission[i].module != 'roles' && rolePermission[i].module != 'dashboard') {
+                        for (var b = 0; b < rolesDashboardDefaultData.length; b++) {
+                            permissionsList.push(rolesDashboardDefaultData[b]);
+                        }
                     }
-                } else if(rolePermission[i].module != 'roles' && rolePermission[i].module != 'dashboard') {
-                    for(var b = 0; b < rolesDashboardDefaultData.length; b++) {
-                        permissionsList.push(rolesDashboardDefaultData[b]);
+
+                    for (var key in rolePermission[i].permissions) {
+                        permissionsList.push(rolePermission[i].permissions[key]);
                     }
                 }
-
-                for(var key in rolePermission[i].permissions) {
-                    permissionsList.push(rolePermission[i].permissions[key]);
+            } else {
+                for (var i = 0; i < rolePermission.length; i++) {
+                    for (var key in rolePermission[i].permissions) {
+                        permissionsList.push(rolePermission[i].permissions[key]);
+                    }
                 }
             }
         } else {
-            for(var i = 0; i < rolePermission.length; i++) {
-                for(var key in rolePermission[i].permissions) {
-                    permissionsList.push(rolePermission[i].permissions[key]);
+            if (rolePermission.length == 0) {
+                var permissionDefaultData = ['dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete'];
+
+                for (var i = 0; i < permissionDefaultData.length; i++) {
+                    permissionsList.push(permissionDefaultData[i]);
+
+                }
+            } else if (module != 0) {
+                dashboardDefaultData = ['dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete'];
+
+                for (var i = 0; i < rolePermission.length; i++) {
+                    if (rolePermission[i].module != 'dashboard') {
+                        for (var a = 0; a < dashboardDefaultData.length; a++) {
+                            permissionsList.push(dashboardDefaultData[a]);
+                        }
+                    }
+                    for (var key in rolePermission[i].permissions) {
+                        permissionsList.push(rolePermission[i].permissions[key]);
+                    }
+                }
+            } else {
+                for (var i = 0; i < rolePermission.length; i++) {
+                    for (var key in rolePermission[i].permissions) {
+                        permissionsList.push(rolePermission[i].permissions[key]);
+                    }
                 }
             }
         }
@@ -312,7 +355,7 @@ Template.Role_create.events({
             type: roleType
         }
 
-        for(var i = 0; i < permissionsList.length; i++) {
+        for (var i = 0; i < permissionsList.length; i++) {
             var modules = permissionsList[i].split('.')[0];
             var functionName = permissionsList[i].split('.')[1];
             var permissionDatas = {
@@ -323,8 +366,9 @@ Template.Role_create.events({
 
             permissionsData.push(permissionDatas);
         }
-        Meteor.call('rolePermissions.insert', roleData, permissionsData, function(error) {
-            if(error) {
+
+        Meteor.call('rolePermissions.insert', roleData, permissionsData, function (error) {
+            if (error) {
                 Session.set('failure', error.reason);
                 alertMessage.style.display = 'block';
             } else {
@@ -336,50 +380,54 @@ Template.Role_create.events({
 });
 
 Template.Role_update.events({
-    'change select': function (event, template) {
-        const target = event.target;
-
-        var selectModule = target.options[target.selectedIndex].value;
-        if (selectModule == 'user') {
-            template.reactive.set('showAdminModule', false);
-            template.reactive.set('showUserModule', true);
-        } else {
-            template.reactive.set('showUserModule', false);
-            template.reactive.set('showAdminModule', true);
-        }
-    },
     'click tr': function (event) {
         event.preventDefault();
         var radioElement = document.getElementsByClassName('functionName');
         var accessAll = document.getElementById('access-all');
         var tar = document.getElementsByTagName('tr');
 
-        if(!accessAll.checked) {
+        if (!accessAll.checked) {
 
-            for(var i = 0; i < radioElement.length; i++) {
+            for (var i = 0; i < radioElement.length; i++) {
                 radioElement[i].checked = false;
+                radioElement[i].removeAttribute('disabled');
             }
 
-            for(var i = 0; i < tar.length; i++) {
+            for (var i = 0; i < tar.length; i++) {
                 tar[i].classList.remove('selected');
             }
-    
+
             const target = event.target.closest('tr');
             target.classList.add('selected');
 
             var data = document.getElementsByClassName('selected');
             var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
             rolePermissionId = FlowRouter.getParam('_id');
-            
+
             var rolePermission = RolePermissions.findOne({ _id: rolePermissionId });
             var permission = rolePermission.permissions;
 
+            if (moduleData == 'dashboard') {
+                for (var k = 0; k < radioElement.length; k++) {
+                    radioElement[k].checked = true;
+                    radioElement[k].setAttribute('disabled', true);
+                }
+            } else if (moduleData == 'roles') {
+                document.getElementById('view').checked = true;
+                document.getElementById('view').setAttribute('disabled', true);
+            } else if (moduleData == 'users') {
+                document.getElementById('create').checked = true;
+                document.getElementById('view').checked = true;
+                document.getElementById('create').setAttribute('disabled', true);
+                document.getElementById('view').setAttribute('disabled', true);
+            }
+
             permission.forEach(element => {
-                if(element.module === moduleData) {
+                if (element.module === moduleData) {
                     document.getElementById(element.function).checked = true;
                 }
             })
-        }        
+        }
     },
     'change .functionName': function () {
         var radioElement = document.getElementsByClassName('functionName');
@@ -387,7 +435,7 @@ Template.Role_update.events({
         var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
         var permission = [];
 
-        for(var i = 0; i < radioElement.length; i++) {
+        for (var i = 0; i < radioElement.length; i++) {
             if (radioElement[i].checked) {
                 var permissions = moduleData + '.' + radioElement[i].value;
                 permission.push(permissions);
@@ -401,7 +449,7 @@ Template.Role_update.events({
 
         var rolePermissions = Template.instance().reactive.get('rolePermission');
 
-        for(var i = 0; i < rolePermissions.length; i++) {
+        for (var i = 0; i < rolePermissions.length; i++) {
             if (rolePermissions[i].module === moduleData) {
                 rolePermissions.splice(i, 1);
                 break;
@@ -415,47 +463,48 @@ Template.Role_update.events({
         var accessAll = document.getElementById('access-all');
         var radioElement = document.getElementsByClassName('functionName');
         var data = document.getElementsByClassName('selected');
-        
 
-        if(accessAll.checked) {   
+        if (accessAll.checked) {
             var moduleListSelected = document.getElementsByClassName('module-list');
             var permission = [];
             var moduleList = [];
 
-            for(var r in radioElement) {
+            for (var r = 0; r < radioElement.length; r++) {
                 radioElement[r].checked = true;
+                radioElement[r].setAttribute('disabled', true);
             }
 
-            for(var m = 0; m < moduleListSelected.length; m++) {
+            for (var m = 0; m < moduleListSelected.length; m++) {
                 moduleListSelected[m].classList.add('selected');
             }
 
-            for(var i = 0; i < data.length; i++) {
+            for (var i = 0; i < data.length; i++) {
                 var moduleElement = data[i].getElementsByClassName('module');
-                for(var o = 0; o < moduleElement.length; o++ ) {
+                for (var o = 0; o < moduleElement.length; o++) {
                     var moduleValue = moduleElement[o].getAttribute('module-value');
                     moduleList.push(moduleValue);
                 }
             }
-            
+
             var rolePermission = [{
                 permissions: permission
             }];
 
-            for(var a = 0; a < moduleList.length; a++) {
+            for (var a = 0; a < moduleList.length; a++) {
                 var moduleData = moduleList[a];
-                for(var b = 0; b < radioElement.length; b++) {
+                for (var b = 0; b < radioElement.length; b++) {
                     if (radioElement[b].checked) {
                         var permissions = moduleData + '.' + radioElement[b].value;
                         permission.push(permissions);
                     }
                 }
             }
+
             Template.instance().reactive.set('rolePermission', rolePermission);
         } else {
             var tar = document.getElementsByTagName('tr');
 
-            for(var e = 0; e < tar.length; e++) {
+            for (var e = 0; e < tar.length; e++) {
                 tar[e].classList.remove('selected');
             }
 
@@ -464,12 +513,12 @@ Template.Role_update.events({
             var data = document.getElementsByClassName('selected');
             var moduleData = data[0].getElementsByClassName('module')[0].getAttribute('module-value');
 
-            if(moduleData == 'dashboard') {
-                for(var k = 0; k < radioElement.length;k++) {
+            if (moduleData == 'dashboard') {
+                for (var k = 0; k < radioElement.length; k++) {
                     radioElement[k].checked = true;
                     radioElement[k].setAttribute('disabled', true);
                 }
-            } 
+            }
 
             rolePermissions = [];
 
@@ -495,8 +544,10 @@ Template.Role_update.events({
 
         var permissionsList = [];
         var permissionDefaultData = [];
-        var usersDashboardDefaultData = [];
-        var rolesDashboardDefaultData = []
+        var adminUsersDashboard = [];
+        var adminRolesDashboard = [];
+        var userDashboardReports = [];
+        var userDashboardIssue = [];
         var module = [];
 
         rolePermission.forEach(element => {
@@ -504,6 +555,8 @@ Template.Role_update.events({
             module.push(elementModules);
         });
 
+        //admin role type
+        // get all data under or admin role type
         permissions.forEach(element => {
             var dataElement = element.permission
             var module = dataElement.split('-')[1];
@@ -512,53 +565,115 @@ Template.Role_update.events({
 
         permissions.forEach(element => {
             var dataElement = element.permission
-            if(element.module == 'dashboard') {
+
+            if (element.module == 'dashboard') {
                 var module = dataElement.split('-')[1];
-                usersDashboardDefaultData.push(module);
+                adminUsersDashboard.push(module);
             }
-            if(element.module == 'users') {
+            if (element.module == 'users') {
                 var module = dataElement.split('-')[1];
-                usersDashboardDefaultData.push(module);
+                adminUsersDashboard.push(module);
             }
         });
 
         permissions.forEach(element => {
             var dataElement = element.permission
-            if(element.module == 'dashboard') {
+
+            if (element.module == 'dashboard') {
                 var module = dataElement.split('-')[1];
-                rolesDashboardDefaultData.push(module);
+                adminRolesDashboard.push(module);
             }
-            if(element.module == 'roles') {
+            if (element.module == 'roles') {
                 var module = dataElement.split('-')[1];
-                rolesDashboardDefaultData.push(module);
+                adminRolesDashboard.push(module);
             }
         });
 
-        if(rolePermission.length == 0) {
-            for(var i = 0; i < permissionDefaultData.length; i++) {
-                permissionsList.push(permissionDefaultData[i]);
-            }
-        } else if(module != 0){
-            for(var i = 0; i < rolePermission.length; i++) {
+        //users roletype
+        // get all data under or user role type
+        permissions.forEach(element => {
+            var dataElement = element.permission
 
-                if (rolePermission[i].module != 'users' && rolePermission[i].module != 'dashboard') {
-                    for(var a = 0; a < usersDashboardDefaultData.length; a++) {
-                        permissionsList.push(usersDashboardDefaultData[a]);
+            if (element.module == 'dashboard') {
+                var module = dataElement.split('-')[1];
+                userDashboardReports.push(module);
+            }
+            if (element.module == 'reports') {
+                var module = dataElement.split('-')[1];
+                userDashboardReports.push(module);
+            }
+        });
+
+        permissions.forEach(element => {
+            var dataElement = element.permission
+
+            if (element.module == 'dashboard') {
+                var module = dataElement.split('-')[1];
+                userDashboardIssue.push(module);
+            }
+            if (element.module == 'issue-tracker') {
+                var module = dataElement.split('-')[1];
+                userDashboardIssue.push(module);
+            }
+        });
+        //end
+
+        if (roleType === 'admin') {
+            if (rolePermission.length == 0) {
+                for (var i = 0; i < permissionDefaultData.length; i++) {
+                    permissionsList.push(permissionDefaultData[i]);
+                }
+            } else if (module != 0) {
+                for (var i = 0; i < rolePermission.length; i++) {
+                    if (rolePermission[i].module != 'users' && rolePermission[i].module != 'dashboard') {
+                        for (var a = 0; a < adminUsersDashboard.length; a++) {
+                            permissionsList.push(adminUsersDashboard[a]);
+                        }
+                    } else if (rolePermission[i].module != 'roles' && rolePermission[i].module != 'dashboard') {
+                        for (var b = 0; b < adminRolesDashboard.length; b++) {
+                            permissionsList.push(adminRolesDashboard[b]);
+                        }
                     }
-                } else if(rolePermission[i].module != 'roles' && rolePermission[i].module != 'dashboard') {
-                    for(var b = 0; b < rolesDashboardDefaultData.length; b++) {
-                        permissionsList.push(rolesDashboardDefaultData[b]);
+
+                    for (var key in rolePermission[i].permissions) {
+                        permissionsList.push(rolePermission[i].permissions[key]);
                     }
                 }
-
-                for(var key in rolePermission[i].permissions) {
-                    permissionsList.push(rolePermission[i].permissions[key]);
+            } else {
+                for (var i = 0; i < rolePermission.length; i++) {
+                    for (var key in rolePermission[i].permissions) {
+                        permissionsList.push(rolePermission[i].permissions[key]);
+                    }
                 }
             }
         } else {
-            for(var i = 0; i < rolePermission.length; i++) {
-                for(var key in rolePermission[i].permissions) {
-                    permissionsList.push(rolePermission[i].permissions[key]);
+            if (rolePermission.length == 0) {
+                var permissionDefaultData = ['dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete'];
+
+                for (var i = 0; i < permissionDefaultData.length; i++) {
+                    permissionsList.push(permissionDefaultData[i]);
+
+                }
+            } else if (module != 0) {
+                for (var i = 0; i < rolePermission.length; i++) {
+                    if (rolePermission[i].module != 'dashboard' && rolePermission[i].module != 'reports') {
+                        for (var a = 0; a < userDashboardReports.length; a++) {
+                            permissionsList.push(userDashboardReports[a]);
+                        }
+                    } else if (rolePermission[i].module != 'dashboard' && rolePermission[i].module != 'issue-tracker'){
+                        for (var b = 0; b < userDashboardReports.length; b++) {
+                            permissionsList.push(userDashboardReports[b]);
+                        }
+                    }
+                    for (var key in rolePermission[i].permissions) {
+                        permissionsList.push(rolePermission[i].permissions[key]);
+                    }
+                }
+            } else {
+                for (var i = 0; i < rolePermission.length; i++) {
+                    for (var key in rolePermission[i].permissions) {
+                        permissionsList.push(rolePermission[i].permissions[key]);
+                    }
                 }
             }
         }
@@ -569,7 +684,7 @@ Template.Role_update.events({
             type: roleType
         };
 
-        for(var i = 0; i < permissionsList.length; i++) {
+        for (var i = 0; i < permissionsList.length; i++) {
             var modules = permissionsList[i].split('.')[0];
             var functionName = permissionsList[i].split('.')[1];
             var permissionDatas = {
@@ -586,8 +701,8 @@ Template.Role_update.events({
             roleData
         };
 
-        Meteor.call('rolePermissions.update', rolePermissionId, rolePermissionData, function(error) {
-            if(error) {
+        Meteor.call('rolePermissions.update', rolePermissionId, rolePermissionData, function (error) {
+            if (error) {
                 Session.set('failure', error.reason);
                 alertMessage.style.display = 'block';
             } else {

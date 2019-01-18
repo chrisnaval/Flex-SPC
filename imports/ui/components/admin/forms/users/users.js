@@ -148,6 +148,7 @@ Template.User_create.events({
         template.reactive.set('showtable', true);
     },
     'click tr': function(event, template){
+        document.getElementById('role').value = '';
         var tar = document.getElementsByTagName('tr');
 
         for(var i = 0; i < tar.length; i++) {
@@ -235,6 +236,7 @@ Template.User_update.events({
         template.reactive.set('showtable', true);
     },
     'click tr': function(event, template){
+        document.getElementById("updateRole").value = '';
         var tar = document.getElementsByTagName('tr');
 
         for(var i = 0; i < tar.length; i++) {
@@ -245,8 +247,8 @@ Template.User_update.events({
         target.classList.add('selected');
 
         var data = document.getElementsByClassName("selected");
-        var data_value = data[0].getElementsByClassName("updateRole")[0].innerText;
-        document.getElementById("role").value = data_value;
+        var data_value = data[0].getElementsByClassName('role')[0].innerText;
+        document.getElementById('updateRole').value = data_value;
 
         template.reactive.set('showtable', false);
     },
