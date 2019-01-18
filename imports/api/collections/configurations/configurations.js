@@ -7,52 +7,52 @@ export const Configurations = new Mongo.Collection('configurations');
 // Schema
 Configurations.schema = new SimpleSchema({
 	product: {
-		type: Object,
+		type: Object
 	},
 	'product._id': {
-		type: String,
+		type: String
 	},
 	'product.name': {
-		type: String,
+		type: String
 	},
 	sampleSize: {
-		type: Number,
+		type: Number
 	},
 	tester: {
-		type: Object,
+		type: Object
 	},
 	'tester._id': {
-		type: String,
+		type: String
 	},
 	'tester.name': {
-		type: String,
+		type: String
 	},
 	parameter: {
-		type: Object,
+		type: Object
 	},
 	'parameter._id': {
-		type: String,
+		type: String
 	},
 	'parameter.name': {
-		type: String,
+		type: String
 	},
 	controlLimit: {
-		type: Object,
+		type: Object
 	},
 	'controlLimit.upperControlLimit': {
-		type: Number,
+		type: Number
 	},
 	'controlLimit.lowerControlLimit': {
-		type: Number,
+		type: Number
 	},
 	specLimit: {
-		type: Object,
+		type: Object
 	},
 	'specLimit.upperSpecLimit': {
-		type: Number,
+		type: Number
 	},
 	'specLimit.lowerSpecLimit': {
-		type: Number,
+		type: Number
 	},
 	createdAt: {
 		type: Date,
@@ -65,5 +65,5 @@ Configurations.schema = new SimpleSchema({
 	deletedAt: {
 		type: Date,
 		optional: true
-	},
+	}
 });

@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 // Mongo Collection(s)
 import { Parameters } from '../parameters.js';
 
-Meteor.publish('parametersData', function() {
+Meteor.publish('parameters.all', function() {
     return Parameters.find({}, {
         fields: {
             _id: 1,

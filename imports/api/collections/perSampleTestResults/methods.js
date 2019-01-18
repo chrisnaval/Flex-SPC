@@ -8,7 +8,6 @@ import { PerSampleTestResults } from './perSampleTestResults.js';
 
 Meteor.methods({
     'perSampleTestResults.insert': function(perSampleTestResultData) {
-
         // Validation of Data from the Client using the Collection's Schema
         PerSampleTestResults.schema.validate(perSampleTestResultData);
 

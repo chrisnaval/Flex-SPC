@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 // Mongo Collection(s)
 import { Testers } from '../testers.js';
 
-Meteor.publish('testersData', function() {
+Meteor.publish('testers.all', function() {
     return Testers.find({}, {
         fields: {
             _id: 1,

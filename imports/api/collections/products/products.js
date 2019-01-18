@@ -6,15 +6,15 @@ export const Products = new Mongo.Collection('products');
 
 Products.schema = new SimpleSchema({
 	name: {
-		type: String,
+		type: String
 	},
 	createdAt: {
-		type: Date,
+		type: Date
 	},
 	updatedAt: {
-		type: Date,
+		type: Date
 	},
 	deletedAt: {
-		type: Date,
-	},
+		type: Date
+	}
 });
