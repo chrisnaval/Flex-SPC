@@ -22,7 +22,9 @@ Template.Role_create.onCreated(function () {
 });
 
 Template.Role_update.onCreated(function () {
+    Meteor.subscribe('rolePermissions.all');
     Meteor.subscribe('appModules.all');
+
     this.reactive = new ReactiveDict();
 
     this.reactive.set('roleId', FlowRouter.getParam('_id'));
@@ -84,7 +86,7 @@ Template.Role_update.helpers({
     },
     roleData() {
         return RolePermissions.findOne({
-            _id: Template.instance().reactive.get('roleId'),
+            _id:  Template.instance().reactive.get('roleId')
         });
     },
     adminAppModules() {
@@ -484,7 +486,6 @@ Template.Role_update.events({
         var alertMessage = document.getElementById('alert-message');
         var roleType = element.options[element.selectedIndex].value;
         var permissionsData = [];
-
 
         var rolePermission = Template.instance().reactive.get('rolePermission');
         var rolePermissionId = Template.instance().reactive.get('roleId');
