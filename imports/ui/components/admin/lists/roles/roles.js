@@ -15,7 +15,7 @@ import { RolePermissions } from '/imports/api/collections/rolePermissions/rolePe
 // Global Object for View Navigation
 var globalObj = {};
 
-Template.Roles_list.onCreated(function() {
+Template.Roles_list.onCreated(function () {
 	var instance = this;
 	instance.state = new ReactiveDict();
 	instance.limit = new ReactiveVar(10);
@@ -24,64 +24,47 @@ Template.Roles_list.onCreated(function() {
 	instance.searchKeyword = new ReactiveVar();
 
 	// Check the user who is currently logged in
-    var user = Meteor.user();
-	if(user) {
-		if(user.profile.role.role == "Super Administrator") {
+	var user = Meteor.user();
+	if (user) {
+		if (user.profile.role.role == "Super Administrator") {
 			this.state.set({
 				viewAll: true,
 				viewAdmins: false,
 				viewUsers: false
 			});
-		} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
+		} else if (user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 			this.state.set({
 				viewAll: false,
 				viewAdmins: true,
 				viewUsers: false,
 				viewEditButton: false,
 			});
-	
+
 			var viewAdmins = document.getElementById('view-admins');
-			if(viewAdmins) {
+			if (viewAdmins) {
 				viewAdmins.parentElement.classList.add('active');
 			}
 		}
-    }
-    
-    // Autorun
-	instance.autorun(function() {
+	}
+
+	// Autorun
+	instance.autorun(function () {
 		var user = Meteor.user();
-		if(user) {
-			if(user.profile.role.role == "Super Administrator") {
-				if(instance.state.get('viewAdmins')) {
+		if (user) {
+			if (user.profile.role.role == "Super Administrator") {
+				if (instance.state.get('viewAdmins')) {
 					Session.set('rolesList', RolePermissions.find({
-						'role.role': { 
-							$ne: "Super Administrator" 
+						'role.role': {
+							$ne: "Super Administrator"
 						},
-						'role.type': { 
-							$eq: "admin" 
+						'role.type': {
+							$eq: "admin"
 						}
 					}).fetch());
-				} else if(instance.state.get('viewUsers')) {
+				} else if (instance.state.get('viewUsers')) {
 					Session.set('rolesList', RolePermissions.find({
-						'role.role': { 
-							$ne: "Super Administrator" 
-						},
-						'role.type': { 
-							$eq: "user" 
-						}
-					}).fetch());
-				} else {
-					Session.set('rolesList', RolePermissions.find({
-						'role.role': { 
-							$ne: "Super Administrator" 
-						},
-					}).fetch());
-				}
-			} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
-				if(instance.state.get('viewUsers')) {
-					Session.set('rolesList', RolePermissions.find({
-						'role.role': { 
-							$ne: "Super Administrator" 
+						'role.role': {
+							$ne: "Super Administrator"
 						},
 						'role.type': {
 							$eq: "user"
@@ -89,8 +72,25 @@ Template.Roles_list.onCreated(function() {
 					}).fetch());
 				} else {
 					Session.set('rolesList', RolePermissions.find({
-						'role.role': { 
-							$ne: "Super Administrator" 
+						'role.role': {
+							$ne: "Super Administrator"
+						},
+					}).fetch());
+				}
+			} else if (user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
+				if (instance.state.get('viewUsers')) {
+					Session.set('rolesList', RolePermissions.find({
+						'role.role': {
+							$ne: "Super Administrator"
+						},
+						'role.type': {
+							$eq: "user"
+						}
+					}).fetch());
+				} else {
+					Session.set('rolesList', RolePermissions.find({
+						'role.role': {
+							$ne: "Super Administrator"
 						},
 						'role.type': {
 							$eq: "admin"
@@ -104,40 +104,40 @@ Template.Roles_list.onCreated(function() {
 
 			// Subscription(s)
 			var querySubscription = Meteor.subscribe('rolePermissions.list', {
-				limit: limit, 
-				sort: {createdAt: -1}
+				limit: limit,
+				sort: { createdAt: -1 }
 			});
 			// If querySubscription is ready, set new limit
-			if(querySubscription.ready()) {
+			if (querySubscription.ready()) {
 				instance.loaded.set(limit);
 			}
 
 			var searchSubscription = Meteor.subscribe('rolePermissions.search', instance.searchKeyword.get(), () => {
-				setTimeout( () => {
+				setTimeout(() => {
 					instance.searching.set(false);
 				}, 100);
 			});
 			// If searchSubscription is ready, set new limit
-			if(searchSubscription.ready()) {
+			if (searchSubscription.ready()) {
 				instance.loaded.set(limit);
 			}
 		}
-    });
-	
-	instance.foundRoles = function() {
+	});
+
+	instance.foundRoles = function () {
 		var keyword = instance.searchKeyword.get();
-		
-		if(instance.state.get('viewAdmins')) {
+
+		if (instance.state.get('viewAdmins')) {
 			return RolePermissions.find({
 				'role.type': {
 					$eq: "admin"
 				},
 				$and: [
 					{
-						'role.role': { 
-							$ne: "Super Administrator" 
+						'role.role': {
+							$ne: "Super Administrator"
 						}
-					}, 
+					},
 					{
 						'role.role': {
 							$regex: ".*" + keyword + ".*",
@@ -145,18 +145,18 @@ Template.Roles_list.onCreated(function() {
 						}
 					}
 				]
-			}, { limit: instance.loaded.get(), sort: {createdAt: -1} }).fetch();
-		} else if(instance.state.get('viewUsers')) {
+			}, { limit: instance.loaded.get(), sort: { createdAt: -1 } }).fetch();
+		} else if (instance.state.get('viewUsers')) {
 			return RolePermissions.find({
 				'role.type': {
 					$eq: "user"
 				},
 				$and: [
 					{
-						'role.role': { 
-							$ne: "Super Administrator" 
+						'role.role': {
+							$ne: "Super Administrator"
 						}
-					}, 
+					},
 					{
 						'role.role': {
 							$regex: ".*" + keyword + ".*",
@@ -164,15 +164,15 @@ Template.Roles_list.onCreated(function() {
 						}
 					}
 				]
-			}, { limit: instance.loaded.get(), sort: {createdAt: -1} }).fetch();
+			}, { limit: instance.loaded.get(), sort: { createdAt: -1 } }).fetch();
 		} else {
 			return RolePermissions.find({
 				$and: [
 					{
-						'role.role': { 
-							$ne: "Super Administrator" 
+						'role.role': {
+							$ne: "Super Administrator"
 						}
-					}, 
+					},
 					{
 						'role.role': {
 							$regex: ".*" + keyword + ".*",
@@ -180,11 +180,11 @@ Template.Roles_list.onCreated(function() {
 						}
 					}
 				]
-			}, { limit: instance.loaded.get(), sort: {createdAt: -1} }).fetch();
+			}, { limit: instance.loaded.get(), sort: { createdAt: -1 } }).fetch();
 		}
 	};
 
-    globalObj = {
+	globalObj = {
 		viewAll: this.state.get('viewAll'),
 		viewAdmins: this.state.get('viewAdmins'),
 		viewUsers: this.state.get('viewUsers'),
@@ -192,25 +192,25 @@ Template.Roles_list.onCreated(function() {
 	};
 });
 
-Template.Roles_list.onRendered(function() {
-    //
+Template.Roles_list.onRendered(function () {
+
 });
 
 // Template Helpers
 // Roles_list
-Template.Roles_list.helpers({	
+Template.Roles_list.helpers({
 	// Found Roles from Search Keyword
 	foundRoles() {
 		return Template.instance().foundRoles();
 	},
 	isSuperAdmin() {
 		var user = Meteor.user();
-		if(user) {
-			if(user.profile.role.role == "Super Administrator") {
+		if (user) {
+			if (user.profile.role.role == "Super Administrator") {
 				return true;
-			} else if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
+			} else if (user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
 				var viewAdmins = document.getElementById('view-admins');
-				if(viewAdmins) {
+				if (viewAdmins) {
 					viewAdmins.parentElement.classList.add('active');
 				}
 			} else {
@@ -222,9 +222,9 @@ Template.Roles_list.helpers({
 	nothingFound() {
 		return Template.instance().foundRoles().length == 0;
 	},
-    roles() {
+	roles() {
 		return Session.get('rolesList');
-    },
+	},
 	// Searching Roles
 	searching() {
 		return Template.instance().searching.get();
@@ -235,17 +235,17 @@ Template.Roles_list.helpers({
 	},
 	viewActions() {
 		var instance = Template.instance();
-        var user = Meteor.user();
-		if(user) {
-			if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
-				if(instance.state.get('viewAdmin')) {
+		var user = Meteor.user();
+		if (user) {
+			if (user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
+				if (instance.state.get('viewAdmin')) {
 					return !instance.state.get('viewAdmin');
-				} else if(instance.state.get('viewUsers')) {
+				} else if (instance.state.get('viewUsers')) {
 					return instance.state.get('viewUsers');
 				} else {
 					return false;
 				}
-			} else if(user.profile.type == "user") { 
+			} else if (user.profile.type == "user") {
 				return false;
 			} else {
 				return true;
@@ -254,41 +254,45 @@ Template.Roles_list.helpers({
 	},
 	viewCreateButton() {
 		var user = Meteor.user();
-		var userRoleId = user.profile.role._id;
-		var rolePermissions = RolePermissions.findOne({'role._id': userRoleId});
-		var permissions = rolePermissions.permissions;
+		if(user) {
+			var userRoleId = user.profile.role._id;
+			var rolePermissions = RolePermissions.findOne({ 'role._id': userRoleId });
+			if(rolePermissions) {
+				var permissions = rolePermissions.permissions;
+				var hasPermissionToCreate = false;
 
-		var hasPermissionToCreate = false;
-
-		if(user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
-			hasPermissionToCreate = true;
-		} else {
-			permissions.forEach(element => {
-				var permission = element.function;
-	
-				if(permission == 'create') {
+				if (user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
 					hasPermissionToCreate = true;
-				}
-			});
-		}
+				} else {
+					permissions.forEach(element => {
+						var permission = element.function;
 
-		return hasPermissionToCreate;
-	}, 
+						if (permission == 'create') {
+							hasPermissionToCreate = true;
+						}
+					});
+				}
+			}
+			return {
+				hasPermissionToCreate,
+			};
+		} 
+	},
 });
 // Roles_data
 Template.Roles_data.helpers({
 	viewActions() {
 		var user = Meteor.user();
-		if(user) {
-			if(user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
-				if(globalObj.viewAll) {
+		if (user) {
+			if (user.profile.type == "admin" && user.profile.role.role != "Super Administrator") {
+				if (globalObj.viewAll) {
 					return !globalObj.viewAll;
-				} else if(globalObj.viewUsers) {
+				} else if (globalObj.viewUsers) {
 					return globalObj.viewUsers;
 				} else {
 					return false;
 				}
-			} else if(user.profile.type == "user") { 
+			} else if (user.profile.type == "user") {
 				return false;
 			} else {
 				return true;
@@ -297,41 +301,43 @@ Template.Roles_data.helpers({
 	},
 	viewEditButton() {
 		var user = Meteor.user();
-		var userRoleId = user.profile.role._id;
-		var rolePermissions = RolePermissions.findOne({'role._id': userRoleId});
-		var permissions = rolePermissions.permissions;
+		if (user.profile) {
+			var userRoleId = user.profile.role._id;
+			var rolePermissions = RolePermissions.findOne({ 'role._id': userRoleId });
+			var permissions = rolePermissions.permissions;
 
-		var hasPermissionToEdit = false;
+			var hasPermissionToEdit = false;
 
-		if(user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
-			hasPermissionToEdit = true;
-		} else {
-			permissions.forEach(element => {
-				var permission = element.function;
-	
-				if(permission == 'update') {
-					hasPermissionToEdit = true;
-				}
-			});
+			if (user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
+				hasPermissionToEdit = true;
+			} else {
+				permissions.forEach(element => {
+					var permission = element.function;
+
+					if (permission == 'update') {
+						hasPermissionToEdit = true;
+					}
+				});
+			}
+
+			return hasPermissionToEdit;
 		}
-
-		return hasPermissionToEdit;
 	},
 	viewDeleteButton() {
 		var user = Meteor.user();
 		var userRoleId = user.profile.role._id;
-		var rolePermissions = RolePermissions.findOne({'role._id': userRoleId});
+		var rolePermissions = RolePermissions.findOne({ 'role._id': userRoleId });
 		var permissions = rolePermissions.permissions;
 
 		var hasPermissionToDelete = false;
 
-		if(user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
+		if (user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
 			hasPermissionToDelete = true;
 		} else {
 			permissions.forEach(element => {
 				var permission = element.function;
-	
-				if(permission == 'delete') {
+
+				if (permission == 'delete') {
 					hasPermissionToDelete = true;
 				}
 			});
@@ -343,22 +349,22 @@ Template.Roles_data.helpers({
 
 // Template Events
 Template.Roles_list.events({
-    'click #view-all': function(event, instance) {
+	'click #view-all': function (event, instance) {
 		event.target.parentElement.classList.add('active');
 
 		var viewAdmins = document.getElementById('view-admins');
 		var viewUsers = document.getElementById('view-users');
-		
+
 		viewAdmins.parentElement.classList.remove('active');
 		viewUsers.parentElement.classList.remove('active');
 
 		// Retrieves all roles except "Super Administrator" - is set on Session variable
 		Session.set('rolesList', RolePermissions.find({
-            'role.role': { 
-                $ne: "Super Administrator" 
-            },
-        }).fetch());
-		
+			'role.role': {
+				$ne: "Super Administrator"
+			},
+		}).fetch());
+
 		instance.state.set({
 			viewAll: true,
 			viewAdmins: false,
@@ -371,26 +377,26 @@ Template.Roles_list.events({
 			viewUsers: instance.state.get('viewUsers')
 		};
 	},
-	'click #view-admins': function(event, instance) {
+	'click #view-admins': function (event, instance) {
 		event.target.parentElement.classList.add('active');
-		
+
 		var viewAll = document.getElementById('view-all');
 		var viewUsers = document.getElementById('view-users');
-		
-		if(viewAll) {
+
+		if (viewAll) {
 			viewAll.parentElement.classList.remove('active');
 		}
 		viewUsers.parentElement.classList.remove('active');
 
 		// Retrieves all roles with type "admin" except "Super Administrator" - is set on Session variable
 		Session.set('rolesList', RolePermissions.find({
-            'role.role': { 
-                $ne: "Super Administrator" 
-            },
-            'role.type': {
-                $eq: "admin"
-            }
-        }).fetch());
+			'role.role': {
+				$ne: "Super Administrator"
+			},
+			'role.type': {
+				$eq: "admin"
+			}
+		}).fetch());
 
 		instance.state.set({
 			viewAll: false,
@@ -404,26 +410,26 @@ Template.Roles_list.events({
 			viewUsers: instance.state.get('viewUsers')
 		};
 	},
-	'click #view-users': function(event, instance) {
+	'click #view-users': function (event, instance) {
 		event.target.parentElement.classList.add('active');
 
 		var viewAll = document.getElementById('view-all');
 		var viewAdmins = document.getElementById('view-admins');
-		
-		if(viewAll) {
+
+		if (viewAll) {
 			viewAll.parentElement.classList.remove('active');
 		}
 		viewAdmins.parentElement.classList.remove('active');
 
 		// Retrieves all roles with type "user" except "Super Administrator" - is set on Session variable
 		Session.set('rolesList', RolePermissions.find({
-            'role.role': { 
-                $ne: "Super Administrator" 
-            },
-            'role.type': {
-                $eq: "user"
-            }
-        }).fetch());
+			'role.role': {
+				$ne: "Super Administrator"
+			},
+			'role.type': {
+				$eq: "user"
+			}
+		}).fetch());
 
 		instance.state.set({
 			viewAll: false,
@@ -437,16 +443,16 @@ Template.Roles_list.events({
 			viewUsers: instance.state.get('viewUsers')
 		};
 	},
-    'click .delete-role': function(event) {
-        event.preventDefault();
+	'click .delete-role': function (event) {
+		event.preventDefault();
 
 		var modal = document.getElementById('deleteModal');
 		modal.style.display = 'block';
 		document.getElementById('delete-id').value = this._id;
-    },
-    'click .delete': function(event) {
+	},
+	'click .delete': function (event) {
 		event.preventDefault();
-		
+
 		var rolePermissionId = document.getElementById('delete-id').value;
 		var alertMessage = document.getElementById('alert-message');
 
@@ -463,39 +469,39 @@ Template.Roles_list.events({
 		document.getElementById('delete-id').value = '';
 		var modal = document.getElementById('deleteModal');
 		modal.style.display = 'none';
-    },
-    'click .role-list': function(event) {
-        event.preventDefault();
+	},
+	'click .role-list': function (event) {
+		event.preventDefault();
 
 		var radioButton = document.getElementsByClassName('functionName');
 		var tar = document.getElementsByTagName('tr');
 		document.getElementById('access-all').setAttribute('disabled', true);
 
-		for(var i = 0; i < radioButton.length; i++) {
+		for (var i = 0; i < radioButton.length; i++) {
 			radioButton[i].setAttribute("readonly", true);
 		}
 
-        for(var i = 0; i < tar.length; i++) {
-            tar[i].classList.remove('selected');
-        }
+		for (var i = 0; i < tar.length; i++) {
+			tar[i].classList.remove('selected');
+		}
 
-        const target = event.target.closest('tr');
-        target.classList.add('selected');
+		const target = event.target.closest('tr');
+		target.classList.add('selected');
 
-        var element = document.getElementsByClassName('selected');
-        var elementVal = element[0].getAttribute('data-id');
+		var element = document.getElementsByClassName('selected');
+		var elementVal = element[0].getAttribute('data-id');
 
-        Session.set('roleId', elementVal);
-        
+		Session.set('roleId', elementVal);
+
 		var modal = document.getElementById('role-view');
 		modal.style.display = 'block';
 	},
-	'click .session': function() {
+	'click .session': function () {
 		Session.keys = {}
 	},
-	'keyup #search': function(event, instance) {
+	'keyup #search': function (event, instance) {
 		var code = event.which;
-    	if(code == 13) {
+		if (code == 13) {
 			event.preventDefault();
 		} else {
 			instance.searching.set(true);

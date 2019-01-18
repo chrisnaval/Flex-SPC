@@ -245,44 +245,51 @@ Template.Users_list.helpers({
 	//button permission
 	createButton() {
 		var user = Meteor.user();
-		var userRoleId = user.profile.role._id;
-		var roleId = RolePermissions.findOne({'role._id': userRoleId});
-		var permission = roleId.permissions;
-		var hasPermissionToCreate = false;
+		if(user) {
+			var userRoleId = user.profile.role._id;
+			var roleId = RolePermissions.findOne({'role._id': userRoleId});
+			if(roleId) {
+				var permission = roleId.permissions;
+				var hasPermissionToCreate = false;
 
-		if(user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
-			hasPermissionToCreate = true;
-		} else {
-			permission.forEach(element => {
-				var permission = element.function;
-	
-				if(permission == 'create') {
+				if(user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
 					hasPermissionToCreate = true;
+				} else {
+					permission.forEach(element => {
+						var permission = element.function;
+			
+						if(permission == 'create') {
+							hasPermissionToCreate = true;
+						}
+					});
 				}
-			});
+			}
+			return hasPermissionToCreate;
 		}
-		return hasPermissionToCreate;
 	},
 	editButton() {
 		var user = Meteor.user();
-		var userRoleId = user.profile.role_id;
-		var roleId = RolePermissions.findOne({ 'role._id': userRoleId});
-		var permissions = roleId.permissions;
+		if(user) {
+			var userRoleId = user.profile.role_id;
+			var roleId = RolePermissions.findOne({ 'role._id': userRoleId});
+			if(roleId) {
+				var permissions = roleId.permissions;
+				var hasPermissionToEdit = false;
 
-		var hasPermissionToEdit = false;
-
-		if(user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
-			hasPermissionToEdit = true;
-		} else {
-			permissions.forEach(element => {
-				var permission = element.function;
-	
-				if(permission == 'edit') {
+				if(user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
 					hasPermissionToEdit = true;
+				} else {
+					permissions.forEach(element => {
+						var permission = element.function;
+			
+						if(permission == 'edit') {
+							hasPermissionToEdit = true;
+						}
+					});
 				}
-			});
+			}
+			return hasPermissionToEdit;
 		}
-		return hasPermissionToEdit;
 	},
 	foundUsers() {
 		return Template.instance().foundUsers();

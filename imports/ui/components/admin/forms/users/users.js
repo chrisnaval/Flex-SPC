@@ -23,10 +23,10 @@ Template.User_create.onCreated(function() {
         Meteor.subscribe('roles.all', function() {
             Session.set('roles', Roles.find({
                 role: {
-                    $ne: "Super Administrator"
+                    $ne: 'Super Administrator'
                 },
                 type: {
-                    $eq: "admin"
+                    $eq: 'admin'
                 }
             }).fetch());
         });
@@ -43,10 +43,10 @@ Template.User_update.onCreated(function () {
         Meteor.subscribe('roles.all', function() {
             Session.set('roles', Roles.find({
                 role: {
-                    $ne: "Super Administrator"
+                    $ne: 'Super Administrator'
                 },
                 type: {
-                    $eq: "admin"
+                    $eq: 'admin'
                 }
             }).fetch());
         });
@@ -61,10 +61,10 @@ Template.User_create.onRendered(function() {
         Meteor.subscribe('roles.all', function() {
             Session.set('roles', Roles.find({
                 role: {
-                    $ne: "Super Administrator"
+                    $ne: 'Super Administrator'
                 },
                 type: {
-                    $eq: "admin"
+                    $eq: 'admin'
                 }
             }).fetch());
         });
@@ -78,10 +78,10 @@ Template.User_update.onRendered(function() {
         Meteor.subscribe('roles.all', function() {
             Session.set('roles', Roles.find({
                 role: {
-                    $ne: "Super Administrator"
+                    $ne: 'Super Administrator'
                 },
                 type: {
-                    $eq: "admin"
+                    $eq: 'admin'
                 }
             }).fetch());
         });
@@ -99,7 +99,7 @@ Template.User_update.helpers({
     roles() {
         return Roles.find({
             role: {
-                $ne: "Super Administrator"
+                $ne: 'Super Administrator'
             },
         });
     },
@@ -123,22 +123,22 @@ Template.User_create.events({
         const target = event.target;
 
         var userType = target.options[target.selectedIndex].value;
-        if(userType == "admin") {
+        if(userType == 'admin') {
             Session.set('roles', Roles.find({
                 role: {
-                    $ne: "Super Administrator"
+                    $ne: 'Super Administrator'
                 },
                 type: {
-                    $eq: "admin"
+                    $eq: 'admin'
                 }
             }).fetch());
         } else {
             Session.set('roles', Roles.find({
                 role: {
-                    $ne: "Super Administrator"
+                    $ne: 'Super Administrator'
                 },
                 type: {
-                    $eq: "user"
+                    $eq: 'user'
                 }
             }).fetch());
         }
@@ -148,6 +148,7 @@ Template.User_create.events({
         template.reactive.set('showtable', true);
     },
     'click tr': function(event, template){
+        document.getElementById('role').value = '';
         var tar = document.getElementsByTagName('tr');
 
         for(var i = 0; i < tar.length; i++) {
@@ -194,7 +195,7 @@ Template.User_create.events({
             Session.set('failure', 'Password dont match.');
             alertMessage.style.display = 'block';
         } else {
-            var username = emailAddress.split("@");
+            var username = emailAddress.split('@');
             username = username[0];
 
             // Find specific role to get the whole document
@@ -235,6 +236,7 @@ Template.User_update.events({
         template.reactive.set('showtable', true);
     },
     'click tr': function(event, template){
+        document.getElementById('updateRole').value = '';
         var tar = document.getElementsByTagName('tr');
 
         for(var i = 0; i < tar.length; i++) {
@@ -244,9 +246,9 @@ Template.User_update.events({
         const target = event.target.closest('tr');
         target.classList.add('selected');
 
-        var data = document.getElementsByClassName("selected");
-        var data_value = data[0].getElementsByClassName("updateRole")[0].innerText;
-        document.getElementById("role").value = data_value;
+        var data = document.getElementsByClassName('selected');
+        var data_value = data[0].getElementsByClassName('role')[0].innerText;
+        document.getElementById('updateRole').value = data_value;
 
         template.reactive.set('showtable', false);
     },
@@ -280,7 +282,7 @@ Template.User_update.events({
             Session.set('failure', 'Password dont match.');
             alertMessage.style.display = 'block';
         } else {
-            var username = emailAddress.split("@");
+            var username = emailAddress.split('@');
             username = username[0];
 
             // Find specific role to get the whole document
@@ -301,7 +303,7 @@ Template.User_update.events({
                 password: password,
                 userProfile
             };
-            var userId = FlowRouter.getParam("_id");
+            var userId = FlowRouter.getParam('_id');
             Meteor.call('users.update', userId, userData, function(error) {
                 if(error) {
                     Session.set('failure', error.reason);

@@ -56,6 +56,7 @@ UserProfiles.schema = new SimpleSchema({
         optional: true
     },
     deletedAt: {
-        type: Date
+        type: Date,
+        optional: true
 	}
 });
