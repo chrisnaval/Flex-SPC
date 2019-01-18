@@ -4,12 +4,12 @@ import './dashboard.html';
 import { Session } from 'meteor/session'
 
 // Component(s)
-import '../../components/charts/candlestick/candlestick.js';
-import '../../components/charts/histogram/histogram.js';
-import '../../components/charts/pareto/pareto.js';
-import '../../components/charts/range/range.js';
-import '../../components/charts/xbar/xbar.js';
-import '../../components/charts/yield/yield.js';
+import '../../components/graphs/candlestick/candlestick.js';
+import '../../components/graphs/histograph/histograph.js';
+import '../../components/graphs/pareto/pareto.js';
+import '../../components/graphs/range/range.js';
+import '../../components/graphs/xbar/xbar.js';
+import '../../components/graphs/yield/yield.js';
 import '../../components/modals/modals.js';
 import '../alert-message/alert-message.js'
 
@@ -67,7 +67,7 @@ Template.Dashboard.events({
                 Session.set('charts', alt);
                 Session.set('remove', true);
                 break;
-            case 'Histogram':
+            case 'Histograph':
                 Session.set('charts', alt);
                 Session.set('remove', true);
                 break;

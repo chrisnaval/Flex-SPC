@@ -1,9 +1,5 @@
 // Register your API(s) here...
 
-// Application Modules (Admin Side)
-// Roles
-import '../../api/appModules/admin/roles/methods.js';
-
 // Mongo Collection(s)
 // AppModules
 import '../../api/collections/appModules/server/publications.js';
@@ -43,3 +39,8 @@ import '../../api/collections/testers/server/publications.js';
 // Users
 import '../../api/collections/users/methods.js';
 import '../../api/collections/users/server/publications.js';
+
+
+// Application Modules (Admin Side)
+// Roles
+import '../../api/appModules/admin/roles/methods.js'; 

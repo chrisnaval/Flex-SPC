@@ -4,8 +4,8 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 
 // Component(s)
 import '../../ui/components/dashboard/dashboard.js';
-import '../../ui/components/forms/configurations/configurations.js';
-import '../../ui/components/lists/configurations/configurations.js';
+import '../../ui/components/forms/configuration.js';
+import '../../ui/components/list/product.js';
 import '../../ui/components/kanban/kanban.js';
 
 // Layout(s)
@@ -13,21 +13,13 @@ import '../../ui/layouts/body/body.js';
 import '../../ui/layouts/headers/header.js';
 import '../../ui/layouts/sidebars/sidebar.js';
 
+
 // Page(s)
 import '../../ui/pages/auth/login/login.js';
 import '../../ui/pages/home/home.js';
 import '../../ui/pages/not-found/not-found.js';
 
 // Set up all routes in the app
-// Not Found
-FlowRouter.notFound = {
-    action() {
-        BlazeLayout.render('App_body', {
-            main: 'App_notFound_page'
-        });
-    }
-};
-
 // Login
 FlowRouter.route('/login', {
     name: 'login-page',
@@ -48,10 +40,17 @@ FlowRouter.route('/login', {
                 } 
             }
         }
-    }
+    },
 });
+// Not Found
+FlowRouter.notFound = {
+    action() {
+        BlazeLayout.render('App_body', {
+            main: 'App_notFound_page'
+        });
+    },
+};
 
-// User's Home Page (Dashboard)
 FlowRouter.route('/', {
     name: 'home-page',
     action() {
@@ -64,56 +63,41 @@ FlowRouter.route('/', {
         } else {
             FlowRouter.go('/login');
         }
-    }
+    },
 });
 
-FlowRouter.route('/configurations-list', {
-    name: 'configurations-list-page',
+FlowRouter.route('/products', {
+    name: 'products-page',
     action() {
         if(Meteor.userId()) {
             BlazeLayout.render('Home', {
                 header: 'Header',
                 sidebar: 'Sidebar',
-                main: 'Configurations_list'
+                main: 'Product_list'
             });
         } else {
             FlowRouter.go('/login');
         }
-    }
+    },
 });
 
-FlowRouter.route('/create-configuration', {
-    name: 'create-configuration-page',
+FlowRouter.route('/product/configuration', {
+    name: 'configuration-page',
     action() {
         if(Meteor.userId()) {
             BlazeLayout.render('Home', {
                 header: 'Header',
                 sidebar: 'Sidebar',
-                main: 'Configuration_create'
+                main: 'Configuration'
             });
         } else {
             FlowRouter.go('/login');
         }
-    }
+    },
 });
 
-FlowRouter.route('/reports', {
-    name: 'reports-page',
-    action() {
-        if(Meteor.userId()) {
-            BlazeLayout.render('Home', {
-                header: 'Header',
-                sidebar: 'Sidebar',
-                main: ''
-            });
-        } else {
-            FlowRouter.go('/login');
-        }
-    }
-});
-
-FlowRouter.route('/issue-tracker', {
-    name: 'issue-tracker-page',
+FlowRouter.route('/kanban', {
+    name: 'kanban-page',
     action() {
         if(Meteor.userId()) {
             BlazeLayout.render('Home', {
@@ -124,5 +108,5 @@ FlowRouter.route('/issue-tracker', {
         } else {
             FlowRouter.go('/login');
         }
-    }
+    },
 });

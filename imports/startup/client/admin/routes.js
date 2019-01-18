@@ -36,7 +36,7 @@ FlowRouter.route('/admin', {
         } else {
             FlowRouter.go('/login');
         }
-    }
+    },
 });
 
 // Handling /admin/create-role
@@ -52,7 +52,7 @@ adminRoutes.route('/create-role', {
         } else {
             FlowRouter.go('/login');
         }
-    }
+    },
 });
 
 // Handling /admin/edit-role
@@ -68,7 +68,7 @@ adminRoutes.route('/edit-role/:_id', {
         } else {
             FlowRouter.go('/login');
         }
-    }
+    },
 });
 
 // Handling /admin/roles-list
@@ -84,7 +84,7 @@ adminRoutes.route('/roles-list', {
         } else {
             FlowRouter.go('/login');
         }
-    }
+    },
 });
 
 // Handling /admin/create-user
@@ -101,7 +101,7 @@ adminRoutes.route('/create-user', {
         } else {
             FlowRouter.go('/login');
         }
-    }
+    },
 });
 
 // Handling /admin/edit-user
@@ -117,7 +117,7 @@ adminRoutes.route('/edit-user/:_id', {
         } else {
             FlowRouter.go('/login');
         }
-    }
+    },
 });
 
 // Handling /admin/users-list
@@ -133,5 +133,5 @@ adminRoutes.route('/users-list', {
         } else {
             FlowRouter.go('/login');
         }
-    }
+    },
 });

@@ -6,8 +6,8 @@ import { moduleFunctions } from '/lib/constants.js';
 // Mongo Collection(s)
 import { AppModules } from '/imports/api/collections/appModules/appModules.js';
 import { Permissions } from '/imports/api/collections/permissions/permissions.js';
-import { RolePermissions } from '/imports/api/collections/rolePermissions/rolePermissions.js';
 import { Roles } from '/imports/api/collections/roles/roles.js';
+import { RolePermissions } from '/imports/api/collections/rolePermissions/rolePermissions.js';
 import { UserProfiles } from '/imports/api/collections/users/userProfiles.js';
 
 Meteor.startup(function() {
@@ -62,7 +62,7 @@ Meteor.startup(function() {
                 throw new Meteor.Error('error', error.error);
             } else {
                 var modules = AppModules.find({ type: "admin" }); // Get all AppModules by "admin" type only...
-                var permissions = []; // Array for the Created Permissions
+                var permissions = []; // Array for the created Permissions
 
                 modules.forEach(element => {
                     for(var moduleFunction in moduleFunctions)
