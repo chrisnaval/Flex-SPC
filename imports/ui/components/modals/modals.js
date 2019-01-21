@@ -10,7 +10,6 @@ import { Products } from '/imports/api/collections/products/products.js';
 import { RolePermissions } from '/imports/api/collections/rolePermissions/rolePermissions.js';
 import { Testers } from '/imports/api/collections/testers/testers.js';
 
-
 // Template Created
 // Parameter
 Template.Parameter.onCreated(function() {
@@ -98,10 +97,9 @@ Template.Tester.helpers({
 	},
 });
 
-
 // Template Events
 // Custom Dashboard
-Template.Change_pass.events({
+Template.Change_password.events({
     'click .cancel': function() {
         var modal = document.getElementById('change-password');
 		modal.style.display = 'none';
