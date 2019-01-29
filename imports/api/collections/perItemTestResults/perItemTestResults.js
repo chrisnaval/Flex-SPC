@@ -12,12 +12,6 @@ PerItemTestResults.schema = new SimpleSchema({
 	product: {
 		type: Object
 	},
-	'product._id': {
-		type: String
-	},
-	'product.name': {
-		type: String
-	},
 	itemCode: {
 		type: String
 	},
@@ -47,6 +41,9 @@ PerItemTestResults.schema = new SimpleSchema({
 	},
 	'testResults.$.parameters.$.paramName': {
 		type: String
+	},
+	measurement: {
+		type: Number
 	},
 	createdAt: {
 		type: Date,

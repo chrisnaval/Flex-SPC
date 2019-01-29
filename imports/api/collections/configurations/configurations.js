@@ -6,6 +6,9 @@ export const Configurations = new Mongo.Collection('configurations');
 
 // Schema
 Configurations.schema = new SimpleSchema({
+	configuredBy: {
+		type: Object
+	},
 	product: {
 		type: Object
 	},
