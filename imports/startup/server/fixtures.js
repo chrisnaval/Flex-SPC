@@ -1,6 +1,7 @@
 // Fill the Db with sample data on startup
 
 // Constants
+import { charts } from '/lib/constants.js';
 import { moduleFunctions } from '/lib/constants.js';
 
 // Mongo Collection(s)
@@ -32,6 +33,11 @@ Meteor.startup(function() {
             {
                 name: "Dashboard",
                 module: "dashboard",
+                type: "user"
+            },
+            {
+                name: "Configurations",
+                module: "configurations",
                 type: "user"
             },
             {
@@ -85,6 +91,11 @@ Meteor.startup(function() {
                     if(error) {
                         throw new Meteor.Error('error', error.error);
                     } else {
+                        var adminCharts = [];
+                        for(var key in charts) {
+                            adminCharts.push(charts[key]);
+                        }
+
                         UserProfiles.insert({
                             firstName: "Super",
                             lastName: "Administrator",
@@ -92,6 +103,7 @@ Meteor.startup(function() {
                             contactNo: "09179244462",
                             type: "admin",
                             role,
+                            charts: adminCharts,
                             createdAt: new Date(),
                             updatedAt: new Date(),
                             deletedAt: null
