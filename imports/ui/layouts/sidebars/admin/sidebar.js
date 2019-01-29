@@ -42,5 +42,30 @@ Template.Admin_sidebar.events({
     },
     'click a': function() {
         Session.keys = {}
+    },
+    'click .user-info': function(event) {
+        event.preventDefault();
+
+        const target = event.target.closest('.user-info');
+
+        var collapsedElement = document.getElementsByClassName('collapsed');
+        for(var c =0; c < collapsedElement.length; c++)  {
+            collapsedElement[c].classList.remove('toggle');
+        }
+        
+        target.classList.add('toggle');
+        var classToggle = document.getElementsByClassName('toggle');
+
+        for(var i = 0; i < classToggle.length; i++) {
+            var dropdown = classToggle[i].nextElementSibling;
+            
+            if(dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+                dropdown.classList.remove('open');
+            } else {
+                dropdown.style.display = 'block';
+                dropdown.classList.add('open');
+            }
+        }   
     }
 });

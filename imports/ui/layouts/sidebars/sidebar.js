@@ -25,5 +25,27 @@ Template.Sidebar.events({
 
         var modal = document.getElementById('change-password');
 		modal.style.display = 'block';
+    },
+    'click .user-info': function(event) {
+        event.preventDefault();
+
+        const target = event.target.closest('.user-info');
+
+        var collapsedElement = document.getElementsByClassName('collapsed');
+        for(var c =0; c < collapsedElement.length; c++)  {
+            collapsedElement[c].classList.remove('toggle');
+        }
+        
+        target.classList.add('toggle');
+        var classToggle = document.getElementsByClassName('toggle');
+
+        for(var i = 0; i < classToggle.length; i++) {
+            var dropdown = classToggle[i].nextElementSibling;
+            if(dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            } else {
+                dropdown.style.display = 'block';
+            }
+        }   
     }
 });
