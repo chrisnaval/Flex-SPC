@@ -13,11 +13,11 @@ import { Testers } from '/imports/api/collections/testers/testers.js';
 // Template Created
 // Parameter
 Template.Parameter.onCreated(function() {
-    Meteor.subscribe('parametersData');
+    Meteor.subscribe('parameters.all');
 });
 // Product
 Template.Product.onCreated(function() {
-    Meteor.subscribe('productsData');
+    Meteor.subscribe('products.all');
 });
 // Role_view
 Template.Role_view.onCreated(function () {
@@ -26,7 +26,7 @@ Template.Role_view.onCreated(function () {
 });
 // Tester
 Template.Tester.onCreated(function() {
-    Meteor.subscribe('testersData');
+    Meteor.subscribe('testers.all');
 });
 
 //template onrendered
