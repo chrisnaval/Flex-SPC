@@ -27,10 +27,10 @@ accounts-password@1.5.1
 reactive-dict@1.2.1
 aldeed:simple-schema
 
-
 fortawesome:fontawesome
 anychart:anychart
 em0ney:amcharts
 ahref:dragula
 session
 mgoldberg524:meteor-simple-statistics
+momentjs:moment

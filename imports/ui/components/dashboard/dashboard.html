@@ -1,0 +1,92 @@
+<template name="Dashboard">
+    <div class="wrap">
+        {{> Alert_message}}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        {{> Pareto}}
+                    </div>
+                    <div class="card-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                {{#if remove}}
+                <a href="javascriot:void(0)" id="removeGraph">
+                    <div class="text-content">
+                        <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                    </div>
+                </a>
+                <div class="card">
+                    <div class="card-body">
+                        {{> Template.dynamic template=chart }}
+                    </div>
+                    <div class="card-footer">
+
+                    </div>
+                </div>
+                {{/if}}
+                <a href="" class="choose" id="choose">
+                    <div class="choose-graphs-content">
+                        <div class="text-content">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            <p class="text-choose">Choose to Display</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        {{> Candlestick}}
+                    </div>
+                    <div class="card-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        {{> Xbar}}
+                    </div>
+                    <div class="card-footer">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        {{> Yield}}
+                    </div>
+                    <div class="card-footer">
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        {{> Range}}
+                    </div>
+                    <div class="card-footer">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {{> Custom_dashboard}}
+</template>

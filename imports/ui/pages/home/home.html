@@ -1,52 +1,14 @@
 <template name="Home">
     <!-- main -->
     <main class="main">
-        <div class="page-container">
-            {{> Home_header}}
-            {{> App_sidebar}}
-            <div class="page-content">
-                <div class="wrap">
-                    {{> Banner}}
-                    <div class="content-wrap">
-                        <div class="content">
-                            <div class="row">
-                                <div class="col-12">
-                                    {{> Pareto}}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <a href="" class="choose">
-                                        <div class="graphs choose-graphs-content">
-                                            <div class="text-content">
-                                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                                <p class="text-choose">Choose to Display</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-6">
-                                    {{> Candlestick}}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    {{> Xbar}}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    {{> Yield}}
-                                </div>
-                                <div class="col-6">
-                                    {{> Range}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="wrapper">
+            {{> Template.dynamic template=sidebar}}
+            <div class="page-container">
+                {{> Template.dynamic template=header}}
+                <div class="content">
+                    {{> Template.dynamic template=main}}
                 </div>
             </div>
         </div>
     </main>
-    {{> Custom_dashboard_modal}}
 </template>
