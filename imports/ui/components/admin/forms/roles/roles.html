@@ -94,23 +94,10 @@
                                     <table class="table table-hover">
                                         <tbody>
                                             {{#each modules}}
-                                            <tr class="module-list {{#if dashboard module}} selected {{/if}}">
-                                                <td class="module" module-value="{{module}}">{{name}}</td>
-                                            </tr>
+                                                <tr class="module-list {{#if dashboard module}} selected {{/if}}">
+                                                    <td class="module" module-value="{{module}}">{{name}}</td>
+                                                </tr>
                                             {{/each}}
-                                            <!-- {{#if showAdmin}}
-                                                {{#each adminAppModules}}
-                                                    <tr class="module-list {{#if dashboard module}} selected {{/if}}">
-                                                        <td class="module" module-value="{{module}}">{{name}}</td>
-                                                    </tr>
-                                                {{/each}}
-                                            {{else}}
-                                                {{#each userAppModules}}
-                                                    <tr class="module-list {{#if dashboard module}} selected {{/if}}">
-                                                        <td class="module" module-value="{{module}}">{{name}}</td>
-                                                    </tr>
-                                                {{/each}}
-                                            {{/if}} -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -175,23 +162,10 @@
                                     <table class="table table-hover" id="table">
                                         <tbody>
                                             {{#each modules}}
-                                            <tr class="module-list {{#if dashboard module}} selected {{/if}}">
-                                                <td class="module" module-value="{{module}}">{{name}}</td>
-                                            </tr>
-                                            {{/each}}
-                                            <!-- {{#if showAdmin}}
-                                                {{#each adminAppModules}}
                                                 <tr class="module-list {{#if dashboard module}} selected {{/if}}">
                                                     <td class="module" module-value="{{module}}">{{name}}</td>
                                                 </tr>
-                                                {{/each}}
-                                            {{else}}
-                                                {{#each userAppModules}}
-                                                <tr class="module-list">
-                                                    <td class="module" module-value="{{module}}">{{name}}</td>
-                                                </tr>
-                                                {{/each}}
-                                            {{/if}} -->
+                                            {{/each}}
                                         </tbody>
                                     </table>
                                 </div>
