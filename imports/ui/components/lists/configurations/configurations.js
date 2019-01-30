@@ -12,8 +12,9 @@ Template.Configurations_list.helpers({
 	config() {
 		return Configurations.find({
 			deletedAt: null,
+			'configuredBy.emailAddress': Meteor.user().emails[0].address,
 		});
-	}
+	},
 });
 
 Template.Configurations_list.events({

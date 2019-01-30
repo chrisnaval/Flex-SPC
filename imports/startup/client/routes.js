@@ -7,6 +7,7 @@ import '../../ui/components/dashboard/dashboard.js';
 import '../../ui/components/forms/configurations/configurations.js';
 import '../../ui/components/lists/configurations/configurations.js';
 import '../../ui/components/kanban/kanban.js';
+import '../../ui/components/reports/reports.js';
 
 // Layout(s)
 import '../../ui/layouts/body/body.js';
@@ -104,7 +105,7 @@ FlowRouter.route('/reports', {
             BlazeLayout.render('Home', {
                 header: 'Header',
                 sidebar: 'Sidebar',
-                main: ''
+                main: 'Reports'
             });
         } else {
             FlowRouter.go('/login');

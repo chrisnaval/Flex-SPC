@@ -12,6 +12,7 @@ Meteor.methods({
         Configurations.schema.validate(configData);
 
         Configurations.insert({
+            configuredBy: configData.configuredBy,
             product: configData.product,
             sampleSize: configData.sampleSize,
             tester: configData.tester,

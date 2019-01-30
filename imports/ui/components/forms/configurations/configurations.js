@@ -87,7 +87,13 @@ Template.Configuration_create.events({
         var upperSpecLimit = target.upperSpecLimit.value;
         var lowerSpecLimit = target.lowerSpecLimit.value;
 
+        var currentUser = Meteor.user();
+
         var configData = {
+            configuredBy: {
+                _id: currentUser._id,
+                emailAddress: currentUser.emails[0].address
+            },
             product: {
                 _id: productId,
         		name: product,
