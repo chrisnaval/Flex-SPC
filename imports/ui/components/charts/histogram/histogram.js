@@ -20,3 +20,4 @@ Template.Histogram.rendered = function () {
     chart.container('histogram');
     chart.draw();
 };
+

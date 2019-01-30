@@ -7,7 +7,13 @@ export const Configurations = new Mongo.Collection('configurations');
 // Schema
 Configurations.schema = new SimpleSchema({
 	configuredBy: {
-		type: Object
+		type: Object,
+	},
+	'configuredBy._id': {
+		type: String
+	},
+	'configuredBy.emailAddress': {
+		type: String
 	},
 	product: {
 		type: Object

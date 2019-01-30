@@ -57,9 +57,11 @@ logging@1.1.20
 mdg:validation-error@0.5.1
 meteor@1.9.2
 meteor-base@1.4.0
-meteortesting:browser-tests@1.2.0
-meteortesting:mocha@1.1.1
-meteortesting:mocha-core@5.2.0_3
+meteorhacks:picker@1.0.3
+meteortesting:browser-tests@1.0.0
+meteortesting:mocha@1.0.1
+meteortesting:mocha-core@1.0.1
+mgoldberg524:meteor-simple-statistics@0.9.2
 minifier-css@1.4.1
 minifier-js@2.4.0
 minimongo@1.4.5
