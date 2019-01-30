@@ -104,7 +104,6 @@ Template.User_update.helpers({
         });
     },
     userData() {
-        // var test = FlowRouter.getParam('_id');
         return Meteor.users.findOne({
             _id: Template.instance().state.get('userId'),
         });

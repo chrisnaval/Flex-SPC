@@ -304,22 +304,24 @@ Template.Roles_data.helpers({
 		if (user.profile) {
 			var userRoleId = user.profile.role._id;
 			var rolePermissions = RolePermissions.findOne({ 'role._id': userRoleId });
-			var permissions = rolePermissions.permissions;
 
-			var hasPermissionToEdit = false;
+			if(rolePermissions) {
+				var permissions = rolePermissions.permissions;
 
-			if (user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
-				hasPermissionToEdit = true;
-			} else {
-				permissions.forEach(element => {
-					var permission = element.function;
+				var hasPermissionToEdit = false;
 
-					if (permission == 'update') {
-						hasPermissionToEdit = true;
-					}
-				});
+				if (user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
+					hasPermissionToEdit = true;
+				} else {
+					permissions.forEach(element => {
+						var permission = element.function;
+
+						if (permission == 'update') {
+							hasPermissionToEdit = true;
+						}
+					});
+				}
 			}
-
 			return hasPermissionToEdit;
 		}
 	},
@@ -327,20 +329,23 @@ Template.Roles_data.helpers({
 		var user = Meteor.user();
 		var userRoleId = user.profile.role._id;
 		var rolePermissions = RolePermissions.findOne({ 'role._id': userRoleId });
-		var permissions = rolePermissions.permissions;
+		
+		if(rolePermissions) {
+			var permissions = rolePermissions.permissions;
 
-		var hasPermissionToDelete = false;
+			var hasPermissionToDelete = false;
 
-		if (user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
-			hasPermissionToDelete = true;
-		} else {
-			permissions.forEach(element => {
-				var permission = element.function;
+			if (user.profile.type == 'admin' && user.profile.role.role == 'Super Administrator') {
+				hasPermissionToDelete = true;
+			} else {
+				permissions.forEach(element => {
+					var permission = element.function;
 
-				if (permission == 'delete') {
-					hasPermissionToDelete = true;
-				}
-			});
+					if (permission == 'delete') {
+						hasPermissionToDelete = true;
+					}
+				});
+			}
 		}
 
 		return hasPermissionToDelete;

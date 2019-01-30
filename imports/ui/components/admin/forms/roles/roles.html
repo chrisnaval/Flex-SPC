@@ -2,7 +2,7 @@
 <template name="Check_boxes">
     <div class="forms checkboxes">
         <div class="form-group" style="border-bottom: solid 2px #f3f3f3;padding-bottom: 25px;">
-            <p style="font-weight:600;">ACCESS ALL</p>
+            <p style="font-weight:600;display: inline;">ACCESS ALL</p>
             <label class="switch" style="float:right;">
                 <input type="checkbox" id="access-all" value="access-all">
                 <div class="slider round">
@@ -93,19 +93,11 @@
                                 <div class="modules" style="margin-top: 20px;">
                                     <table class="table table-hover">
                                         <tbody>
-                                            {{#if showAdmin}}
-                                                {{#each adminAppModules}}
-                                                    <tr class="module-list {{#if dashboard module}} selected {{/if}}">
-                                                        <td class="module" module-value="{{module}}">{{name}}</td>
-                                                    </tr>
-                                                {{/each}}
-                                            {{else}}
-                                                {{#each userAppModules}}
-                                                    <tr class="module-list {{#if dashboard module}} selected {{/if}}">
-                                                        <td class="module" module-value="{{module}}">{{name}}</td>
-                                                    </tr>
-                                                {{/each}}
-                                            {{/if}}
+                                            {{#each modules}}
+                                                <tr class="module-list {{#if dashboard module}} selected {{/if}}">
+                                                    <td class="module" module-value="{{module}}">{{name}}</td>
+                                                </tr>
+                                            {{/each}}
                                         </tbody>
                                     </table>
                                 </div>
@@ -162,26 +154,18 @@
                                 <p></p>
                                 <p>Choose Role Type</p>
                                 <div class="form-group">
-                                    <select name="module" id="module" class="form-control" disabled>
+                                    <select name="module" id="module" class="form-control" data-value="{{roleData.role.type}}" disabled>
                                         <option value="{{roleData.role.type}}" selected>{{ucFirst roleData.role.type}}</option>
                                     </select>
                                 </div>
                                 <div class="modules" style="margin-top: 20px;">
                                     <table class="table table-hover" id="table">
                                         <tbody>
-                                            {{#if showAdmin}}
-                                                {{#each adminAppModules}}
+                                            {{#each modules}}
                                                 <tr class="module-list {{#if dashboard module}} selected {{/if}}">
                                                     <td class="module" module-value="{{module}}">{{name}}</td>
                                                 </tr>
-                                                {{/each}}
-                                            {{else}}
-                                                {{#each userAppModules}}
-                                                <tr class="module-list">
-                                                    <td class="module" module-value="{{module}}">{{name}}</td>
-                                                </tr>
-                                                {{/each}}
-                                            {{/if}}
+                                            {{/each}}
                                         </tbody>
                                     </table>
                                 </div>

@@ -1,5 +1,9 @@
 import './histogram.html';
 
+Template.Histogram.onCreated(function() {
+    
+});
+
 Template.Histogram.rendered = function () {
     var data = [
         ['10', 10000],
