@@ -3,14 +3,15 @@ import './roles.html';
 //component
 import '../../../alert-message/alert-message.js';
 
+//meteor packages
+import { Session } from 'meteor/session';
+
 // Collection(s)
 import { AppModules } from '/imports/api/collections/appModules/appModules.js';
 import { RolePermissions } from '/imports/api/collections/rolePermissions/rolePermissions.js';
 
 //oncreated
 Template.Role_create.onCreated(function () {
-    Meteor.subscribe('appModules.all');
-
     this.reactive = new ReactiveDict();
 
     this.reactive.set({
@@ -19,12 +20,20 @@ Template.Role_create.onCreated(function () {
         showRadioButtons: false,
         rolePermission: [],
     });
+
+    // Autorun
+    this.autorun(function() {
+        Meteor.subscribe('appModules.all', function() {
+            Session.set('appModules', AppModules.find({
+                type: {
+                    $eq: 'admin'
+                }
+            }).fetch());
+        });
+    });
 });
 
 Template.Role_update.onCreated(function () {
-    Meteor.subscribe('rolePermissions.all');
-    Meteor.subscribe('appModules.all');
-
     this.reactive = new ReactiveDict();
 
     this.reactive.set('roleId', FlowRouter.getParam('_id'));
@@ -33,19 +42,56 @@ Template.Role_update.onCreated(function () {
         showUserModule: false,
         showRadioButtons: false,
         rolePermission: [],
+        moduleSelected: ''
+    });
+
+    // Autorun
+    this.autorun(function() {
+        Meteor.subscribe('rolePermissions.all');
+
+        var rolePermission = RolePermissions.findOne({
+            _id: Template.instance().reactive.get('roleId')
+        });
+
+        if(rolePermission) {
+            var roleType = rolePermission.role.type;
+        }
+
+        Meteor.subscribe('appModules.all', function() {
+            Session.set('appModules', AppModules.find({
+                type: {
+                    $eq: roleType
+                }
+            }).fetch());
+        });
     });
 });
 
 //onrendered
 Template.Role_create.onRendered(function () {
+    Session.keys = {}
+
     var radioElement = document.getElementsByClassName('functionName');
     for (var i = 0; i < radioElement.length; i++) {
         radioElement[i].checked = true;
         radioElement[i].setAttribute('disabled', true);
     }
+
+     // Autorun
+     this.autorun(function() {
+        Meteor.subscribe('appModules.all', function() {
+            Session.set('appModules', AppModules.find({
+                type: {
+                    $eq: 'admin'
+                }
+            }).fetch());
+        });
+    });
 });
 
 Template.Role_update.onRendered(function () {
+    Meteor.subscribe('rolePermissions.all');
+    Meteor.subscribe('appModules.all');
     var radioElement = document.getElementsByClassName('functionName');
     
     for (var i = 0; i < radioElement.length; i++) {
@@ -53,16 +99,26 @@ Template.Role_update.onRendered(function () {
         radioElement[i].setAttribute('disabled', true);
     }
 
-    var element = document.getElementById('module');
-    var roleType = element.options[element.selectedIndex].value;
-    
-    if(roleType === 'user') {
-        Template.instance().reactive.set('showAdminModule', false);
-        Template.instance().reactive.set('showUserModule', true);
-    } else {
-        Template.instance().reactive.set('showUserModule', false);
-        Template.instance().reactive.set('showAdminModule', true);
-    }
+     // Autorun
+     this.autorun(function() {
+        Meteor.subscribe('rolePermissions.all');
+        
+        var rolePermission = RolePermissions.findOne({
+            _id: Template.instance().reactive.get('roleId')
+        });
+
+        if(rolePermission) {
+            var roleType = rolePermission.role.type;
+        }
+
+        Meteor.subscribe('appModules.all', function() {
+            Session.set('appModules', AppModules.find({
+                type: {
+                    $eq: roleType
+                }
+            }).fetch());
+        });
+    });
 });
 //helpers
 Template.Role_create.helpers({
@@ -70,25 +126,10 @@ Template.Role_create.helpers({
         var dashboard = 'dashboard';
         return dashboard === module;
     },
-    adminAppModules() {
-        return AppModules.find({
-            type: 'admin'
-        });
+    modules() {
+        return Session.get('appModules');
     },
-    userAppModules() {
-        return AppModules.find({
-            type: 'user'
-        });
-    },
-    showAdmin() {
-        return Template.instance().reactive.get('showAdminModule');
-    },
-    showUser() {
-        return Template.instance().reactive.get('showUserModule');
-    },
-    showRadio() {
-        return Template.instance().reactive.get('showRadioButtons');
-    },
+
 });
 
 Template.Role_update.helpers({
@@ -96,29 +137,13 @@ Template.Role_update.helpers({
         var dashboard = 'dashboard';
         return dashboard === module;
     },
+    modules() {
+        return Session.get('appModules');
+    },
     roleData() {
         return RolePermissions.findOne({
             _id: Template.instance().reactive.get('roleId')
         });
-    },
-    adminAppModules() {
-        return AppModules.find({
-            type: 'admin'
-        });
-    },
-    userAppModules() {
-        return AppModules.find({
-            type: 'user'
-        });
-    },
-    showAdmin() {
-        return Template.instance().reactive.get('showAdminModule');
-    },
-    showUser() {
-        return Template.instance().reactive.get('showUserModule');
-    },
-    showRadio() {
-        return Template.instance().reactive.get('showRadioButtons');
     },
 });
 
@@ -129,11 +154,17 @@ Template.Role_create.events({
 
         var selectModule = target.options[target.selectedIndex].value;
         if (selectModule == 'user') {
-            template.reactive.set('showAdminModule', false);
-            template.reactive.set('showUserModule', true);
+            Session.set('appModules', AppModules.find({
+                type: {
+                    $eq: 'user'
+                }
+            }).fetch());
         } else {
-            template.reactive.set('showUserModule', false);
-            template.reactive.set('showAdminModule', true);
+            Session.set('appModules', AppModules.find({
+                type: {
+                    $eq: 'admin'
+                }
+            }).fetch());
         }
     },
     'click tr': function (event) {
@@ -170,6 +201,11 @@ Template.Role_create.events({
                 document.getElementById('view').checked = true;
                 document.getElementById('create').setAttribute('disabled', true);
                 document.getElementById('view').setAttribute('disabled', true);
+            } else if (moduleData == 'configurations') {
+                document.getElementById('create').checked = true;
+                document.getElementById('view').checked = true;
+                document.getElementById('create').setAttribute('disabled', true);
+                document.getElementById('view').setAttribute('disabled', true);
             }
         }
     },
@@ -192,12 +228,14 @@ Template.Role_create.events({
         }
         var rolePermissions = Template.instance().reactive.get('rolePermission');
 
+        //delete array if exist
         for (var i = 0; i < rolePermissions.length; i++) {
             if (rolePermissions[i].module === moduleData) {
                 rolePermissions.splice(i, 1);
                 break;
             }
         }
+
         rolePermissions.push(rolePermission);
         Template.instance().reactive.set('rolePermission', rolePermissions);
     },
@@ -242,6 +280,7 @@ Template.Role_create.events({
                     }
                 }
             }
+
             Template.instance().reactive.set('rolePermission', rolePermission);
         } else {
             var tar = document.getElementsByTagName('tr');
@@ -287,29 +326,48 @@ Template.Role_create.events({
             module.push(elementModules);
         });
 
+        //default datas
+        var adminPermissionDefaultData = ['dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete', 'roles.view', 'users.create', 'users.view'];
+        var usersPermissionDefaultData = ['dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete', 'configurations.create', 'configurations.view'];
+        var usersConfiguration = [ 'configurations.create', 'configurations.view'];
+        var dashboardDefault = ['dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete'];
+        var adminUsers = ['users.create', 'users.view'];
+        var adminRoles = ['roles.view'];
+
         if (roleType === 'admin') {
             if (rolePermission.length == 0) {
-                var permissionDefaultData = ['dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete', 'roles.view', 'users.create', 'users.view'];
-                for (var i = 0; i < permissionDefaultData.length; i++) {
-                    permissionsList.push(permissionDefaultData[i]);
+                for (var i = 0; i < adminPermissionDefaultData.length; i++) {
+                    permissionsList.push(adminPermissionDefaultData[i]);
                 }
             } else if (module != 0) {
-                var usersDashboardDefaultData = ['users.create', 'users.view', 'dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete'];
-                var rolesDashboardDefaultData = ['dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete', 'roles.view'];
+                var rolePermissionModule = [];
 
                 for (var i = 0; i < rolePermission.length; i++) {
-                    if (rolePermission[i].module != 'users' && rolePermission[i].module != 'dashboard') {
-                        for (var a = 0; a < usersDashboardDefaultData.length; a++) {
-                            permissionsList.push(usersDashboardDefaultData[a]);
-                        }
-                    } else if (rolePermission[i].module != 'roles' && rolePermission[i].module != 'dashboard') {
-                        for (var b = 0; b < rolesDashboardDefaultData.length; b++) {
-                            permissionsList.push(rolesDashboardDefaultData[b]);
-                        }
-                    }
-
+                    rolePermissionModule.push(rolePermission[i].module);
                     for (var key in rolePermission[i].permissions) {
                         permissionsList.push(rolePermission[i].permissions[key]);
+                    }
+                }
+
+                if(rolePermissionModule.length == 1) {
+                    if(rolePermissionModule.includes('users')) {
+                        for (var c = 0; c < dashboardDefault.length; c++) {
+                            permissionsList.push(dashboardDefault[c]);
+                        }
+                        for (var a = 0; a < adminRoles.length; a++) {
+                            permissionsList.push(adminRoles[a]);
+                        }
+                    } else if (rolePermissionModule == 'roles') {
+                        for (var c = 0; c < dashboardDefault.length; c++) {
+                            permissionsList.push(dashboardDefault[c]);
+                        }
+                        for (var b = 0; b < adminUsers.length; b++) {
+                            permissionsList.push(adminUsers[b]);
+                        }
+                    }
+                } else if (rolePermissionModule.length == 2) {
+                    for (var c = 0; c < dashboardDefault.length; c++) {
+                        permissionsList.push(dashboardDefault[c]);
                     }
                 }
             } else {
@@ -321,23 +379,30 @@ Template.Role_create.events({
             }
         } else {
             if (rolePermission.length == 0) {
-                var permissionDefaultData = ['dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete'];
 
-                for (var i = 0; i < permissionDefaultData.length; i++) {
-                    permissionsList.push(permissionDefaultData[i]);
+                for (var i = 0; i < usersPermissionDefaultData.length; i++) {
+                    permissionsList.push(usersPermissionDefaultData[i]);
 
                 }
             } else if (module != 0) {
-                dashboardDefaultData = ['dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete'];
-
+                var rolePermissionModule = [];
                 for (var i = 0; i < rolePermission.length; i++) {
-                    if (rolePermission[i].module != 'dashboard') {
-                        for (var a = 0; a < dashboardDefaultData.length; a++) {
-                            permissionsList.push(dashboardDefaultData[a]);
-                        }
-                    }
+                    rolePermissionModule.push(rolePermission[i].module);
                     for (var key in rolePermission[i].permissions) {
                         permissionsList.push(rolePermission[i].permissions[key]);
+                    }
+                }
+
+                if (rolePermissionModule == 'configurations') {
+                    for (var b = 0; b < dashboardDefault.length; b++) {
+                        permissionsList.push(dashboardDefault[b]);
+                    }
+                } else {
+                    for (var b = 0; b < dashboardDefault.length; b++) {
+                        permissionsList.push(dashboardDefault[b]);
+                    }
+                    for (var a = 0; a < usersConfiguration.length; a++) {
+                        permissionsList.push(usersConfiguration[a]);
                     }
                 }
             } else {
@@ -366,6 +431,7 @@ Template.Role_create.events({
 
             permissionsData.push(permissionDatas);
         }
+
         Meteor.call('createRoleWithPermissions', roleData, permissionsData, function(error) {
             if(error) {
                 Session.set('failure', error.reason);
@@ -415,6 +481,11 @@ Template.Role_update.events({
                 document.getElementById('view').checked = true;
                 document.getElementById('view').setAttribute('disabled', true);
             } else if (moduleData == 'users') {
+                document.getElementById('create').checked = true;
+                document.getElementById('view').checked = true;
+                document.getElementById('create').setAttribute('disabled', true);
+                document.getElementById('view').setAttribute('disabled', true);
+            } else if (moduleData == 'configurations') {
                 document.getElementById('create').checked = true;
                 document.getElementById('view').checked = true;
                 document.getElementById('create').setAttribute('disabled', true);
@@ -534,7 +605,6 @@ Template.Role_update.events({
         var alertMessage = document.getElementById('alert-message');
         var roleType = element.options[element.selectedIndex].value;
         var permissionsData = [];
-
         var rolePermission = Template.instance().reactive.get('rolePermission');
         var rolePermissionId = Template.instance().reactive.get('roleId');
 
@@ -543,10 +613,12 @@ Template.Role_update.events({
 
         var permissionsList = [];
         var permissionDefaultData = [];
-        var adminUsersDashboard = [];
-        var adminRolesDashboard = [];
-        var userDashboardReports = [];
-        var userDashboardIssue = [];
+        var adminUsers = [];
+        var adminRoles = [];
+        var dashboardDefault = [];
+        var userReports = [];
+        var userConfigurations = [];
+        var userIssueTracker = [];
         var module = [];
 
         rolePermission.forEach(element => {
@@ -554,65 +626,42 @@ Template.Role_update.events({
             module.push(elementModules);
         });
 
-        //admin role type
-        // get all data under or admin role type
+        //setup default data
+        // get all data under of admin role type
         permissions.forEach(element => {
             var dataElement = element.permission
             var module = dataElement.split('-')[1];
             permissionDefaultData.push(module);
-        });
-
-        permissions.forEach(element => {
-            var dataElement = element.permission
 
             if (element.module == 'dashboard') {
                 var module = dataElement.split('-')[1];
-                adminUsersDashboard.push(module);
+                dashboardDefault.push(module);
             }
             if (element.module == 'users') {
                 var module = dataElement.split('-')[1];
-                adminUsersDashboard.push(module);
-            }
-        });
-
-        permissions.forEach(element => {
-            var dataElement = element.permission
-
-            if (element.module == 'dashboard') {
-                var module = dataElement.split('-')[1];
-                adminRolesDashboard.push(module);
+                adminUsers.push(module);
             }
             if (element.module == 'roles') {
                 var module = dataElement.split('-')[1];
-                adminRolesDashboard.push(module);
+                adminRoles.push(module);
             }
         });
 
-        //users roletype
-        // get all data under or user role type
+        // get all data under of user role type
+        //dashboard with
         permissions.forEach(element => {
             var dataElement = element.permission
-
-            if (element.module == 'dashboard') {
-                var module = dataElement.split('-')[1];
-                userDashboardReports.push(module);
-            }
             if (element.module == 'reports') {
                 var module = dataElement.split('-')[1];
-                userDashboardReports.push(module);
+                userReports.push(module);
             }
-        });
-
-        permissions.forEach(element => {
-            var dataElement = element.permission
-
-            if (element.module == 'dashboard') {
+            if (element.module == 'configurations') {
                 var module = dataElement.split('-')[1];
-                userDashboardIssue.push(module);
+                userConfigurations.push(module);
             }
             if (element.module == 'issue-tracker') {
                 var module = dataElement.split('-')[1];
-                userDashboardIssue.push(module);
+                userIssueTracker.push(module);
             }
         });
         //end
@@ -623,19 +672,33 @@ Template.Role_update.events({
                     permissionsList.push(permissionDefaultData[i]);
                 }
             } else if (module != 0) {
-                for (var i = 0; i < rolePermission.length; i++) {
-                    if (rolePermission[i].module != 'users' && rolePermission[i].module != 'dashboard') {
-                        for (var a = 0; a < adminUsersDashboard.length; a++) {
-                            permissionsList.push(adminUsersDashboard[a]);
-                        }
-                    } else if (rolePermission[i].module != 'roles' && rolePermission[i].module != 'dashboard') {
-                        for (var b = 0; b < adminRolesDashboard.length; b++) {
-                            permissionsList.push(adminRolesDashboard[b]);
-                        }
-                    }
+                var rolePermissionModule = [];
 
+                for (var i = 0; i < rolePermission.length; i++) {
+                    rolePermissionModule.push(rolePermission[i].module);
                     for (var key in rolePermission[i].permissions) {
                         permissionsList.push(rolePermission[i].permissions[key]);
+                    }
+                }
+                if(rolePermissionModule.length == 1) {
+                    if(rolePermissionModule.includes('users')) {
+                        for (var c = 0; c < dashboardDefault.length; c++) {
+                            permissionsList.push(dashboardDefault[c]);
+                        }
+                        for (var a = 0; a < adminRoles.length; a++) {
+                            permissionsList.push(adminRoles[a]);
+                        }
+                    } else if (rolePermissionModule == 'roles') {
+                        for (var c = 0; c < dashboardDefault.length; c++) {
+                            permissionsList.push(dashboardDefault[c]);
+                        }
+                        for (var b = 0; b < adminUsers.length; b++) {
+                            permissionsList.push(adminUsers[b]);
+                        }
+                    }
+                } else if (rolePermissionModule.length == 2) {
+                    for (var c = 0; c < dashboardDefault.length; c++) {
+                        permissionsList.push(dashboardDefault[c]);
                     }
                 }
             } else {
@@ -647,27 +710,78 @@ Template.Role_update.events({
             }
         } else {
             if (rolePermission.length == 0) {
-                var permissionDefaultData = ['dashboard.create', 'dashboard.view', 'dashboard.edit', 'dashboard.delete'];
-
                 for (var i = 0; i < permissionDefaultData.length; i++) {
                     permissionsList.push(permissionDefaultData[i]);
 
                 }
             } else if (module != 0) {
+                var rolePermissionModule = [];
                 for (var i = 0; i < rolePermission.length; i++) {
-                    if (rolePermission[i].module != 'dashboard' && rolePermission[i].module != 'reports') {
-                        for (var a = 0; a < userDashboardReports.length; a++) {
-                            permissionsList.push(userDashboardReports[a]);
-                        }
-                    } else if (rolePermission[i].module != 'dashboard' && rolePermission[i].module != 'issue-tracker'){
-                        for (var b = 0; b < userDashboardReports.length; b++) {
-                            permissionsList.push(userDashboardReports[b]);
-                        }
-                    }
+                    rolePermissionModule.push(rolePermission[i].module);
                     for (var key in rolePermission[i].permissions) {
                         permissionsList.push(rolePermission[i].permissions[key]);
                     }
                 }
+                if (rolePermissionModule.length == 1) {
+                    if (rolePermissionModule.includes('configurations')) {
+                        for (var a = 0; a < dashboardDefault.length; a++) {
+                            permissionsList.push(dashboardDefault[a]);
+                        }
+                        for (var b = 0; b < userReports.length; b++) {
+                            permissionsList.push(userReports[b]);
+                        }
+                        for (var c = 0; c < userIssueTracker.length; c++) {
+                            permissionsList.push(userIssueTracker[c]);
+                        }
+                    } else if (rolePermissionModule.includes('reports')) {
+                        for (var a = 0; a < dashboardDefault.length; a++) {
+                            permissionsList.push(dashboardDefault[a]);
+                        }
+                        for (var b = 0; b < userConfigurations.length; b++) {
+                            permissionsList.push(userConfigurations[b]);
+                        }
+                        for (var c = 0; c < userIssueTracker.length; c++) {
+                            permissionsList.push(userIssueTracker[c]);
+                        }
+                    } else if (rolePermissionModule.includes('issue-tracker')) {
+                        for (var a = 0; a < dashboardDefault.length; a++) {
+                            permissionsList.push(dashboardDefault[a]);
+                        }
+                        for (var b = 0; b < userConfigurations.length; b++) {
+                            permissionsList.push(userConfigurations[b]);
+                        }
+                        for (var c = 0; c < userReports.length; c++) {
+                            permissionsList.push(userReports[c]);
+                        }
+                    }
+                } else if (rolePermissionModule.length == 2) {
+                    if(rolePermissionModule.includes('configurations') && rolePermissionModule.includes('reports')) {
+                        for (var a = 0; a < dashboardDefault.length; a++) {
+                            permissionsList.push(dashboardDefault[a]);
+                        }
+                        for (var b = 0; b < userIssueTracker.length; b++) {
+                            permissionsList.push(userIssueTracker[b]);
+                        }
+                    } else if(rolePermissionModule.includes('configurations') && rolePermissionModule.includes('issue-tracker')){
+                        for (var a = 0; a < dashboardDefault.length; a++) {
+                            permissionsList.push(dashboardDefault[a]);
+                        }
+                        for (var b = 0; b < userReports.length; b++) {
+                            permissionsList.push(userReports[b]);
+                        }
+                    } else if (rolePermissionModule.includes('reports') && rolePermissionModule.includes('issue-tracker')) {
+                        for (var a = 0; a < dashboardDefault.length; a++) {
+                            permissionsList.push(dashboardDefault[a]);
+                        }
+                        for (var b = 0; b < userConfigurations.length; b++) {
+                            permissionsList.push(userConfigurations[b]);
+                        }
+                    }
+                } else if (rolePermissionModule.length == 3) {
+                    for (var a = 0; a < dashboardDefault.length; a++) {
+                        permissionsList.push(dashboardDefault[a]);
+                    }
+                } 
             } else {
                 for (var i = 0; i < rolePermission.length; i++) {
                     for (var key in rolePermission[i].permissions) {
