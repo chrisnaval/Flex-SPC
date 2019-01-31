@@ -1,6 +1,6 @@
 import './xbar.html';
 
-Template.Xbar.rendered = function () {
+Template.Xbar.rendered = function() {
     var chartData = generateChartData();
     var chart = AmCharts.makeChart("linechart", {
         "type": "serial",
@@ -67,7 +67,7 @@ Template.Xbar.rendered = function () {
         }
     });
 
-    chart.addListener("rendered", zoomChart);
+    chart.addListener('rendered', zoomChart);
     zoomChart();
     function zoomChart() {
         chart.zoomToIndexes(chartData.length - 40, chartData.length - 1);
@@ -76,8 +76,9 @@ Template.Xbar.rendered = function () {
         var chartData = [];
         var firstDate = new Date();
         firstDate.setDate(firstDate.getDate() - 5);
+        
         var visits = 1200;
-        for (var i = 0; i < 1000; i++) {
+        for(var i = 0; i < 1000; i++) {
             var newDate = new Date(firstDate);
             newDate.setDate(newDate.getDate() + i);
 
@@ -88,6 +89,7 @@ Template.Xbar.rendered = function () {
                 visits: visits
             });
         }
+
         return chartData;
     }
 };

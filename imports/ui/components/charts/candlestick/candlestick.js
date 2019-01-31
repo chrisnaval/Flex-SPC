@@ -1,7 +1,7 @@
 import './candlestick.html';
 
-Template.Candlestick.rendered = function () {
-    // set the data
+Template.Candlestick.rendered = function() {
+    // Set the data
     table = anychart.data.table('x');
     table.addData([
         { 'x': '2004-01-02', 'o': 92.86, 'h': 93.05, 'l': 91.20, 'c': 91.55 },
@@ -36,13 +36,14 @@ Template.Candlestick.rendered = function () {
         { 'x': '2004-02-13', 'o': 99.10, 'h': 99.99, 'l': 99.08, 'c': 99.71 },
         { 'x': '2004-02-17', 'o': 99.99, 'h': 99.00, 'l': 99.32, 'c': 99.37 }
     ]);
+
     mapping = table.mapAs({ 'open': 'o', 'high': 'h', 'low': 'l', 'close': 'c' });
+    
     var chart = anychart.stock();
     var series = chart.plot(0).candlestick(mapping);
     series.name('(Parameter)');
 
     chart.title('Box Plot No. a (Parameter)');
     chart.container('candlestick');
-
     chart.draw();
 };

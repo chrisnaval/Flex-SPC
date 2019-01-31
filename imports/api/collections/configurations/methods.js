@@ -20,6 +20,8 @@ Meteor.methods({
             controlLimit: configData.controlLimit,
             specLimit: configData.specLimit,
             createdAt: new Date(),
+            updatedAt: new Date(),
+            deletedAt: null
         });
     },
     'configurations.remove': function(configDataId) {
