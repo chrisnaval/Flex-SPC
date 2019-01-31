@@ -17,6 +17,7 @@ import '../../ui/layouts/sidebars/sidebar.js';
 import '../../ui/pages/auth/login/login.js';
 import '../../ui/pages/home/home.js';
 import '../../ui/pages/not-found/not-found.js';
+import '../../ui/pages/reports/reports.js';
 
 // Set up all routes in the app
 // Not Found
@@ -104,7 +105,7 @@ FlowRouter.route('/reports', {
             BlazeLayout.render('Home', {
                 header: 'Header',
                 sidebar: 'Sidebar',
-                main: ''
+                main: 'Reports'
             });
         } else {
             FlowRouter.go('/login');

@@ -1,8 +1,8 @@
 import './histogram.html';
 
-Template.Histogram.onCreated(function() {
-    
-});
+// Mongo Collection(s)
+import { Configurations } from '/imports/api/collections/configurations/configurations.js';
+import { HistogramData } from '/imports/api/collections/histogramData/histogramData.js';
 
 Template.Histogram.rendered = function () {
     var data = [
@@ -24,4 +24,3 @@ Template.Histogram.rendered = function () {
     chart.container('histogram');
     chart.draw();
 };
-
