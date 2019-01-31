@@ -15,6 +15,12 @@ Configurations.schema = new SimpleSchema({
 	'configuredBy.emailAddress': {
 		type: String
 	},
+	'configuredBy._id': {
+		type: String
+	},
+	'configuredBy.emailAddress': {
+		type: String
+	},
 	product: {
 		type: Object
 	},

@@ -24,25 +24,13 @@ PerItemTestResults.schema = new SimpleSchema({
 	'testResults.$.tester': {
 		type: Object
 	},
-	'testResults.$.tester._id': {
-		type: String
-	},
-	'testResults.$.tester.name': {
-		type: String
-	},
-	'testResults.$.parameters': {
-		type: Array
-	},
-	'testResults.$.parameters.$': {
+	'testResults.$.parameter': {
 		type: Object
 	},
-	'testResults.$.parameters.$._id': {
-		type: String
-	},
-	'testResults.$.parameters.$.paramName': {
-		type: String
-	},
 	measurement: {
+		type: Number
+	},
+	dataResultId: {
 		type: Number
 	},
 	createdAt: {

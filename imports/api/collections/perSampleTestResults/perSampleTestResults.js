@@ -44,5 +44,5 @@ PerSampleTestResults.schema = new SimpleSchema({
 	deletedAt: {
 		type: Date,
 		optional: true
-	},
+	}
 });

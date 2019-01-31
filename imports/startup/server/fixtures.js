@@ -13,7 +13,7 @@ import { UserProfiles } from '/imports/api/collections/users/userProfiles.js';
 
 Meteor.startup(function() {
     // Seed Data to AppModules Collection
-    if(AppModules.find().count() === 0) {
+    if(AppModules.find().count() == 0) {
         const modules = [
             {
                 name: "Dashboard",
@@ -58,7 +58,7 @@ Meteor.startup(function() {
     }
 
     // Create Super Admin with Role and Permissions
-    if(Meteor.users.find().count() === 0) {
+    if(Meteor.users.find().count() == 0) {
         Roles.insert({
             role: "Super Administrator",
             description: "Super Administrator have access to all the admin-type application modules.",
