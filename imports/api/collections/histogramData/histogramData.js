@@ -15,8 +15,8 @@ HistogramData.schema = new SimpleSchema({
 	binCount: {
 		type: Number
 	},
-	sampleId: {
-		type: String
+	sampleItem: {
+		type: Object
 	},
 	createdAt: {
 		type: Date,
