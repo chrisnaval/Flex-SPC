@@ -33,15 +33,10 @@ PerItemTestResults.schema = new SimpleSchema({
 	dataResultId: {
 		type: Number
 	},
+	dataCreatedAt: {
+		type: Date
+	},
 	createdAt: {
-		type: Date,
-		optional: true
-	},
-	updatedAt: {
-		type: Date,
-		optional: true
-	},
-	deletedAt: {
 		type: Date,
 		optional: true
 	}
