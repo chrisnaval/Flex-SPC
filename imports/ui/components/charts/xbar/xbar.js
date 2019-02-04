@@ -82,8 +82,9 @@ Template.Xbar.onCreated(function () {
         var chartData = [];
         var firstDate = new Date();
         firstDate.setDate(firstDate.getDate() - 5);
+        
         var visits = 1200;
-        for (var i = 0; i < 1000; i++) {
+        for(var i = 0; i < 1000; i++) {
             var newDate = new Date(firstDate);
             newDate.setDate(newDate.getDate() + i);
 

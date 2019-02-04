@@ -6,6 +6,9 @@ export const PerSampleTestResults = new Mongo.Collection('perSampleTestResults')
 
 // Schema
 PerSampleTestResults.schema = new SimpleSchema({
+	sampleSize: {
+		type: Number
+	},
 	sampleItems: {
 		type: Array
 	},
@@ -36,13 +39,5 @@ PerSampleTestResults.schema = new SimpleSchema({
 	createdAt: {
 		type: Date,
 		optional: true
-	},
-	updatedAt: {
-		type: Date,
-		optional: true
-	},
-	deletedAt: {
-		type: Date,
-		optional: true
-	},
+	}
 });
