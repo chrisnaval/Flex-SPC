@@ -1,10 +1,26 @@
 import './histogram.html';
 
-Template.Histogram.onCreated(function() {
-    
-});
+//Meteor Packages
+import { Session } from 'meteor/session';
 
-Template.Histogram.rendered = function () {
+//global variable and functions
+var histogramChart = anychart.column();
+
+function createHistogram(data) {
+    var series = histogramChart.column(data);
+    
+    histogramChart.title('Histogram per Sample (Parameter)');
+    histogramChart.barGroupsPadding(0);
+    histogramChart.xAxis().title('Bin');
+    histogramChart.yAxis().title('Frequency');
+    histogramChart.container('histogram');
+    histogramChart.draw();
+}
+
+//onCreated
+Template.Histogram.onCreated(function() {
+    histogramChart.removeAllSeries();
+
     var data = [
         ['10', 10000],
         ['15', 12000],
@@ -13,15 +29,18 @@ Template.Histogram.rendered = function () {
         ['45', 9000],
         ['60', 7000]
     ];
-
-    var chart = anychart.column();
-    var series = chart.column(data);
     
-    chart.title('Histogram per Sample (Parameter)');
-    chart.barGroupsPadding(0);
-    chart.xAxis().title('Bin');
-    chart.yAxis().title('Frequency');
-    chart.container('histogram');
-    chart.draw();
-};
+    Session.set('histogramData', data);
+});
+
+//onrendered
+Template.Histogram.onRendered(function () {
+    var data = Session.get('histogramData');
+    createHistogram(data);
+});
+
+//events
+Template.Histogram.events({
+
+});
 

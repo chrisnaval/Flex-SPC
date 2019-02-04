@@ -1,15 +1,18 @@
 import './xbar.html';
 
-Template.Xbar.rendered = function () {
-    var chartData = generateChartData();
-    var chart = AmCharts.makeChart("linechart", {
+//Meteor Packages
+import { Session } from 'meteor/session';
+
+//global function and variables
+function test(data) {
+    var xbarChart = AmCharts.makeChart("linechart", {
         "type": "serial",
         "theme": "light",
         "marginRight": 80,
         "autoMarginOffset": 20,
         "marginTop": 7,
         "pathToImages": "http://www.amcharts.com/lib/3/images/",
-        "dataProvider": chartData,
+        "dataProvider": data,
         "valueAxes": [{
             "axisAlpha": 0.2,
             "dashLength": 1,
@@ -67,12 +70,15 @@ Template.Xbar.rendered = function () {
         }
     });
 
-    chart.addListener("rendered", zoomChart);
+    xbarChart.addListener("rendered", zoomChart);
     zoomChart();
     function zoomChart() {
-        chart.zoomToIndexes(chartData.length - 40, chartData.length - 1);
+        xbarChart.zoomToIndexes(data.length - 40, data.length - 1);
     }
-    function generateChartData() {
+}
+
+//onCreated
+Template.Xbar.onCreated(function () {
         var chartData = [];
         var firstDate = new Date();
         firstDate.setDate(firstDate.getDate() - 5);
@@ -88,6 +94,11 @@ Template.Xbar.rendered = function () {
                 visits: visits
             });
         }
-        return chartData;
-    }
-};
+        Session.set('chartData', chartData);
+});
+
+//onrendered
+Template.Xbar.onRendered(function () {
+    var chartData = Session.get('chartData');
+    test(chartData);
+});
