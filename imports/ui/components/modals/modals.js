@@ -5,12 +5,18 @@ import { Session } from 'meteor/session';
 
 // Mongo Collection(s)
 import { AppModules } from '/imports/api/collections/appModules/appModules.js';
+import { Configurations } from '/imports/api/collections/configurations/configurations.js';
 import { Parameters } from '/imports/api/collections/parameters/parameters.js';
 import { Products } from '/imports/api/collections/products/products.js';
 import { RolePermissions } from '/imports/api/collections/rolePermissions/rolePermissions.js';
 import { Testers } from '/imports/api/collections/testers/testers.js';
 
 // Template Created
+//Configuration
+Template.Configuration.onCreated(function() {
+    Meteor.subscribe('configurations.all');
+});
+
 // Parameter
 Template.Parameter.onCreated(function() {
     Meteor.subscribe('parameters.all');
@@ -38,6 +44,13 @@ Template.Role_view.onRendered(function() {
 });
 
 // Template Helpers
+//Configuration
+Template.Configuration.helpers({
+    configuration() {
+        return Configurations.find({});
+    }
+});
+
 // Parameter
 Template.Parameter.helpers({
     parameters() {
@@ -127,6 +140,20 @@ Template.Change_password.events({
         modal.style.display = 'none';
     },
 });
+
+Template.Configuration.events({
+    'click .cancel': function() {
+        var modal = document.getElementById('configurationModal');
+        var tr = document.getElementsByTagName('tr');
+
+        for(var i = 0; i < tr.length; i++) {
+            tr[i].classList.remove('selected');
+         }
+
+        modal.style.display = 'none';
+    }
+});
+
 //custom dashboard
 Template.Custom_dashboard.events({
     'click .cancel': function() {

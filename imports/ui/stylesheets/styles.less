@@ -42,6 +42,7 @@ img {
 .row:after, .row:before {
     display: table;
     content: " ";
+    clear: both;
 }
 
 .row:after {
@@ -89,7 +90,6 @@ td, th {
 
 p {
     margin: 0 0 10px;
-    display: block;
 }
 
 .col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
@@ -301,25 +301,34 @@ tbody>tr:hover {
     letter-spacing: -.7px;
 }
 
-.form-group {
+.forms {
     margin-bottom: 20px;
 
-    .form-control {
-        font-size: 13px;
-        border-radius: 3px;
-        box-shadow: none;
-        transition-duration: .5s;
-        width: 100%;
-        padding: 6px 12px;
-        line-height: 1.42857143;
-        border: 0;
-    }
+    .form-group {
+        margin-bottom: 20px;
     
-    .form-control:focus {
-        border-bottom: solid 2px #9c27b0 !important;
-        box-shadow: none;
-        transition-duration: .5s;
-        outline: 0;
+        .form-control {
+            font-size: 13px;
+            border-radius: 3px;
+            box-shadow: none;
+            transition-duration: .5s;
+            width: 100%;
+            padding: 6px 12px;
+            line-height: 1.42857143;
+            border: 0;
+            float:left;
+        }
+        
+        .form-control:focus {
+            border-bottom: solid 2px #9c27b0 !important;
+            box-shadow: none;
+            transition-duration: .5s;
+            outline: 0;
+        }
+    
+        .form-choose {
+            display: -webkit-box;
+        }
     }
 }
 
@@ -393,10 +402,6 @@ tbody>tr:hover {
 
                     .card-body {
                         padding: 20px;
-
-                        .lookup {
-                            width: 92%;
-                        }
                     
                         i.fa.fa-ellipsis-h {
                             padding: 5px 8px;

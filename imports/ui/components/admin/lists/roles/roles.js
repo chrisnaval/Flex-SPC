@@ -193,7 +193,6 @@ Template.Roles_list.onCreated(function () {
 });
 
 Template.Roles_list.onRendered(function () {
-
 });
 
 // Template Helpers
