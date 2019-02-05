@@ -19,10 +19,8 @@ Template.Reports.helpers({
 		return Configurations.find({});
 	},
 	rangeSample() {
-		var configId = '5Qbd8wJZNsdsqB7i8';
 		var config = Configurations.findOne({ _id: configId });
 		var configSampleSize = config.sampleSize;
 		return PerItemTestResults.find({}, {limit: configSampleSize});
-		// console.log(max);
 	}
 });

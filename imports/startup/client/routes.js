@@ -105,7 +105,7 @@ FlowRouter.route('/reports', {
             BlazeLayout.render('Home', {
                 header: 'Header',
                 sidebar: 'Sidebar',
-                main: 'Reports'
+                main: ''
             });
         } else {
             FlowRouter.go('/login');
