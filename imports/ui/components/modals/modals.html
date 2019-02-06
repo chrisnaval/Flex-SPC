@@ -31,6 +31,50 @@
     </div>
 </template>
 
+<template name="Configuration">
+    <div id="configurationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Configuration</h5>
+            </div>
+            <div class="modal-body" style="height: 400px;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" style="border-right: 1px solid #ddd;">Product Name</th>
+                            <th rowspan="2" style="border-right: 1px solid #ddd;">Sample Size</th>
+                            <th colspan="2" style="border-right: 1px solid #ddd;">Control Limit</th>
+                            <th colspan="2" style="border-right: 1px solid #ddd;">Spec Limit</th>
+                        </tr>
+                        <tr>
+                            <th style="border-right: 1px solid #ddd;">Upper</th>
+                            <th style="border-right: 1px solid #ddd;">Lower</th>
+                            <th style="border-right: 1px solid #ddd;">Upper</th>
+                            <th style="border-right: 1px solid #ddd;">Lower</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each configuration}}
+                        <tr>
+                            <td class="productName" data-id="_id">{{product.name}}</td>
+                            <td class="sampleSize">{{sampleSize}}</td>
+                            <td class="upperControlLimit">{{controlLimit.upperControlLimit}}</td>
+                            <td class="lowerControlLimit">{{controlLimit.lowerControlLimit}}</td>
+                            <td class="upperSpecLimit">{{specLimit.upperSpecLimit}}</td>
+                            <td class="lowerSpecLimit">{{specLimit.lowerSpecLimit}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal modal-default cancel">Cancel</button>
+                <button type="button" class="btn-modal modal-info select-configuration">Select</button>
+            </div>
+        </div>
+    </div>
+</template>
+
 <!-- Custom_dashboard -->
 <template name="Custom_dashboard">
     <div id="formModal" class="modal">

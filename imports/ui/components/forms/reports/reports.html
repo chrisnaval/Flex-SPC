@@ -1,0 +1,66 @@
+<template name="Reports_create">
+    <div class="configuration-section">
+        <div class="wrap">
+            <div class="card">
+                <div class="card-body">
+                    <div class="forms">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Histogram</label>
+                                    <input type="text" class="form-control lookup" name="histogram" id="histogram-chart"
+                                        disabled>
+                                    <a href="" class="form-choose choose-histogram"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                                    {{> Configuration}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="charts">
+                        {{> Histogram}}
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="forms">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Candlestick</label>
+                                    <input type="text" class="form-control lookup" name="candlestick" id="candlestick-chart"
+                                        disabled>
+                                    <a href="" class="form-choose choose-candlestick"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                                    {{> Configuration}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="charts">
+                        {{> Candlestick}}
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="forms">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Xbar</label>
+                                    <input type="text" class="form-control lookup" name="xbar" id="xbar-chart"
+                                        disabled>
+                                    <a href="" class="form-choose choose-Xbar"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                                    {{> Configuration}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="charts">
+                        {{> Xbar}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

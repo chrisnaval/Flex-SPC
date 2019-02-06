@@ -10,10 +10,12 @@ Template.Configurations_list.onCreated(function() {
 
 Template.Configurations_list.helpers({
 	config() {
-		return Configurations.find({
-			deletedAt: null,
-			'configuredBy.emailAddress': Meteor.user().emails[0].address,
-		});
+		if(Meteor.user()) {
+			return Configurations.find({
+				deletedAt: null,
+				'configuredBy.emailAddress': Meteor.user().emails[0].address,
+			});
+		}
 	},
 });
 
@@ -23,19 +25,24 @@ Template.Configurations_list.events({
 
 		var modal = document.getElementById('deleteModal');
 		modal.style.display = 'block';
-		document.getElementById('delete_id').value = this._id;
+		document.getElementById('delete-id').value = this._id;
 	},
-	'click .remove': function(event) {
+	'click .delete': function(event) {
 		event.preventDefault();
 		
-		var _id = document.getElementById('delete_id').value;
-		document.getElementById('delete_id').value = '';
+		var alertMessage = document.getElementById('alert-message');
+		var _id = document.getElementById('delete-id').value;
+		document.getElementById('delete-id').value = '';
 		var configData = _id;
 
 		Meteor.call('configurations.remove', configData, function(error) {
-            if(error) {
-                document.getElementById('error-msg').innerHTML = error.reason;
-            }
+			if(error) {
+                Session.set('failure', error.reason);
+				alertMessage.style.display = 'block';
+			} else {
+				Session.set('success', 'Successfully Deleted');
+				alertMessage.style.display = 'block';
+			}
 		});
 		
 		var modal = document.getElementById('deleteModal');
