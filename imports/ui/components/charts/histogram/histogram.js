@@ -1,5 +1,8 @@
 import './histogram.html';
 
+// Mongo Collection(s)
+import { Configurations } from '/imports/api/collections/configurations/configurations.js';
+import { HistogramData } from '/imports/api/collections/histogramData/histogramData.js';
 //Meteor Packages
 import { Session } from 'meteor/session';
 
