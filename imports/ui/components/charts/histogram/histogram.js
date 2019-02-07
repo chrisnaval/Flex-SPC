@@ -1,12 +1,13 @@
 import './histogram.html';
 
+//Meteor Package(s)
+import { Session } from 'meteor/session';
+
 // Mongo Collection(s)
 import { Configurations } from '/imports/api/collections/configurations/configurations.js';
 import { HistogramData } from '/imports/api/collections/histogramData/histogramData.js';
-//Meteor Packages
-import { Session } from 'meteor/session';
 
-//global variable and functions
+// Global Variable(s) and Function(s)
 var histogramChart = anychart.column();
 
 function createHistogram(data) {
@@ -20,7 +21,7 @@ function createHistogram(data) {
     histogramChart.draw();
 }
 
-//onCreated
+// onCreated
 Template.Histogram.onCreated(function() {
     histogramChart.removeAllSeries();
 
@@ -36,14 +37,13 @@ Template.Histogram.onCreated(function() {
     Session.set('histogramData', data);
 });
 
-//onrendered
-Template.Histogram.onRendered(function () {
+// onRendered
+Template.Histogram.onRendered(function() {
     var data = Session.get('histogramData');
     createHistogram(data);
 });
 
-//events
+// events
 Template.Histogram.events({
 
 });
-

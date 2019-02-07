@@ -10,6 +10,9 @@ HistogramData.schema = new SimpleSchema({
 		type: Number
 	},
 	binRange: {
+		type: Object
+	},
+	'binRange.$': {
 		type: Number
 	},
 	binCount: {
