@@ -37,14 +37,10 @@ Meteor.methods({
                     }, limit: sampleSize, 
                 }).fetch();
 
-                var measurements = []; // Array of measurements from perSampleTestResults
-                // 
-                for(var i = 0; i < perSampleTestResults.length; i++) {
-                    var perSampleTestResult = perSampleTestResults[i];
-                    var perSampleMeasurement = perSampleTestResult.measurement;
-
-                    measurements.push(perSampleMeasurement);
-                }
+                var measurements = []; // Array of measurements for calculation purposes
+                perSampleTestResults.forEach(function(perSampleTestResult) {
+                    measurements.push(perSampleTestResult.measurement);
+                });
 
                 // Get the length of the measurements array
                 var measurementsLength = measurements.length;
@@ -65,10 +61,10 @@ Meteor.methods({
                 // Calculate the Median
                 var median = 0;
                 if(measurementsLength % 2 === 0) {
-                    // Average of the two middle measurements
+                    // Average of the two middle elements from the measurements array
                     median = (measurements[measurementsLength / 2 - 1] + measurements[measurementsLength / 2]) / 2;
                 } else {
-                    // Middle measurement only
+                    // Middle element from the measurements array
                     median = measurements[(measurementsLength - 1) / 2];
                 }
 
@@ -90,6 +86,7 @@ Meteor.methods({
                     maximum: maximum,
                 };
 
+                // Call the method to insert the perSampleTestResultData
                 Meteor.call('perSampleTestResults.insert', perSampleTestResultData, function(error) {
                     if(error) {
                         throw new Meteor.Error('error', error.error);

@@ -1,109 +1,108 @@
-// Methods related to Per Sample Test Results Collection
+// Methods related to PerSampleTestResults Collection
 
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-// Collection(s)
+// Mongo Collection(s)
 import { PerSampleTestResults } from './perSampleTestResults.js';
 
-
 Meteor.methods({
-    'perSampleTestResults.insert': function(perItemTestResultData) {
-
+    'perSampleTestResults.insert': function(perSampleTestResultData) {
         try {
             PerSampleTestResults.insert({
-                sampleSize: perItemTestResultData.sampleSize,
-                sampleItems: perItemTestResultData.sampleItems,
-                xBarResult: perItemTestResultData.xBarResult,
-                rChartResult: perItemTestResultData.range,
-                minimum: perItemTestResultData.minimum,
-                maximum: perItemTestResultData.maximum,
-                median: perItemTestResultData.median,
-                firstQuartile: perItemTestResultData.firstQuartile,
-                thirdQuartile: perItemTestResultData.thirdQuartile,
+                sampleSize: perSampleTestResultData.sampleSize,
+                sampleItems: perSampleTestResultData.sampleItems,
+                xBarResult: perSampleTestResultData.xBarResult,
+                rChartResult: perSampleTestResultData.range,
+                minimum: perSampleTestResultData.minimum,
+                firstQuartile: perSampleTestResultData.firstQuartile,
+                median: perSampleTestResultData.median,
+                thirdQuartile: perSampleTestResultData.thirdQuartile,
+                maximum: perSampleTestResultData.maximum,
                 createdAt: new Date(),
-            }, function(error, perSampleTestId) {
+            }, function(error, perSampleTestResultId) {
                 if(error) {
                     throw new Meteor.Error('error', error.error);
                 } else {
-                    var perSampleTestResults = PerSampleTestResults.findOne({ _id: perSampleTestId });
+                    var perSampleTestResults = PerSampleTestResults.findOne({ _id: perSampleTestResultId });
                     var sampleItems = perSampleTestResults.sampleItems;
 
-                    var measurements = []; //array of measurements
-
-                    sampleItems.forEach(function(element) {
-                        element.measurement;
-                        measurements.push(element.measurement);
+                    var measurements = []; // Array of measurements for calculation purposes
+                    sampleItems.forEach(function(sampleItem) {
+                        measurements.push(sampleItem.measurement);
                     });
 
-                    function histogram(measurements) {
-                        var dataLength = measurements.length;
-                        var overallMin = measurements[0];
-                        var overallMax = measurements[dataLength - 1];
-                        var bin = 5;
+                    // Get the length of the measurements array
+                    var measurementsLength = measurements.length;
                     
-                        var min = overallMin;
-                        var max = 0;
+                    var bin = 5; // Default Bin of 5
+                    // Minimum and Maximum of all sampleItems
+                    var overallMin = measurements[0];
+                    var overallMax = measurements[measurementsLength - 1];
                     
-                        var perDataRange = [];
-                    
-                        for(var i = 0; i < measurements.length; i++) {
-                            if(min == overallMin) {
-                                max = min + (bin-1);
-                            }
-
-                            if(measurements[i] > max) {
-                                min = min + bin;
-                                max = (min-1) + bin
-                            }
-
-                            if(measurements[i] >= (overallMax - (bin-1)) || measurements[i] == overallMax) {
-                                max = overallMax;
-                                min = overallMax - (bin-1);
-                            }
-                            
-                            var histogramData = {
-                                bin: 5,
-                                binRange: {
-                                    min: min,
-                                    max: max,
-                                },
-                                min: min,
-                                sampleItem: {
-                                    measurement: measurements[i]
-                                }
-                            };
-
-                            perDataRange.push(histogramData);
+                    // Minimum and Maximum per data for binRange
+                    var minimum = overallMin;
+                    var maximum = 0;
+                
+                    var dataWithBinRange = []; // Array for all data with binRange
+                    for(var i = 0; i < measurementsLength; i++) {
+                        if(minimum == overallMin) {
+                            maximum = minimum + (bin-1);
                         }
 
-                        var dataPerMin = perDataRange.reduce(function(accumulator, item) {  
-                            var key = item.min;
-                            accumulator[key] = accumulator[key] || [];
-                            accumulator[key].push(item);
-                            
-                            return accumulator;
-                        }, []);
-
-                        var reducedDataPerMin = [];
-                        for(var key of dataPerMin.keys()) {
-                            var dataArray = dataPerMin[key];
-                            if(dataArray) {
-                                var binCount = dataArray.length;
-                                dataArray.forEach(element => {
-                                    delete element.min;
-                                    element.binCount = binCount;
-                                    return element;
-                                });
-
-                                reducedDataPerMin.push(dataArray);
-                            }
+                        if(measurements[i] > maximum) {
+                            minimum = minimum + bin;
+                            maximum = (minimum-1) + bin
                         }
-                        return reducedDataPerMin;
+
+                        if(measurements[i] >= (overallMax - (bin-1)) || measurements[i] == overallMax) {
+                            maximum = overallMax;
+                            minimum = overallMax - (bin-1);
+                        }
+                        
+                        var perDataWithBinRange = {
+                            bin: bin,
+                            binRange: {
+                                minimum: minimum,
+                                maximum: maximum,
+                            },
+                            sampleItem: {
+                                measurement: measurements[i]
+                            },
+                            minimum: minimum, // For grouping of data purposes
+                        };
+
+                        dataWithBinRange.push(perDataWithBinRange);
                     }
-                    var histogramDatas = histogram(measurements);
+
+                    // Group each data by its minimum measurement
+                    var reducedDataPerMin = dataWithBinRange.reduce(function(accumulator, item) {  
+                        var key = item.minimum;
+
+                        accumulator[key] = accumulator[key] || [];
+                        accumulator[key].push(item);
+                        
+                        return accumulator;
+                    }, []);
+
+                    // Simplify the grouped data by its minimum measurement and identify the binCount
+                    var reducedDataPerMinWithCount = [];
+                    for(var key of reducedDataPerMin.keys()) {
+                        var dataArray = reducedDataPerMin[key];
+                        if(dataArray) {
+                            var binCount = dataArray.length;
+                            dataArray.forEach(element => {
+                                delete element.minimum;
+                                element.binCount = binCount;
+                                return element;
+                            });
+
+                            reducedDataPerMinWithCount.push(dataArray);
+                        }
+                    }
                     
-                    Meteor.call('histogramData.insert', histogramDatas, function(error) {
+                    // Call the method to insert the reducedDataPerMinWithCount into histogramData
+                    Meteor.call('histogramData.insert', reducedDataPerMinWithCount, function(error) {
                         if(error) {
                             throw new Meteor.Error('error', error.error);
                         }
@@ -113,5 +112,5 @@ Meteor.methods({
         } catch(error) {
             throw new Meteor.Error('error', error.error);
         }
-    },
+    }
 });
