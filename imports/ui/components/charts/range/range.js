@@ -1,15 +1,18 @@
 import './range.html';
 
-Template.Range.rendered = function() {
-    var chartData = generateChartData();
-    var chart = AmCharts.makeChart("Rlinechart", {
+/*
+ * Creates R Line Chart
+ * @param data
+*/
+function createRline(data) {
+    var rLinechart = AmCharts.makeChart("Rlinechart", {
         "type": "serial",
         "theme": "light",
         "marginRight": 80,
         "autoMarginOffset": 20,
         "marginTop": 7,
         "pathToImages": "http://www.amcharts.com/lib/3/images/",
-        "dataProvider": chartData,
+        "dataProvider": data,
         "valueAxes": [{
             "axisAlpha": 0.2,
             "dashLength": 1,
@@ -67,27 +70,38 @@ Template.Range.rendered = function() {
         }
     });
 
-    chart.addListener('rendered', zoomChart);
+    rLinechart.addListener('rendered', zoomChart);
     zoomChart();
     function zoomChart() {
-        chart.zoomToIndexes(chartData.length - 40, chartData.length - 1);
+        rLinechart.zoomToIndexes(data.length - 40, data.length - 1);
     }
-    function generateChartData() {
-        var chartData = [];
-        var firstDate = new Date();
-        firstDate.setDate(firstDate.getDate() - 5);
-       
-        var visits = 1200;
-        for(var i = 0; i < 1000; i++) {
-            var newDate = new Date(firstDate);
-            newDate.setDate(newDate.getDate() + i);
-            visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-            chartData.push({
-                date: newDate,
-                visits: visits
-            });
-        }
+}
 
-        return chartData;
+Template.Range.onCreated(function() {
+    var chartData = [];
+    var firstDate = new Date();
+    firstDate.setDate(firstDate.getDate() - 5);
+   
+    var visits = 1200;
+    for(var i = 0; i < 1000; i++) {
+        var newDate = new Date(firstDate);
+        newDate.setDate(newDate.getDate() + i);
+        visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+        chartData.push({
+            date: newDate,
+            visits: visits
+        });
     }
-};
+
+    Session.set('chartData', chartData);
+});
+
+Template.Range.helpers({
+
+});
+
+Template.Range.onRendered(function () {
+    // Session.get('rLineData')
+    var chartData = Session.get('chartData');
+    createRline(chartData);
+});
