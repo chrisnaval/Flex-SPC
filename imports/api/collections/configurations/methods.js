@@ -33,7 +33,6 @@ Meteor.methods({
                         measurement: 1
                     }, limit: configuration.sampleSize, 
                 }).fetch();
-                
                 var measurements = []; // array of measurement from perSampleTestResult
 
                 for(var i = 0; i < perSampleTestResults.length; i++) {
@@ -42,17 +41,16 @@ Meteor.methods({
 
                     measurements.push(perSampleMeasurement);
                 };
-
                 var maximum = Math.max.apply(null, measurements);
                 var minimum = Math.min.apply(null, measurements);
 
-                var sumOfMeasurements = 0;
+                var xBar = 0;
                 var measurement = measurements;
                 for( var i = 0; i < measurement.length; i++ ) {
-                    sumOfMeasurements += parseInt( measurement[i] );
+                    xBar += parseInt( measurement[i] );
                 };
 
-                var xBarResult = sumOfMeasurements / measurement.length;
+                var xBarResult = xBar / measurement.length;
                 var range = maximum - minimum;
 
                 function median(measurements) {
