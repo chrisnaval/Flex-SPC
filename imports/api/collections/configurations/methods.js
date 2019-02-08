@@ -1,5 +1,8 @@
 // Methods related to Configurations Collection
 
+// Helpers
+import { calculateData } from '/lib/helpers.js';
+
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
@@ -28,77 +31,17 @@ Meteor.methods({
                 throw new Meteor.Error('error', error.error);
             } else {
                 var configuration = Configurations.findOne({ _id: configId });
-                var sampleSize = configuration.sampleSize;
-                var perSampleTestResults = PerItemTestResults.find({ 
-                    'product.name': configuration.product.name,
-                }, {
-                    sort: {
-                        measurement: 1
-                    }, limit: sampleSize, 
-                }).fetch();
-
-                var measurements = []; // Array of measurements for calculation purposes
-                perSampleTestResults.forEach(function(perSampleTestResult) {
-                    measurements.push(perSampleTestResult.measurement);
-                });
-
-                // Get the length of the measurements array
-                var measurementsLength = measurements.length;
-
-                // Calculate the minimum and maximum of the perSampleTestResults
-                var maximum = Math.max.apply(null, measurements);
-                var minimum = Math.min.apply(null, measurements);
-
-                // Calculation for the xBarResult
-                var xBar = 0;
-                for(var i = 0; i < measurementsLength; i++) {
-                    xBar += parseInt(measurements[i]);
-                }
-                var xBarResult = xBar / measurementsLength;
-                // Calculate the Range
-                var range = maximum - minimum;
-
-                // Calculate the Median
-                var median = 0;
-                if(measurementsLength % 2 === 0) {
-                    // Average of the two middle elements from the measurements array
-                    median = (measurements[measurementsLength / 2 - 1] + measurements[measurementsLength / 2]) / 2;
-                } else {
-                    // Middle element from the measurements array
-                    median = measurements[(measurementsLength - 1) / 2];
-                }
-
-                // Calculate the First Quartile and the Third Quartile of the measurements array
-                var fQIndex = Math.floor(measurementsLength * 0.25);
-                var tQIndex = Math.floor(measurementsLength * 0.75);
-                var firstQuartile = measurements[fQIndex];
-                var thirdQuartile = measurements[tQIndex];
-
-                var perSampleTestResultData = {
-                    sampleSize: sampleSize,
-                    sampleItems: perSampleTestResults,
-                    xBarResult: xBarResult,
-                    rChartResult: range,
-                    minimum: minimum,
-                    firstQuartile: firstQuartile,
-                    median: median,
-                    thirdQuartile: thirdQuartile,
-                    maximum: maximum,
-                };
-
-                // Call the method to insert the perSampleTestResultData
-                Meteor.call('perSampleTestResults.insert', perSampleTestResultData, function(error) {
-                    if(error) {
-                        throw new Meteor.Error('error', error.error);
-                    }
-                });
+                
+                // Call the configurations calculation methods
+                Meteor.call('configurations.calculatePerSample', configuration);
+                Meteor.call('configurations.calculateOverall', configuration);
             }
         });
     },
-    'configurations.remove': function(configDataId) {
+    'configurations.remove': function(configId) {
         try {
             // Soft Delete for Configuration Collection
-            Configurations.update({ _id: configDataId }, {
+            Configurations.update({ _id: configId }, {
                 $set: {
                     deletedAt: new Date(),
                 }
@@ -106,5 +49,38 @@ Meteor.methods({
         } catch(error) {
             throw new Meteor.Error('error', error.error);
         }
+    },
+    'configurations.calculatePerSample': function(configData) {
+        var sampleSize = configData.sampleSize;
+        var perSampleTestResults = PerItemTestResults.find({ 
+            'product.name': configData.product.name,
+        }, {
+            sort: {
+                measurement: 1
+            }, limit: sampleSize, 
+        }).fetch();
+
+        var perSampleTestResultData = calculateData(perSampleTestResults);
+        perSampleTestResultData.sampleSize = sampleSize;
+
+        // Call the method to insert the perSampleTestResultData
+        Meteor.call('perSampleTestResults.insert', perSampleTestResultData, function(error) {
+            if(error) {
+                throw new Meteor.Error('error', error.error);
+            }
+        });
+    },
+    'configurations.calculateOverall': function(configData) {
+        var overallItemTestResults = PerItemTestResults.find({ 
+            'product.name': configData.product.name,
+        }, {
+            sort: {
+                measurement: 1
+            },
+        }).fetch();
+
+        var overallDataCalculation = calculateData(overallItemTestResults);
+
+        console.log(overallDataCalculation);
     }
 });

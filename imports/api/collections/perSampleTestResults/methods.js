@@ -11,7 +11,7 @@ Meteor.methods({
         try {
             PerSampleTestResults.insert({
                 sampleSize: perSampleTestResultData.sampleSize,
-                sampleItems: perSampleTestResultData.sampleItems,
+                sampleItems: perSampleTestResultData.items,
                 xBarResult: perSampleTestResultData.xBarResult,
                 rChartResult: perSampleTestResultData.range,
                 minimum: perSampleTestResultData.minimum,
@@ -24,8 +24,8 @@ Meteor.methods({
                 if(error) {
                     throw new Meteor.Error('error', error.error);
                 } else {
-                    var perSampleTestResults = PerSampleTestResults.findOne({ _id: perSampleTestResultId });
-                    var sampleItems = perSampleTestResults.sampleItems;
+                    var perSampleTestResult = PerSampleTestResults.findOne({ _id: perSampleTestResultId });
+                    var sampleItems = perSampleTestResult.sampleItems;
 
                     var measurements = []; // Array of measurements for calculation purposes
                     sampleItems.forEach(function(sampleItem) {
