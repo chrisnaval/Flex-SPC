@@ -106,6 +106,8 @@ Template.Xbar.onCreated(function () {
                 visits: visits
             });
         }
+        console.log(new Date());
+        console.log(newDate);
         Session.set('chartData', chartData);
 });
 
