@@ -10,13 +10,18 @@ Meteor.methods({
     'histogramData.insert': function(histogramDatas) {
 
         try {
-            HistogramData.insert({
-                bin: histogramDatas.bin,
-                binRange: histogramDatas.binRange,
-                binCount: histogramDatas.binCount,
-                sampleItem: histogramDatas.sampleItem,
-                createdAt: new Date()
+            histogramDatas.forEach(function(histogramDataArrays) {
+                histogramDataArrays.forEach(function(histogramData) {
+                    HistogramData.insert({
+                        bin: histogramData.bin,
+                        binRange: histogramData.binRange,
+                        binCount: histogramData.binCount,
+                        sampleItem: histogramData.sampleItem,
+                        createdAt: new Date()
+                    });
+                });
             });
+            
         } catch(error) {
             throw new Meteor.Error('error', error.error);
         }
