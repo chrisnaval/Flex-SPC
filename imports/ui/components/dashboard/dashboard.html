@@ -15,22 +15,20 @@
         </div>
         <div class="row">
             <div class="col-6">
-                {{#if remove}}
-                <a href="javascriot:void(0)" id="removeGraph">
-                    <div class="text-content">
-                        <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-                    </div>
-                </a>
-                <div class="card">
-                    <div class="card-body">
-                        {{> Template.dynamic template=chart }}
-                    </div>
-                    <div class="card-footer">
-
+                {{section1}}
+                <div id="section1" style="display:none">
+                    <a href="javascriot:void(0)" id="removeGraph">
+                        <div class="text-content">
+                            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <div class="card">
+                        <div class="card-body">   
+                                {{> Template.dynamic template=section1 }}
+                        </div>
                     </div>
                 </div>
-                {{/if}}
-                <a href="" class="choose" id="choose">
+                <a href="" class="choose choose-section1" id="choose" data-value="section1" style="display:block">
                     <div class="choose-graphs-content">
                         <div class="text-content">
                             <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -40,51 +38,100 @@
                 </a>
             </div>
             <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        {{> Candlestick}}
-                    </div>
-                    <div class="card-footer">
-
+                    {{section2}}
+                <div id="section2" style="display:none">
+                    <a href="javascriot:void(0)" id="removeGraph">
+                        <div class="text-content">
+                            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <div class="card">
+                        <div class="card-body">
+                                {{> Template.dynamic template=section2 }}
+                        </div>
                     </div>
                 </div>
+                <a href="" class="choose choose-section2" id="choose" data-value="section2" style="display:block">
+                    <div class="choose-graphs-content">
+                        <div class="text-content">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            <p class="text-choose">Choose to Display</p>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        {{> Xbar}}
-                    </div>
-                    <div class="card-footer">
-
+                {{section3}}
+                <div id="section3" style="display:none">
+                    <a href="javascriot:void(0)" id="removeGraph">
+                        <div class="text-content">
+                            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <div class="card">
+                        <div class="card-body">
+                                {{> Template.dynamic template=section3 }}
+                        </div>
                     </div>
                 </div>
-
+                <a href="" class="choose choose-section3" id="choose" data-value="section3" style="display:block">
+                    <div class="choose-graphs-content">
+                        <div class="text-content">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            <p class="text-choose">Choose to Display</p>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="row">
             <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        {{> Yield}}
-                    </div>
-                    <div class="card-footer">
-
+                {{section4}}
+                <div id="section4" style="display:none">
+                    <a href="javascriot:void(0)" id="removeGraph">
+                        <div class="text-content">
+                            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <div class="card">
+                        <div class="card-body">
+                                {{> Template.dynamic template=section4 }}
+                        </div>
                     </div>
                 </div>
-
+                <a href="" class="choose choose-section4" id="choose" data-value="section4" style="display:block">
+                    <div class="choose-graphs-content">
+                        <div class="text-content">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            <p class="text-choose">Choose to Display</p>
+                        </div>
+                    </div>
+                </a>
             </div>
             <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        {{> Range}}
-                    </div>
-                    <div class="card-footer">
-
+                {{section5}}
+                <div id="section5" style="display:none">
+                    <a href="javascriot:void(0)" id="removeGraph">
+                        <div class="text-content">
+                            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <div class="card">
+                        <div class="card-body">
+                            {{> Template.dynamic template=section5 }}
+                        </div>
                     </div>
                 </div>
-
+                <a href="" class="choose choose-section5" id="choose" data-value="section5" style="display:block">
+                    <div class="choose-graphs-content">
+                        <div class="text-content">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            <p class="text-choose">Choose to Display</p>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

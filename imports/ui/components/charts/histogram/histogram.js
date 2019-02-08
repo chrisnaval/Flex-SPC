@@ -10,6 +10,10 @@ import { HistogramData } from '/imports/api/collections/histogramData/histogramD
 // Global Variable(s) and Function(s)
 var histogramChart = anychart.column();
 
+/*
+ * Creates Histogram Chart
+ * @param data
+*/
 function createHistogram(data) {
     var series = histogramChart.column(data);
     

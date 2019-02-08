@@ -15,9 +15,6 @@ Template.Role_create.onCreated(function () {
     this.reactive = new ReactiveDict();
 
     this.reactive.set({
-        showAdminModule: true,
-        showUserModule: false,
-        showRadioButtons: false,
         rolePermission: [],
     });
 
@@ -38,9 +35,6 @@ Template.Role_update.onCreated(function () {
 
     this.reactive.set('roleId', FlowRouter.getParam('_id'));
     this.reactive.set({
-        showAdminModule: true,
-        showUserModule: false,
-        showRadioButtons: false,
         rolePermission: [],
         moduleSelected: ''
     });
@@ -76,17 +70,6 @@ Template.Role_create.onRendered(function () {
         radioElement[i].checked = true;
         radioElement[i].setAttribute('disabled', true);
     }
-
-     // Autorun
-     this.autorun(function() {
-        Meteor.subscribe('appModules.all', function() {
-            Session.set('appModules', AppModules.find({
-                type: {
-                    $eq: 'admin'
-                }
-            }).fetch());
-        });
-    });
 });
 
 Template.Role_update.onRendered(function () {
@@ -98,27 +81,6 @@ Template.Role_update.onRendered(function () {
         radioElement[i].checked = true;
         radioElement[i].setAttribute('disabled', true);
     }
-
-     // Autorun
-     this.autorun(function() {
-        Meteor.subscribe('rolePermissions.all');
-        
-        var rolePermission = RolePermissions.findOne({
-            _id: Template.instance().reactive.get('roleId')
-        });
-
-        if(rolePermission) {
-            var roleType = rolePermission.role.type;
-        }
-
-        Meteor.subscribe('appModules.all', function() {
-            Session.set('appModules', AppModules.find({
-                type: {
-                    $eq: roleType
-                }
-            }).fetch());
-        });
-    });
 });
 //helpers
 Template.Role_create.helpers({

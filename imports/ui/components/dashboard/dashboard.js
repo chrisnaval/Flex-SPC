@@ -1,8 +1,5 @@
 import './dashboard.html';
 
-//packages
-import { Session } from 'meteor/session'
-
 // Component(s)
 import '../../components/charts/candlestick/candlestick.js';
 import '../../components/charts/histogram/histogram.js';
@@ -13,17 +10,44 @@ import '../../components/charts/yield/yield.js';
 import '../../components/modals/modals.js';
 import '../alert-message/alert-message.js'
 
+Template.Dashboard.onCreated(function() {
+    this.reactive = new ReactiveDict();
+
+    this.reactive.set({
+        sectionValue: null,
+        section1: null,
+        section2: null,
+        section3: null,
+        section4: null,
+        section5: null,
+
+    });
+});
+
 Template.Dashboard.helpers({
-    chart() {
-        return Session.get('charts');
+    section1() {
+        return Template.instance().reactive.get('section1');
     },
-    remove() {
-        return Session.get('remove');
-    }
+    section2() {
+        return Template.instance().reactive.get('section2');
+    },
+    section3() {
+        return Template.instance().reactive.get('section3');   
+    },
+    section4() {
+        return Template.instance().reactive.get('section4');
+    },
+    section5() {
+        return Template.instance().reactive.get('section5');
+    },
 });
 
 Template.Dashboard.events({
-    'click .choose': function() {
+    'click .choose': function(event) {
+        var element = event.currentTarget;
+        var dataValue = element.getAttribute('data-value');
+        Template.instance().reactive.set('sectionValue', dataValue);
+
         var modal = document.getElementById('formModal');
         modal.style.display = 'block';
     },
@@ -38,12 +62,12 @@ Template.Dashboard.events({
         target.classList.add('selected');
     },
     'click #removeGraph': function() {
-        Session.set('remove', false);
-        var choose= document.getElementById('choose');
-        choose.style.display = "block";
+        Session.set('charts', null); 
     },
     'click .select-graph': function(event) {
         event.preventDefault();
+        var instance = Template.instance();
+
         var data = document.getElementsByClassName("selected");
         var alt = data[0].getElementsByClassName("sm-img")[0].getAttribute("alt");
         var img = document.getElementsByClassName('image-content');
@@ -56,32 +80,40 @@ Template.Dashboard.events({
 
         switch(alt) {
             case 'Xbar':
-                Session.set('charts', alt); 
-                Session.set('remove', true);
+                instance.reactive.set('charts', alt);
                 break;
             case 'Candlestick':
-                Session.set('charts', alt);
-                Session.set('remove', true);
+                instance.reactive.set('charts', alt);
                 break;
             case 'Range':
-                Session.set('charts', alt);
-                Session.set('remove', true);
+                instance.reactive.set('charts', alt);
                 break;
             case 'Histogram':
-                Session.set('charts', alt);
-                Session.set('remove', true);
+                instance.reactive.set('charts', alt);
                 break;
             case 'Yield':
-                Session.set('charts', alt);
-                Session.set('remove', true);
+                instance.reactive.set('charts', alt);
                 break;
             case 'Pareto':
-                Session.set('charts', alt);
-                Session.set('remove', true);
+                instance.reactive.set('charts', alt);
                 break;
         }
+
+        var charts = instance.reactive.get('charts');
+        var section = instance.reactive.get('sectionValue');
+        var sectionElement = 'choose-'+section;
+
+        if(section === 'section1') {
+            Template.instance().reactive.set('section1', charts);
+        } else if(section === 'section2') {
+            Template.instance().reactive.set('section2', charts);
+        } else if(section === 'section3') {
+            Template.instance().reactive.set('section3', charts);
+        } else if(section === 'section4') {
+            Template.instance().reactive.set('section4', charts);
+        } else if(section === 'section5') {
+            Template.instance().reactive.set('section5', charts);
+        }
         
-        var choose = document.getElementById('choose');
-        choose.style.display = "none";
     },
 });

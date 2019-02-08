@@ -1,10 +1,10 @@
 import './xbar.html';
 
-//Meteor Packages
-import { Session } from 'meteor/session';
-
-//global function and variables
-function test(data) {
+/*
+ * Creates XBar Chart
+ * @param data
+*/
+function createXbar(data) {
     var xbarChart = AmCharts.makeChart("linechart", {
         "type": "serial",
         "theme": "light",
@@ -25,8 +25,19 @@ function test(data) {
                 "lineColor": "#FFCC00",
                 "inside": true,
                 "lineAlpha": 1,
-                "value": 1300,
-                "toValue": 1200
+                "value": 1400,//upper
+            },
+            {
+                "lineColor": "#FFCC00",
+                "inside": true,
+                "lineAlpha": 1,
+                "value": 1300,//median
+            },
+            {
+                "lineColor": "#FFCC00",
+                "inside": true,
+                "lineAlpha": 1,
+                "value": 1200,//lower
             }],
         }],
         "graphs": [{
@@ -98,8 +109,12 @@ Template.Xbar.onCreated(function () {
         Session.set('chartData', chartData);
 });
 
+Template.Xbar.helpers({
+
+});
 //onrendered
 Template.Xbar.onRendered(function () {
+    // Session.get('xBarData')
     var chartData = Session.get('chartData');
-    test(chartData);
+    createXbar(chartData);//draw graph
 });
