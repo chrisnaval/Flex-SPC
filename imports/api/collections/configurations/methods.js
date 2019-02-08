@@ -28,62 +28,69 @@ Meteor.methods({
                 throw new Meteor.Error('error', error.error);
             } else {
                 var configuration = Configurations.findOne({ _id: configId });
-                var perSampleTestResults = PerItemTestResults.find({ 'product.name': configuration.product.name }, {
+                var sampleSize = configuration.sampleSize;
+                var perSampleTestResults = PerItemTestResults.find({ 
+                    'product.name': configuration.product.name,
+                }, {
                     sort: {
                         measurement: 1
-                    }, limit: configuration.sampleSize, 
+                    }, limit: sampleSize, 
                 }).fetch();
-                var measurements = []; // array of measurement from perSampleTestResult
 
+                var measurements = []; // Array of measurements from perSampleTestResults
+                // 
                 for(var i = 0; i < perSampleTestResults.length; i++) {
                     var perSampleTestResult = perSampleTestResults[i];
                     var perSampleMeasurement = perSampleTestResult.measurement;
 
                     measurements.push(perSampleMeasurement);
-                };
+                }
+
+                // Get the length of the measurements array
+                var measurementsLength = measurements.length;
+
+                // Calculate the minimum and maximum of the perSampleTestResults
                 var maximum = Math.max.apply(null, measurements);
                 var minimum = Math.min.apply(null, measurements);
 
+                // Calculation for the xBarResult
                 var xBar = 0;
-                var measurement = measurements;
-                for( var i = 0; i < measurement.length; i++ ) {
-                    xBar += parseInt( measurement[i] );
-                };
-
-                var xBarResult = xBar / measurement.length;
+                for(var i = 0; i < measurementsLength; i++) {
+                    xBar += parseInt(measurements[i]);
+                }
+                var xBarResult = xBar / measurementsLength;
+                // Calculate the Range
                 var range = maximum - minimum;
 
-                function median(measurements) {
-                    var median = 0,
-                    measurementsLength = measurements.length;
-                    if(measurementsLength % 2 === 0) {
-                        // average of two middle numbers on the measurement
-                        median = (measurements[measurementsLength / 2 - 1] + measurements[measurementsLength / 2]) / 2;
-                    } else {
-                        // middle number on measurement only
-                        median = measurements[(measurementsLength - 1) / 2];
-                    }
-                    return median;
-                };
+                // Calculate the Median
+                var median = 0;
+                if(measurementsLength % 2 === 0) {
+                    // Average of the two middle measurements
+                    median = (measurements[measurementsLength / 2 - 1] + measurements[measurementsLength / 2]) / 2;
+                } else {
+                    // Middle measurement only
+                    median = measurements[(measurementsLength - 1) / 2];
+                }
 
-                var sampleMeasurementsCount = measurements.length;
-                var fQIndex = Math.floor(sampleMeasurementsCount * 0.25);
-                var tQIndex = Math.floor(sampleMeasurementsCount * 0.75);
+                // Calculate the First Quartile and the Third Quartile of the measurements array
+                var fQIndex = Math.floor(measurementsLength * 0.25);
+                var tQIndex = Math.floor(measurementsLength * 0.75);
                 var firstQuartile = measurements[fQIndex];
                 var thirdQuartile = measurements[tQIndex];
 
-                var perItemTestResultData = {
+                var perSampleTestResultData = {
+                    sampleSize: sampleSize,
                     sampleItems: perSampleTestResults,
-                    sampleSize: configData.sampleSize,
-                    minimum: minimum,
-                    maximum: maximum,
                     xBarResult: xBarResult,
                     rChartResult: range,
-                    median: median(measurements),
+                    minimum: minimum,
                     firstQuartile: firstQuartile,
-                    thirdQuartile: thirdQuartile
+                    median: median,
+                    thirdQuartile: thirdQuartile,
+                    maximum: maximum,
                 };
-                Meteor.call('perSampleTestResults.insert', perItemTestResultData, function(error) {
+
+                Meteor.call('perSampleTestResults.insert', perSampleTestResultData, function(error) {
                     if(error) {
                         throw new Meteor.Error('error', error.error);
                     }
