@@ -17,7 +17,17 @@ import { PerSampleTestResults } from '/imports/api/collections/perSampleTestResu
 
 //global function and variables
 function formatData(data) {
+    var dataValue = [];
     
+    for(var i = 0; i < data.length; i++) {
+        dataList = {
+            date: data[i].createdAt,
+            visits: data[i].xBarResult
+        }
+        dataValue.push(dataList);
+    }
+    return dataValue;
+
 }
 
 Template.Reports_create.onCreated(function() {
@@ -114,6 +124,10 @@ Template.Reports_create.events({
         var modal = document.getElementById('configurationModal');
         var tr = document.getElementsByTagName('tr');
 
+        for(var i = 0; i < tr.length; i++) {
+            tr[i].classList.remove('selected');
+        }
+
         var xbar = Session.get('xbar');
         var histogram = Session.get('histogram');
         var candlestick = Session.get('candlestick');
@@ -135,15 +149,14 @@ Template.Reports_create.events({
             document.getElementById('tester-chart').value = productName +' = '+ sampleSize;
         }
 
-        for(var i = 0; i < tr.length; i++) {
-            tr[i].classList.remove('selected');
-         }
-
         var xbarValue = document.getElementById('xbar-chart').value;
         var rLineValue = document.getElementById('rLine-chart').value;
 
         if(xbarValue) {
-            Session.set('xBarData', PerSampleTestResults.find({}).fetch());
+            // Session.set('xBarData', PerSampleTestResults.find({}).fetch());
+            Meteor.subscribe('perSampleTestResults.all  ', function() {
+                Session.set('xBarData', formatData(PerSampleTestResults.find({}).fetch()));
+            });
         }
         if (rLineValue) {
             Session.set('rLineData', PerSampleTestResults.find({}).fetch());
