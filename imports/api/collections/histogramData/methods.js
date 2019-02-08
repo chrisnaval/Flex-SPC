@@ -3,25 +3,23 @@
 // Meteor Package(s)
 import { Meteor } from 'meteor/meteor';
 
-// Collection(s)
+// Mongo Collection(s)
 import { HistogramData } from './histogramData.js';
 
 Meteor.methods({
-    'histogramData.insert': function(histogramDatas) {
-
+    'histogramData.insertMany': function(histogramDataArray) {
         try {
-            histogramDatas.forEach(function(histogramDataArrays) {
-                histogramDataArrays.forEach(function(histogramData) {
+            histogramDataArray.forEach(function(histogramData) {
+                histogramData.forEach(function(perHistogramData) {
                     HistogramData.insert({
-                        bin: histogramData.bin,
-                        binRange: histogramData.binRange,
-                        binCount: histogramData.binCount,
-                        sampleItem: histogramData.sampleItem,
+                        bin: perHistogramData.bin,
+                        binRange: perHistogramData.binRange,
+                        binCount: perHistogramData.binCount,
+                        sampleItem: perHistogramData.sampleItem,
                         createdAt: new Date()
                     });
                 });
             });
-            
         } catch(error) {
             throw new Meteor.Error('error', error.error);
         }

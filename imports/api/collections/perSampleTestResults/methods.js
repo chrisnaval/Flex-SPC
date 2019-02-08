@@ -101,8 +101,8 @@ Meteor.methods({
                         }
                     }
                     
-                    // Call the method to insert the reducedDataPerMinWithCount into histogramData
-                    Meteor.call('histogramData.insert', reducedDataPerMinWithCount, function(error) {
+                    // Call the method to insert the array of reducedDataPerMinWithCount into histogramData
+                    Meteor.call('histogramData.insertMany', reducedDataPerMinWithCount, function(error) {
                         if(error) {
                             throw new Meteor.Error('error', error.error);
                         }
