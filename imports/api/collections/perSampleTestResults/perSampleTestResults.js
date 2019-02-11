@@ -6,8 +6,8 @@ export const PerSampleTestResults = new Mongo.Collection('perSampleTestResults')
 
 // Schema
 PerSampleTestResults.schema = new SimpleSchema({
-	sampleSize: {
-		type: Number
+	configuration: {
+		type: Object
 	},
 	sampleItems: {
 		type: Array

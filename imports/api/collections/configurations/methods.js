@@ -15,10 +15,13 @@ Meteor.methods({
         // Validation of Data from the Client using the Collection's Schema
         Configurations.schema.validate(configData);
 
+        var actualSize = 0;
+
         Configurations.insert({
             configuredBy: configData.configuredBy,
             product: configData.product,
             sampleSize: configData.sampleSize,
+            actualSize: (actualSize) ? actualSize : 0,
             tester: configData.tester,
             parameter: configData.parameter,
             controlLimit: configData.controlLimit,
@@ -50,10 +53,10 @@ Meteor.methods({
             throw new Meteor.Error('error', error.error);
         }
     },
-    'configurations.calculatePerSample': function(configData) {
-        var sampleSize = configData.sampleSize;
+    'configurations.calculatePerSample': function(configuration) {
+        var sampleSize = configuration.sampleSize;
         var perSampleTestResults = PerItemTestResults.find({ 
-            'product.name': configData.product.name,
+            'product.name': configuration.product.name,
         }, {
             sort: {
                 measurement: 1
@@ -61,7 +64,7 @@ Meteor.methods({
         }).fetch();
 
         var perSampleTestResultData = calculateData(perSampleTestResults);
-        perSampleTestResultData.sampleSize = sampleSize;
+        perSampleTestResultData.configuration = configuration;
 
         // Call the method to insert the perSampleTestResultData
         Meteor.call('perSampleTestResults.insert', perSampleTestResultData, function(error) {
@@ -70,9 +73,9 @@ Meteor.methods({
             }
         });
     },
-    'configurations.calculateOverall': function(configData) {
+    'configurations.calculateOverall': function(configuration) {
         var overallItemTestResults = PerItemTestResults.find({ 
-            'product.name': configData.product.name,
+            'product.name': configuration.product.name,
         }, {
             sort: {
                 measurement: 1

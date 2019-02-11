@@ -10,10 +10,10 @@ Meteor.methods({
     'perSampleTestResults.insert': function(perSampleTestResultData) {
         try {
             PerSampleTestResults.insert({
-                sampleSize: perSampleTestResultData.sampleSize,
+                configuration: perSampleTestResultData.configuration,
                 sampleItems: perSampleTestResultData.items,
                 xBarResult: perSampleTestResultData.xBarResult,
-                rChartResult: perSampleTestResultData.range,
+                rChartResult: perSampleTestResultData.rChartResult,
                 minimum: perSampleTestResultData.minimum,
                 firstQuartile: perSampleTestResultData.firstQuartile,
                 median: perSampleTestResultData.median,
