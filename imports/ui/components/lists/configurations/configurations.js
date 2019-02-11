@@ -9,14 +9,14 @@ Template.Configurations_list.onCreated(function() {
 });
 
 Template.Configurations_list.helpers({
-	config() {
+	configurations() {
 		if(Meteor.user()) {
 			return Configurations.find({
-				deletedAt: null,
-				'configuredBy.emailAddress': Meteor.user().emails[0].address,
-			});
+                'configuredBy._id': Meteor.userId(),
+                deletedAt: null
+			}).fetch();
 		}
-	},
+	}
 });
 
 Template.Configurations_list.events({
@@ -47,5 +47,5 @@ Template.Configurations_list.events({
 		
 		var modal = document.getElementById('deleteModal');
 		modal.style.display = 'none';
-	},
+	}
 });

@@ -2,7 +2,7 @@
 
 // Identifies the current route according to its name provided for
 Template.registerHelper('currentRouteIs', function(route) { 
-	return FlowRouter.current().route.name == route; 
+	return FlowRouter.current().route.name == route;
 });
 // Date Format
 Template.registerHelper('formatDate', function(date) {

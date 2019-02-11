@@ -9,23 +9,6 @@ Template.Sidebar.helpers({
 
 // Template Events
 Template.Sidebar.events({
-    'click #logout-user': function(event) {
-        event.preventDefault();
-        
-        Meteor.logout(function(error) {
-	        if(error) {
-	            throw new Meteor.Error("Log out failed!");
-	        } else {
-	        	FlowRouter.go('/login');
-	        }
-    	});
-    },
-    'click #change-pass': function(event) {
-        event.preventDefault();
-
-        var modal = document.getElementById('change-password');
-		modal.style.display = 'block';
-    },
     'click .user-info': function(event) {
         event.preventDefault();
 
@@ -47,5 +30,32 @@ Template.Sidebar.events({
                 dropdown.style.display = 'block';
             }
         }   
+    },
+    'click #change-pass': function(event) {
+        event.preventDefault();
+
+        var modal = document.getElementById('change-password');
+		modal.style.display = 'block';
+    },
+    'click #logout-user': function(event) {
+        event.preventDefault();
+        
+        Meteor.logout(function(error) {
+	        if(error) {
+	            throw new Meteor.Error("Log out failed!");
+	        } else {
+	        	FlowRouter.go('/login');
+	        }
+    	});
+    },
+    'click .menu-item': function(event) {
+        var elements = document.querySelector('.active');
+
+        if(elements !== null) {
+            elements.classList.remove('active');
+            elements.classList.add('inactive');
+        }
+
+        event.target.parentElement.classList.add('active');
     }
 });
