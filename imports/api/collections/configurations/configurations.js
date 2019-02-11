@@ -33,6 +33,9 @@ Configurations.schema = new SimpleSchema({
 	sampleSize: {
 		type: Number
 	},
+	actualSize: {
+		type: Number
+	},
 	tester: {
 		type: Object
 	},

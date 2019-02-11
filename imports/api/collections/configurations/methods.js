@@ -15,13 +15,28 @@ Meteor.methods({
         // Validation of Data from the Client using the Collection's Schema
         Configurations.schema.validate(configData);
 
-        var actualSize = 0;
+        // Validation for Sample Size
+        var sampleSize = configData.sampleSize;
+        var actualSize = PerItemTestResults.find({ 
+            'product.name': configData.product.name,
+            'testResults': { 
+                $elemMatch: {
+                    'tester.name': configData.tester.name,
+                    'parameter.name': configData.parameter.name
+                },
+            }
+        }).count();
+
+        // Validation for Unique Configuration
+        var configuration = Configurations.find({
+            // Provide filters to all necessary fields...
+        });
 
         Configurations.insert({
             configuredBy: configData.configuredBy,
             product: configData.product,
-            sampleSize: configData.sampleSize,
-            actualSize: (actualSize) ? actualSize : 0,
+            sampleSize: sampleSize,
+            actualSize: actualSize,
             tester: configData.tester,
             parameter: configData.parameter,
             controlLimit: configData.controlLimit,
@@ -57,6 +72,12 @@ Meteor.methods({
         var sampleSize = configuration.sampleSize;
         var perSampleTestResults = PerItemTestResults.find({ 
             'product.name': configuration.product.name,
+            'testResults': { 
+                $elemMatch: {
+                    'tester.name': configuration.tester.name,
+                    'parameter.name': configuration.parameter.name
+                },
+            }
         }, {
             sort: {
                 measurement: 1
@@ -76,6 +97,12 @@ Meteor.methods({
     'configurations.calculateOverall': function(configuration) {
         var overallItemTestResults = PerItemTestResults.find({ 
             'product.name': configuration.product.name,
+            'testResults': { 
+                $elemMatch: {
+                    'tester.name': configuration.tester.name,
+                    'parameter.name': configuration.parameter.name
+                },
+            }
         }, {
             sort: {
                 measurement: 1

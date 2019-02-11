@@ -121,7 +121,7 @@ Template.Configuration_create.events({
             if(error) {
                 Session.set('failure', error.reason);
             } else {
-                FlowRouter.go('/');
+                FlowRouter.go('/configurations-list');
                 Session.set('success', 'Successfully Created');
             }
         });
