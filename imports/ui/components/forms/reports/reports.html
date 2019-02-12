@@ -2,13 +2,17 @@
     <div class="configuration-section">
         <div class="wrap">
             <div class="card">
+                <div class="card-header form-title">
+                    <span style="font-size:15px;">Histogram</span>
+                </div>
                 <div class="card-body">
                     <div class="forms">
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label>Histogram</label>
+                                    <label>Display by</label>
                                     <select class="form-control" name="chartCategory" id="histogram-Category">
+                                        <option value="" disabled selected>-- Select Category --</option>
                                         <option value="overall">Overall</option>
                                         <option value="sample">Per Sample</option>
                                     </select>
@@ -17,11 +21,7 @@
                             <div class="col-4"></div>
                             <div class="col-4">
                                 <br>
-                                <div class="form-group" id="histogram-div" style="float:left;display: none;">
-                                    <input type="text" class="form-control lookup" name="histogram" id="histogram-chart"
-                                        disabled>
-                                    <a href="" class="form-choose choose-histogram"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                                </div>
+                                <a href="javascript:void(0)" class="reports" id="reports-histogram">selected configuration</a>
                             </div>
                         </div>
                     </div>
@@ -31,13 +31,17 @@
                 </div>
             </div>
             <div class="card">
+                <div class="card-header form-title">
+                    <span style="font-size:15px;">Candlestick</span>
+                </div>
                 <div class="card-body">
                     <div class="forms">
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label>Candlestick</label>
+                                    <label>Display by</label>
                                     <select class="form-control chartCategory" name="chartCategory" id="candlestick-Category">
+                                        <option value="" disabled selected>-- Select Category --</option>
                                         <option value="overall">Overall</option>
                                         <option value="sample">Per Sample</option>
                                     </select>
@@ -45,12 +49,7 @@
                             </div>
                             <div class="col-4"></div>
                             <div class="col-4">
-                                <div class="form-group" id="candlestick-div" style="float:left;display: none;">
-                                    <br>
-                                    <input type="text" class="form-control lookup" name="candlestick" id="candlestick-chart"
-                                        disabled>
-                                    <a href="" class="form-choose choose-candlestick"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                                </div>
+                                <a href="javascript:void(0)" class="reports" id="reports-candlestick">selected configuration</a>
                             </div>
                         </div>
                     </div>
@@ -60,13 +59,17 @@
                 </div>
             </div>
             <div class="card">
+                <div class="card-header form-title">
+                    <span style="font-size:15px;">Xbar</span>
+                </div>
                 <div class="card-body">
                     <div class="forms">
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label>Xbar</label>
+                                    <label>Display by</label>
                                     <select class="form-control" name="chartCategory" id="xbar-category">
+                                        <option value="" disabled selected>-- Select Category --</option>
                                         <option value="overall">Overall</option>
                                         <option value="sample">Per Sample</option>
                                     </select>
@@ -74,12 +77,7 @@
                             </div>
                             <div class="col-4"></div>
                             <div class="col-4">
-                                <div class="form-group" id="xbar-div" style="float:left;display:none;">
-                                    <br>
-                                    <input type="text" class="form-control lookup" name="xbar" id="xbar-chart"
-                                        disabled>
-                                    <a href="" class="form-choose choose-Xbar"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                                </div>
+                                <a href="javascript:void(0)" class="reports" id="reports-xbar">selected configuration</a>
                             </div>
                         </div>
                     </div>
@@ -89,13 +87,17 @@
                 </div>
             </div>
             <div class="card">
+                <div class="card-header form-title">
+                    <span style="font-size:15px;">R Line</span>
+                </div>
                 <div class="card-body">
                     <div class="forms">
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label>R Line</label>
+                                    <label>Display by</label>
                                     <select class="form-control" name="chartCategory" id="rLine-category">
+                                        <option value="" disabled selected>-- Select Category --</option>
                                         <option value="overall">Overall</option>
                                         <option value="sample">Per Sample</option>
                                     </select>
@@ -103,12 +105,7 @@
                             </div>
                             <div class="col-4"></div>
                             <div class="col-4">
-                                <div class="form-group" id="rLine-div" style="float:left;display:none;">
-                                    <br>
-                                    <input type="text" class="form-control lookup" name="rLine" id="rLine-chart"
-                                        disabled>
-                                    <a href="" class="form-choose choose-rLine"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                                </div>
+                                <a href="javascript:void(0)" class="reports" id="reports-rLine">selected configuration</a>
                             </div>
                         </div>
                     </div>
@@ -118,13 +115,17 @@
                 </div>
             </div>
             <div class="card">
+                <div class="card-header form-title">
+                    <span style="font-size:15px;">Yield</span>
+                </div>
                 <div class="card-body">
                     <div class="forms">
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label>Yield</label>
+                                    <label>Display by</label>
                                     <select class="form-control" name="chartCategory" id="yield-category">
+                                        <option value="" disabled selected>-- Select Category --</option>
                                         <option value="overall">Overall</option>
                                         <option value="sample">Per Sample</option>
                                     </select>
@@ -132,12 +133,7 @@
                             </div>
                             <div class="col-4"></div>
                             <div class="col-4">
-                                <div class="form-group" id="yield-div" style="float:left;display:none;">
-                                    <br>
-                                    <input type="text" class="form-control lookup" name="yield" id="yield-chart"
-                                        disabled>
-                                    <a href="" class="form-choose choose-yield"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                                </div>
+                                <a href="javascript:void(0)" class="reports" id="reports-yield">selected configuration</a>
                             </div>
                         </div>
                     </div>
@@ -147,13 +143,17 @@
                 </div>
             </div>
             <div class="card">
+                <div class="card-header form-title">
+                    <span style="font-size:15px;">Tester</span>
+                </div>
                 <div class="card-body">
                     <div class="forms">
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label>Tester</label>
+                                    <label>Display by</label>
                                     <select class="form-control" name="chartCategory" id="tester-category">
+                                        <option value="" disabled selected>-- Select Category --</option>
                                         <option value="overall">Overall</option>
                                         <option value="sample">Per Sample</option>
                                     </select>
@@ -161,12 +161,7 @@
                             </div>
                             <div class="col-4"></div>
                             <div class="col-4">
-                                <div class="form-group" id="tester-div" style="float:left;display:none;">
-                                    <br>
-                                    <input type="text" class="form-control lookup" name="tester" id="tester-chart"
-                                        disabled>
-                                    <a href="" class="form-choose choose-tester"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                                </div>
+                                <a href="javascript:void(0)" class="reports" id="reports-tester">selected configuration</a>
                             </div>
                         </div>
                     </div>

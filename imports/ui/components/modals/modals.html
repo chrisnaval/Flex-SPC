@@ -8,17 +8,19 @@
             <!-- <form class="change-pass" id="change-pass"> -->
                 <div class="modal-body" style="height: 400px;">
                     <div class="modal-form">
-                        <div class="form-group">
-                            <label>Old Password</label>
-                            <input type="password" class="form-control" id="oldPassword" name="oldPassword">
-                        </div>
-                        <div class="form-group">
-                            <label>New Password</label>
-                            <input type="password" class="form-control" id="newPassword" name="newPassword">
-                        </div>
-                        <div class="form-group">
-                            <label>Confirm New Password</label>
-                            <input type="password" class="form-control" id="changePassword" name="changePassword">
+                        <div class="forms">
+                            <div class="form-group">
+                                <label>Old Password</label>
+                                <input type="password" class="form-control" id="oldPassword" name="oldPassword">
+                            </div>
+                            <div class="form-group">
+                                <label>New Password</label>
+                                <input type="password" class="form-control" id="newPassword" name="newPassword">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm New Password</label>
+                                <input type="password" class="form-control" id="changePassword" name="changePassword">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -42,7 +44,11 @@
                     <thead>
                         <tr>
                             <th rowspan="2" style="border-right: 1px solid #ddd;">Product Name</th>
-                            <th rowspan="2" style="border-right: 1px solid #ddd;">Sample Size</th>
+                            <th rowspan="2" style="border-right: 1px solid #ddd;">Actual Size</th>
+                            {{#if overAll}}
+                            <th rowspan="2" style="border-right: 1px solid #ddd;">Tester</th>
+                            <th rowspan="2" style="border-right: 1px solid #ddd;">Parameter</th>
+                            {{/if}}
                             <th colspan="2" style="border-right: 1px solid #ddd;">Control Limit</th>
                             <th colspan="2" style="border-right: 1px solid #ddd;">Spec Limit</th>
                         </tr>
@@ -56,8 +62,12 @@
                     <tbody>
                         {{#each configuration}}
                         <tr>
-                            <td class="productName" data-id="_id">{{product.name}}</td>
+                            <td class="productName" data-id="{{_id}}">{{product.name}}</td>
                             <td class="sampleSize">{{sampleSize}}</td>
+                            {{#if overAll}}
+                            <td class="upperControlLimit">{{tester.name}}</td>
+                            <td class="upperControlLimit">{{parameter.name}}</td>
+                            {{/if}}
                             <td class="upperControlLimit">{{controlLimit.upperControlLimit}}</td>
                             <td class="lowerControlLimit">{{controlLimit.lowerControlLimit}}</td>
                             <td class="upperSpecLimit">{{specLimit.upperSpecLimit}}</td>

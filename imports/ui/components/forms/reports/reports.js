@@ -63,48 +63,6 @@ Template.Reports_create.helpers({
 });
 
 Template.Reports_create.events({
-    'click .choose-histogram': function(event) {
-        Session.keys = {}
-        event.preventDefault();
-        var modal = document.getElementById('configurationModal');
-        modal.style.display = 'block';
-        Session.set('histogram', true);
-    },
-    'click .choose-Xbar': function(event) {
-        Session.keys = {}
-        event.preventDefault();
-        var modal = document.getElementById('configurationModal');
-        modal.style.display = 'block';
-        Session.set('xbar', true);
-    },
-    'click .choose-candlestick': function(event) {
-        Session.keys = {}
-        event.preventDefault();
-        var modal = document.getElementById('configurationModal');
-        modal.style.display = 'block';
-        Session.set('candlestick', true);
-    },
-    'click .choose-rLine': function(event) {
-        Session.keys = {}
-        event.preventDefault();
-        var modal = document.getElementById('configurationModal');
-        modal.style.display = 'block';
-        Session.set('rLine', true);
-    },
-    'click .choose-yield': function(event) {
-        Session.keys = {}
-        event.preventDefault();
-        var modal = document.getElementById('configurationModal');
-        modal.style.display = 'block';
-        Session.set('yield', true);
-    },
-    'click .choose-tester': function(event) {
-        Session.keys = {}
-        event.preventDefault();
-        var modal = document.getElementById('configurationModal');
-        modal.style.display = 'block';
-        Session.set('tester', true);
-    },
     'click tr': function(event) {
         event.preventDefault();
         var tr = document.getElementsByTagName('tr');
@@ -119,8 +77,7 @@ Template.Reports_create.events({
     'click .select-configuration': function() {
         event.preventDefault();
         var data = document.getElementsByClassName('selected');
-        var productName = data[0].getElementsByClassName('productName')[0].innerText;
-        var sampleSize = data[0].getElementsByClassName('sampleSize')[0].innerText;
+        var productId = data[0].getElementsByClassName('productName')[0].getAttribute('data-id');
         var modal = document.getElementById('configurationModal');
         var tr = document.getElementsByTagName('tr');
 
@@ -134,95 +91,145 @@ Template.Reports_create.events({
         var rLine = Session.get('rLine');
         var yield = Session.get('yield');
         var tester = Session.get('tester');
+        var category = Session.get('category');
 
         if(histogram) {
-            document.getElementById('histogram-chart').value = productName +' = '+ sampleSize;
-        } else if(xbar) {
-            document.getElementById('xbar-chart').value = productName +' = '+ sampleSize;
-        } else if(candlestick) {
-            document.getElementById('candlestick-chart').value = productName +' = '+ sampleSize;
-        } else if(rLine) {
-            document.getElementById('rLine-chart').value = productName +' = '+ sampleSize;
-        } else if(yield) {
-            document.getElementById('yield-chart').value = productName +' = '+ sampleSize;
-        } else if(tester) {
-            document.getElementById('tester-chart').value = productName +' = '+ sampleSize;
+            document.getElementById('reports-histogram').setAttribute('data-id', productId);
+            document.getElementById('reports-histogram').setAttribute('data-cat', category);
+        }
+        if(xbar) {
+            document.getElementById('reports-xbar').setAttribute('data-id', productId);
+            document.getElementById('reports-xbar').setAttribute('data-cat', category);
+        }
+        if(candlestick) {
+            document.getElementById('reports-candlestick').setAttribute('data-id', productId);
+            document.getElementById('reports-candlestick').setAttribute('data-cat', category);
+        }
+        if(rLine) {
+            document.getElementById('reports-rLine').setAttribute('data-id', productId);
+            document.getElementById('reports-rLine').setAttribute('data-cat', category);
+        }
+        if(yield) {
+            document.getElementById('reports-yield').setAttribute('data-id', productId);
+            document.getElementById('reports-yield').setAttribute('data-cat', category);
+        }
+        if(tester) {
+            document.getElementById('reports-tester').setAttribute('data-id', productId);
+            document.getElementById('reports-tester').setAttribute('data-cat', category);
         }
 
-        var xbarValue = document.getElementById('xbar-chart').value;
-        var rLineValue = document.getElementById('rLine-chart').value;
+        var xBarConfigId = document.getElementById('reports-xbar').getAttribute('data-id');
+        var xBarConfigCategory = document.getElementById('reports-xbar').getAttribute('data-cat');
 
-        if(xbarValue) {
-            // Session.set('xBarData', PerSampleTestResults.find({}).fetch());
-            Meteor.subscribe('perSampleTestResults.all  ', function() {
-                Session.set('xBarData', formatData(PerSampleTestResults.find({}).fetch()));
-            });
-        }
-        if (rLineValue) {
-            Session.set('rLineData', PerSampleTestResults.find({}).fetch());
+        if(xBarConfigId != null && xBarConfigCategory === 'sample') {
+            //statement
+        } else if (xBarConfigId != null && xBarConfigCategory === 'overall') {
+            //statement
         }
 
         modal.style.display = 'none';
     },
+    'click select': function() {
+        Session.set('dataId','');
+    },
     'change #xbar-category': function() {
+        Session.keys = {}
         var element = document.getElementById('xbar-category');
         var chartCategory = element.options[element.selectedIndex].value;
+        var modal = document.getElementById('configurationModal');
+        Session.set('xbar', true);
 
         if(chartCategory === 'sample') {
-            document.getElementById('xbar-div').style.display = 'block';
+            Session.set('category', 'sample');
         } else {
-            document.getElementById('xbar-div').style.display = 'none';
-            document.getElementById('xbar-chart').value = '';
-            Session.set('xBarData', PerItemTestResults.find({}).fetch());
+            Session.set('category', 'overall');
         }
+
+        modal.style.display = 'block';
     },
     'change #histogram-Category': function() {
+        Session.keys = {}
         var element = document.getElementById('histogram-Category');
         var chartCategory = element.options[element.selectedIndex].value;
+        var modal = document.getElementById('configurationModal');
+        Session.set('histogram', true);
+
         if(chartCategory === 'sample') {
-            document.getElementById('histogram-div').style.display = 'block';
+            Session.set('category', 'sample');
         } else {
-            document.getElementById('histogram-div').style.display = 'none';
+            Session.set('category', 'overall');
         }
+
+        modal.style.display = 'block';
     },
     'change #candlestick-Category': function() {
+        Session.keys = {}
         var element = document.getElementById('candlestick-Category');
         var chartCategory = element.options[element.selectedIndex].value;
+        var modal = document.getElementById('configurationModal');
+        Session.set('candlestick', true);
+
         if(chartCategory === 'sample') {
-            document.getElementById('candlestick-div').style.display = 'block';
+            Session.set('category', 'sample');
         } else {
-            document.getElementById('candlestick-div').style.display = 'none';
+            Session.set('category', 'overall');
         }
+
+        modal.style.display = 'block';
     },
     'change #rLine-category': function() {
+        Session.keys = {}
         var element = document.getElementById('rLine-category');
         var chartCategory = element.options[element.selectedIndex].value;
+        var modal = document.getElementById('configurationModal');
+        Session.set('rLine', true);
+
         if(chartCategory === 'sample') {
-            document.getElementById('rLine-div').style.display = 'block';
+            Session.set('category', 'sample');
         } else {
-            document.getElementById('rLine-div').style.display = 'none';
-            document.getElementById('rLine-chart').value = '';
-            Session.set('rLineData', PerItemTestResults.find({}).fetch());
+            Session.set('category', 'overall');
         }
+
+        modal.style.display = 'block';
     },
     'change #yield-category': function() {
+        Session.keys = {}
         var element = document.getElementById('yield-category');
         var chartCategory = element.options[element.selectedIndex].value;
+        var modal = document.getElementById('configurationModal');
+        Session.set('yield', true);
+
         if(chartCategory === 'sample') {
-            document.getElementById('yield-div').style.display = 'block';
+            Session.set('category', 'sample');
         } else {
-            document.getElementById('yield-div').style.display = 'none';
-            document.getElementById('yield-chart').value = '';
+            Session.set('category', 'overall');
         }
+
+        modal.style.display = 'block';
     },
     'change #tester-category': function() {
+        Session.keys = {}
         var element = document.getElementById('tester-category');
         var chartCategory = element.options[element.selectedIndex].value;
+        var modal = document.getElementById('configurationModal');
+        Session.set('tester', true);
+
         if(chartCategory === 'sample') {
-            document.getElementById('tester-div').style.display = 'block';
+            Session.set('category', 'sample');
         } else {
-            document.getElementById('tester-div').style.display = 'none';
-            document.getElementById('tester-chart').value = '';
+            Session.set('category', 'overall');
         }
+
+        modal.style.display = 'block';
+    },
+    'click .reports': function(event) {
+        var target = event.target;
+        var modal = document.getElementById('configurationModal');
+        var elementId = target.getAttribute('data-id');
+        var elementCategory = target.getAttribute('data-cat');
+
+        Session.set('dataId', elementId);
+        Session.set('dataCategory', elementCategory);
+        modal.style.display = 'block';
     }
 });

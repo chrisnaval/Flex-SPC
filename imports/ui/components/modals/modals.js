@@ -1,8 +1,5 @@
 import './modals.html';
 
-// Meteor Package(s)
-import { Session } from 'meteor/session';
-
 // Mongo Collection(s)
 import { AppModules } from '/imports/api/collections/appModules/appModules.js';
 import { Configurations } from '/imports/api/collections/configurations/configurations.js';
@@ -14,25 +11,35 @@ import { Testers } from '/imports/api/collections/testers/testers.js';
 // Template Created
 //Configuration
 Template.Configuration.onCreated(function() {
-    Meteor.subscribe('configurations.all');
+    this.autorun(function() { 
+        Meteor.subscribe('configurations.all');
+    });
 });
 
 // Parameter
 Template.Parameter.onCreated(function() {
-    Meteor.subscribe('parameters.all');
+    this.autorun(function() { 
+        Meteor.subscribe('parameters.all');
+    });
 });
 // Product
 Template.Product.onCreated(function() {
-    Meteor.subscribe('products.all');
+    this.autorun(function() { 
+        Meteor.subscribe('products.all');
+    });
 });
 // Role_view
 Template.Role_view.onCreated(function () {
-    Meteor.subscribe('appModules.all');
-    Meteor.subscribe('rolePermissions.all');
+    this.autorun(function() { 
+        Meteor.subscribe('appModules.all');
+        Meteor.subscribe('rolePermissions.all');
+    });
 });
 // Tester
 Template.Tester.onCreated(function() {
-    Meteor.subscribe('testers.all');
+    this.autorun(function() { 
+        Meteor.subscribe('testers.all');
+    });
 });
 
 //template onrendered
@@ -43,11 +50,30 @@ Template.Role_view.onRendered(function() {
     }
 });
 
+Template.Configuration.onRendered(function() {
+
+})
+
 // Template Helpers
 //Configuration
 Template.Configuration.helpers({
     configuration() {
-        return Configurations.find({});
+        var reportsDataId = Session.get('dataId');
+        if(reportsDataId) {
+            return Configurations.find({
+                _id : reportsDataId
+            }).fetch();
+        } else {
+            return Configurations.find({}).fetch();
+        }
+    },
+    overAll() {
+        var categoryValue = Session.get('dataCategory');
+        if(categoryValue === 'overall') {
+            return true;
+        } else {
+            return false;
+        }
     }
 });
 

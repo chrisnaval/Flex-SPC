@@ -12,34 +12,59 @@
                             <div class="card-body">
                                 <div class="forms">
                                     <p id="error-msg" style="color: #F16362;"></p>
-                                    <div class="form-group">
-                                        <label>Product</label>
-                                        <input type="hidden" name="productId" id="product_id">
-                                        <input type="text" class="form-control lookup" name="product" id="product"
-                                            required>
-                                        <a href="" class="form-choose choose-product"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                                        {{> Product}}
+                                    <div class="row">
+                                        <div class="col-11">
+                                            <div class="form-group">
+                                                <label>Product</label>
+                                                <input type="hidden" name="productId" id="product_id">
+                                                <input type="text" class="form-control lookup" name="product" id="product"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                            <br>
+                                            <a href="" class="form-choose choose-product"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                                            {{> Product}}
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Sample Size</label>
-                                        <input type="number" class="form-control" name="sampleSize" required>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Sample Size</label>
+                                                <input type="number" class="form-control" name="sampleSize" required>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Tester</label>
-                                        <input type="hidden" name="testerId" id="tester_id">
-                                        <input type="text" class="form-control lookup" name="tester" id="tester"
-                                            required>
-                                        <a href="" class="form-choose choose-tester"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                                        {{> Tester}}
+                                    <div class="row">
+                                        <div class="col-11">
+                                            <div class="form-group">
+                                                <label>Tester</label>
+                                                <input type="hidden" name="testerId" id="tester_id">
+                                                <input type="text" class="form-control lookup" name="tester" id="tester"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                            <br>
+                                            <a href="" class="form-choose choose-tester"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                                            {{> Tester}}
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Parameter</label>
-                                        <input type="hidden" name="parameterId" id="parameter_id">
-                                        <input type="text" class="form-control lookup" name="parameter" id="parameter"
-                                            required>
-                                        <a href="javascript:void(0)" class="form-choose choose-parameter"><i class="fa fa-ellipsis-h"
-                                                aria-hidden="true"></i></a>
-                                        {{> Parameter}}
+                                    <div class="row">
+                                        <div class="col-11">
+                                            <div class="form-group">
+                                                <label>Parameter</label>
+                                                <input type="hidden" name="parameterId" id="parameter_id">
+                                                <input type="text" class="form-control lookup" name="parameter" id="parameter"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                            <br>
+                                            <a href="javascript:void(0)" class="form-choose choose-parameter"><i class="fa fa-ellipsis-h"
+                                                    aria-hidden="true"></i></a>
+                                            {{> Parameter}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

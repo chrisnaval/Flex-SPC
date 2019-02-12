@@ -304,9 +304,28 @@ tbody>tr:hover {
 .forms {
     margin-bottom: 20px;
 
+    p {
+        display: inline-block;
+    }
+
+    .form-choose {
+        margin-left: -24px;
+    }
+
+    .reports {
+        text-decoration: underline;
+        color: #e91e63;
+        margin-top: 13px;
+        display: block;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 8px;
+    }
+
+
     .form-group {
-        margin-bottom: 20px;
-    
+        margin-bottom: 15px;
+        
         .form-control {
             font-size: 13px;
             border-radius: 3px;
@@ -316,8 +335,6 @@ tbody>tr:hover {
             padding: 6px 12px;
             line-height: 1.42857143;
             border: 0;
-            float:left;
-            margin-bottom: 10px;
         }
         
         .form-control:focus {
@@ -325,10 +342,6 @@ tbody>tr:hover {
             box-shadow: none;
             transition-duration: .5s;
             outline: 0;
-        }
-    
-        .form-choose {
-            display: -webkit-box;
         }
     }
 }
@@ -458,6 +471,7 @@ tbody>tr:hover {
                         a {
                             text-decoration: none;
                             color: #7a878e;
+                            display: inline-block;
                         }
                         .selected {
                             background-color: #efeff3 !important;
@@ -615,3 +629,14 @@ a.float-add {
   .slider.round:before {
     border-radius: 50%;
   }
+
+//media queries 
+@media screen and (max-width: 768px) {
+    // .form-group {
+    //     .form-control {
+    //         display: inline-block;
+    //         width: auto;
+    //         vertical-align: middle;
+    //     }
+    // }
+}
