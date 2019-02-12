@@ -66,9 +66,7 @@ Meteor.methods({
                                 minimum: minimum,
                                 maximum: maximum,
                             },
-                            sampleItem: {
-                                measurement: measurements[i]
-                            },
+                            sampleItem: sampleItems[i],
                             minimum: minimum, // For grouping of data purposes
                         };
 

@@ -29,32 +29,54 @@ Meteor.methods({
 
         // Validation for Unique Configuration
         var configuration = Configurations.find({
-            // Provide filters to all necessary fields...
-        });
-
-        Configurations.insert({
-            configuredBy: configData.configuredBy,
-            product: configData.product,
-            sampleSize: sampleSize,
-            actualSize: actualSize,
-            tester: configData.tester,
-            parameter: configData.parameter,
-            controlLimit: configData.controlLimit,
-            specLimit: configData.specLimit,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            deletedAt: null,
-        }, function(error, configId) {
-            if(error) {
-                throw new Meteor.Error('error', error.error);
-            } else {
-                var configuration = Configurations.findOne({ _id: configId });
-                
-                // Call the configurations calculation methods
-                Meteor.call('configurations.calculatePerSample', configuration);
-                Meteor.call('configurations.calculateOverall', configuration);
+            'product.name': configData.product.name,
+            'tester.name': configData.tester.name,
+            'parameter.name': configData.parameter.name,
+            'controlLimit.upperControlLimit': configData.controlLimit.upperControlLimit,
+            'controlLimit.lowerControlLimit': configData.controlLimit.lowerControlLimit,
+            'specLimit.upperSpecLimit': configData.controlLimit.upperSpecLimit,
+            'specLimit.lowerSpecLimit': configData.controlLimit.lowerSpecLimit,
+        }, {
+            fields: {
+                'product.name': 1,
+                'tester.name': 1,
+                'parameter.name': 1,
+                'controlLimit.upperControlLimit': 1,
+                'controlLimit.lowerControlLimit': 1,
+                'specLimit.upperSpecLimit': 1,
+                'specLimit.lowerSpecLimit': 1
             }
-        });
+        }).fetch();
+
+        if(sampleSize > actualSize) {
+            throw new Meteor.Error('Sample-size', 'the sample size you provide is less than the actual size of our data, are you sure you want to continue this ?');
+        } else if(configuration.length != 0) {
+            throw new Meteor.Error('Unique-config', 'this Critical parameter is already existed in our record, please create new one');
+        } else {
+            Configurations.insert({
+                configuredBy: configData.configuredBy,
+                product: configData.product,
+                sampleSize: sampleSize,
+                actualSize: actualSize,
+                tester: configData.tester,
+                parameter: configData.parameter,
+                controlLimit: configData.controlLimit,
+                specLimit: configData.specLimit,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                deletedAt: null,
+            }, function(error, configId) {
+                if(error) {
+                    throw new Meteor.Error('error', error.error);
+                } else {
+                    var configuration = Configurations.findOne({ _id: configId });
+
+                    // Call the configurations calculation methods
+                    Meteor.call('configurations.calculatePerSample', configuration);
+                    Meteor.call('configurations.calculateOverall', configuration);
+                }
+            });
+        }
     },
     'configurations.remove': function(configId) {
         try {
@@ -111,6 +133,6 @@ Meteor.methods({
 
         var overallDataCalculation = calculateData(overallItemTestResults);
 
-        console.log(overallDataCalculation);
+        // console.log(overallDataCalculation);
     }
 });
