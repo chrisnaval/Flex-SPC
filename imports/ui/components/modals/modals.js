@@ -10,20 +10,20 @@ import { Testers } from '/imports/api/collections/testers/testers.js';
 
 // Template Created
 //Configuration
-Template.Configuration.onCreated(function() {
+Template.Configurations.onCreated(function() {
     this.autorun(function() { 
         Meteor.subscribe('configurations.all');
     });
 });
 
 // Parameter
-Template.Parameter.onCreated(function() {
+Template.Parameters.onCreated(function() {
     this.autorun(function() { 
         Meteor.subscribe('parameters.all');
     });
 });
 // Product
-Template.Product.onCreated(function() {
+Template.Products.onCreated(function() {
     this.autorun(function() { 
         Meteor.subscribe('products.all');
     });
@@ -36,7 +36,7 @@ Template.Role_view.onCreated(function () {
     });
 });
 // Tester
-Template.Tester.onCreated(function() {
+Template.Testers.onCreated(function() {
     this.autorun(function() { 
         Meteor.subscribe('testers.all');
     });
@@ -50,13 +50,13 @@ Template.Role_view.onRendered(function() {
     }
 });
 
-Template.Configuration.onRendered(function() {
+Template.Configurations.onRendered(function() {
 
 })
 
 // Template Helpers
 //Configuration
-Template.Configuration.helpers({
+Template.Configurations.helpers({
     configuration() {
         var reportsDataId = Session.get('dataId');
         if(reportsDataId) {
@@ -78,13 +78,13 @@ Template.Configuration.helpers({
 });
 
 // Parameter
-Template.Parameter.helpers({
+Template.Parameters.helpers({
     parameters() {
         return Parameters.find({});
     }
 });
 // Product
-Template.Product.helpers({
+Template.Products.helpers({
     products() {
         return Products.find({});
     }
@@ -130,7 +130,7 @@ Template.User_view.helpers({
     }
 });
 // Tester
-Template.Tester.helpers({
+Template.Testers.helpers({
     testers() {
 		return Testers.find({});
 	},
@@ -167,7 +167,7 @@ Template.Change_password.events({
     },
 });
 
-Template.Configuration.events({
+Template.Configurations.events({
     'click .cancel': function() {
         var modal = document.getElementById('configurationModal');
         var tr = document.getElementsByTagName('tr');
@@ -217,7 +217,7 @@ Template.Delete_modal.events({
 });
 
 // Parameter
-Template.Parameter.events({
+Template.Parameters.events({
     'click .cancel': function() {
         var modal = document.getElementById('parameterModal');
         var tr = document.getElementsByTagName('tr');
@@ -230,7 +230,7 @@ Template.Parameter.events({
     }
 });
 // Product
-Template.Product.events({
+Template.Products.events({
     'click .cancel': function() {
         var modal = document.getElementById('productModal');
         var tr = document.getElementsByTagName('tr');
@@ -299,7 +299,7 @@ Template.User_view.events({
     },
 });
 // Tester
-Template.Tester.events({
+Template.Testers.events({
     'click .cancel': function() {
         var modal = document.getElementById('testerModal');
         var tr = document.getElementsByTagName('tr');
