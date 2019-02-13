@@ -8,7 +8,6 @@ import { HistogramData } from './histogramData.js';
 
 Meteor.methods({
     'histogramData.insertMany': function(histogramDataArray) {
-        console.log(histogramDataArray);
         try {
             histogramDataArray.forEach(function(histogramData) {
                 histogramData.forEach(function(perHistogramData) {
