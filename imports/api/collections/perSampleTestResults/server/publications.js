@@ -6,6 +6,6 @@ import { Meteor } from 'meteor/meteor';
 // Mongo Collection(s)
 import { PerSampleTestResults } from '../perSampleTestResults.js';
 
-Meteor.publish('perSampleTestResults.all', function() {
-    return PerSampleTestResults.find({});
+Meteor.publish('perSampleTestResults.all', function(options) {
+    return PerSampleTestResults.find({}, options);
 });
