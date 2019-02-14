@@ -78,22 +78,22 @@ function createRline(data) {
 }
 
 Template.Range.onCreated(function() {
-    var chartData = [];
-    var firstDate = new Date();
-    firstDate.setDate(firstDate.getDate() - 5);
-   
-    var visits = 1200;
-    for(var i = 0; i < 1000; i++) {
-        var newDate = new Date(firstDate);
-        newDate.setDate(newDate.getDate() + i);
-        visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-        chartData.push({
-            date: newDate,
-            visits: visits
-        });
-    }
+        var chartData = [];
+        var firstDate = new Date();
+        firstDate.setDate(firstDate.getDate() - 5);
+    
+        var visits = 1200;
+        for(var i = 0; i < 1000; i++) {
+            var newDate = new Date(firstDate);
+            newDate.setDate(newDate.getDate() + i);
+            visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+            chartData.push({
+                date: newDate,
+                visits: visits
+            });
+        }
 
-    Session.set('chartData', chartData);
+        Session.set('chartData', chartData);
 });
 
 Template.Range.helpers({
@@ -101,7 +101,10 @@ Template.Range.helpers({
 });
 
 Template.Range.onRendered(function () {
-    // Session.get('rLineData')
-    var chartData = Session.get('chartData');
+    var chartData = Session.get('chartData')
     createRline(chartData);
+});
+
+Template.Range.events({
+
 });

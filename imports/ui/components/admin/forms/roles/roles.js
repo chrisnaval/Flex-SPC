@@ -3,9 +3,6 @@ import './roles.html';
 //component
 import '../../../alert-message/alert-message.js';
 
-//meteor packages
-import { Session } from 'meteor/session';
-
 // Collection(s)
 import { AppModules } from '/imports/api/collections/appModules/appModules.js';
 import { RolePermissions } from '/imports/api/collections/rolePermissions/rolePermissions.js';
@@ -64,8 +61,8 @@ Template.Role_update.onCreated(function () {
 //onrendered
 Template.Role_create.onRendered(function () {
     Session.keys = {}
-
     var radioElement = document.getElementsByClassName('functionName');
+    
     for (var i = 0; i < radioElement.length; i++) {
         radioElement[i].checked = true;
         radioElement[i].setAttribute('disabled', true);

@@ -12,7 +12,8 @@ import { PerItemTestResults } from '/imports/api/collections/perItemTestResults/
 
 Meteor.methods({
     'configurations.insert': function(configData) {
-        // Validation of Data from the Client using the Collection's Schema
+
+        // // Validation of Data from the Client using the Collection's Schema
         Configurations.schema.validate(configData);
 
         // Validation for Sample Size

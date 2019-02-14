@@ -114,7 +114,6 @@ Template.Xbar.helpers({
 });
 //onrendered
 Template.Xbar.onRendered(function () {
-    // Session.get('xBarData')
     var chartData = Session.get('chartData');
     createXbar(chartData);//draw graph
 });
