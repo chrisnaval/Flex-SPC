@@ -12,11 +12,13 @@ import { PerItemTestResults } from '/imports/api/collections/perItemTestResults/
 
 Meteor.methods({
     'configurations.insert': function(configData) {
-        // Validation of Data from the Client using the Collection's Schema
+
+        // // Validation of Data from the Client using the Collection's Schema
         Configurations.schema.validate(configData);
 
         // Validation for Sample Size
         var sampleSize = configData.sampleSize;
+        // var actualSize = 1000;
         var actualSize = PerItemTestResults.find({ 
             'product.name': configData.product.name,
             'testResults': { 
@@ -27,7 +29,7 @@ Meteor.methods({
             }
         }).count();
 
-        // Validation for Unique Configuration
+        // // // // // // // // // // // Validation for Unique Configuration
         var configuration = Configurations.find({
             'product.name': configData.product.name,
             'tester.name': configData.tester.name,
