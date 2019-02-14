@@ -31,6 +31,9 @@ import '../../api/collections/perSampleTestResults/server/publications.js';
 // Products
 import '../../api/collections/products/server/publications.js';
 
+// Reports
+import '../../api/appModules/reports/server/publications.js';
+
 // RolePermissions
 import '../../api/collections/rolePermissions/server/publications.js';
 

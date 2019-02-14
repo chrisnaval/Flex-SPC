@@ -13,10 +13,24 @@ import '../../alert-message/alert-message.js';
 
 // Mongo Collection(s)
 import { Configurations } from '/imports/api/collections/configurations/configurations.js';
+import { HistogramData } from '/imports/api/collections/histogramData/histogramData.js';
 import { PerItemTestResults } from '/imports/api/collections/perItemTestResults/perItemTestResults.js';
 import { PerSampleTestResults } from '/imports/api/collections/perSampleTestResults/perSampleTestResults.js';
 
 //global function and variables
+function histogramFormat(data) {
+    var dataValue = [];
+
+    for(var i = 0; i < data.length; i++) {
+        dataList = [
+            data[i].binRange.minimum + '-' + data[i].binRange.maximum,
+            data[i].binCount
+        ];
+        dataValue.push(dataList);
+    }
+    return dataValue;
+}
+
 function formatData(data) {
     var dataValue = [];
     
@@ -31,18 +45,32 @@ function formatData(data) {
         }
     }
     return dataValue;
-
 }
 
 Template.Reports_create.onCreated(function() {
+    // Histrogram over all and per sample
     this.autorun(function() {
         Meteor.subscribe('configurations.all');
         Meteor.subscribe('perSampleTestResults.all');
         var config = Configurations.findOne({});
         if(config) {
-            Meteor.subscribe('histogram.overAll', config._id);
-        }
+            // Meteor.subscribe('histogram.overAll', config._id);
+            Meteor.subscribe('histogram.perSample', config._id);
+        } 
+        // else if(config) {
+        //     Meteor.subscribe('histogram.perSample', config._id);
+        // }
+        
     });
+    // Histogram per sample
+    // this.autorun(function() {
+    //     Meteor.subscribe('configurations.all');
+    //     Meteor.subscribe('perSampleTestResults.all');
+    //     var config = Configurations.findOne({});
+    //     if(config) {
+    //         Meteor.subscribe('histogram.overAll', config._id);
+    //     }
+    // });
 });
 
 Template.Reports_create.onRendered(function() {
