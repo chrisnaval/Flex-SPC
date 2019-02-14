@@ -4,15 +4,13 @@
 import { Meteor } from 'meteor/meteor';
 
 // Mongo Collection(s)
-import { PerItemTestResults } from '../../collections/perItemTestResults/perItemTestResults.js';
-import { PerSampleTestResults } from '../../collections/perSampleTestResults/perSampleTestResults.js';
+import { HistogramData } from '/imports/api/collections/histogramData/histogramData.js';
+import { PerItemTestResults } from '/imports/api/collections/perItemTestResults/perItemTestResults.js';
 
-Meteor.publish('candlestickData.overtime', function() {
-    // return PerItemTestResults.find({});
+Meteor.publish('perItemTestResults.overall', function() {
+    return PerItemTestResults.find({});
 });
 
-Meteor.publish('histogramData.perSample', function(configData) {
-    // var perSampleTestResults = PerSampleTestResults.find({
-    //     'product.name': configData.product.name,
-    // }, { limit: configData.sampleSize }).fetch();
+Meteor.publish('histogramData.overall', function() {
+    return HistogramData.find({});
 });

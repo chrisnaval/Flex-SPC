@@ -4,6 +4,10 @@
 // Roles
 import '../../api/appModules/admin/roles/methods.js';
 
+// Application Modules (User Side)
+// Reports
+import '../../api/appModules/reports/server/publications.js';
+
 // Mongo Collection(s)
 // AppModules
 import '../../api/collections/appModules/server/publications.js';

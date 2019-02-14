@@ -1,5 +1,7 @@
 import './candlestick.html';
 
+import { calculateOverallItems } from '/lib/overall-calculator.js';
+
 // Meteor Packages
 import { Session } from 'meteor/session';
 
@@ -60,6 +62,13 @@ Template.Candlestick.onCreated(function() {
     ];
 
     Session.set('candlestickData', data);
+
+    this.autorun(() => {
+        this.subscribe('candlestickData.overtime', function(error, response) {
+            // var overallItems = calculateOverallItems();
+            // Session.set('overallItems', overallItems);
+        });
+    });
 });
 
 Template.Candlestick.onRendered(function() {
