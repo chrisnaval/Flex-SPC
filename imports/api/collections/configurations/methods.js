@@ -18,7 +18,6 @@ Meteor.methods({
 
         // Validation for Sample Size
         var sampleSize = configData.sampleSize;
-        // var actualSize = 1000;
         var actualSize = PerItemTestResults.find({ 
             'product.name': configData.product.name,
             'testResults': { 
@@ -29,7 +28,7 @@ Meteor.methods({
             }
         }).count();
 
-        // // // // // // // // // // // Validation for Unique Configuration
+        // Validation for Unique Configuration
         var configuration = Configurations.find({
             'product.name': configData.product.name,
             'tester.name': configData.tester.name,

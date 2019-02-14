@@ -61,9 +61,8 @@ Template.Role_update.onCreated(function () {
 //onrendered
 Template.Role_create.onRendered(function () {
     Session.keys = {}
-
     var radioElement = document.getElementsByClassName('functionName');
-    console.log(radioElement);
+    
     for (var i = 0; i < radioElement.length; i++) {
         radioElement[i].checked = true;
         radioElement[i].setAttribute('disabled', true);
