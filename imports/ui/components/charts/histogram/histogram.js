@@ -37,7 +37,6 @@ Template.Histogram.onCreated(function() {
         ['45', 9000],
         ['60', 7000]
     ];
-    
     Session.set('histogramData', data);
 });
 

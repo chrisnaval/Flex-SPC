@@ -90,6 +90,7 @@ function createXbar(data) {
 
 //onCreated
 Template.Xbar.onCreated(function () {
+    Meteor.subscribe('perSampleTestResults.all');
         var chartData = [];
         var firstDate = new Date();
         firstDate.setDate(firstDate.getDate() - 5);
@@ -112,6 +113,7 @@ Template.Xbar.onCreated(function () {
 Template.Xbar.helpers({
 
 });
+
 //onrendered
 Template.Xbar.onRendered(function () {
     var chartData = Session.get('chartData');
