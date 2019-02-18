@@ -5,18 +5,13 @@
                 <p class="content-title align-center">Tester Alert Chart</p>
                 <table class="white-table">
                     <tr class="table-header">
-                        <th class="head-title">Parameter</th>
-                        <th class="head-title">T1</th>
-                        <th class="head-title">T2</th>
-                        <th class="head-title">T3</th>
-                        <th class="head-title">T4</th>
-                        <th class="head-title">T5</th>
-                        <th class="head-title">T6</th>
-                        <th class="head-title">T7</th>
-                        <th class="head-title">T8</th>
+                        {{#each testers}}
+                        <th class="head-title">{{name}}</th>
+                        {{/each}}
                     </tr>
+                    {{#each parameters}}
                     <tr class="table-row-cell">
-                        <td class="table-cell">Pressure Stability</td>
+                        <td class="table-cell">{{name}}</td>
                         <td class="table-cell"><span class="cell-result-good"></span></td>
                         <td class="table-cell"><span class="cell-result-warning"></span></td>
                         <td class="table-cell"><span class="cell-result-good"></span></td>
@@ -26,138 +21,7 @@
                         <td class="table-cell"><span class="cell-result-good"></span></td>
                         <td class="table-cell"><span class="cell-result-good"></span></td>
                     </tr>
-                    <tr class="table-row-cell">
-                        <td class="table-cell">Slope</td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-warning"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                    </tr>
-                    <tr class="table-row-cell">
-                        <td class="table-cell">Supply Pressure</td>
-                        <td class="table-cell"><span class="cell-result-danger"></span></td>
-                        <td class="table-cell"><span class="cell-result-danger"></span></td>
-                        <td class="table-cell"><span class="cell-result-danger"></span></td>
-                        <td class="table-cell"><span class="cell-result-danger"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                    </tr>
-                    <tr class="table-row-cell">
-                        <td class="table-cell">Hysteresis</td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-warning"></span></td>
-                        <td class="table-cell"><span class="cell-result-warning"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                    </tr>
-                    <tr class="table-row-cell">
-                        <td class="table-cell">Repeatability</td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-warning"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                    </tr>
-                    <tr class="table-row-cell">
-                        <td class="table-cell">Gate Point 1</td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-warning"></span></td>
-                        <td class="table-cell"><span class="cell-result-danger"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                    </tr>
-                    <tr class="table-row-cell">
-                        <td class="table-cell">Gate Point 2</td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-warning"></span></td>
-                        <td class="table-cell"><span class="cell-result-danger"></span></td>
-                    </tr>
-                    <tr class="table-row-cell">
-                        <td class="table-cell">P_Adjust</td>
-                        <td class="table-cell"><span class="cell-result-danger"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-warning"></span></td>
-                    </tr>
-                    <tr class="table-row-cell">
-                        <td class="table-cell">P_Adjust</td>
-                        <td class="table-cell"><span class="cell-result-warning"></span></td>
-                        <td class="table-cell"><span class="cell-result-danger"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                    </tr>
-                    <tr class="table-row-cell">
-                        <td class="table-cell">P_Adjust</td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-warning"></span></td>
-                        <td class="table-cell"><span class="cell-result-danger"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                    </tr>
-                    <tr class="table-row-cell">
-                        <td class="table-cell">P_Adjust</td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-warning"></span></td>
-                        <td class="table-cell"><span class="cell-result-danger"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                    </tr>
-                    <tr class="table-row-cell">
-                        <td class="table-cell">P_Adjust</td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-warning"></span></td>
-                        <td class="table-cell"><span class="cell-result-danger"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                    </tr>
-                    <tr class="table-row-cell">
-                        <td class="table-cell">P_Adjust</td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-warning"></span></td>
-                        <td class="table-cell"><span class="cell-result-danger"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                    </tr>
+                    {{/each}}
                 </table>
             </div>
         </div>
