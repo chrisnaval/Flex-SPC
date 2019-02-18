@@ -100,8 +100,3 @@ function histogramFormatData(data) {
     
     return dataValue;
 }
-Meteor.publish('histogram.overAll', function(configId) {
-    check(configId, String);
-    var configuration = Configurations.findOne({ _id: configId });
-    console.log(histogramFormatData(PerItemTestResults.find({ 'product.name': configuration.product.name }).fetch()));
-});

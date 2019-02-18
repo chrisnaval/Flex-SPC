@@ -1,119 +1,62 @@
 import './xbar.html';
 
+// X-bar Chart
+const xBarChart = anychart.line();
+// Global Var for X-bar Chart Data
+var xBarChartData = [];
+
 /*
- * Creates XBar Chart
+ * Creates X-bar Chart
  * @param data
 */
-function createXbar(data) {
-    var xbarChart = AmCharts.makeChart("linechart", {
-        "type": "serial",
-        "theme": "light",
-        "marginRight": 80,
-        "autoMarginOffset": 20,
-        "marginTop": 7,
-        "pathToImages": "http://www.amcharts.com/lib/3/images/",
-        "dataProvider": data,
-        "valueAxes": [{
-            "axisAlpha": 0.2,
-            "dashLength": 1,
-            "position": "left"
-        }],
-        "mouseWheelZoomEnabled": true,
-        "valueAxes": [{
-            "logarithmic": true,
-            "guides": [{
-                "lineColor": "#FFCC00",
-                "inside": true,
-                "lineAlpha": 1,
-                "value": 1400,//upper
-            },
-            {
-                "lineColor": "#FFCC00",
-                "inside": true,
-                "lineAlpha": 1,
-                "value": 1300,//median
-            },
-            {
-                "lineColor": "#FFCC00",
-                "inside": true,
-                "lineAlpha": 1,
-                "value": 1200,//lower
-            }],
-        }],
-        "graphs": [{
-            "id": "g1",
-            "balloonText": "[[value]]",
-            "bullet": "round",
-            "bulletBorderAlpha": 1,
-            "bulletColor": "#FFFFFF",
-            "hideBulletsCount": 50,
-            "title": "red line",
-            "valueField": "visits",
-            "useLineColorForBulletBorder": true,
-            "balloon": {
-                "drop": true
-            }
-        }],
-        "guides": [
-            {
-                "fillAlpha": 0.10,
-                "value": 0,
-                "toValue": 10
-            }
-        ],
-        "chartScrollbar": {
-            "autoGridCount": true,
-            "graph": "g1",
-            "scrollbarHeight": 40
-        },
-        "chartCursor": {
-            "limitToGraph": "g1"
-        },
-        "categoryField": "date",
-        "categoryAxis": {
-            "parseDates": true,
-            "axisColor": "#DADADA",
-            "dashLength": 1,
-            "minorGridEnabled": true
-        },
-        "export": {
-            "enabled": true
-        }
-    });
+export const createXBar = function createXBar(data) {
+    // Set Global Data for Chart
+    xBarChartData = data;
+    
+    if(xBarChartData.chartData) {
+        xBarChart.yScale()
+		.minimum(xBarChartData.yScale.min)
+		.maximum(xBarChartData.yScale.max);
+		
+        xBarChart.title('X-Bar Chart');
+        xBarChart.container('x-bar-chart');
+        
+        var series = xBarChart.line(xBarChartData.chartData);
+        series.stroke('#0000FF');
+        series.name('Measurement');
 
-    xbarChart.addListener("rendered", zoomChart);
-    zoomChart();
-    function zoomChart() {
-        xbarChart.zoomToIndexes(data.length - 40, data.length - 1);
+        // Upper Control Limit
+        var series2 = xBarChart.line(xBarChartData.ucl);
+        series2.stroke('#FFFF00');
+        series2.name('Upper Control Limit');
+        // Lower Control Limit
+        var series3 = xBarChart.line(xBarChartData.lcl);
+        series3.stroke('#FFFF00');
+        series3.name('Lower Control Limit');
+
+         // Upper Specification Limit
+         var series4 = xBarChart.line(xBarChartData.usl);
+         series4.stroke('#FF0000');
+         series4.name('Upper Specification Limit');
+         // Lower Specification Limit
+         var series5 = xBarChart.line(xBarChartData.lsl);
+         series5.stroke('#FF0000');
+         series5.name('Lower Specification Limit');
+
+        var legend = xBarChart.legend();
+        legend.enabled(true)
+            .position('bottom');
+
+        xBarChart.draw();
     }
 }
 
-//onCreated
-Template.Xbar.onCreated(function () {
-        var chartData = [];
-        var firstDate = new Date();
-        firstDate.setDate(firstDate.getDate() - 5);
-        
-        var visits = 1200;
-        for(var i = 0; i < 1000; i++) {
-            var newDate = new Date(firstDate);
-            newDate.setDate(newDate.getDate() + i);
-
-            visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-
-            chartData.push({
-                date: newDate,
-                visits: visits
-            });
-        }
-        Session.set('chartData', chartData);
+Template.X_bar.onCreated(function() {
+    xBarChart.removeAllSeries();
+    createXBar(xBarChartData);
 });
 
-Template.Xbar.helpers({
-
-});
-//onrendered
-Template.Xbar.onRendered(function () {
-    var chartData = Session.get('chartData');
-    createXbar(chartData);//draw graph
+Template.X_bar.onRendered(function() {
+    xBarChart.removeAllSeries();
+    createXBar(xBarChartData);
 });

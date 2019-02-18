@@ -11,6 +11,8 @@ import '../../charts/tester/tester.js';
 import '../../modals/modals.js';
 import '../../alert-message/alert-message.js';
 
+import { createXBar } from '../../charts/xbar/xbar.js';
+
 // Mongo Collection(s)
 import { Configurations } from '/imports/api/collections/configurations/configurations.js';
 import { PerItemTestResults } from '/imports/api/collections/perItemTestResults/perItemTestResults.js';
@@ -107,6 +109,7 @@ Template.Reports_create.events({
             }).fetch();
 
             Session.set('chartDatas', formatData(chartValue));
+            createXBar(formatData(chartValue));
         } else {
             var chartValue = PerSampleTestResults.findOne({});
             Session.set('chartDatas', formatData(chartValue));
