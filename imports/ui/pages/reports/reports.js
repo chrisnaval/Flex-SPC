@@ -133,23 +133,23 @@ Template.Reports.events({
 
             createXBar(xBarChartData);
         }
-        else {
-            var perSampleTestResult = PerSampleTestResults.findOne();
-            var chartData = formatDataForAnyCharts(perSampleTestResult.sampleItems);
-            var xBarChartData = {
-                yScale: {
-                    min: perSampleTestResult.minimum,
-                    max: perSampleTestResult.configuration.specLimit.upperSpecLimit
-                },
-                chartData: chartData,
-                ucl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.upperControlLimit),
-                lcl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.lowerControlLimit),
-                usl: setLimit(chartData, perSampleTestResult.configuration.specLimit.upperSpecLimit),
-                lsl: setLimit(chartData, perSampleTestResult.configuration.specLimit.lowerSpecLimit),
-            };
+        // else {
+        //     var perSampleTestResult = PerSampleTestResults.findOne();
+        //     var chartData = formatDataForAnyCharts(perSampleTestResult.sampleItems);
+        //     var xBarChartData = {
+        //         yScale: {
+        //             min: perSampleTestResult.minimum,
+        //             max: perSampleTestResult.configuration.specLimit.upperSpecLimit
+        //         },
+        //         chartData: chartData,
+        //         ucl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.upperControlLimit),
+        //         lcl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.lowerControlLimit),
+        //         usl: setLimit(chartData, perSampleTestResult.configuration.specLimit.upperSpecLimit),
+        //         lsl: setLimit(chartData, perSampleTestResult.configuration.specLimit.lowerSpecLimit),
+        //     };
 
-            createXBar(xBarChartData);
-        }
+        //     createXBar(xBarChartData);
+        // }
     },
     'click #tester': function(event, instance) {
         const target = event.target;
