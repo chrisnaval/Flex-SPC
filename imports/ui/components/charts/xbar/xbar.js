@@ -28,7 +28,6 @@ var xBarChartDataType;
 export const createXBar = function createXBar(data, type) {
     xBarChartDataType = type;
     xBarChart.removeAllSeries();
-
     // Identify the type of data to display on chart
     if(type == "per sample") {
         xBarChartDataPerSample = data;

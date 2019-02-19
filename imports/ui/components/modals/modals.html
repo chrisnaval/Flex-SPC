@@ -213,6 +213,39 @@
     </div>
 </template>
 
+<!--per item-->
+<template name="PerItem">
+        <div id="PerItemModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Items</h5>
+                </div>
+                <div class="modal-body" style="height: 400px;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Item Code</th>
+                                <th>Product Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each products}}
+                            <tr class="perItem-list">
+                                <td class="product" data-id="{{_id}}" data-name="{{product.name}}">{{itemCode}}</td>
+                                <td class="product" data-id="{{_id}}" data-name="{{product.name}}">{{product.name}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-modal modal-default cancel">Cancel</button>
+                    <button type="button" class="btn-modal modal-info select-item">Select</button>
+                </div>
+            </div>
+        </div>
+    </template>
+    
 <!-- Product -->
 <template name="Products">
     <div id="productModal" class="modal">
