@@ -1,6 +1,17 @@
 import './reports.html';
 
 // Component(s)
+//candle stick
+import '../../components/charts/candlestick/candlestick.js';
+
+//histogram
+import '../../components/charts/histogram/histogram.js';
+import { createHistogram } from '../../components/charts/histogram/histogram.js';
+
+//Range
+import '../../components/charts/range/range.js';
+import { createRline } from '../../components/charts/range/range.js';
+
 // Tester
 import '../../components/charts/tester/tester.js';
 // X-bar
@@ -10,14 +21,8 @@ import { createXBar } from '../../components/charts/xbar/xbar.js';
 import '../../components/charts/yield/yield.js';
 import { createYield } from '../../components/charts/yield/yield.js';
 
-//Range
-import '../../components/charts/range/range.js';
-import { createRline } from '../../components/charts/range/range.js';
-
-//histogram
-import '../../components/charts/histogram/histogram.js';
-import { createHistogram } from '../../components/charts/histogram/histogram.js';
-import { histogramChart } from '../../components/charts/histogram/histogram.js';
+//yield
+import '../../components/charts/yield/yield.js';
 // Helpers
 import { formatDataForAnyCharts } from '/lib/helpers.js';
 import { histogramOverAllFormat } from '/lib/helpers.js';
@@ -34,6 +39,7 @@ import { PerSampleTestResults } from '/imports/api/collections/perSampleTestResu
 
 // Overall Items
 import { calculateOverallItems } from '/lib/overall-calculator.js';
+import { calculateHistogramOverallItems } from '/lib/overall-calculator.js';
 
 Template.Reports.onCreated(function() {
     this.state = new ReactiveDict();
@@ -141,6 +147,9 @@ Template.Reports.events({
                 lsl: setLimit(chartData, configuration.specLimit.lowerSpecLimit),
             };
 
+            //histogram
+            var histogramData = calculateHistogramOverallItems(configuration);
+
         } else {
             var configuration = Session.get('configuration');
             var overallItems = calculateOverallItems(configuration);
@@ -161,6 +170,7 @@ Template.Reports.events({
         createXBar(xBarChartData, 'overall');
         createYield(xBarChartData, 'overall');
         createRline(rLineChartData, 'overall');
+        createHistogram(histogramData, 'overall');
     },
     'click #per-sample': function(event, instance) {
         const target = event.target;
