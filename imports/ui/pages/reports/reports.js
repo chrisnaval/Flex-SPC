@@ -3,7 +3,7 @@ import './reports.html';
 // Component(s)
 // Tester
 import '../../components/charts/tester/tester.js';
-// XBar
+// X-bar
 import '../../components/charts/xbar/xbar.js';
 import { createXBar } from '../../components/charts/xbar/xbar.js';
 
@@ -11,16 +11,16 @@ import { createXBar } from '../../components/charts/xbar/xbar.js';
 import { formatDataForAnyCharts } from '/lib/helpers.js';
 import { setLimit } from '/lib/helpers.js';
 
-// Overall Items
-import { calculateOverallItems } from '/lib/overall-calculator.js';
-
 // Meteor Package(s)
-import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { Session } from 'meteor/session';
 
 // Mongo Collection(s)
 import { Configurations } from '/imports/api/collections/configurations/configurations.js';
 import { PerSampleTestResults } from '/imports/api/collections/perSampleTestResults/perSampleTestResults.js';
+
+// Overall Items
+import { calculateOverallItems } from '/lib/overall-calculator.js';
 
 Template.Reports.onCreated(function() {
     this.state = new ReactiveDict();

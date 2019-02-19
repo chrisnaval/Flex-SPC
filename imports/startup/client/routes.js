@@ -110,6 +110,10 @@ FlowRouter.route('/reports', {
         } else {
             FlowRouter.go('/login');
         }
+    },
+    subscriptions: function() {
+        // Fast Render
+        this.register('config', Meteor.subscribe('configurations.all'));
     }
 });
 
