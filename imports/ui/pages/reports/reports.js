@@ -11,13 +11,15 @@ import { createXBar } from '../../components/charts/xbar/xbar.js';
 import { formatDataForAnyCharts } from '/lib/helpers.js';
 import { setLimit } from '/lib/helpers.js';
 
+// Overall Items
+import { calculateOverallItems } from '/lib/overall-calculator.js';
+
 // Meteor Package(s)
 import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 // Mongo Collection(s)
 import { Configurations } from '/imports/api/collections/configurations/configurations.js';
-import { PerItemTestResults } from '/imports/api/collections/perItemTestResults/perItemTestResults.js';
 import { PerSampleTestResults } from '/imports/api/collections/perSampleTestResults/perSampleTestResults.js';
 
 Template.Reports.onCreated(function() {
@@ -29,17 +31,16 @@ Template.Reports.onCreated(function() {
     });
 
     this.autorun(function() {
-        Meteor.subscribe('configurations.all');
+        Meteor.subscribe('configurations.all', function() {
+            Session.set('configuration', Configurations.findOne());
+        });
+        Meteor.subscribe('perItemTestResults.all');
         Meteor.subscribe('perSampleTestResults.all');
-        var config = Configurations.findOne({});
-        if(config) {
-            Meteor.subscribe('histogram.overAll', config._id);
-        }
     });
 });
 
 Template.Reports.onRendered(function() {
-	
+	// 
 });
 
 Template.Reports.helpers({
@@ -47,7 +48,7 @@ Template.Reports.helpers({
         return Configurations.find({}).fetch();
     },
     first(id) {
-        var firstItem = Configurations.findOne({});
+        var firstItem = Configurations.findOne();
         if(firstItem) {
             var firstItemId = firstItem._id;
             if(firstItemId === id) {
@@ -87,6 +88,50 @@ Template.Reports.events({
             isConfig: false,
             isTester: false
         });
+
+        // Radio Element
+        var radioElement = document.getElementsByClassName('radio');
+        var radioValConfigId;
+        for(var i = 0; i < radioElement.length; i++) {
+            if(radioElement[i].checked) {
+                radioValConfigId = radioElement[i].value;
+            }
+        }
+
+        var xBarChartData = {};
+        if(radioValConfigId) {
+            var configuration = Configurations.findOne({ _id: radioValConfigId });
+            var overallItems = calculateOverallItems(configuration);
+            var chartData = formatDataForAnyCharts(overallItems.items);
+            xBarChartData = {
+                yScale: {
+                    min: overallItems.minimum,
+                    max: configuration.specLimit.upperSpecLimit
+                },
+                chartData: chartData,
+                ucl: setLimit(chartData, configuration.controlLimit.upperControlLimit),
+                lcl: setLimit(chartData, configuration.controlLimit.lowerControlLimit),
+                usl: setLimit(chartData, configuration.specLimit.upperSpecLimit),
+                lsl: setLimit(chartData, configuration.specLimit.lowerSpecLimit),
+            };
+        } else {
+            var configuration = Session.get('configuration');
+            var overallItems = calculateOverallItems(configuration);
+            var chartData = formatDataForAnyCharts(overallItems.items);
+            xBarChartData = {
+                yScale: {
+                    min: overallItems.minimum,
+                    max: configuration.specLimit.upperSpecLimit
+                },
+                chartData: chartData,
+                ucl: setLimit(chartData, configuration.controlLimit.upperControlLimit),
+                lcl: setLimit(chartData, configuration.controlLimit.lowerControlLimit),
+                usl: setLimit(chartData, configuration.specLimit.upperSpecLimit),
+                lsl: setLimit(chartData, configuration.specLimit.lowerSpecLimit),
+            };
+        }
+
+        createXBar(xBarChartData, "overall");
     },
     'click #per-sample': function(event, instance) {
         const target = event.target;
@@ -116,6 +161,7 @@ Template.Reports.events({
             }
         }
 
+        var xBarChartData = {};
         if(radioValConfigId) {
             var perSampleTestResult = PerSampleTestResults.findOne({ 'configuration._id': radioValConfigId });
             var chartData = formatDataForAnyCharts(perSampleTestResult.sampleItems);
@@ -130,26 +176,25 @@ Template.Reports.events({
                 usl: setLimit(chartData, perSampleTestResult.configuration.specLimit.upperSpecLimit),
                 lsl: setLimit(chartData, perSampleTestResult.configuration.specLimit.lowerSpecLimit),
             };
-
-            createXBar(xBarChartData);
         }
-        // else {
-        //     var perSampleTestResult = PerSampleTestResults.findOne();
-        //     var chartData = formatDataForAnyCharts(perSampleTestResult.sampleItems);
-        //     var xBarChartData = {
-        //         yScale: {
-        //             min: perSampleTestResult.minimum,
-        //             max: perSampleTestResult.configuration.specLimit.upperSpecLimit
-        //         },
-        //         chartData: chartData,
-        //         ucl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.upperControlLimit),
-        //         lcl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.lowerControlLimit),
-        //         usl: setLimit(chartData, perSampleTestResult.configuration.specLimit.upperSpecLimit),
-        //         lsl: setLimit(chartData, perSampleTestResult.configuration.specLimit.lowerSpecLimit),
-        //     };
+        else {
+            var configuration = Session.get('configuration');
+            var perSampleTestResult = PerSampleTestResults.findOne({ 'configuration._id': configuration._id });
+            var chartData = formatDataForAnyCharts(perSampleTestResult.sampleItems);
+            xBarChartData = {
+                yScale: {
+                    min: perSampleTestResult.minimum,
+                    max: perSampleTestResult.configuration.specLimit.upperSpecLimit
+                },
+                chartData: chartData,
+                ucl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.upperControlLimit),
+                lcl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.lowerControlLimit),
+                usl: setLimit(chartData, perSampleTestResult.configuration.specLimit.upperSpecLimit),
+                lsl: setLimit(chartData, perSampleTestResult.configuration.specLimit.lowerSpecLimit),
+            };
+        }
 
-        //     createXBar(xBarChartData);
-        // }
+        createXBar(xBarChartData, "per sample");
     },
     'click #tester': function(event, instance) {
         const target = event.target;
