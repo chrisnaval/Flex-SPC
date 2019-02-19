@@ -22,7 +22,7 @@
                 </div>
                 {{#if showCharts}}
                 <div id="template-1">
-                    <!-- <div class="card">
+                     <div class="card">
                         <div class="card-header form-title">
                             <span style="font-size:15px;">Histogram</span>
                         </div>
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card">
+                    <!--<div class="card">
                         <div class="card-header form-title">
                             <span style="font-size:15px;">Candlestick</span>
                         </div>
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="card">
+                    <div class="card">
                         <div class="card-header form-title">
                             <span style="font-size:15px;">R Line</span>
                         </div>
@@ -61,8 +61,8 @@
                                 {{> Range}}
                             </div>
                         </div>
-                    </div> -->
-                    <div class="card">
+                    </div>
+                    <!-- <div class="card">
                         <div class="card-header form-title">
                             <span style="font-size:15px;">Yield</span>
                         </div>
@@ -71,25 +71,30 @@
                                 {{> Yield}}
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 {{/if}}
                 {{#if isTester}}
                 <div id="template-2">
                     <div class="card">
                         <div class="card-header form-title">
-                            <span style="font-size:15px;">Tester</span>
+                            <span style="font-size:15px;">Tester</span>&nbsp;&nbsp;&nbsp;
+                            <span id="product-name"></span>
+                            <input type="hidden" name="itemId" id="itemId">
+                            <input type="hidden" name="productname" id="productname">
+                            <a href="javascript:void(0)" class="reports align-right" id="reports-productlist">Products</a>
+                            {{> PerItem}}
                         </div>
                         <div class="card-body">
                             <div class="charts">
+                                {{testing}}
                                 {{> TesterChart}}
                             </div>
                         </div>
                     </div>
                 </div>
                 {{/if}}
-                {{#if isConfig}}
-                <div id="template-3">
+                <div id="template-3" style="display:none;">
                     <div class="card">
                         <div class="card-header form-title">
                             <span style="font-size:15px;">Configurations</span>
@@ -140,7 +145,6 @@
                         </div>
                     </div>
                 </div>
-                {{/if}}
             </div>
         </div>
     </div>

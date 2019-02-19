@@ -4,6 +4,7 @@ import './modals.html';
 import { AppModules } from '/imports/api/collections/appModules/appModules.js';
 import { Configurations } from '/imports/api/collections/configurations/configurations.js';
 import { Parameters } from '/imports/api/collections/parameters/parameters.js';
+import { PerItemTestResults } from '/imports/api/collections/perItemTestResults/perItemTestResults.js';
 import { Products } from '/imports/api/collections/products/products.js';
 import { RolePermissions } from '/imports/api/collections/rolePermissions/rolePermissions.js';
 import { Testers } from '/imports/api/collections/testers/testers.js';
@@ -22,6 +23,16 @@ Template.Parameters.onCreated(function() {
         Meteor.subscribe('parameters.all');
     });
 });
+
+// PerItem
+Template.PerItem.onCreated(function() {
+    this.autorun(function() { 
+        Meteor.subscribe('perItemTestResults.all', function() {
+            Session.set('perItem', PerItemTestResults.find({}).fetch());
+        });
+    });
+});
+
 // Product
 Template.Products.onCreated(function() {
     this.autorun(function() { 
@@ -83,6 +94,13 @@ Template.Parameters.helpers({
         return Parameters.find({});
     }
 });
+
+Template.PerItem.helpers({
+    products() {
+        return PerItemTestResults.find({});
+    }
+});
+
 // Product
 Template.Products.helpers({
     products() {
@@ -229,6 +247,21 @@ Template.Parameters.events({
         modal.style.display = 'none';
     }
 });
+
+//perItem
+Template.Parameters.events({
+    'click .cancel': function() {
+        var modal = document.getElementById('PerItemModal');
+        var tr = document.getElementsByTagName('tr');
+
+        for(var i = 0; i < tr.length; i++) {
+            tr[i].classList.remove('selected');
+         }
+
+        modal.style.display = 'none';
+    }
+});
+
 // Product
 Template.Products.events({
     'click .cancel': function() {
