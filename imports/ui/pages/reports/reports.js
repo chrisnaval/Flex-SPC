@@ -6,6 +6,9 @@ import '../../components/charts/tester/tester.js';
 // X-bar
 import '../../components/charts/xbar/xbar.js';
 import { createXBar } from '../../components/charts/xbar/xbar.js';
+// Yield
+import '../../components/charts/yield/yield.js';
+import { createYield } from '../../components/charts/yield/yield.js';
 
 // Helpers
 import { formatDataForAnyCharts } from '/lib/helpers.js';
@@ -99,6 +102,7 @@ Template.Reports.events({
         }
 
         var xBarChartData = {};
+        var yieldChartData = {};
         if(radioValConfigId) {
             var configuration = Configurations.findOne({ _id: radioValConfigId });
             var overallItems = calculateOverallItems(configuration);
@@ -132,6 +136,7 @@ Template.Reports.events({
         }
 
         createXBar(xBarChartData, "overall");
+        createYield(xBarChartData, "overall");
     },
     'click #per-sample': function(event, instance) {
         const target = event.target;
@@ -195,6 +200,7 @@ Template.Reports.events({
         }
 
         createXBar(xBarChartData, "per sample");
+        createYield(xBarChartData, "per sample");
     },
     'click #tester': function(event, instance) {
         const target = event.target;

@@ -32,6 +32,7 @@ export const createXBar = function createXBar(data, type) {
     // Identify the type of data to display on chart
     if(type == "per sample") {
         xBarChartDataPerSample = data;
+        
         if(xBarChartDataPerSample.chartData) {
             xBarChart.yScale()
             .minimum(xBarChartDataPerSample.yScale.min)
@@ -111,35 +112,40 @@ export const createXBar = function createXBar(data, type) {
 }
 
 Template.X_bar.onCreated(function() {
-    Tracker.autorun(() => {
-        // Subscription(s)
-        var configSubscription = Meteor.subscribe('configurations.all');
-        Meteor.subscribe('perItemTestResults.all');
-
-        if(configSubscription.ready()) {
-            Session.set('configuration', Configurations.findOne());
-            
-            var configuration = Session.get('configuration');
-            var overallItems = calculateOverallItems(configuration);
-            var chartData = formatDataForAnyCharts(overallItems.items);
-            var xBarChartData = {
-                yScale: {
-                    min: overallItems.minimum,
-                    max: configuration.specLimit.upperSpecLimit
-                },
-                chartData: chartData,
-                ucl: setLimit(chartData, configuration.controlLimit.upperControlLimit),
-                lcl: setLimit(chartData, configuration.controlLimit.lowerControlLimit),
-                usl: setLimit(chartData, configuration.specLimit.upperSpecLimit),
-                lsl: setLimit(chartData, configuration.specLimit.lowerSpecLimit),
-            };
-
-            xBarChartDataOverall = xBarChartData;
-            xBarChartDataType = "overall";
-
-            createXBar(xBarChartDataOverall, xBarChartDataType);
-        }
-    });
+    // Identify the type of data to display on chart
+    if(xBarChartDataType == "per sample") {
+        createXBar(xBarChartDataPerSample, xBarChartDataType);
+    } else {
+        Tracker.autorun(() => {
+            // Subscription(s)
+            var configSubscription = Meteor.subscribe('configurations.all');
+            Meteor.subscribe('perItemTestResults.all');
+    
+            if(configSubscription.ready()) {
+                Session.set('configuration', Configurations.findOne());
+                
+                var configuration = Session.get('configuration');
+                var overallItems = calculateOverallItems(configuration);
+                var chartData = formatDataForAnyCharts(overallItems.items);
+                var xBarChartData = {
+                    yScale: {
+                        min: overallItems.minimum,
+                        max: configuration.specLimit.upperSpecLimit
+                    },
+                    chartData: chartData,
+                    ucl: setLimit(chartData, configuration.controlLimit.upperControlLimit),
+                    lcl: setLimit(chartData, configuration.controlLimit.lowerControlLimit),
+                    usl: setLimit(chartData, configuration.specLimit.upperSpecLimit),
+                    lsl: setLimit(chartData, configuration.specLimit.lowerSpecLimit),
+                };
+    
+                xBarChartDataOverall = xBarChartData;
+                xBarChartDataType = "overall";
+    
+                createXBar(xBarChartDataOverall, xBarChartDataType);
+            }
+        });
+    }
 });
 
 Template.X_bar.onRendered(function() {
