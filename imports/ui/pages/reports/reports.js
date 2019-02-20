@@ -3,6 +3,7 @@ import './reports.html';
 // Component(s)
 // Candlestick
 import '../../components/charts/candlestick/candlestick.js';
+import { createCandlestick } from '../../components/charts/candlestick/candlestick.js';
 // Histogram
 import '../../components/charts/histogram/histogram.js';
 import { createHistogram } from '../../components/charts/histogram/histogram.js';
@@ -20,6 +21,7 @@ import { createYield } from '../../components/charts/yield/yield.js';
 
 // Helpers
 import { formatDataForAnyCharts } from '/lib/helpers.js';
+import { formatDataForCandlestickChart } from '/lib/helpers.js';
 import { formatDataForYieldChart } from '/lib/helpers.js';
 import { histogramOverAllFormat } from '/lib/helpers.js';
 import { setLimit } from '/lib/helpers.js';
@@ -110,6 +112,7 @@ Template.Reports.events({
             }
         }
 
+        var candlestickChartData;
         var rLineChartData = {};
         var xBarChartData = {};
         var yieldChartData = {};
@@ -120,6 +123,8 @@ Template.Reports.events({
             var overallItemsCalculation = calculateOverallItems(configuration);
             var overallItems = overallItemsCalculation.items;
 
+            // Candlestick
+            candlestickChartData = formatDataForCandlestickChart(overallItemsCalculation, overallItems);
             // Histogram
             var histogramData = calculateHistogramOverallItems(configuration);
             // Chart Data for X-bar and Range
@@ -164,9 +169,13 @@ Template.Reports.events({
             var overallItemsCalculation = calculateOverallItems(configuration);
             var overallItems = overallItemsCalculation.items;
             
+            // Candlestick
+            candlestickChartData = formatDataForCandlestickChart(overallItemsCalculation, overallItems);
+
             // Chart Data for X-bar and Range
             var chartData = formatDataForAnyCharts(overallItems);
             
+            // X-bar
             xBarChartData = {
                 yScale: {
                     min: overallItemsCalculation.minimum,
@@ -188,7 +197,9 @@ Template.Reports.events({
                 chartData: formatDataForYieldChart(configuration, overallItems)
             };
         }
-        
+
+        // Create Charts
+        createCandlestick(candlestickChartData, "overall");
         createHistogram(histogramData, "overall");
         createRline(rLineChartData, "overall");
         createXBar(xBarChartData, "overall");
@@ -222,6 +233,7 @@ Template.Reports.events({
             }
         }
 
+        var candlestickChartData;
         var histogramData = {};
         var rLineChartData = {};
         var xBarChartData = {};
@@ -233,6 +245,9 @@ Template.Reports.events({
             var configuration = perSampleTestResult.configuration;
             var sampleItems = perSampleTestResult.sampleItems;
             
+            // Candlestick
+            candlestickChartData = formatDataForCandlestickChart(perSampleTestResult, sampleItems);
+
             // Histogram
             var histogramData = histogramOverAllFormat(perSampleTestResult.sampleItems);
             // Chart Data for X-bar and Range
@@ -278,6 +293,8 @@ Template.Reports.events({
             var perSampleTestResult = PerSampleTestResults.findOne({ 'configuration._id': configuration._id });
             var sampleItems = perSampleTestResult.sampleItems;
 
+            // Candlestick
+            candlestickChartData = formatDataForCandlestickChart(perSampleTestResult, sampleItems);
             // Histogram
             var histogramData = histogramOverAllFormat(perSampleTestResult.sampleItems);
             // Chart Data for X-bar and Range
@@ -320,6 +337,7 @@ Template.Reports.events({
         }
 
         // Create Charts
+        createCandlestick(candlestickChartData, "per sample");
         createHistogram(histogramData, "per sample");
         createRline(rLineChartData, "per sample");
         createXBar(xBarChartData, "per sample");
