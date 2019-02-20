@@ -10,13 +10,14 @@ import { Configurations } from '/imports/api/collections/configurations/configur
 // Overall Items
 import { calculateHistogramOverallItems } from '/lib/overall-calculator.js';
 
-//histogram
+// Histogram
 const histogramChart = anychart.column();
 
 // Global Variable(s) and Function(s)
 var histogramChartDataPerSample = [];
 var histogramChartDataOverall = [];
 var histogramChartDataType;
+
 /*
  * Creates Histogram Chart
  * @param data
@@ -29,9 +30,12 @@ export const createHistogram = function createHistogram(data, type) {
         histogramChartDataPerSample = data;
         
         if(histogramChartDataPerSample) {
-            var series = histogramChart.column(histogramChartDataPerSample);
+            histogramChart.column(histogramChartDataPerSample);
+            
+            histogramChart.tooltip().titleFormat('Bin Range: {%x}');
+            histogramChart.tooltip().format('Bin Count: {%value}');
 
-            histogramChart.title('Histogram');
+            // histogramChart.title('Histogram');
             histogramChart.barGroupsPadding(0);
             histogramChart.xAxis().title('Bin');
             histogramChart.yAxis().title('Frequency');
@@ -40,13 +44,15 @@ export const createHistogram = function createHistogram(data, type) {
         }
     } else {
         histogramChartDataOverall = data;
-        
         if(histogramChartDataOverall) {
-            var series = histogramChart.column(histogramChartDataOverall);
+            histogramChart.column(histogramChartDataOverall);
 
-            histogramChart.title('Histogram');
+            histogramChart.tooltip().titleFormat('Bin Range: {%x}');
+            histogramChart.tooltip().format('Bin Count: {%value}');
+
+            // histogramChart.title('Histogram');
             histogramChart.barGroupsPadding(0);
-            histogramChart.xAxis().title('Bin');
+            histogramChart.xAxis().title('Bin Range');
             histogramChart.yAxis().title('Frequency');
             histogramChart.container('histogram');
             histogramChart.draw();
@@ -54,9 +60,7 @@ export const createHistogram = function createHistogram(data, type) {
     }
 }
 
-// onCreated
 Template.Histogram.onCreated(function() {
-
     if(histogramChartDataType === 'per sample') {
         createHistogram(histogramChartDataPerSample, histogramChartDataType);
     } else {
@@ -78,7 +82,6 @@ Template.Histogram.onCreated(function() {
     }
 });
 
-// onRendered
 Template.Histogram.onRendered(function() {
     var histogramData;
     

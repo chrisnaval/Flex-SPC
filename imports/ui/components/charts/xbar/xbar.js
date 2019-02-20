@@ -37,7 +37,11 @@ export const createXBar = function createXBar(data, type) {
             .minimum(xBarChartDataPerSample.yScale.min)
             .maximum(xBarChartDataPerSample.yScale.max);
             
-            xBarChart.title('X-Bar Chart');
+            xBarChart.xAxis().labels().format('{%Value}{type:datetime}');
+            
+            xBarChart.tooltip().titleFormat('{%x}{type:datetime}');
+
+            // xBarChart.title('X-bar Chart');
             xBarChart.container('x-bar-chart');
             
             var series = xBarChart.line(xBarChartDataPerSample.chartData);
@@ -76,7 +80,11 @@ export const createXBar = function createXBar(data, type) {
             .minimum(xBarChartDataOverall.yScale.min)
             .maximum(xBarChartDataOverall.yScale.max);
             
-            xBarChart.title('X-Bar Chart');
+            xBarChart.xAxis().labels().format('{%Value}{type:datetime}');
+            
+            xBarChart.tooltip().titleFormat('{%x}{type:datetime}');
+
+            // xBarChart.title('X-bar Chart');
             xBarChart.container('x-bar-chart');
             
             var series = xBarChart.line(xBarChartDataOverall.chartData);
@@ -122,14 +130,14 @@ Template.X_bar.onCreated(function() {
     
             if(configSubscription.ready()) {
                 Session.set('configuration', Configurations.findOne());
-                
+
                 var configuration = Session.get('configuration');
-                var overallItems = calculateOverallItems(configuration);
-                var chartData = formatDataForAnyCharts(overallItems.items);
+                var overallItemsCalculation = calculateOverallItems(configuration);
+                var chartData = formatDataForAnyCharts(overallItemsCalculation.items);
                 var xBarChartData = {
                     yScale: {
-                        min: overallItems.minimum,
-                        max: configuration.specLimit.upperSpecLimit
+                        min: overallItemsCalculation.minimum,
+                        max: (overallItemsCalculation.maximum > configuration.specLimit.upperSpecLimit) ? overallItemsCalculation.maximum : configuration.specLimit.upperSpecLimit
                     },
                     chartData: chartData,
                     ucl: setLimit(chartData, configuration.controlLimit.upperControlLimit),

@@ -20,7 +20,7 @@ function createCandlestick(data) {
     var series = candlestickChart.plot(0).candlestick(mapping);
     series.name('(Parameter)');
 
-    candlestickChart.title('Box Plot No. a (Parameter)');
+    // candlestickChart.title('Box Plot No. a (Parameter)');
     candlestickChart.container('candlestick');
 
     candlestickChart.draw();

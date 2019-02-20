@@ -1,8 +1,7 @@
 import './yield.html';
 
 // Helpers
-import { formatDataForAnyCharts } from '/lib/helpers.js';
-import { setLimit } from '/lib/helpers.js';
+import { formatDataForYieldChart } from '/lib/helpers.js';
 
 // Meteor Package(s)
 import { Session } from 'meteor/session';
@@ -37,31 +36,19 @@ export const createYield = function createYield(data, type) {
             yieldChart.yScale()
             .minimum(yieldChartDataPerSample.yScale.min)
             .maximum(yieldChartDataPerSample.yScale.max);
-            
-            yieldChart.title('Yield Chart');
+
+            yieldChart.xAxis().labels().format('{%Value}{type:time}');
+            yieldChart.yAxis().labels().format('{%Value}%');
+
+            yieldChart.tooltip().titleFormat('{%x}{type:datetime}');
+            yieldChart.tooltip().format('{%value}%');
+
+            // yieldChart.title('Yield Chart');
             yieldChart.container('yield-chart');
             
             var series = yieldChart.spline(yieldChartDataPerSample.chartData);
             series.stroke('#0000FF');
-            series.name('Measurement');
-
-            // Upper Control Limit
-            var series2 = yieldChart.spline(yieldChartDataPerSample.ucl);
-            series2.stroke('#FFFF00');
-            series2.name('Upper Control Limit');
-            // Lower Control Limit
-            var series3 = yieldChart.spline(yieldChartDataPerSample.lcl);
-            series3.stroke('#FFFF00');
-            series3.name('Lower Control Limit');
-
-            // Upper Specification Limit
-            var series4 = yieldChart.spline(yieldChartDataPerSample.usl);
-            series4.stroke('#FF0000');
-            series4.name('Upper Specification Limit');
-            // Lower Specification Limit
-            var series5 = yieldChart.spline(yieldChartDataPerSample.lsl);
-            series5.stroke('#FF0000');
-            series5.name('Lower Specification Limit');
+            series.name('Yield');
 
             var legend = yieldChart.legend();
             legend.enabled(true)
@@ -77,30 +64,20 @@ export const createYield = function createYield(data, type) {
             .minimum(yieldChartDataOverall.yScale.min)
             .maximum(yieldChartDataOverall.yScale.max);
             
-            yieldChart.title('Yield Chart');
+            yieldChart.xAxis().labels().format('{%Value}{type:datetime}');
+            yieldChart.yAxis().labels().format('{%Value}%');
+
+            // yieldChart.labels().enabled(true);
+            yieldChart.tooltip().titleFormat('{%x}{type:datetime}');
+            yieldChart.tooltip().format('{%value}%');
+            // yieldChart.tooltip().format('{%value}{decimalsCount:1}%');
+
+            // yieldChart.title('Yield Chart');
             yieldChart.container('yield-chart');
             
             var series = yieldChart.spline(yieldChartDataOverall.chartData);
             series.stroke('#0000FF');
-            series.name('Measurement');
-
-            // Upper Control Limit
-            var series2 = yieldChart.spline(yieldChartDataOverall.ucl);
-            series2.stroke('#FFFF00');
-            series2.name('Upper Control Limit');
-            // Lower Control Limit
-            var series3 = yieldChart.spline(yieldChartDataOverall.lcl);
-            series3.stroke('#FFFF00');
-            series3.name('Lower Control Limit');
-
-            // Upper Specification Limit
-            var series4 = yieldChart.spline(yieldChartDataOverall.usl);
-            series4.stroke('#FF0000');
-            series4.name('Upper Specification Limit');
-            // Lower Specification Limit
-            var series5 = yieldChart.spline(yieldChartDataOverall.lsl);
-            series5.stroke('#FF0000');
-            series5.name('Lower Specification Limit');
+            series.name('Yield');
 
             var legend = yieldChart.legend();
             legend.enabled(true)
@@ -123,20 +100,16 @@ Template.Yield.onCreated(function() {
     
             if(configSubscription.ready()) {
                 Session.set('configuration', Configurations.findOne());
-                
+    
                 var configuration = Session.get('configuration');
-                var overallItems = calculateOverallItems(configuration);
-                var chartData = formatDataForAnyCharts(overallItems.items);
+                var overallItemsCalculation = calculateOverallItems(configuration);
+                var overallItems = overallItemsCalculation.items;
                 var yieldChartData = {
                     yScale: {
-                        min: overallItems.minimum,
-                        max: configuration.specLimit.upperSpecLimit
+                        min: 0,
+                        max: 100
                     },
-                    chartData: chartData,
-                    ucl: setLimit(chartData, configuration.controlLimit.upperControlLimit),
-                    lcl: setLimit(chartData, configuration.controlLimit.lowerControlLimit),
-                    usl: setLimit(chartData, configuration.specLimit.upperSpecLimit),
-                    lsl: setLimit(chartData, configuration.specLimit.lowerSpecLimit),
+                    chartData: formatDataForYieldChart(configuration, overallItems)
                 };
     
                 yieldChartDataOverall = yieldChartData;

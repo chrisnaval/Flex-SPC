@@ -1,17 +1,14 @@
 import './reports.html';
 
 // Component(s)
-//candle stick
+// Candlestick
 import '../../components/charts/candlestick/candlestick.js';
-
-//histogram
+// Histogram
 import '../../components/charts/histogram/histogram.js';
 import { createHistogram } from '../../components/charts/histogram/histogram.js';
-
-//Range
+// Range
 import '../../components/charts/range/range.js';
 import { createRline } from '../../components/charts/range/range.js';
-
 // Tester
 import '../../components/charts/tester/tester.js';
 // X-bar
@@ -21,10 +18,9 @@ import { createXBar } from '../../components/charts/xbar/xbar.js';
 import '../../components/charts/yield/yield.js';
 import { createYield } from '../../components/charts/yield/yield.js';
 
-//yield
-import '../../components/charts/yield/yield.js';
 // Helpers
 import { formatDataForAnyCharts } from '/lib/helpers.js';
+import { formatDataForYieldChart } from '/lib/helpers.js';
 import { histogramOverAllFormat } from '/lib/helpers.js';
 import { setLimit } from '/lib/helpers.js';
 
@@ -58,9 +54,9 @@ Template.Reports.onCreated(function() {
     });
 });
 
-// Template.Reports.onRendered(function() {
-// 	// 
-// });
+Template.Reports.onRendered(function() {
+	// 
+});
 
 Template.Reports.helpers({
     configurations() {
@@ -94,7 +90,7 @@ Template.Reports.events({
         var perSample = document.getElementById('per-sample');
         var tester = document.getElementById('tester');
         var configuration = document.getElementById('configuration');
-        document.getElementById('template-3').style.display = 'none';
+        document.getElementById('template-2').style.display = 'none';
 
 		perSample.parentElement.classList.remove('active');
         tester.parentElement.classList.remove('active');
@@ -114,63 +110,89 @@ Template.Reports.events({
             }
         }
 
+        var rLineChartData = {};
         var xBarChartData = {};
         var yieldChartData = {};
+
+        // Check if there's a selected configuration
         if(radioValConfigId) {
-
-            //xbar
             var configuration = Configurations.findOne({ _id: radioValConfigId });
-            var overallItems = calculateOverallItems(configuration);
-            var chartData = formatDataForAnyCharts(overallItems.items);
-            xBarChartData = {
-                yScale: {
-                    min: overallItems.minimum,
-                    max: configuration.specLimit.upperSpecLimit
-                },
-                chartData: chartData,
-                ucl: setLimit(chartData, configuration.controlLimit.upperControlLimit),
-                lcl: setLimit(chartData, configuration.controlLimit.lowerControlLimit),
-                usl: setLimit(chartData, configuration.specLimit.upperSpecLimit),
-                lsl: setLimit(chartData, configuration.specLimit.lowerSpecLimit),
-            };
+            var overallItemsCalculation = calculateOverallItems(configuration);
+            var overallItems = overallItemsCalculation.items;
 
-            //range
+            // Histogram
+            var histogramData = calculateHistogramOverallItems(configuration);
+            // Chart Data for X-bar and Range
+            var chartData = formatDataForAnyCharts(overallItems);
+
+            // Range
             rLineChartData = {
                 yScale: {
-                    min: overallItems.minimum,
-                    max: configuration.specLimit.upperSpecLimit
+                    min: overallItemsCalculation.minimum,
+                    max: (overallItemsCalculation.maximum > configuration.specLimit.upperSpecLimit) ? overallItemsCalculation.maximum : configuration.specLimit.upperSpecLimit
                 },
                 chartData: chartData,
                 ucl: setLimit(chartData, configuration.controlLimit.upperControlLimit),
                 lcl: setLimit(chartData, configuration.controlLimit.lowerControlLimit),
                 usl: setLimit(chartData, configuration.specLimit.upperSpecLimit),
-                lsl: setLimit(chartData, configuration.specLimit.lowerSpecLimit),
+                lsl: setLimit(chartData, configuration.specLimit.lowerSpecLimit)
             };
 
-            //histogram
-            var histogramData = calculateHistogramOverallItems(configuration);
-
-        } else {
-            var configuration = Session.get('configuration');
-            var overallItems = calculateOverallItems(configuration);
-            var chartData = formatDataForAnyCharts(overallItems.items);
+            // X-bar
             xBarChartData = {
                 yScale: {
-                    min: overallItems.minimum,
-                    max: configuration.specLimit.upperSpecLimit
+                    min: overallItemsCalculation.minimum,
+                    max: (overallItemsCalculation.maximum > configuration.specLimit.upperSpecLimit) ? overallItemsCalculation.maximum : configuration.specLimit.upperSpecLimit
+                },
+                chartData: formatDataForAnyCharts(overallItems),
+                ucl: setLimit(chartData, configuration.controlLimit.upperControlLimit),
+                lcl: setLimit(chartData, configuration.controlLimit.lowerControlLimit),
+                usl: setLimit(chartData, configuration.specLimit.upperSpecLimit),
+                lsl: setLimit(chartData, configuration.specLimit.lowerSpecLimit)
+            };
+
+            // Yield
+            yieldChartData = {
+                yScale: {
+                    min: 0,
+                    max: 100
+                },
+                chartData: formatDataForYieldChart(configuration, overallItems)
+            };
+        } else {
+            var configuration = Session.get('configuration');
+            var overallItemsCalculation = calculateOverallItems(configuration);
+            var overallItems = overallItemsCalculation.items;
+            
+            // Chart Data for X-bar and Range
+            var chartData = formatDataForAnyCharts(overallItems);
+            
+            xBarChartData = {
+                yScale: {
+                    min: overallItemsCalculation.minimum,
+                    max: (overallItemsCalculation.maximum > configuration.specLimit.upperSpecLimit) ? overallItemsCalculation.maximum : configuration.specLimit.upperSpecLimit
                 },
                 chartData: chartData,
                 ucl: setLimit(chartData, configuration.controlLimit.upperControlLimit),
                 lcl: setLimit(chartData, configuration.controlLimit.lowerControlLimit),
                 usl: setLimit(chartData, configuration.specLimit.upperSpecLimit),
-                lsl: setLimit(chartData, configuration.specLimit.lowerSpecLimit),
+                lsl: setLimit(chartData, configuration.specLimit.lowerSpecLimit)
+            };
+            
+            // Yield
+            yieldChartData = {
+                yScale: {
+                    min: 0,
+                    max: 100
+                },
+                chartData: formatDataForYieldChart(configuration, overallItems)
             };
         }
-
-        createXBar(xBarChartData, 'overall');
-        createYield(xBarChartData, 'overall');
-        createRline(rLineChartData, 'overall');
-        createHistogram(histogramData, 'overall');
+        
+        createHistogram(histogramData, "overall");
+        createRline(rLineChartData, "overall");
+        createXBar(xBarChartData, "overall");
+        createYield(yieldChartData, "overall");
     },
     'click #per-sample': function(event, instance) {
         const target = event.target;
@@ -180,7 +202,7 @@ Template.Reports.events({
         var overall = document.getElementById('overall');
         var tester = document.getElementById('tester');
         var configuration = document.getElementById('configuration');
-        document.getElementById('template-3').style.display = 'none';
+        document.getElementById('template-2').style.display = 'none';
 
 		overall.parentElement.classList.remove('active');
         tester.parentElement.classList.remove('active');
@@ -200,29 +222,68 @@ Template.Reports.events({
             }
         }
 
-        var xBarChartData = {};
-        var rLineChartData = {};
         var histogramData = {};
+        var rLineChartData = {};
+        var xBarChartData = {};
+        var yieldChartData = {};
         
-        //check if theres a chosen config
+        // Check if there's a selected configuration
         if(radioValConfigId) {
             var perSampleTestResult = PerSampleTestResults.findOne({ 'configuration._id': radioValConfigId });
-            var chartData = formatDataForAnyCharts(perSampleTestResult.sampleItems);
+            var configuration = perSampleTestResult.configuration;
+            var sampleItems = perSampleTestResult.sampleItems;
+            
+            // Histogram
+            var histogramData = histogramOverAllFormat(perSampleTestResult.sampleItems);
+            // Chart Data for X-bar and Range
+            var chartData = formatDataForAnyCharts(sampleItems);
 
-            //xbar
+            // Range 
+            var rLineChartData = {
+                yScale: {
+                    min: perSampleTestResult.minimum,
+                    max: (perSampleTestResult.maximum > configuration.specLimit.upperSpecLimit) ? perSampleTestResult.maximum : configuration.specLimit.upperSpecLimit
+                },
+                chartData: chartData,
+                ucl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.upperControlLimit),
+                lcl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.lowerControlLimit),
+                usl: setLimit(chartData, perSampleTestResult.configuration.specLimit.upperSpecLimit),
+                lsl: setLimit(chartData, perSampleTestResult.configuration.specLimit.lowerSpecLimit)
+            };
+
+            // X-bar
             var xBarChartData = {
                 yScale: {
                     min: perSampleTestResult.minimum,
-                    max: perSampleTestResult.configuration.specLimit.upperSpecLimit
+                    max: (perSampleTestResult.maximum > configuration.specLimit.upperSpecLimit) ? perSampleTestResult.maximum : configuration.specLimit.upperSpecLimit
                 },
                 chartData: chartData,
-                ucl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.upperControlLimit),
-                lcl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.lowerControlLimit),
-                usl: setLimit(chartData, perSampleTestResult.configuration.specLimit.upperSpecLimit),
-                lsl: setLimit(chartData, perSampleTestResult.configuration.specLimit.lowerSpecLimit),
+                ucl: setLimit(chartData, configuration.controlLimit.upperControlLimit),
+                lcl: setLimit(chartData, configuration.controlLimit.lowerControlLimit),
+                usl: setLimit(chartData, configuration.specLimit.upperSpecLimit),
+                lsl: setLimit(chartData, configuration.specLimit.lowerSpecLimit)
             };
 
-            //Range 
+            // Yield
+            yieldChartData = {
+                yScale: {
+                    min: 0,
+                    max: 100
+                },
+                chartData: formatDataForYieldChart(configuration, sampleItems)
+            };
+        }
+        else {
+            var configuration = Session.get('configuration');
+            var perSampleTestResult = PerSampleTestResults.findOne({ 'configuration._id': configuration._id });
+            var sampleItems = perSampleTestResult.sampleItems;
+
+            // Histogram
+            var histogramData = histogramOverAllFormat(perSampleTestResult.sampleItems);
+            // Chart Data for X-bar and Range
+            var chartData = formatDataForAnyCharts(sampleItems);
+
+            // Range
             var rLineChartData = {
                 yScale: {
                     min: perSampleTestResult.minimum,
@@ -235,48 +296,34 @@ Template.Reports.events({
                 lsl: setLimit(chartData, perSampleTestResult.configuration.specLimit.lowerSpecLimit),
             };  
 
-            //histogram
-            var histogramData = histogramOverAllFormat(perSampleTestResult.sampleItems);
-        }
-        else {
-            
-            var configuration = Session.get('configuration');
-            var perSampleTestResult = PerSampleTestResults.findOne({ 'configuration._id': configuration._id });
-            var chartData = formatDataForAnyCharts(perSampleTestResult.sampleItems);
-            //xbar
+            // X-bar
             xBarChartData = {
                 yScale: {
                     min: perSampleTestResult.minimum,
-                    max: perSampleTestResult.configuration.specLimit.upperSpecLimit
+                    max: (perSampleTestResult.maximum > configuration.specLimit.upperSpecLimit) ? perSampleTestResult.maximum : configuration.specLimit.upperSpecLimit
                 },
                 chartData: chartData,
-                ucl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.upperControlLimit),
-                lcl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.lowerControlLimit),
-                usl: setLimit(chartData, perSampleTestResult.configuration.specLimit.upperSpecLimit),
-                lsl: setLimit(chartData, perSampleTestResult.configuration.specLimit.lowerSpecLimit),
+                ucl: setLimit(chartData, configuration.controlLimit.upperControlLimit),
+                lcl: setLimit(chartData, configuration.controlLimit.lowerControlLimit),
+                usl: setLimit(chartData, configuration.specLimit.upperSpecLimit),
+                lsl: setLimit(chartData, configuration.specLimit.lowerSpecLimit),
             };
 
-            //range
-            var rLineChartData = {
+            // Yield
+            yieldChartData = {
                 yScale: {
-                    min: perSampleTestResult.minimum,
-                    max: perSampleTestResult.configuration.specLimit.upperSpecLimit
+                    min: 0,
+                    max: 100
                 },
-                chartData: chartData,
-                ucl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.upperControlLimit),
-                lcl: setLimit(chartData, perSampleTestResult.configuration.controlLimit.lowerControlLimit),
-                usl: setLimit(chartData, perSampleTestResult.configuration.specLimit.upperSpecLimit),
-                lsl: setLimit(chartData, perSampleTestResult.configuration.specLimit.lowerSpecLimit),
-            };  
-
-            //histogram
-            var histogramData = histogramOverAllFormat(perSampleTestResult.sampleItems);
+                chartData: formatDataForYieldChart(configuration, sampleItems)
+            };
         }
 
-        createXBar(xBarChartData, 'per sample');
-        createYield(xBarChartData, 'per sample');
-        createRline(rLineChartData, 'per sample');
-        createHistogram(histogramData, 'per sample');
+        // Create Charts
+        createHistogram(histogramData, "per sample");
+        createRline(rLineChartData, "per sample");
+        createXBar(xBarChartData, "per sample");
+        createYield(yieldChartData, "per sample");
     },
     'click #tester': function(event, instance) {
         const target = event.target;
@@ -286,7 +333,7 @@ Template.Reports.events({
         var overall = document.getElementById('overall');
         var perSample = document.getElementById('per-sample');
         var configuration = document.getElementById('configuration');
-        document.getElementById('template-3').style.display = 'none';
+        document.getElementById('template-2').style.display = 'none';
 
 
 		overall.parentElement.classList.remove('active');
@@ -311,7 +358,7 @@ Template.Reports.events({
 		overall.parentElement.classList.remove('active');
         perSample.parentElement.classList.remove('active');
         tester.parentElement.classList.remove('active');
-        document.getElementById('template-3').style.display = 'block';
+        document.getElementById('template-2').style.display = 'block';
 
         instance.state.set({
             showCharts: false,
@@ -346,5 +393,5 @@ Template.Reports.events({
         }
 
         target.parentElement.classList.add('selected');
-    },
+    }
 });

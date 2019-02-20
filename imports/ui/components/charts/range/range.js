@@ -36,7 +36,9 @@ export const createRline = function createRline(data, type) {
             .minimum(rLineChartDataPersample.yScale.min)
             .maximum(rLineChartDataPersample.yScale.max);
             
-            rLineChart.title('Range Chart');
+            rLineChart.tooltip().titleFormat('{%x}{type:datetime}');
+
+            // rLineChart.title('Range Chart');
             rLineChart.container('range-chart');
             
             var series = rLineChart.line(rLineChartDataPersample.chartData);
@@ -74,7 +76,9 @@ export const createRline = function createRline(data, type) {
             .minimum(rLineChartDataOverall.yScale.min)
             .maximum(rLineChartDataOverall.yScale.max);
             
-            rLineChart.title('Range Chart');
+            rLineChart.tooltip().titleFormat('{%x}{type:datetime}');
+            
+            // rLineChart.title('Range Chart');
             rLineChart.container('range-chart');
             
             var series = rLineChart.line(rLineChartDataOverall.chartData);
@@ -119,13 +123,14 @@ Template.Range.onCreated(function() {
     
             if(configSubscription.ready()) {
                 Session.set('configuration', Configurations.findOne());
+
                 var configuration = Session.get('configuration');
-                var overallItems = calculateOverallItems(configuration);
-                var chartData = formatDataForAnyCharts(overallItems.items);
+                var overallItemsCalculation = calculateOverallItems(configuration);
+                var chartData = formatDataForAnyCharts(overallItemsCalculation.items);
                 var rLineChartData = {
                     yScale: {
-                        min: overallItems.minimum,
-                        max: configuration.specLimit.upperSpecLimit
+                        min: overallItemsCalculation.minimum,
+                        max: (overallItemsCalculation.maximum > configuration.specLimit.upperSpecLimit) ? overallItemsCalculation.maximum : configuration.specLimit.upperSpecLimit
                     },
                     chartData: chartData,
                     ucl: setLimit(chartData, configuration.controlLimit.upperControlLimit),

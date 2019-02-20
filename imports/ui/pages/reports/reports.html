@@ -11,11 +11,11 @@
                             <li class="semi-nav-list">
                                 <a href="javascript:void(0);" id="per-sample">PER SAMPLE</a>
                             </li>
-                            <li class="semi-nav-list">
-                                <a href="javascript:void(0);" id="tester">TESTER</a>
+                            <li class="semi-nav-list" >
+                                <a href="javascript:void(0);" id="configuration">CONFIGURATION</a>
                             </li>
                             <li class="semi-nav-list" style="float:right">
-                                <a href="javascript:void(0);" id="configuration">CONFIGURATION</a>
+                                <a href="javascript:void(0);" id="tester">TESTER</a>
                             </li>
                         </ul>
                     </div>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="card">
                         <div class="card-header form-title">
-                            <span style="font-size:15px;">Xbar</span>
+                            <span style="font-size:15px;">X-bar Chart</span>
                         </div>
                         <div class="card-body">
                             <div class="charts">
@@ -54,7 +54,7 @@
                     </div>
                     <div class="card">
                         <div class="card-header form-title">
-                            <span style="font-size:15px;">R Line</span>
+                            <span style="font-size:15px;">Range Chart</span>
                         </div>
                         <div class="card-body">
                             <div class="charts">
@@ -64,7 +64,7 @@
                     </div>
                     <div class="card">
                         <div class="card-header form-title">
-                            <span style="font-size:15px;">Yield</span>
+                            <span style="font-size:15px;">Yield Chart</span>
                         </div>
                         <div class="card-body">
                             <div class="charts">
@@ -74,27 +74,8 @@
                     </div>
                 </div>
                 {{/if}}
-                {{#if isTester}}
-                <div id="template-2">
-                    <div class="card">
-                        <div class="card-header form-title">
-                            <span style="font-size:15px;">Tester</span>&nbsp;&nbsp;&nbsp;
-                            <span id="product-name"></span>
-                            <input type="hidden" name="itemId" id="itemId">
-                            <input type="hidden" name="productname" id="productname">
-                            <a href="javascript:void(0)" class="reports align-right" id="reports-productlist">Products</a>
-                            {{> PerItem}}
-                        </div>
-                        <div class="card-body">
-                            <div class="charts">
-                                {{testing}}
-                                {{> TesterChart}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{/if}}
-                <div id="template-3" style="display:none;">
+                <!-- {{#if isConfig}} -->
+                <div id="template-2" style="display: none;">
                     <div class="card">
                         <div class="card-header form-title">
                             <span style="font-size:15px;">Configurations</span>
@@ -145,6 +126,21 @@
                         </div>
                     </div>
                 </div>
+                <!-- {{/if}} -->
+                {{#if isTester}}
+                <div id="template-3">
+                    <div class="card">
+                        <div class="card-header form-title">
+                            <span style="font-size:15px;">Tester</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="charts">
+                                {{> TesterChart}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
             </div>
         </div>
     </div>

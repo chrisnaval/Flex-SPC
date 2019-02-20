@@ -554,11 +554,11 @@ a.float-add {
     display: inline-block;
     width: 70px;
     height: 30px;
-  }
-  
-  .switch input {display:none;}
-  
-  .slider {
+}
+
+.switch input {display:none;}
+
+.slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -568,9 +568,9 @@ a.float-add {
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
-  }
-  
-  .slider:before {
+}
+
+.slider:before {
     position: absolute;
     content: "";
     height: 22px;
@@ -580,32 +580,32 @@ a.float-add {
     background-color: white;
     -webkit-transition: .4s;
     transition: .4s;
-  }
-  
-  .functionName[disabled] + .slider {
+}
+
+.functionName[disabled] + .slider {
     background-color: #da94ac;
-  }
-  input:checked + .slider {
+}
+input:checked + .slider {
     background-color: #e91e63;
-  }
-  
-  input:focus + .slider {
+}
+
+input:focus + .slider {
     box-shadow: 0 0 1px #2196F3;
-  }
-  
-  input:checked + .slider:before {
+}
+
+input:checked + .slider:before {
     -webkit-transform: translateX(40px);
     -ms-transform: translateX(40px);
     transform: translateX(40px);
-  }
-  
-  .on
-  {
+}
+
+.on
+{
     display: none;
-  }
-  
-  .on, .off
-  {
+}
+
+.on, .off
+{
     color: white;
     position: absolute;
     transform: translate(-50%,-50%);
@@ -613,29 +613,23 @@ a.float-add {
     left: 50%;
     font-size: 10px;
     font-family: Verdana, sans-serif;
-  }
-  
-  input:checked+ .slider .on
-  {display: block;}
-  
-  input:checked + .slider .off
-  {display: none;}
+}
 
-  .slider.round {
+input:checked+ .slider .on
+{ display: block; }
+
+input:checked + .slider .off
+{ display: none; }
+
+.slider.round {
     border-radius: 34px;
-  }
-  
-  .slider.round:before {
-    border-radius: 50%;
-  }
+}
 
-//media queries 
-@media screen and (max-width: 768px) {
-    // .form-group {
-    //     .form-control {
-    //         display: inline-block;
-    //         width: auto;
-    //         vertical-align: middle;
-    //     }
-    // }
+.slider.round:before {
+    border-radius: 50%;
+}
+
+// anychart-credits 
+.anychart-credits {
+    display: none !important;
 }
