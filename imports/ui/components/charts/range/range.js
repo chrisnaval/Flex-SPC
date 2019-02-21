@@ -36,6 +36,7 @@ export const createRline = function createRline(data, type) {
             .minimum(rLineChartDataPersample.yScale.min)
             .maximum(rLineChartDataPersample.yScale.max);
             
+            rLineChart.xAxis().labels().format('{%Value}{type:datetime}');
             rLineChart.tooltip().titleFormat('{%x}{type:datetime}');
 
             // rLineChart.title('Range Chart');
@@ -76,6 +77,7 @@ export const createRline = function createRline(data, type) {
             .minimum(rLineChartDataOverall.yScale.min)
             .maximum(rLineChartDataOverall.yScale.max);
             
+            rLineChart.xAxis().labels().format('{%Value}{type:datetime}');
             rLineChart.tooltip().titleFormat('{%x}{type:datetime}');
             
             // rLineChart.title('Range Chart');

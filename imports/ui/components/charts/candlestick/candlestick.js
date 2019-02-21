@@ -38,9 +38,9 @@ export const createCandlestick = function createCandlestick(data, type) {
         mapping = table.mapAs({ 'open': 'o', 'high': 'h', 'low': 'l', 'close': 'c' });
 
         var series = candlestickChart.plot(0).candlestick(mapping);
-        series.name('Parameter');
+        series.name('Items');
 
-        // candlestickChart.xAxis().labels().format('{%Value}{type:datetime}');
+        // candlestickChart.plot(0).xAxis().labels().format('{%Value}{type:datetime}');
         candlestickChart.tooltip().titleFormat('{%x}{type:datetime}');
         candlestickChart.container('candlestick-chart');
         candlestickChart.draw();
@@ -53,9 +53,11 @@ export const createCandlestick = function createCandlestick(data, type) {
         mapping = table.mapAs({ 'open': 'o', 'high': 'h', 'low': 'l', 'close': 'c' });
 
         var series = candlestickChart.plot(0).candlestick(mapping);
-        series.name('Parameter');
+        series.name('Items');
+        series.fill('#DC143C');
+        // series.stroke('#FF7F50');
 
-        // candlestickChart.xAxis().labels().format('{%Value}{type:datetime}');
+        // candlestickChart.plot(0).xAxis().labels().format('{%Value}{type:datetime}');
         candlestickChart.tooltip().titleFormat('{%x}{type:datetime}');
         candlestickChart.container('candlestick-chart');
         candlestickChart.draw();
@@ -93,7 +95,7 @@ Template.Candlestick.onRendered(function() {
     
     // Identify the type of data to display on chart
     if(candlestickChartDataType == "per sample") {
-        // candlestickChartData = candlestickChartDataPerSample;
+        candlestickChartData = candlestickChartDataPerSample;
     } else {
         candlestickChartData = candlestickChartDataOverall;
     }

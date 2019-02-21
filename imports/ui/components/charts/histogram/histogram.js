@@ -30,7 +30,9 @@ export const createHistogram = function createHistogram(data, type) {
         histogramChartDataPerSample = data;
         
         if(histogramChartDataPerSample) {
-            histogramChart.column(histogramChartDataPerSample);
+            var series = histogramChart.column(histogramChartDataPerSample);
+            series.fill('#DC143C');
+            series.stroke('#FF7F50');
             
             histogramChart.tooltip().titleFormat('Bin Range: {%x}');
             histogramChart.tooltip().format('Bin Count: {%value}');
@@ -39,13 +41,15 @@ export const createHistogram = function createHistogram(data, type) {
             histogramChart.barGroupsPadding(0);
             histogramChart.xAxis().title('Bin');
             histogramChart.yAxis().title('Frequency');
-            histogramChart.container('histogram');
+            histogramChart.container('histogram')
             histogramChart.draw();
         }
     } else {
         histogramChartDataOverall = data;
-        if(histogramChartDataOverall) {
-            histogramChart.column(histogramChartDataOverall);
+        if(histogramChartDataOverall) { 
+            var series = histogramChart.column(histogramChartDataOverall);
+            series.fill('#DC143C');
+            series.stroke('#FF7F50');
 
             histogramChart.tooltip().titleFormat('Bin Range: {%x}');
             histogramChart.tooltip().format('Bin Count: {%value}');

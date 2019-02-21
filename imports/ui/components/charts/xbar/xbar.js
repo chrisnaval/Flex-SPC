@@ -38,7 +38,6 @@ export const createXBar = function createXBar(data, type) {
             .maximum(xBarChartDataPerSample.yScale.max);
             
             xBarChart.xAxis().labels().format('{%Value}{type:datetime}');
-            
             xBarChart.tooltip().titleFormat('{%x}{type:datetime}');
 
             // xBarChart.title('X-bar Chart');
@@ -81,7 +80,6 @@ export const createXBar = function createXBar(data, type) {
             .maximum(xBarChartDataOverall.yScale.max);
             
             xBarChart.xAxis().labels().format('{%Value}{type:datetime}');
-            
             xBarChart.tooltip().titleFormat('{%x}{type:datetime}');
 
             // xBarChart.title('X-bar Chart');
