@@ -26,13 +26,13 @@ var candlestickChartDataType;
 */
 export const createCandlestick = function createCandlestick(data, type) {
     candlestickChartDataType = type;
+    candlestickChart.plot(0).removeAllSeries();
 
     // Identify the type of data to display on chart
     if(type == "per sample") {
         candlestickChartDataPerSample = data;
 
         table = anychart.data.table('x');
-        table.removeData();
         table.addData(candlestickChartDataPerSample);
 
         mapping = table.mapAs({ 'open': 'o', 'high': 'h', 'low': 'l', 'close': 'c' });
@@ -40,6 +40,8 @@ export const createCandlestick = function createCandlestick(data, type) {
         var series = candlestickChart.plot(0).candlestick(mapping);
         series.name('Parameter');
 
+        // candlestickChart.xAxis().labels().format('{%Value}{type:datetime}');
+        candlestickChart.tooltip().titleFormat('{%x}{type:datetime}');
         candlestickChart.container('candlestick-chart');
         candlestickChart.draw();
     } else {
@@ -53,6 +55,8 @@ export const createCandlestick = function createCandlestick(data, type) {
         var series = candlestickChart.plot(0).candlestick(mapping);
         series.name('Parameter');
 
+        // candlestickChart.xAxis().labels().format('{%Value}{type:datetime}');
+        candlestickChart.tooltip().titleFormat('{%x}{type:datetime}');
         candlestickChart.container('candlestick-chart');
         candlestickChart.draw();
     }
