@@ -27,6 +27,7 @@ Template.Parameters.onCreated(function() {
 // PerItem
 Template.PerItem.onCreated(function() {
     this.autorun(function() { 
+        Meteor.subscribe('configurations.all');
         Meteor.subscribe('perItemTestResults.all', function() {
             Session.set('perItem', PerItemTestResults.find({}).fetch());
         });
@@ -98,6 +99,9 @@ Template.Parameters.helpers({
 Template.PerItem.helpers({
     products() {
         return PerItemTestResults.find({});
+    },
+    itemDetails() {
+        return Session.get('itemDetails');
     }
 });
 
@@ -248,15 +252,81 @@ Template.Parameters.events({
     }
 });
 
-//perItem
-Template.Parameters.events({
+//perItem events
+Template.PerItem.events({
+    'click .product': function(event) {
+        event.preventDefault();
+        var itemId = event.currentTarget.getAttribute('data-id');
+        var itemDetails = PerItemTestResults.findOne({_id: itemId});
+        var measurement = itemDetails.measurement;
+        var itemTestResults = itemDetails.testResults
+        var perItemdata = [];
+        var testResultData = [];
+
+        for(var i = 0; i < itemTestResults.length; i++) {
+            var configuration = Configurations.findOne({
+                'product.name': itemDetails.product.name,
+                'tester.name' : itemTestResults[i].tester.name,
+                'parameter.name' : itemTestResults[i].parameter.name
+            }, { sort: { _id: -1 }, limit: 1 });
+
+            //for view only
+            if(configuration === null || configuration === undefined) {
+                upperSpecLimit = null;
+                lowerSpecLimit = null;
+                upperControlLimit = null;
+                lowerControlLimit = null;
+            } else {
+                upperSpecLimit = configuration.specLimit.upperSpecLimit;
+                lowerSpecLimit = configuration.specLimit.lowerSpecLimit;
+                upperControlLimit = configuration.controlLimit.upperControlLimit;
+                lowerControlLimit = configuration.controlLimit.lowerControlLimit;
+            }
+            
+            var data = {
+                tester: itemTestResults[i].tester.name,
+                parameter: itemTestResults[i].parameter.name,
+                specUp : upperSpecLimit,
+                specLow : lowerSpecLimit,
+                controlUp : upperControlLimit,
+                controlLow : lowerControlLimit
+            }
+            perItemdata.push(data);
+
+            //integration
+            if(configuration) {
+                if(measurement >= upperSpecLimit || measurement <= lowerSpecLimit) {
+                    var testerParameter = {
+                        tester: itemTestResults[i].tester.name,
+                        parameter: itemTestResults[i].parameter.name,
+                        status: 'danger'
+                    }
+
+                    testResultData.push(testerParameter);
+                } else if (measurement >= upperControlLimit || measurement <= lowerControlLimit) {
+                    var testerParameter = {
+                        tester: itemTestResults[i].tester.name,
+                        parameter: itemTestResults[i].parameter.name,
+                        status: 'warning'
+                    }
+
+                    testResultData.push(testerParameter);
+                } else {
+                    var testerParameter = {
+                        tester: itemTestResults[i].tester.name,
+                        parameter: itemTestResults[i].parameter.name,
+                        status: 'good'
+
+                    }
+                    testResultData.push(testerParameter);                }
+            }
+        }
+
+        Session.set('itemDetails', perItemdata);
+        Session.set('testresult', testResultData);
+    },
     'click .cancel': function() {
         var modal = document.getElementById('PerItemModal');
-        var tr = document.getElementsByTagName('tr');
-
-        for(var i = 0; i < tr.length; i++) {
-            tr[i].classList.remove('selected');
-         }
 
         modal.style.display = 'none';
     }
