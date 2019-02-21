@@ -216,31 +216,68 @@
 <!--per item-->
 <template name="PerItem">
         <div id="PerItemModal" class="modal">
-            <div class="modal-content">
+            <div class="modal-content" style="width: 66%;">
                 <div class="modal-header">
                     <h5>Items</h5>
                 </div>
-                <div class="modal-body" style="height: 400px;">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Item Code</th>
-                                <th>Product Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each products}}
-                            <tr class="perItem-list">
-                                <td class="product" data-id="{{_id}}" data-name="{{product.name}}">{{itemCode}}</td>
-                                <td class="product" data-id="{{_id}}" data-name="{{product.name}}">{{product.name}}</td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
+                <div class="modal-body" style="height: 400px;overflow: hidden;">
+                    <div class="row">
+                        <div class="col-5" style="border-right: solid 2px #f3f3f3;overflow: auto;height: 290px;">
+                            <div class="test">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Item Code</th>
+                                            <th>Product Name</th>
+                                            <th>Measurement</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each products}}
+                                        <tr class="perItem-list">
+                                            <td class="product" data-id="{{_id}}" data-name="{{product.name}}">{{itemCode}}</td>
+                                            <td class="product" data-id="{{_id}}" data-name="{{product.name}}">{{product.name}}</td>
+                                            <td class="product" data-id="{{_id}}" data-name="{{product.name}}">{{measurement}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-7" style="overflow: auto;height: 290px;">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2">Tester</th>
+                                        <th rowspan="2">Parameter</th>
+                                        <th colspan="2">Specification Limit</th>
+                                        <th colspan="2">Control Limit</th>
+                                    </tr>
+                                    <tr>
+                                        <th rowspan="2">Upper</th>
+                                        <th rowspan="2">Lower</th>
+                                        <th rowspan="2">Upper</th>
+                                        <th rowspan="2">Lower</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each itemDetails}}
+                                    <tr>
+                                        <td>{{tester}}</td>
+                                        <td>{{parameter}}</td>
+                                        <td>{{#if specUp}} {{specUp}} {{else}} No Config  {{/if}}</td>
+                                        <td>{{#if specLow}} {{specLow}} {{else}} No Config {{/if}}</td>
+                                        <td>{{#if controlUp}} {{controlUp}} {{else}} No Config {{/if}}</td>
+                                        <td>{{#if controlLow}} {{controlLow}} {{else}} No Config {{/if}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn-modal modal-default cancel">Cancel</button>
-                    <button type="button" class="btn-modal modal-info select-item">Select</button>
+                    <button type="button" class="btn-modal modal-default cancel">Close</button>
                 </div>
             </div>
         </div>

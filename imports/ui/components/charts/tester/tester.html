@@ -1,5 +1,4 @@
 <template name="TesterChart">
-    <!-- <div class="card"> -->
         <div class="charts table-section">
             <div class="custom-table">
                 <p class="content-title align-center">Tester Alert Chart</p>
@@ -10,21 +9,16 @@
                         <th class="head-title">{{name}}</th>
                         {{/each}}
                     </tr>
+                    {{testerResult}}
                     {{#each parameters}}
-                    <tr class="table-row-cell">
+                    <tr class="table-row-cell" id="{{trim name}}">
                         <td class="table-cell">{{name}}</td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-warning"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-danger"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
-                        <td class="table-cell"><span class="cell-result-good"></span></td>
+                        {{#each testers}}
+                        <td class="table-cell"><span class="cell-result-empty" id="{{trim name}}"></span></td>
+                        {{/each}}
                     </tr>
                     {{/each}}
                 </table>
             </div>
         </div>
-    <!-- </div> -->
 </template>
