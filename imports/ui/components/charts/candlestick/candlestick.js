@@ -15,6 +15,9 @@ import { calculateOverallItems } from '/lib/overall-calculator.js';
 
 // Candlestick Chart
 var candlestickChart = anychart.stock();
+var rangeSelector = anychart.ui.rangeSelector();
+var rangePicker = anychart.ui.rangePicker();
+
 // Global Var for Candlestick Chart Data
 var candlestickChartDataOverall = [];
 var candlestickChartDataPerSample = [];
@@ -44,6 +47,13 @@ export const createCandlestick = function createCandlestick(data, type) {
         candlestickChart.tooltip().titleFormat('{%x}{type:datetime}');
         candlestickChart.container('candlestick-chart');
         candlestickChart.draw();
+
+        // create range picker
+        rangeSelector.target(candlestickChart);
+        rangePicker.target(candlestickChart);
+
+        rangeSelector.render(document.getElementById("rangeselectorContainer"));
+        rangePicker.render(document.getElementById("rangepickerContainer"));
     } else {
         candlestickChartDataOverall = data;
 
@@ -61,6 +71,13 @@ export const createCandlestick = function createCandlestick(data, type) {
         candlestickChart.tooltip().titleFormat('{%x}{type:datetime}');
         candlestickChart.container('candlestick-chart');
         candlestickChart.draw();
+
+         // create range picker
+        rangeSelector.target(candlestickChart);
+        rangePicker.target(candlestickChart);
+
+        rangeSelector.render(document.getElementById("rangeselectorContainer"));
+        rangePicker.render(document.getElementById("rangepickerContainer"));
     }
 }
 

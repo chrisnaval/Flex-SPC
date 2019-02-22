@@ -202,6 +202,17 @@ Template.Configurations.events({
     }
 });
 
+// Configuration Error
+Template.Configuration_Error.events({
+    'click .close-toggle': function() {
+        var modal = document.getElementById('configurationError');
+        modal.style.display = 'none';
+    },
+    'click .cancel': function() {
+        var modal = document.getElementById('configurationError');
+        modal.style.display = 'none';
+    }
+});
 //custom dashboard
 Template.Custom_dashboard.events({
     'click .cancel': function() {
