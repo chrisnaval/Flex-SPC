@@ -383,7 +383,7 @@ Template.Reports.events({
             isTester: false
         });
     },
-    'click #reports-productlist': function() {
+    'click #reports-products-list': function() {
         var modal = document.getElementById('PerItemModal');
         modal.style.display = 'block';
     },

@@ -74,7 +74,6 @@ Meteor.methods({
 
                     // Call the configurations calculation methods
                     Meteor.call('configurations.calculatePerSample', configuration);
-                    Meteor.call('configurations.calculateOverall', configuration);
                 }
             });
         }
@@ -116,24 +115,5 @@ Meteor.methods({
                 throw new Meteor.Error('error', error.error);
             }
         });
-    },
-    'configurations.calculateOverall': function(configuration) {
-        var overallItemTestResults = PerItemTestResults.find({ 
-            'product.name': configuration.product.name,
-            'testResults': { 
-                $elemMatch: {
-                    'tester.name': configuration.tester.name,
-                    'parameter.name': configuration.parameter.name
-                },
-            }
-        }, {
-            sort: {
-                measurement: 1
-            },
-        }).fetch();
-
-        var overallDataCalculation = calculateData(overallItemTestResults);
-
-        // console.log(overallDataCalculation);
     }
 });
