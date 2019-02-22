@@ -168,7 +168,7 @@ Template.Reports.events({
             var configuration = Session.get('configuration');
             var overallItemsCalculation = calculateOverallItems(configuration);
             var overallItems = overallItemsCalculation.items;
-            
+
             // Candlestick
             candlestickChartData = formatDataForCandlestickChart(overallItemsCalculation, overallItems);
 
