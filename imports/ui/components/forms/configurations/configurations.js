@@ -140,8 +140,6 @@ Template.Configuration_create.events({
             var modal = document.getElementById('configurationError');
             modal.style.display = 'block';
         } else {
-            var modal = document.getElementById('configurationError');
-            modal.style.display = 'block';
             Session.get('configData');
             Meteor.call('configurations.insert', configData, function(error) {
                 if(error) {

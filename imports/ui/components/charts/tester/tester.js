@@ -8,11 +8,15 @@ import { Testers } from '/imports/api/collections/testers/testers.js';
 Template.TesterChart.onCreated(function() {
     this.autorun(function() {
         Meteor.subscribe('parameters.all', function() {
-            Session.set('parameters', Parameters.find({}).fetch());
+            Session.set('parameters', Parameters.find({}, {sort: {
+                name: 1
+            }}).fetch());
         });
 
         Meteor.subscribe('testers.all', function() {
-            Session.set('testers', Testers.find({}).fetch());
+            Session.set('testers', Testers.find({}, {sort: {
+                name: 1
+            }}).fetch());
         });
     });
 });
