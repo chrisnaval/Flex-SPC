@@ -97,6 +97,8 @@ Meteor.methods({
                     role: userData.userProfile.role,
                     updatedAt: new Date(),
                 }
+            }, {
+                multi: true
             }, function(error) {
                 if(error) {
                     throw new Meteor.Error('error', error.error);

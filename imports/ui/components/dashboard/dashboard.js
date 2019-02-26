@@ -14,39 +14,55 @@ Template.Dashboard.onCreated(function() {
     this.reactive = new ReactiveDict();
 
     this.reactive.set({
-        sectionValue: null,
-        section1: null,
-        section2: null,
-        section3: null,
-        section4: null,
-        section5: null,
-
+        graphSection: null,
+        chart1: null,
+        chart2: null,
+        chart3: null,
+        chart4: null,
+        chart5: null,
     });
 });
 
 Template.Dashboard.helpers({
-    section1() {
-        return Template.instance().reactive.get('section1');
+    chartData1() {
+        var chartData = Template.instance().reactive.get('chart1');
+        return chartData;
     },
-    section2() {
-        return Template.instance().reactive.get('section2');
+    chartData2() {
+        var chartData = Template.instance().reactive.get('chart2');
+        return chartData;
     },
-    section3() {
-        return Template.instance().reactive.get('section3');   
+    chartData3() {
+        var chartData = Template.instance().reactive.get('chart3');
+        return chartData;
     },
-    section4() {
-        return Template.instance().reactive.get('section4');
+    chartData4() {
+        var chartData = Template.instance().reactive.get('chart4');
+        return chartData;
     },
-    section5() {
-        return Template.instance().reactive.get('section5');
+    chartData5() {
+        var chartData = Template.instance().reactive.get('chart5');
+        return chartData;
     },
+    validateChart(name, chartData) {
+        if(name === chartData.chartName) {
+            return true;
+        }
+    },
+    equal(chartData, section) {
+        if(chartData) {
+            if(chartData.section === section) {
+                return true;
+            }
+        }
+    }
 });
 
 Template.Dashboard.events({
     'click .choose': function(event) {
         var element = event.currentTarget;
         var dataValue = element.getAttribute('data-value');
-        Template.instance().reactive.set('sectionValue', dataValue);
+        Template.instance().reactive.set('graphSection', dataValue);
 
         var modal = document.getElementById('formModal');
         modal.style.display = 'block';
@@ -77,43 +93,46 @@ Template.Dashboard.events({
         for(var i = 0; i < img.length; i++) {
             img[i].classList.remove('selected');
         }
+        var graphSection = instance.reactive.get('graphSection');
 
-        switch(alt) {
-            case 'Xbar':
-                instance.reactive.set('charts', alt);
-                break;
-            case 'Candlestick':
-                instance.reactive.set('charts', alt);
-                break;
-            case 'Range':
-                instance.reactive.set('charts', alt);
-                break;
-            case 'Histogram':
-                instance.reactive.set('charts', alt);
-                break;
-            case 'Yield':
-                instance.reactive.set('charts', alt);
-                break;
-            case 'Pareto':
-                instance.reactive.set('charts', alt);
-                break;
-        }
-
-        var charts = instance.reactive.get('charts');
-        var section = instance.reactive.get('sectionValue');
-        var sectionElement = 'choose-'+section;
-
-        if(section === 'section1') {
-            Template.instance().reactive.set('section1', charts);
-        } else if(section === 'section2') {
-            Template.instance().reactive.set('section2', charts);
-        } else if(section === 'section3') {
-            Template.instance().reactive.set('section3', charts);
-        } else if(section === 'section4') {
-            Template.instance().reactive.set('section4', charts);
-        } else if(section === 'section5') {
-            Template.instance().reactive.set('section5', charts);
+        dataChart = {
+            chartName: alt,
+            section: graphSection
         }
         
+        if(graphSection === 'chart1') {
+            instance.reactive.set('chart1', dataChart);
+        } else if(graphSection === 'chart2') {
+            instance.reactive.set('chart2', dataChart);
+        } else if(graphSection === 'chart3') {
+            instance.reactive.set('chart3', dataChart);
+        } else if(graphSection === 'chart4') {
+            instance.reactive.set('chart4', dataChart);
+        } else if(graphSection === 'chart5') {
+            instance.reactive.set('chart5', dataChart);
+        }
+
+        document.getElementById(graphSection).style.display = 'none';
     },
+    'click #save-custom': function(event) {
+        var modal = document.getElementById('confirmDash');
+        modal.style.display = 'block';
+    },
+    'click #removeGraph':function(event) {
+        event.preventDefault();
+        var instance = Template.instance();
+        var graphValue = event.currentTarget.getAttribute('data-value');
+
+        if(graphValue === 'chart1') {
+            instance.reactive.set('chart1', null);
+        } else if(graphValue === 'chart2') {
+            instance.reactive.set('chart2', null);
+        } else if(graphValue === 'chart3') {
+            instance.reactive.set('chart3', null);
+        } else if(graphValue === 'chart4') {
+            instance.reactive.set('chart4', null);
+        } else if(graphValue === 'chart5') {
+            instance.reactive.set('chart5', null);
+        }
+    }
 });

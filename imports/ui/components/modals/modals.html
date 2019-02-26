@@ -119,7 +119,7 @@
                                 <div class="checked">
                                     <i class="fa fa-check" aria-hidden="true"></i>
                                 </div>
-                                <img src="/img/LineGraph.png" alt="Xbar" class="sm-img">
+                                <img src="/img/Xbar.JPG" alt="X_bar" class="sm-img">
                                 <p>X Bar</p>
                             </div>
                         </div>
@@ -128,7 +128,7 @@
                                 <div class="checked">
                                     <i class="fa fa-check" aria-hidden="true"></i>
                                 </div>
-                                <img src="/img/candlestick.png" alt="Candlestick" class="sm-img">
+                                <img src="/img/candlestick.JPG" alt="Candlestick" class="sm-img">
                                 <p>Candlestick</p>
                             </div>
                         </div>
@@ -137,7 +137,7 @@
                                 <div class="checked">
                                     <i class="fa fa-check" aria-hidden="true"></i>
                                 </div>
-                                <img src="/img/LineGraph.png" alt="Range" class="sm-img">
+                                <img src="/img/range.JPG" alt="Range" class="sm-img">
                                 <p>Range Bar</p>
                             </div>
                         </div>
@@ -148,7 +148,7 @@
                                 <div class="checked">
                                     <i class="fa fa-check" aria-hidden="true"></i>
                                 </div>
-                                <img src="/img/histo.png" alt="Histogram" class="sm-img">
+                                <img src="/img/histogram.JPG" alt="Histogram" class="sm-img">
                                 <p>Histogram</p>
                             </div>
                         </div>
@@ -157,17 +157,8 @@
                                 <div class="checked">
                                     <i class="fa fa-check" aria-hidden="true"></i>
                                 </div>
-                                <img src="/img/yield.png" alt="Yield" class="sm-img">
+                                <img src="/img/yield.JPG" alt="Yield" class="sm-img">
                                 <p>Yield</p>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="image-content">
-                                <div class="checked">
-                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                </div>
-                                <img src="/img/pareto.png" alt="Pareto" class="sm-img">
-                                <p>Pareto</p>
                             </div>
                         </div>
                     </div>
@@ -176,6 +167,24 @@
             <div class="modal-footer">
                 <button type="button" class="btn-modal modal-default cancel">Cancel</button>
                 <button type="button" class="btn-modal modal-info select-graph">Select</button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="CustomDash_Confirmation">
+    <div id="confirmDash" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Save</h5>
+            </div>
+            <div class="modal-body">
+                <h4>Do You Want To Save Your Customized Dashboard</h4>
+                <input type="hidden" id="delete-id" name="remove">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal modal-default no">Cancel</button>
+                <button type="button" class="btn-modal modal-info save">Save</button>
             </div>
         </div>
     </div>
