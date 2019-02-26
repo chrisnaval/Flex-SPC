@@ -161,7 +161,7 @@ Template.Testers.helpers({
 // Template Events
 // Custom Dashboard
 Template.Change_password.events({
-    'click .cancel': function() {
+    'click .no': function() {
         var modal = document.getElementById('change-password');
 		modal.style.display = 'none';
     },
@@ -237,6 +237,52 @@ Template.Custom_dashboard.events({
     },
 });
 
+//custom dashboard
+Template.CustomDash_Confirmation.events({
+    'click .no': function() {
+        var modal = document.getElementById('confirmDash');
+        modal.style.display = 'none';
+    },
+    'click .save': function(event) {
+        var modal = document.getElementById('confirmDash');
+        var configData = [];
+
+        var chart5Value = document.getElementById('chart5').value;
+        var chart4Value = document.getElementById('chart4').value;
+        var chart3Value = document.getElementById('chart3').value;
+        var chart2Value = document.getElementById('chart2').value;
+        var chart1Value = document.getElementById('chart1').value;
+
+        if(chart1Value) {
+            configData.push(chart1Value);
+        }
+        if(chart2Value) {
+            configData.push(chart2Value);
+        }
+        if(chart3Value) {
+            configData.push(chart3Value);
+        }
+        if(chart4Value) {
+            configData.push(chart4Value);
+        }
+        if(chart5Value) {
+            configData.push(chart5Value);
+        }
+
+
+        Meteor.call('users.update', configData, function(error) {
+            if(error) {
+                Session.set('failure', error.reason);
+                console.log(error);
+            } else {
+                FlowRouter.go('/configurations-list');
+                Session.set('success', 'Successfully Created');
+                console.log('success');
+            }
+        });
+        modal.style.display = 'none';
+    },
+});
 // Delete_modal
 Template.Delete_modal.events({
     'click .close-toggle': function() {

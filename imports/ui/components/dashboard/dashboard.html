@@ -1,139 +1,252 @@
 <template name="Dashboard">
     <div class="wrap">
         {{> Alert_message}}
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        {{> X_bar}}
-                    </div>
-                    <div class="card-footer">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                {{section1}}
-                <div id="section1" style="display:none">
-                    <a href="javascriot:void(0)" id="removeGraph">
-                        <div class="text-content">
-                            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-                        </div>
-                    </a>
-                    <div class="card">
-                        <div class="card-body">   
-                                {{> Template.dynamic template=section1 }}
-                        </div>
-                    </div>
-                </div>
-                <a href="" class="choose choose-section1" id="choose" data-value="section1" style="display:block">
-                    <div class="choose-graphs-content">
-                        <div class="text-content">
-                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                            <p class="text-choose">Choose to Display</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-6">
-                    {{section2}}
-                <div id="section2" style="display:none">
-                    <a href="javascriot:void(0)" id="removeGraph">
-                        <div class="text-content">
-                            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-                        </div>
-                    </a>
+        <div class="content-wrap page">
+            <div class="row">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                                {{> Template.dynamic template=section2 }}
+                            {{> Pareto}}
                         </div>
                     </div>
                 </div>
-                <a href="" class="choose choose-section2" id="choose" data-value="section2" style="display:block">
-                    <div class="choose-graphs-content">
-                        <div class="text-content">
-                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                            <p class="text-choose">Choose to Display</p>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    {{#if equal chartData1 'chart1'}}
+                    <div class="chart1">
+                        <a href="javascriot:void(0)" id="removeGraph" data-value="chart1">
+                            <div class="text-content">
+                                <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                            </div>
+                        </a>
+                        <input type="hidden" id="chart1" value="{{chartData1.chartName}}">
+                        <div class="card">
+                            <div class="card-body">
+                                {{#if validateChart 'X_bar' chartData1}}
+                                    {{> X_bar}}
+                                {{else}}
+                                    {{#if validateChart 'Candlestick' chartData1}}
+                                        {{> Candlestick}}
+                                    {{else}}
+                                        {{#if validateChart 'Range' chartData1}}
+                                            {{> Range}}
+                                        {{else}}
+                                            {{#if validateChart 'Histogram' chartData1}}
+                                                {{> Histogram}}
+                                            {{else}}
+                                                {{#if validateChart 'Yield' chartData1}}
+                                                    {{> Yield}}
+                                                {{/if}}
+                                            {{/if}}
+                                        {{/if}}
+                                    {{/if}}
+                                {{/if}}
+                            </div>
                         </div>
                     </div>
-                </a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                {{section3}}
-                <div id="section3" style="display:none">
-                    <a href="javascriot:void(0)" id="removeGraph">
-                        <div class="text-content">
-                            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                    {{else}}
+                    <input type="hidden" id="chart1" value="">
+                    <a href="" class="choose choose-graph1" id="chart1" data-value="chart1" style="display:block">
+                        <div class="choose-graphs-content">
+                            <div class="text-content">
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                <p class="text-choose">Choose to Display</p>
+                            </div>
                         </div>
                     </a>
-                    <div class="card">
-                        <div class="card-body">
-                                {{> Template.dynamic template=section3 }}
-                        </div>
-                    </div>
+                    {{/if}}
                 </div>
-                <a href="" class="choose choose-section3" id="choose" data-value="section3" style="display:block">
-                    <div class="choose-graphs-content">
-                        <div class="text-content">
-                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                            <p class="text-choose">Choose to Display</p>
+                <div class="col-6">
+                    {{#if equal chartData2 'chart2'}}
+                    <div class="chart2">
+                        <a href="javascriot:void(0)" id="removeGraph" data-value="chart2">
+                            <div class="text-content">
+                                <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                            </div>
+                        </a>
+                        <input type="hidden" id="chart2" value="{{chartData2.chartName}}">
+                        <div class="card">
+                            <div class="card-body">
+                                {{#if validateChart 'X_bar' chartData2}}
+                                    {{> X_bar}}
+                                {{else}}
+                                    {{#if validateChart 'Candlestick' chartData2}}
+                                        {{> Candlestick}}
+                                    {{else}}
+                                        {{#if validateChart 'Range' chartData2}}
+                                            {{> Range}}
+                                        {{else}}
+                                            {{#if validateChart 'Histogram' chartData2}}
+                                                {{> Histogram}}
+                                            {{else}}
+                                                {{#if validateChart 'Yield' chartData2}}
+                                                    {{> Yield}}
+                                                {{/if}}
+                                            {{/if}}
+                                        {{/if}}
+                                    {{/if}}
+                                {{/if}}
+                            </div>
                         </div>
                     </div>
-                </a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                {{section4}}
-                <div id="section4" style="display:none">
-                    <a href="javascriot:void(0)" id="removeGraph">
-                        <div class="text-content">
-                            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                    {{else}}
+                    <input type="hidden" id="chart2" value="">
+                    <a href="" class="choose choose-graph2" id="chart2" data-value="chart2" style="display:block">
+                        <div class="choose-graphs-content">
+                            <div class="text-content">
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                <p class="text-choose">Choose to Display</p>
+                            </div>
                         </div>
                     </a>
-                    <div class="card">
-                        <div class="card-body">
-                                {{> Template.dynamic template=section4 }}
-                        </div>
-                    </div>
+                    {{/if}}
                 </div>
-                <a href="" class="choose choose-section4" id="choose" data-value="section4" style="display:block">
-                    <div class="choose-graphs-content">
-                        <div class="text-content">
-                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                            <p class="text-choose">Choose to Display</p>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {{#if equal chartData3 'chart3'}}
+                    <div class="chart3">
+                        <a href="javascriot:void(0)" id="removeGraph" data-value="chart3">
+                            <div class="text-content">
+                                <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                            </div>
+                        </a>
+                        <input type="hidden" id="chart3" value="{{chartData3.chartName}}">
+                        <div class="card">
+                            <div class="card-body">
+                                {{#if validateChart 'X_bar' chartData3}}
+                                    {{> X_bar}}
+                                {{else}}
+                                    {{#if validateChart 'Candlestick' chartData3}}
+                                        {{> Candlestick}}
+                                    {{else}}
+                                        {{#if validateChart 'Range' chartData3}}
+                                            {{> Range}}
+                                        {{else}}
+                                            {{#if validateChart 'Histogram' chartData3}}
+                                                {{> Histogram}}
+                                            {{else}}
+                                                {{#if validateChart 'Yield' chartData3}}
+                                                    {{> Yield}}
+                                                {{/if}}
+                                            {{/if}}
+                                        {{/if}}
+                                    {{/if}}
+                                {{/if}}
+                            </div>
                         </div>
                     </div>
-                </a>
-            </div>
-            <div class="col-6">
-                {{section5}}
-                <div id="section5" style="display:none">
-                    <a href="javascriot:void(0)" id="removeGraph">
-                        <div class="text-content">
-                            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                    {{else}}
+                    <input type="hidden" id="chart3" value="">
+                    <a href="" class="choose choose-graph3" id="chart3" data-value="chart3" style="display:block">
+                        <div class="choose-graphs-content">
+                            <div class="text-content">
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                <p class="text-choose">Choose to Display</p>
+                            </div>
                         </div>
                     </a>
-                    <div class="card">
-                        <div class="card-body">
-                            {{> Template.dynamic template=section5 }}
-                        </div>
-                    </div>
+                    {{/if}}
                 </div>
-                <a href="" class="choose choose-section5" id="choose" data-value="section5" style="display:block">
-                    <div class="choose-graphs-content">
-                        <div class="text-content">
-                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                            <p class="text-choose">Choose to Display</p>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    {{#if equal chartData4 'chart4'}}
+                    <div class="chart4">
+                        <a href="javascriot:void(0)" id="removeGraph" data-value="chart4">
+                            <div class="text-content">
+                                <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                            </div>
+                        </a>
+                        <input type="hidden" id="chart4" value="{{chartData4.chartName}}">
+                        <div class="card">
+                            <div class="card-body">
+                                {{#if validateChart 'X_bar' chartData4}}
+                                    {{> X_bar}}
+                                {{else}}
+                                    {{#if validateChart 'Candlestick' chartData4}}
+                                        {{> Candlestick}}
+                                    {{else}}
+                                        {{#if validateChart 'Range' chartData4}}
+                                            {{> Range}}
+                                        {{else}}
+                                            {{#if validateChart 'Histogram' chartData4}}
+                                                {{> Histogram}}
+                                            {{else}}
+                                                {{#if validateChart 'Yield' chartData4}}
+                                                    {{> Yield}}
+                                                {{/if}}
+                                            {{/if}}
+                                        {{/if}}
+                                    {{/if}}
+                                {{/if}}
+                            </div>
                         </div>
                     </div>
-                </a>
+                    {{else}}
+                    <input type="hidden" id="chart4" value="">
+                    <a href="" class="choose choose-graph4" id="chart4" data-value="chart4" style="display:block">
+                        <div class="choose-graphs-content">
+                            <div class="text-content">
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                <p class="text-choose">Choose to Display</p>
+                            </div>
+                        </div>
+                    </a>
+                    {{/if}}
+                </div>
+                <div class="col-6">
+                    {{#if equal chartData5 'chart5'}}
+                    <div class="chart5">
+                        <a href="javascriot:void(0)" id="removeGraph" data-value="chart5">
+                            <div class="text-content">
+                                <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                            </div>
+                        </a>
+                        <input type="hidden" id="chart5" value="{{chartData5.chartName}}">
+                        <div class="card">
+                            <div class="card-body">
+                                {{#if validateChart 'X_bar' chartData5}}
+                                    {{> X_bar}}
+                                {{else}}
+                                    {{#if validateChart 'Candlestick' chartData5}}
+                                        {{> Candlestick}}
+                                    {{else}}
+                                        {{#if validateChart 'Range' chartData5}}
+                                            {{> Range}}
+                                        {{else}}
+                                            {{#if validateChart 'Histogram' chartData5}}
+                                                {{> Histogram}}
+                                            {{else}}
+                                                {{#if validateChart 'Yield' chartData5}}
+                                                    {{> Yield}}
+                                                {{/if}}
+                                            {{/if}}
+                                        {{/if}}
+                                    {{/if}}
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    {{else}}
+                    <input type="hidden" id="chart5" value="">
+                    <a href="" class="choose choose-graph5" id="chart5" data-value="chart5" style="display:block">
+                        <div class="choose-graphs-content">
+                            <div class="text-content">
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                <p class="text-choose">Choose to Display</p>
+                            </div>
+                        </div>
+                    </a>
+                    {{/if}}
+                </div>
             </div>
+            <a href="javascript:void(0);" class="float-add" id="save-custom">
+                <i class="fa fa-floppy-o" aria-hidden="true" style="margin-top: 18px;font-size: 23px;"></i>
+            </a>
         </div>
     </div>
+    {{> CustomDash_Confirmation}}
     {{> Custom_dashboard}}
 </template>

@@ -5,7 +5,6 @@ import { formatDataForAnyCharts } from '/lib/helpers.js';
 import { setLimit } from '/lib/helpers.js';
 
 // Meteor Package(s)
-import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
 
 // Mongo Collection(s)
