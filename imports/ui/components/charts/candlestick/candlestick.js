@@ -84,8 +84,6 @@ Template.Candlestick.onCreated(function() {
     // Identify the type of data to display on chart
     if(candlestickChartDataType == "per sample") {
         createCandlestick(candlestickChartDataPerSample, candlestickChartDataType);
-    } else if(candlestickChartDataType == 'dashboard') {
-        console.log('dashboard');
     } else {
         Tracker.autorun(() => {
             // Subscription(s)
