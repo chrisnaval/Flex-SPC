@@ -12,8 +12,8 @@ Template.Configurations_list.helpers({
 	configurations() {
 		if(Meteor.user()) {
 			return Configurations.find({
-                'configuredBy._id': Meteor.userId(),
-                deletedAt: null
+				'configuredBy._id': Meteor.userId(),
+				deletedAt: null
 			}).fetch();
 		}
 	}
