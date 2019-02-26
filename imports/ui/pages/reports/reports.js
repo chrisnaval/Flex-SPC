@@ -32,7 +32,6 @@ import { Session } from 'meteor/session';
 
 // Mongo Collection(s)
 import { Configurations } from '/imports/api/collections/configurations/configurations.js';
-import { PerItemTestResults } from '/imports/api/collections/perItemTestResults/perItemTestResults.js';
 import { PerSampleTestResults } from '/imports/api/collections/perSampleTestResults/perSampleTestResults.js';
 
 // Overall Items

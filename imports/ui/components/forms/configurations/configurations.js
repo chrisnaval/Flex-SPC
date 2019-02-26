@@ -2,6 +2,18 @@ import './configurations.html';
 import '../../modals/modals.js';
 import '../../alert-message/alert-message.js';
 
+// Meteor Package(s)
+import { Session } from 'meteor/session';
+
+//Collection(s)
+import { PerItemTestResults } from '/imports/api/collections/perItemTestResults/perItemTestResults.js';
+
+Template.Configuration_create.onCreated(function() {
+    this.autorun(function() { 
+        Meteor.subscribe('perItemTestResults.all');
+    });
+});
+
 // Events
 Template.Configuration_create.events({
     //tester
@@ -87,6 +99,12 @@ Template.Configuration_create.events({
         var upperSpecLimit = target.upperSpecLimit.value;
         var lowerSpecLimit = target.lowerSpecLimit.value;
 
+        var actualSize = PerItemTestResults.find({ 
+            'product.name': product,
+            'testResults.tester.name': tester,
+            'testResults.parameter.name': parameter,
+        }).count();
+
         var currentUser = Meteor.user();
 
         var configData = {
@@ -96,16 +114,16 @@ Template.Configuration_create.events({
             },
             product: {
                 _id: productId,
-        		name: product,
+                name: product,
             },
             sampleSize: parseInt(sampleSize),
             tester: {
                 _id: testerId,
-        		name: tester,
+                name: tester,
             },
             parameter: {
                 _id: parameter_id,
-        		name: parameter,
+                name: parameter,
             },
             controlLimit: {
                 upperControlLimit: parseInt(upperControlLimit),
@@ -116,14 +134,23 @@ Template.Configuration_create.events({
                 lowerSpecLimit: parseInt(lowerSpecLimit),
             },
         }
-        
-        Meteor.call('configurations.insert', configData, function(error) {
-            if(error) {
-                Session.set('failure', error.reason);
-            } else {
-                FlowRouter.go('/configurations-list');
-                Session.set('success', 'Successfully Created');
-            }
-        });
+        Session.set('configData', configData);
+
+        if(sampleSize > actualSize) {
+            var modal = document.getElementById('configurationError');
+            modal.style.display = 'block';
+        } else {
+            var modal = document.getElementById('configurationError');
+            modal.style.display = 'block';
+            Session.get('configData');
+            Meteor.call('configurations.insert', configData, function(error) {
+                if(error) {
+                    Session.set('failure', error.reason);
+                } else {
+                    FlowRouter.go('/configurations-list');
+                    Session.set('success', 'Successfully Created');
+                }
+            });
+        }          
     }
 });

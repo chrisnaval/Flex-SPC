@@ -49,9 +49,7 @@ Meteor.methods({
             }
         }).fetch();
 
-        if(sampleSize > actualSize) {
-            throw new Meteor.Error('Sample-size', 'the sample size you provide is less than the actual size of our data, are you sure you want to continue this ?');
-        } else if(configuration.length != 0) {
+        if(configuration.length != 0) {
             throw new Meteor.Error('Unique-config', 'this Critical parameter is already existed in our record, please create new one');
         } else {
             Configurations.insert({

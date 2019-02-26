@@ -67,15 +67,14 @@ export const createCandlestick = function createCandlestick(data, type) {
         series.fill('#DC143C');
         // series.stroke('#FF7F50');
 
-        // candlestickChart.plot(0).xAxis().labels().format('{%Value}{type:datetime}');
+        candlestickChart.plot(0).xAxis().labels().format('{%Value}{type:datetime}');
         candlestickChart.tooltip().titleFormat('{%x}{type:datetime}');
         candlestickChart.container('candlestick-chart');
         candlestickChart.draw();
 
-         // create range picker
+        // create range picker
         rangeSelector.target(candlestickChart);
         rangePicker.target(candlestickChart);
-
         rangeSelector.render(document.getElementById("rangeselectorContainer"));
         rangePicker.render(document.getElementById("rangepickerContainer"));
     }
@@ -85,6 +84,8 @@ Template.Candlestick.onCreated(function() {
     // Identify the type of data to display on chart
     if(candlestickChartDataType == "per sample") {
         createCandlestick(candlestickChartDataPerSample, candlestickChartDataType);
+    } else if(candlestickChartDataType == 'dashboard') {
+        console.log('dashboard');
     } else {
         Tracker.autorun(() => {
             // Subscription(s)
