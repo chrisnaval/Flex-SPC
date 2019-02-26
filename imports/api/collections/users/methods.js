@@ -158,7 +158,7 @@ Meteor.methods({
                 Meteor.users.update({ _id: userId }, {
                     $set: {
                         profile: UserProfiles.findOne(userProfileId),
-                        updatedAt: new Date()
+                        updatedAt: new Date() 
                     }
                 });
             }
