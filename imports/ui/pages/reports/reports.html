@@ -74,6 +74,7 @@
                     </div>
                 </div>
                 {{/if}}
+                <!-- {{#if isConfig}} -->
                 <div id="template-2" style="display: none;">
                     <div class="card">
                         <div class="card-header form-title">
@@ -125,14 +126,12 @@
                         </div>
                     </div>
                 </div>
+                <!-- {{/if}} -->
                 {{#if isTester}}
                 <div id="template-3">
                     <div class="card">
                         <div class="card-header form-title">
                             <span style="font-size:15px;">Tester</span>
-                            {{ testing }}
-                            <a href="" class="reports align-right" id="reports-products-list">Configurations</a>
-                            {{> PerItem}}
                         </div>
                         <div class="card-body">
                             <div class="charts">

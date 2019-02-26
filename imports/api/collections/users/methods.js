@@ -15,6 +15,7 @@ Meteor.methods({
             password: String,
             userProfile: Object
         });
+        
         // Validation of Data from the Client using the Collection's Schema
         UserProfiles.schema.validate(userData.userProfile);
 
@@ -67,12 +68,13 @@ Meteor.methods({
         }
     },
     'users.update': function(userId, userData) {
-        check(userData, {
+        check([userData], {
             username: String,
             emailAddress: String,
             password: String,
             userProfile: Object
         });
+        
         // Validation of Data from the Client using the Collection's Schema
         UserProfiles.schema.validate(userData.userProfile);
 
@@ -87,7 +89,7 @@ Meteor.methods({
             var user = Meteor.users.findOne({_id: userId});
             var userProfileId = user.profile._id;
         
-            return UserProfiles.update({ _id:  userProfileId }, {
+            return UserProfiles.update({ _id: userProfileId }, {
                 $set: {
                     firstName: userData.userProfile.firstName,
                     lastName: userData.userProfile.lastName,
@@ -95,10 +97,9 @@ Meteor.methods({
                     contactNo: userData.userProfile.contactNo,
                     type: userData.userProfile.type,
                     role: userData.userProfile.role,
+                    charts: userData.userProfile.charts,
                     updatedAt: new Date(),
                 }
-            }, {
-                multi: true
             }, function(error) {
                 if(error) {
                     throw new Meteor.Error('error', error.error);
@@ -135,5 +136,32 @@ Meteor.methods({
                 }
             });
         }
+    },
+    'users.charts': function(userId, charts) {
+        check(charts, Array);
+        check(userId, String);
+
+        var user = Meteor.users.findOne({_id: userId});
+        var userProfileId = user.profile._id;
+
+        return UserProfiles.update({ _id: userProfileId }, {
+            $set: {
+                charts: charts,
+                updatedAt: new Date(),
+            }
+        }, {
+            multi: true
+        }, function(error) {
+            if(error) {
+                throw new Meteor.Error('error', error.error);
+            } else {
+                Meteor.users.update({ _id: userId }, {
+                    $set: {
+                        profile: UserProfiles.findOne(userProfileId),
+                        updatedAt: new Date()
+                    }
+                });
+            }
+        });
     },
 });

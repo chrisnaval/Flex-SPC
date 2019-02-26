@@ -211,6 +211,21 @@ Template.Configuration_Error.events({
     'click .cancel': function() {
         var modal = document.getElementById('configurationError');
         modal.style.display = 'none';
+    },
+    'click .yes': function(event) {
+        event.preventDefault();
+        var configData = Session.get('configData');
+        
+        Meteor.call('configurations.insert', configData, function(error) {
+            if(error) {
+                Session.set('failure', error.reason);
+            } else {
+                FlowRouter.go('/configurations-list');
+                Session.set('success', 'Successfully Created');
+            }
+        });
+        var modal = document.getElementById('configurationError');
+        modal.style.display = 'none';
     }
 });
 //custom dashboard
@@ -245,7 +260,7 @@ Template.CustomDash_Confirmation.events({
     },
     'click .save': function(event) {
         var modal = document.getElementById('confirmDash');
-        var configData = [];
+        var charts = [];
 
         var chart5Value = document.getElementById('chart5').value;
         var chart4Value = document.getElementById('chart4').value;
@@ -254,30 +269,28 @@ Template.CustomDash_Confirmation.events({
         var chart1Value = document.getElementById('chart1').value;
 
         if(chart1Value) {
-            configData.push(chart1Value);
+            charts.push(chart1Value);
         }
         if(chart2Value) {
-            configData.push(chart2Value);
+            charts.push(chart2Value);
         }
         if(chart3Value) {
-            configData.push(chart3Value);
+            charts.push(chart3Value);
         }
         if(chart4Value) {
-            configData.push(chart4Value);
+            charts.push(chart4Value);
         }
         if(chart5Value) {
-            configData.push(chart5Value);
+            charts.push(chart5Value);
         }
+        var userId = Meteor.userId();
 
-
-        Meteor.call('users.update', configData, function(error) {
+        Meteor.call('users.charts', userId, charts, function(error) {
             if(error) {
                 Session.set('failure', error.reason);
-                console.log(error);
             } else {
                 FlowRouter.go('/configurations-list');
                 Session.set('success', 'Successfully Created');
-                console.log('success');
             }
         });
         modal.style.display = 'none';

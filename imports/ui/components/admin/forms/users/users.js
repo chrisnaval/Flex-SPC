@@ -206,7 +206,7 @@ Template.User_create.events({
                 address: address,
                 contactNo: contactNo,
                 type: userType,
-                role
+                role,
             };
             
             var userData = {
@@ -293,7 +293,7 @@ Template.User_update.events({
                 address: address,
                 contactNo: contactNo,
                 type: type,
-                role
+                role,
             };
             
             var userData = {
