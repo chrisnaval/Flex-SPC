@@ -86,7 +86,7 @@ Template.Candlestick.onCreated(function() {
         createCandlestick(candlestickChartDataPerSample, candlestickChartDataType);
     } else {
         Tracker.autorun(() => {
-            // Subscription(s)
+            //Subscription(s)
             var configSubscription = Meteor.subscribe('configurations.all');
             Meteor.subscribe('perItemTestResults.all');
     
