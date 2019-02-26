@@ -9,39 +9,74 @@ import '../../components/charts/xbar/xbar.js';
 import '../../components/charts/yield/yield.js';
 import '../../components/modals/modals.js';
 import '../alert-message/alert-message.js'
+import { Tracker } from 'meteor/tracker';
 
 Template.Dashboard.onCreated(function() {
-    this.reactive = new ReactiveDict();
-
-    this.reactive.set({
-        graphSection: null,
-        chart1: null,
-        chart2: null,
-        chart3: null,
-        chart4: null,
-        chart5: null,
+    // this.reactive = new ReactiveDict();
+    Tracker.autorun(function() { 
+        Meteor.subscribe('users.all');
+        var user = Meteor.users.findOne({_id: Meteor.userId()});
+        
+        if(user) {
+            var chart = user.profile.charts;
+            if(chart) {
+                var userChart1 = {
+                    chartName: chart[1],
+                    section: 'chart1'
+                };
+                var userChart2 = {
+                    chartName: chart[2],
+                    section: 'chart2'
+                };
+                var userChart3 = {
+                    chartName: chart[3],
+                    section: 'chart3'
+                };
+                var userChart4 = {
+                    chartName: chart[4],
+                    section: 'chart4'
+                };
+                var userChart5 = {
+                    chartName: chart[5],
+                    section: 'chart5'
+                };
+            }
+        } else {
+            var userChart1 = null;
+            var userChart2 = null;
+            var userChart3 = null;
+            var userChart4 = null;
+            var userChart5 = null;
+        }
+        
+        Session.set('graphSection', null);
+        Session.set('chart1', userChart1);
+        Session.set('chart2', userChart2);
+        Session.set('chart3', userChart3);
+        Session.set('chart4', userChart4);
+        Session.set('chart5', userChart5);
     });
 });
 
 Template.Dashboard.helpers({
     chartData1() {
-        var chartData = Template.instance().reactive.get('chart1');
+        var chartData = Session.get('chart1');
         return chartData;
     },
     chartData2() {
-        var chartData = Template.instance().reactive.get('chart2');
+        var chartData = Session.get('chart2');
         return chartData;
     },
     chartData3() {
-        var chartData = Template.instance().reactive.get('chart3');
+        var chartData = Session.get('chart3');
         return chartData;
     },
     chartData4() {
-        var chartData = Template.instance().reactive.get('chart4');
+        var chartData = Session.get('chart4');
         return chartData;
     },
     chartData5() {
-        var chartData = Template.instance().reactive.get('chart5');
+        var chartData = Session.get('chart5');
         return chartData;
     },
     validateChart(name, chartData) {
@@ -62,7 +97,7 @@ Template.Dashboard.events({
     'click .choose': function(event) {
         var element = event.currentTarget;
         var dataValue = element.getAttribute('data-value');
-        Template.instance().reactive.set('graphSection', dataValue);
+        Session.set('graphSection', dataValue);
 
         var modal = document.getElementById('formModal');
         modal.style.display = 'block';
@@ -77,12 +112,8 @@ Template.Dashboard.events({
         const target = event.target.closest('.image-content');
         target.classList.add('selected');
     },
-    'click #removeGraph': function() {
-        Session.set('charts', null); 
-    },
     'click .select-graph': function(event) {
         event.preventDefault();
-        var instance = Template.instance();
 
         var data = document.getElementsByClassName("selected");
         var alt = data[0].getElementsByClassName("sm-img")[0].getAttribute("alt");
@@ -93,23 +124,23 @@ Template.Dashboard.events({
         for(var i = 0; i < img.length; i++) {
             img[i].classList.remove('selected');
         }
-        var graphSection = instance.reactive.get('graphSection');
+        var graphSection = Session.get('graphSection');
 
         dataChart = {
             chartName: alt,
             section: graphSection
         }
-        
+
         if(graphSection === 'chart1') {
-            instance.reactive.set('chart1', dataChart);
+            Session.set('chart1', dataChart);
         } else if(graphSection === 'chart2') {
-            instance.reactive.set('chart2', dataChart);
+            Session.set('chart2', dataChart);
         } else if(graphSection === 'chart3') {
-            instance.reactive.set('chart3', dataChart);
+            Session.set('chart3', dataChart);
         } else if(graphSection === 'chart4') {
-            instance.reactive.set('chart4', dataChart);
+            Session.set('chart4', dataChart);
         } else if(graphSection === 'chart5') {
-            instance.reactive.set('chart5', dataChart);
+            Session.set('chart5', dataChart);
         }
 
         document.getElementById(graphSection).style.display = 'none';
@@ -120,19 +151,18 @@ Template.Dashboard.events({
     },
     'click #removeGraph':function(event) {
         event.preventDefault();
-        var instance = Template.instance();
         var graphValue = event.currentTarget.getAttribute('data-value');
 
         if(graphValue === 'chart1') {
-            instance.reactive.set('chart1', null);
+            Session.set('chart1', null);
         } else if(graphValue === 'chart2') {
-            instance.reactive.set('chart2', null);
+            Session.set('chart2', null);
         } else if(graphValue === 'chart3') {
-            instance.reactive.set('chart3', null);
+            Session.set('chart3', null);
         } else if(graphValue === 'chart4') {
-            instance.reactive.set('chart4', null);
+            Session.set('chart4', null);
         } else if(graphValue === 'chart5') {
-            instance.reactive.set('chart5', null);
+            Session.set('chart5', null);
         }
     }
 });

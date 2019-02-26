@@ -267,7 +267,11 @@ Template.CustomDash_Confirmation.events({
         var chart3Value = document.getElementById('chart3').value;
         var chart2Value = document.getElementById('chart2').value;
         var chart1Value = document.getElementById('chart1').value;
+        var chart0Value = document.getElementById('chart0').value;
 
+        if(chart0Value) {
+            charts.push(chart0Value);
+        }
         if(chart1Value) {
             charts.push(chart1Value);
         }
