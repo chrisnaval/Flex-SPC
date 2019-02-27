@@ -4,13 +4,21 @@ import './tester.html';
 import { Parameters } from '/imports/api/collections/parameters/parameters.js';
 import { Testers } from '/imports/api/collections/testers/testers.js';
 
+
+
 //oncreated
 Template.TesterChart.onCreated(function() {
+    const sortAlphaNum = (a, b) => a.localeCompare(b, 'en', { numeric: true });
+
     this.autorun(function() {
         Meteor.subscribe('parameters.all', function() {
-            Session.set('parameters', Parameters.find({}, {sort: {
-                name: 1
-            }}).fetch());
+            var parametersData = Parameters.find({}).fetch();
+            var paramName = []
+            for(var i = 0; i < parametersData.length; i++) {
+                paramName.push(parametersData[i].name);
+            }
+            var paramNameSort =  paramName.sort(sortAlphaNum);
+            Session.set('parameters', paramNameSort);
         });
 
         Meteor.subscribe('testers.all', function() {
@@ -29,7 +37,16 @@ Template.TesterChart.onRendered(function() {
 //helpers
 Template.TesterChart.helpers({
     parameters() {
-        return Session.get('parameters');
+        var param = Session.get('parameters');
+        var paramValue = [];
+        for(var i = 0; i < param.length; i++) {
+            var data = {
+                name: param[i]
+            }
+            paramValue.push(data);
+        }
+        return paramValue;
+        
     },
     testers() {
         return Session.get('testers');
