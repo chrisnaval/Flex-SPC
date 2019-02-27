@@ -22,7 +22,9 @@ Template.TesterChart.onCreated(function() {
         });
 
         Meteor.subscribe('testers.all', function() {
-            Session.set('testers', Testers.find({}).fetch());
+            Session.set('testers', Testers.find({}, {sort: {
+                name: 1
+            }}).fetch());
         });
     });
 });

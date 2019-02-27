@@ -68,7 +68,7 @@ Meteor.methods({
         }
     },
     'users.update': function(userId, userData) {
-        check([userData], {
+        check(userData, {
             username: String,
             emailAddress: String,
             password: String,

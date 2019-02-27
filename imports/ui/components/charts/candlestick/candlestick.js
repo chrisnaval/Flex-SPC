@@ -3,7 +3,7 @@ import './candlestick.html';
 // Helpers
 import { formatDataForCandlestickChart } from '/lib/helpers.js';
 
-// Meteor Packages
+// Meteor Package(s)
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
 
@@ -42,18 +42,17 @@ export const createCandlestick = function createCandlestick(data, type) {
 
         var series = candlestickChart.plot(0).candlestick(mapping);
         series.name('Items');
+        series.fill('#DC143C');
 
-        // candlestickChart.plot(0).xAxis().labels().format('{%Value}{type:datetime}');
+        candlestickChart.plot(0).xAxis().labels().format('{%Value}{type:datetime}');
         candlestickChart.tooltip().titleFormat('{%x}{type:datetime}');
         candlestickChart.container('candlestick-chart');
         candlestickChart.draw();
 
-        // create range picker
         rangeSelector.target(candlestickChart);
         rangePicker.target(candlestickChart);
-
-        rangeSelector.render(document.getElementById("rangeselectorContainer"));
-        rangePicker.render(document.getElementById("rangepickerContainer"));
+        // rangeSelector.render(document.getElementById("candlestick-chart"));
+        // rangePicker.render(document.getElementById("candlestick-chart"));
     } else {
         candlestickChartDataOverall = data;
 
@@ -75,8 +74,8 @@ export const createCandlestick = function createCandlestick(data, type) {
         // create range picker
         rangeSelector.target(candlestickChart);
         rangePicker.target(candlestickChart);
-        rangeSelector.render(document.getElementById("rangeselectorContainer"));
-        rangePicker.render(document.getElementById("rangepickerContainer"));
+        // rangeSelector.render(document.getElementById("candlestick-chart"));
+        // rangePicker.render(document.getElementById("candlestick-chart"));
     }
 }
 

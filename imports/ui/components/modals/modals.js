@@ -317,8 +317,8 @@ Template.CustomDash_Confirmation.events({
             if(error) {
                 Session.set('failure', error.reason);
             } else {
-                FlowRouter.go('/configurations-list');
-                Session.set('success', 'Successfully Created');
+                FlowRouter.go('/');
+                Session.set('success', 'Successfully Saved');
             }
         });
         modal.style.display = 'none';

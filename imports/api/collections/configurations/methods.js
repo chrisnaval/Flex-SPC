@@ -12,7 +12,6 @@ import { PerItemTestResults } from '/imports/api/collections/perItemTestResults/
 
 Meteor.methods({
     'configurations.insert': function(configData) {
-
         // Validation of Data from the Client using the Collection's Schema
         Configurations.schema.validate(configData);
 
@@ -49,8 +48,8 @@ Meteor.methods({
             }
         }).fetch();
 
-        if(configuration.length != 0) {
-            throw new Meteor.Error('Unique-config', 'this Critical parameter is already existed in our record, please create new one');
+        if(configuration.length > 0) {
+            throw new Meteor.Error('Unique-config', 'Error! Configuration already exist.');
         } else {
             Configurations.insert({
                 configuredBy: configData.configuredBy,
