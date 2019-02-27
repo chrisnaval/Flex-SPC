@@ -19,8 +19,20 @@ Template.Configurations.onCreated(function() {
 
 // Parameter
 Template.Parameters.onCreated(function() {
+    const sortAlphaNum = (a, b) => a.localeCompare(b, 'en', { numeric: true });
+
     this.autorun(function() { 
-        Meteor.subscribe('parameters.all');
+        Meteor.subscribe('parameters.all', function() {
+            var parametersData = Parameters.find({}).fetch();
+            var paramName = [];
+
+            for(var i = 0; i < parametersData.length; i++) {
+                paramName.push(parametersData[i].name);
+            }
+
+            var paramNameSort =  paramName.sort(sortAlphaNum);
+            Session.set('parameters', paramNameSort);
+        });
     });
 });
 
@@ -92,7 +104,19 @@ Template.Configurations.helpers({
 // Parameter
 Template.Parameters.helpers({
     parameters() {
-        return Parameters.find({});
+        var param = Session.get('parameters');
+        var paramValue = [];
+        if(param) {
+            for(var i = 0; i < param.length; i++) {
+                var paramResult = Parameters.findOne({name: param[i]});
+                var data = {
+                    name: param[i],
+                    _id: paramResult._id
+                }
+                paramValue.push(data);
+            }
+            return paramValue;
+        }
     }
 });
 
