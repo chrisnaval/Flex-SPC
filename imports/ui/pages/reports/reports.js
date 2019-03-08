@@ -61,7 +61,9 @@ Template.Reports.onRendered(function() {
 
 Template.Reports.helpers({
     configurations() {
-        return Configurations.find({}).fetch();
+        return Configurations.find({
+            deletedAt: null,
+        }).fetch();
     },
     first(id) {
         var firstItem = Configurations.findOne();

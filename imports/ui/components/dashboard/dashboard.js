@@ -11,10 +11,18 @@ import '../../components/modals/modals.js';
 import '../alert-message/alert-message.js'
 import { Tracker } from 'meteor/tracker';
 
+// Mongo Collection(s)
+import { Configurations } from '/imports/api/collections/configurations/configurations.js';
+
 Template.Dashboard.onCreated(function() {
-    // this.reactive = new ReactiveDict();
     Tracker.autorun(function() { 
         Meteor.subscribe('users.all');
+        Meteor.subscribe('configurations.all', function() {
+            Session.set('configuration', Configurations.find({
+                deletedAt: null,
+            }, { sort: {createdAt: -1} }).fetch());
+        });
+
         var user = Meteor.users.findOne({_id: Meteor.userId()});
         
         if(user) {
@@ -78,6 +86,10 @@ Template.Dashboard.helpers({
     chartData5() {
         var chartData = Session.get('chart5');
         return chartData;
+    },
+    configuration() {
+        var config = Session.get('configuration');
+        return config;
     },
     validateChart(name, chartData) {
         if(name === chartData.chartName) {
