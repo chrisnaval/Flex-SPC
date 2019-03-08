@@ -49,11 +49,10 @@ export const createCandlestick = function createCandlestick(data, type) {
         candlestickChart.container('candlestick-chart');
         candlestickChart.draw();
 
-        // create range picker
         rangeSelector.target(candlestickChart);
         rangePicker.target(candlestickChart);
-        rangeSelector.render(document.getElementById("rangeselectorContainer"));
-        rangePicker.render(document.getElementById("rangepickerContainer"));
+        // rangeSelector.render(document.getElementById("candlestick-chart"));
+        // rangePicker.render(document.getElementById("candlestick-chart"));
     } else {
         candlestickChartDataOverall = data;
 
@@ -75,8 +74,8 @@ export const createCandlestick = function createCandlestick(data, type) {
         // create range picker
         rangeSelector.target(candlestickChart);
         rangePicker.target(candlestickChart);
-        rangeSelector.render(document.getElementById("rangeselectorContainer"));
-        rangePicker.render(document.getElementById("rangepickerContainer"));
+        // rangeSelector.render(document.getElementById("candlestick-chart"));
+        // rangePicker.render(document.getElementById("candlestick-chart"));
     }
 }
 

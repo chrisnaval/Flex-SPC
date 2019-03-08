@@ -4,7 +4,7 @@
         <div class="content-wrap page">
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
+                    <div class="card" style="height: 540px;">
                         <div class="card-body">
                                 <input type="hidden" id="chart0" value="pareto">
                             {{> Pareto}}
@@ -16,13 +16,14 @@
                 <div class="col-6">
                     {{#if equal chartData1 'chart1'}}
                     <div class="chart1">
+                        {{#if configuration}}
                         <a href="javascriot:void(0)" id="removeGraph" data-value="chart1">
                             <div class="text-content">
                                 <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                             </div>
                         </a>
                         <input type="hidden" id="chart1" value="{{chartData1.chartName}}">
-                        <div class="card">
+                        <div class="card" style="height: 540px;">
                             <div class="card-body">
                                 {{#if validateChart 'X_bar' chartData1}}
                                     {{> X_bar}}
@@ -45,6 +46,13 @@
                                 {{/if}}
                             </div>
                         </div>
+                        {{else}}
+                            <div class="card" style="height: 540px;">
+                                <div class="card-body">
+                                    <p class="col-xs-12" style="color: #F16362; font-weight: bold;">No Data To Display</p>
+                                </div>
+                            </div>
+                        {{/if}}
                     </div>
                     {{else}}
                     <input type="hidden" id="chart1" value="">
@@ -61,13 +69,14 @@
                 <div class="col-6">
                     {{#if equal chartData2 'chart2'}}
                     <div class="chart2">
+                        {{#if configuration}}
                         <a href="javascriot:void(0)" id="removeGraph" data-value="chart2">
                             <div class="text-content">
                                 <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                             </div>
                         </a>
                         <input type="hidden" id="chart2" value="{{chartData2.chartName}}">
-                        <div class="card">
+                        <div class="card" style="height: 540px;">
                             <div class="card-body">
                                 {{#if validateChart 'X_bar' chartData2}}
                                     {{> X_bar}}
@@ -90,6 +99,13 @@
                                 {{/if}}
                             </div>
                         </div>
+                        {{else}}
+                            <div class="card" style="height: 540px;">
+                                <div class="card-body">
+                                    <p class="col-xs-12" style="color: #F16362; font-weight: bold;">No Data To Display</p>
+                                </div>
+                            </div>
+                        {{/if}}
                     </div>
                     {{else}}
                     <input type="hidden" id="chart2" value="">
@@ -108,13 +124,14 @@
                 <div class="col-12">
                     {{#if equal chartData3 'chart3'}}
                     <div class="chart3">
+                        {{#if configuration}}
                         <a href="javascriot:void(0)" id="removeGraph" data-value="chart3">
                             <div class="text-content">
                                 <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                             </div>
                         </a>
                         <input type="hidden" id="chart3" value="{{chartData3.chartName}}">
-                        <div class="card">
+                        <div class="card" style="height: 540px;">
                             <div class="card-body">
                                 {{#if validateChart 'X_bar' chartData3}}
                                     {{> X_bar}}
@@ -137,6 +154,13 @@
                                 {{/if}}
                             </div>
                         </div>
+                        {{else}}
+                            <div class="card" style="height: 540px;">
+                                <div class="card-body">
+                                    <p class="col-xs-12" style="color: #F16362; font-weight: bold;">No Data To Display</p>
+                                </div>
+                            </div>
+                        {{/if}}
                     </div>
                     {{else}}
                     <input type="hidden" id="chart3" value="">
@@ -155,13 +179,14 @@
                 <div class="col-6">
                     {{#if equal chartData4 'chart4'}}
                     <div class="chart4">
+                        {{#if configuration}}
                         <a href="javascriot:void(0)" id="removeGraph" data-value="chart4">
                             <div class="text-content">
                                 <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                             </div>
                         </a>
                         <input type="hidden" id="chart4" value="{{chartData4.chartName}}">
-                        <div class="card">
+                        <div class="card" style="height: 540px;">
                             <div class="card-body">
                                 {{#if validateChart 'X_bar' chartData4}}
                                     {{> X_bar}}
@@ -184,6 +209,13 @@
                                 {{/if}}
                             </div>
                         </div>
+                        {{else}}
+                            <div class="card" style="height: 540px;">
+                                <div class="card-body">
+                                    <p class="col-xs-12" style="color: #F16362; font-weight: bold;">No Data To Display</p>
+                                </div>
+                            </div>
+                        {{/if}}
                     </div>
                     {{else}}
                     <input type="hidden" id="chart4" value="">
@@ -200,13 +232,14 @@
                 <div class="col-6">
                     {{#if equal chartData5 'chart5'}}
                     <div class="chart5">
+                        {{#if configuration}}
                         <a href="javascriot:void(0)" id="removeGraph" data-value="chart5">
                             <div class="text-content">
                                 <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                             </div>
                         </a>
                         <input type="hidden" id="chart5" value="{{chartData5.chartName}}">
-                        <div class="card">
+                        <div class="card" style="height: 540px;">
                             <div class="card-body">
                                 {{#if validateChart 'X_bar' chartData5}}
                                     {{> X_bar}}
@@ -229,6 +262,13 @@
                                 {{/if}}
                             </div>
                         </div>
+                        {{else}}
+                            <div class="card" style="height: 540px;">
+                                <div class="card-body">
+                                    <p class="col-xs-12" style="color: #F16362; font-weight: bold;">No Data To Display</p>
+                                </div>
+                            </div>
+                        {{/if}}
                     </div>
                     {{else}}
                     <input type="hidden" id="chart5" value="">
