@@ -18,9 +18,9 @@ Template.Dashboard.onCreated(function() {
     Tracker.autorun(function() { 
         Meteor.subscribe('users.all');
         Meteor.subscribe('configurations.all', function() {
-            Session.set('configuration', Configurations.find({
+            Session.set('dashConfiguration', Configurations.find({
                 deletedAt: null,
-            }, { sort: {createdAt: -1} }).fetch());
+            }).fetch());
         });
 
         var user = Meteor.users.findOne({_id: Meteor.userId()});
@@ -88,7 +88,8 @@ Template.Dashboard.helpers({
         return chartData;
     },
     configuration() {
-        var config = Session.get('configuration');
+        var config = Session.get('dashConfiguration');
+        console.log(config);
         return config;
     },
     validateChart(name, chartData) {
