@@ -14,7 +14,7 @@
     "knex": "^0.16.2",
     "meteor-node-stubs": "^0.4.1",
     "mysql": "^2.16.0",
-    "simpl-schema": "^1.5.3",
+    "simpl-schema": "^1.10.2",
     "simple-statistics": "^7.0.1"
   },
   "devDependencies": {
